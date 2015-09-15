@@ -1,0 +1,17 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Editor\UploadImage.cs">
+    <Files>
+      <File FileName="Assets\Editor\FileBrowser.cs" Line="15" Column="1" />
+      <File FileName="Assets\Editor\GameEngine.cs" Line="1" Column="1" />
+      <File FileName="Assets\Editor\PlayerUI.cs" Line="1" Column="1" />
+      <File FileName="Assets\Editor\WeaponUI.cs" Line="1" Column="1" />
+      <File FileName="Assets\Editor\UploadImage.cs" Line="20" Column="50" />
+      <File FileName="Assets\Classes\Weapon.cs" Line="1" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
