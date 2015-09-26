@@ -15,7 +15,24 @@ public class WeaponUI : EditorWindow
 
     void OnGUI()
     {
-        GUILayout.Label("Base Settings", EditorStyles.boldLabel);
+        //Left side area
+        GUILayout.BeginArea(new Rect(0, 0, 300, 280), "Weapons", EditorStyles.helpBox);
+        GUILayout.Space(10);
+
+        ListBox listweapons = new ListBox(new Rect(0, 0, 300, 280), new Rect(0, 0, 300, 280), false, true);
+        listweapons.AddItem("Test1");
+        listweapons.AddItem("Test2");
+        listweapons.AddItem("Test2"); listweapons.AddItem("Test2"); listweapons.AddItem("Test2"); listweapons.AddItem("Test2"); listweapons.AddItem("Test2"); listweapons.AddItem("Test2"); listweapons.AddItem("Test2"); listweapons.AddItem("Test2"); listweapons.AddItem("Test2"); listweapons.AddItem("Test2"); listweapons.AddItem("Test2"); listweapons.AddItem("Test2"); listweapons.AddItem("Test2"); listweapons.AddItem("Test2");
+        listweapons.AddItem("Test3");
+        listweapons.ReDraw();
+
+        GUILayout.EndArea();
+
+
+        //Right side area
+        GUILayout.BeginArea(new Rect(300, 0, 400, 280), "Basic Settings", EditorStyles.helpBox);
+
+        GUILayout.Space(10);
 
         weapon.Name = EditorGUILayout.TextField("Name", weapon.Name);
         weapon.Description = EditorGUILayout.TextField("Description", weapon.Description);
@@ -37,6 +54,8 @@ public class WeaponUI : EditorWindow
         weapon.Stats.MaxMP = EditorGUILayout.IntField("MaxMP: ", weapon.Stats.MaxMP);
 
         save = GUILayout.Button("Save", GUILayout.Width(100));
+
+        GUILayout.EndArea();
     }
 
     void Update()
