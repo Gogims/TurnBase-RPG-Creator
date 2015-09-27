@@ -15,7 +15,7 @@ public class Weapon : MonoBehaviour
     public float HitRate;
 
     public int NumberHit;
-
+    
     public Attribute Stats;
 
     public Weapon ()        

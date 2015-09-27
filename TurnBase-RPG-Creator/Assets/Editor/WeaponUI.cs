@@ -1,33 +1,44 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 using UnityEditor;
 
-public class WeaponUI : EditorWindow
-{
-    bool save;
-    Weapon weapon;
+public class WeaponUI : CRUD
+{    
+    Weapon weapon = new Weapon();
+    ListBox listweapons = new ListBox(new Rect(0, 0, 300, 260), new Rect(0, 0, 285, 280), false, true);
+    
+    GameObject weaponObject;
+    int prevId = -1;
+
+    public WeaponUI() : base(@"\Assets\Resources\Weapon\") { }
 
     public void Init()
     {
-        weapon = new Weapon();
-        save = false;
+        weapon = new Weapon();        
+        ListObjects = (Resources.LoadAll("Weapon", typeof(GameObject)));
+
+        for (int i = 0; i < ListObjects.Length; i++)
+        {
+            weaponObject = (GameObject)Instantiate(ListObjects[i]);
+            Weapon temp = weaponObject.GetComponent<Weapon>();
+            listweapons.AddItem(temp.Name, temp.Id);
+            DestroyImmediate(weaponObject);
+        }
+
+        GetId();
     }
 
     void OnGUI()
     {
         //Left side area
         GUILayout.BeginArea(new Rect(0, 0, 300, 280), "Weapons", EditorStyles.helpBox);
-        GUILayout.Space(10);
-
-        ListBox listweapons = new ListBox(new Rect(0, 0, 300, 280), new Rect(0, 0, 300, 280), false, true);
-        listweapons.AddItem("Test1");
-        listweapons.AddItem("Test2");
-        listweapons.AddItem("Test2"); listweapons.AddItem("Test2"); listweapons.AddItem("Test2"); listweapons.AddItem("Test2"); listweapons.AddItem("Test2"); listweapons.AddItem("Test2"); listweapons.AddItem("Test2"); listweapons.AddItem("Test2"); listweapons.AddItem("Test2"); listweapons.AddItem("Test2"); listweapons.AddItem("Test2"); listweapons.AddItem("Test2"); listweapons.AddItem("Test2"); listweapons.AddItem("Test2");
-        listweapons.AddItem("Test3");
+        GUILayout.Space(10);        
+        
         listweapons.ReDraw();
 
-        GUILayout.EndArea();
+        CreateButton = GUI.Button(new Rect(0, 260, 100, 20), "Create");
 
+        GUILayout.EndArea();       
 
         //Right side area
         GUILayout.BeginArea(new Rect(300, 0, 400, 280), "Basic Settings", EditorStyles.helpBox);
@@ -53,29 +64,69 @@ public class WeaponUI : EditorWindow
         weapon.Stats.MaxHP = EditorGUILayout.IntField("MaxHP: ", weapon.Stats.MaxHP);
         weapon.Stats.MaxMP = EditorGUILayout.IntField("MaxMP: ", weapon.Stats.MaxMP);
 
-        save = GUILayout.Button("Save", GUILayout.Width(100));
+        SaveButton = GUILayout.Button("Save", GUILayout.Width(100));
 
         GUILayout.EndArea();
     }
 
     void Update()
     {
-        if (save)
+        //Si se elige otra arma para ver
+        if (listweapons.GetSelectedID() != prevId)
         {
-            GameObject weaponObject = new GameObject("Weapon");
-            Weapon wcomponent = weaponObject.AddComponent<Weapon>();            
+            if (weaponObject != null)
+            {
+                DestroyImmediate(weaponObject);
+            }
 
-            wcomponent.Name = weapon.Name;
-            wcomponent.Description = weapon.Description;
-            wcomponent.HitType = weapon.HitType;
-            wcomponent.HitRate = weapon.HitRate;
-            wcomponent.NumberHit = weapon.NumberHit;
-            wcomponent.Stats = weapon.Stats;
+            weaponObject = (GameObject)Instantiate(ListObjects[listweapons.GetSelectedIndex()]);
+            weapon = weaponObject.GetComponent<Weapon>();
 
+            prevId = listweapons.GetSelectedID();
+            Creating = false;
+        }
 
-            PrefabUtility.CreatePrefab("Assets/Prefabs/Weapon/test.prefab", wcomponent.gameObject);
-            DestroyImmediate(weaponObject);
+        //Funcionamineto de guardado
+        if (SaveButton)
+        {
+            SaveWeapon();
+        }
+
+        //Si se crea una nueva arma
+        if (CreateButton)
+        {
+            weapon = new Weapon();
+            Creating = true;
+            prevId = 0;
         }
     }
-    
+
+    public void SaveWeapon()
+    {
+        if (Creating)
+        {
+            weaponObject = new GameObject("Weapon");
+        }
+
+        Weapon wcomponent = weaponObject.AddComponent<Weapon>();
+
+        if (Creating)
+        {
+            Id++;
+            wcomponent.Id = Id;
+            listweapons.AddItem(wcomponent.Name, wcomponent.Id);
+            Creating = false;
+        }
+
+        wcomponent.Name = weapon.Name;
+        wcomponent.Description = weapon.Description;
+        wcomponent.HitType = weapon.HitType;
+        wcomponent.HitRate = weapon.HitRate;
+        wcomponent.NumberHit = weapon.NumberHit;
+        wcomponent.Stats = weapon.Stats;
+
+        PrefabUtility.CreatePrefab("Assets/Resources/Weapon/" + wcomponent.Id + ".prefab", wcomponent.gameObject);
+        DestroyImmediate(weaponObject);
+        SetId();
+    }
 }

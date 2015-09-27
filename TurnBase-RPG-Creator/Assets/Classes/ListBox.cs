@@ -23,6 +23,7 @@ public class ListBox
     private List<ListItem> listItems = new List<ListItem>();
 
     protected int lastSelectedIndex = -1;
+    protected int lastSelectedId = 0;
 
     protected GUISkin custom_skin;
     protected bool custom_skin_flag = false;
@@ -78,26 +79,26 @@ public class ListBox
     //Text items
     public int AddItem(System.String c_ItemLabel)
     {
-        int itemIndex = listItems.Count + 1;
+        int itemIndex = listItems.Count;
         listItems.Add(new ListItem(itemIndex, new Rect(0, 0, (int)visibleRect.width, 20), c_ItemLabel));
         return itemIndex;
     }
-    public int AddItem(System.String c_ItemLabel, int c_ItemH)
+    public int AddItem(System.String c_ItemLabel, int itemId)
     {
-        int itemIndex = listItems.Count + 1;
-        listItems.Add(new ListItem(itemIndex, new Rect(0, 0, (int)visibleRect.width, c_ItemH), c_ItemLabel));
-        return itemIndex;
+        int itemIndex = listItems.Count;
+        listItems.Add(new ListItem(itemId, itemIndex , new Rect(0, 0, (int)visibleRect.width, 20), c_ItemLabel));
+        return itemId;
     }
 
     public int InsertItem(int insertPos, System.String c_ItemLabel)
     {
-        int itemIndex = listItems.Count + 1;
+        int itemIndex = listItems.Count;
         listItems.Insert(insertPos, new ListItem(itemIndex, new Rect(0, 0, (int)visibleRect.width, 20), c_ItemLabel));
         return itemIndex;
     }
     public int InsertItem(int insertPos, System.String c_ItemLabel, int c_ItemH)
     {
-        int itemIndex = listItems.Count + 1;
+        int itemIndex = listItems.Count;
         listItems.Insert(insertPos, new ListItem(itemIndex, new Rect(0, 0, (int)visibleRect.width, c_ItemH), c_ItemLabel));
         return itemIndex;
     }
@@ -105,26 +106,26 @@ public class ListBox
     //Icon items
     public int AddItem(Texture2D c_ItemIcon)
     {
-        int itemIndex = listItems.Count + 1;
+        int itemIndex = listItems.Count;
         listItems.Add(new ListItem(itemIndex, new Rect(0, 0, (int)visibleRect.width, 20), c_ItemIcon));
         return itemIndex;
     }
     public int AddItem(Texture2D c_ItemIcon, int c_ItemH)
     {
-        int itemIndex = listItems.Count + 1;
+        int itemIndex = listItems.Count;
         listItems.Add(new ListItem(itemIndex, new Rect(0, 0, (int)visibleRect.width, c_ItemH), c_ItemIcon));
         return itemIndex;
     }
 
     public int InsertItem(int insertPos, Texture2D c_ItemIcon)
     {
-        int itemIndex = listItems.Count + 1;
+        int itemIndex = listItems.Count;
         listItems.Insert(insertPos, new ListItem(itemIndex, new Rect(0, 0, (int)visibleRect.width, 20), c_ItemIcon));
         return itemIndex;
     }
     public int InsertItem(int insertPos, Texture2D c_ItemIcon, int c_ItemH)
     {
-        int itemIndex = listItems.Count + 1;
+        int itemIndex = listItems.Count;
         listItems.Insert(insertPos, new ListItem(itemIndex, new Rect(0, 0, (int)visibleRect.width, c_ItemH), c_ItemIcon));
         return itemIndex;
     }
@@ -160,7 +161,8 @@ public class ListBox
             if (nextListItem.DrawItem())  //Draw it, and check for click on it
             {
                 clicked_button = true;
-                lastSelectedIndex = nextListItem.GetID();
+                lastSelectedIndex = nextListItem.GetIndex();
+                lastSelectedId = nextListItem.GetID();
             }
             but_y_pos += nextListItem.GetHeight(); //Set Y position of next list item
         }
@@ -184,6 +186,11 @@ public class ListBox
         return lastSelectedIndex;
     }
 
+    public int GetSelectedIndex()
+    {
+        return lastSelectedIndex;
+    }
+
 }
 //*************************
 
@@ -191,6 +198,7 @@ public class ListBox
 class ListItem
 {
     private int id;
+    private int index;
 
     private Rect drawRect;
     private System.String ItemLabel;
@@ -199,9 +207,9 @@ class ListItem
     private bool is_iconButton;
 
     //Constructor
-    public ListItem(int c_id, Rect c_drawRect, System.String c_ItemLabel)
+    public ListItem(int c_index, Rect c_drawRect, System.String c_ItemLabel)
     {
-        id = c_id;
+        index = c_index;
 
         drawRect = c_drawRect;
         ItemLabel = c_ItemLabel;
@@ -209,12 +217,23 @@ class ListItem
         is_iconButton = false;
     }
 
-    public ListItem(int c_id, Rect c_drawRect, Texture2D c_ItemIcon)
+    public ListItem(int c_index, Rect c_drawRect, Texture2D c_ItemIcon)
     {
-        id = c_id;
+        index = c_index;
 
         drawRect = c_drawRect;
         ItemIcon = c_ItemIcon;
+
+        is_iconButton = true;
+    }
+
+    public ListItem(int c_id, int c_index, Rect c_drawRect, System.String c_ItemLabel)
+    {
+        index = c_index;
+        id = c_id;
+
+        drawRect = c_drawRect;
+        ItemLabel = c_ItemLabel;
 
         is_iconButton = true;
     }
@@ -245,6 +264,11 @@ class ListItem
     public int GetID()
     {
         return id;
+    }
+
+    public int GetIndex()
+    {
+        return index;
     }
 
     public void SetY(int set_value)
