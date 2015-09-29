@@ -130,11 +130,24 @@ public class ListBox
         return itemIndex;
     }
     //-----------
-    public bool RemoveItem(int iIndex)
+    public bool RemoveItemIndex(int iIndex)
     {
         foreach (ListItem nextListItem in listItems)
         {
-            if (nextListItem.GetID() == iIndex)
+            if (nextListItem.GetIndex() == iIndex)
+            {
+                listItems.Remove(nextListItem);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public bool RemoveItemId(int id)
+    {
+        foreach (ListItem nextListItem in listItems)
+        {
+            if (nextListItem.GetID() == id)
             {
                 listItems.Remove(nextListItem);
                 return true;
@@ -144,6 +157,10 @@ public class ListBox
     }
     //-------------
 
+    /// <summary>
+    /// Draws the listbox and checks if one of the elements of the listbox was clicked
+    /// </summary>
+    /// <returns>If a button got clicked</returns>
     public bool ReDraw()
     {
         bool clicked_button = false;
@@ -183,12 +200,20 @@ public class ListBox
 
     public int GetSelectedID()
     {
-        return lastSelectedIndex;
+        return lastSelectedId;
     }
 
     public int GetSelectedIndex()
     {
         return lastSelectedIndex;
+    }
+
+    public void ChangeName(int index, string label)
+    {
+        if (index < listItems.Count)
+        {
+            listItems[index].SetLabel(label);
+        }
     }
 
 }
@@ -235,7 +260,7 @@ class ListItem
         drawRect = c_drawRect;
         ItemLabel = c_ItemLabel;
 
-        is_iconButton = true;
+        is_iconButton = false;
     }
     //--------------
 
@@ -278,6 +303,10 @@ class ListItem
     public int GetHeight()
     {
         return (int)drawRect.height;
+    }
+    public void SetLabel(string name)
+    {
+        ItemLabel = name;
     }
     //-------------------
 }

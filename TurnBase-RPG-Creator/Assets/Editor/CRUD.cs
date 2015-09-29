@@ -3,14 +3,17 @@ using System.Collections;
 using UnityEditor;
 using System.IO;
 
-public class CRUD : EditorWindow
+public abstract class CRUD : EditorWindow
 {
     protected int Id;
-    protected string Path { get { return _path; } }
-    protected bool CreateButton;
+    protected string Path { get { return _path; } }    
     protected bool Creating;
     protected Object[] ListObjects;
-    protected bool SaveButton; 
+    protected GameObject elementObject;
+
+    protected bool SaveButton;
+    protected bool CreateButton;
+    protected bool DeleteButton;
 
     private string _path;
     private string idPath;
@@ -37,5 +40,23 @@ public class CRUD : EditorWindow
     public virtual void SetId()
     {
         File.WriteAllText(idPath, Id.ToString());
+    }
+
+    public virtual void Create(){}
+
+    public virtual void Edit(){}
+
+    public virtual void Delete() { }
+
+
+    /// <summary>
+    /// Revisa si no existe un game object instanceado, en caso de que sí, lo destruye antes de cerrar la ventana.
+    /// </summary>
+    public void OnDestroy()
+    {
+        if (elementObject != null)
+        {
+            DestroyImmediate(elementObject);
+        }
     }
 }
