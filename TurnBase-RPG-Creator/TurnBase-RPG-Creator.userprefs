@@ -1,17 +1,46 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Editor\UploadImage.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Editor\MapWindow.cs">
     <Files>
-      <File FileName="Assets\Editor\FileBrowser.cs" Line="15" Column="1" />
-      <File FileName="Assets\Editor\GameEngine.cs" Line="1" Column="1" />
-      <File FileName="Assets\Editor\PlayerUI.cs" Line="1" Column="1" />
+      <File FileName="Assets\Editor\GameEngine.cs" Line="19" Column="35" />
+      <File FileName="Assets\Editor\FileBrowser.cs" Line="1" Column="1" />
+      <File FileName="Assets\Editor\PlayerUI.cs" Line="5" Column="36" />
       <File FileName="Assets\Editor\WeaponUI.cs" Line="1" Column="1" />
-      <File FileName="Assets\Editor\UploadImage.cs" Line="20" Column="50" />
+      <File FileName="Assets\Editor\UploadImage.cs" Line="1" Column="1" />
       <File FileName="Assets\Classes\Weapon.cs" Line="1" Column="1" />
+      <File FileName="Assets\Editor\MapWindow.cs" Line="32" Column="74" />
+      <File FileName="Assets\Editor\GetWeapon.cs" Line="1" Column="1" />
+      <File FileName="Assets\Classes\Map.cs" Line="15" Column="1" />
+      <File FileName="Assets\Classes\ListBox.cs" Line="283" Column="26" />
+      <File FileName="Assets\Classes\Actor.cs" Line="1" Column="1" />
     </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State expanded="True">
+          <Node name="Assembly-CSharp" expanded="True">
+            <Node name="Classes" expanded="True" />
+          </Node>
+          <Node name="Assembly-CSharp-Editor" expanded="True">
+            <Node name="Editor" expanded="True">
+              <Node name="MapWindow.cs" selected="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="ClassPad">
+        <State expanded="True" selected="True" />
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State>
+          <Value>Event</Value>
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="C:\Users\LeonelPaulino\Documents\Trabajo xD 14\TurnBase-RPG-Creator\TurnBase-RPG-Creator\Assets\Editor\GameEngine.cs" line="16" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

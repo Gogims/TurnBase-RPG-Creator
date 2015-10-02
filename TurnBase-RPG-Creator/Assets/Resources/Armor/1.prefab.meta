@@ -1,6 +1,11 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:TurnBase-RPG-Creator/Assets/Resources/Armor/1.prefab.meta
 guid: aad6d658fbf07dd41a5688130aea4cd9
 timeCreated: 1443800731
+=======
+guid: 63ccc0e979a8a4c489d68625eb6f8245
+timeCreated: 1443741207
+>>>>>>> origin/master:TurnBase-RPG-Creator/Assets/Sprites/test.asset.meta
 licenseType: Free
 NativeFormatImporter:
   userData: 

@@ -8,6 +8,19 @@ using UnityEditor;
 public class GameEngine : EditorWindow {	
 
 	/// <summary>
+	/// Presenta la ventana de crear un nuevo mapa
+	/// </summary>
+	[MenuItem("RPG-Creator/New Map")]
+	public static void ShowMap()
+	{
+		var window = EditorWindow.GetWindow<MapWindow> ();
+
+		window.maxSize = new Vector2 (500,200);
+		window.minSize= new Vector2(500,200);
+		window.Init();
+		window.Show ();
+	}
+	/// <summary>
 	/// Presenta el mantenimiento de jugadores
 	/// </summary>
 	[MenuItem("RPG-Creator/Player")]
@@ -50,4 +63,5 @@ public class GameEngine : EditorWindow {
 		//Show existing window instance. If one doesn't exist, make one.
 		EditorWindow.GetWindow(typeof(UploadImage));
 	}
+
 }
