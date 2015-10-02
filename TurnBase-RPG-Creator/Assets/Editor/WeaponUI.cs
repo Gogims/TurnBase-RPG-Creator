@@ -5,7 +5,7 @@ using UnityEditor;
 public class WeaponUI : CRUD
 {    
     Weapon weapon = new Weapon();
-    ListBox listweapons = new ListBox(new Rect(0, 0, 300, 260), new Rect(0, 0, 285, 280), false, true);    
+    ListBox listweapons = new ListBox(new Rect(0, 0, 300, 380), new Rect(0, 0, 285, 400), false, true);    
     
     int prevId = -1;
 
@@ -31,7 +31,7 @@ public class WeaponUI : CRUD
     void OnGUI()
     {
         //Left side area
-        GUILayout.BeginArea(new Rect(0, 0, 300, 280), "Weapons", EditorStyles.helpBox);
+        GUILayout.BeginArea(new Rect(0, 0, 300, 400), "Weapons", EditorStyles.helpBox);
         GUILayout.Space(10);
 
         if (listweapons.ReDraw())
@@ -39,17 +39,18 @@ public class WeaponUI : CRUD
             UpdateListBox();
         }
 
-        CreateButton = GUI.Button(new Rect(0, 260, 100, 20), "Create");
+        CreateButton = GUI.Button(new Rect(0, 380, 100, 20), "Create");
 
         GUILayout.EndArea();       
 
         //Right side area        
-        GUILayout.BeginArea(new Rect(300, 0, 400, 280), "Basic Settings", EditorStyles.helpBox);
+        GUILayout.BeginArea(new Rect(300, 0, 600, 400), "Basic Settings", EditorStyles.helpBox);
 
         GUILayout.Space(10);
 
         weapon.Name = EditorGUILayout.TextField("Name", weapon.Name);
         weapon.Description = EditorGUILayout.TextField("Description", weapon.Description);
+        weapon.Price = EditorGUILayout.IntField("Price: ", weapon.Price);
 
         EditorGUILayout.PrefixLabel("Weapon Type");
         weapon.HitType = EditorGUILayout.Popup(weapon.HitType, Weapon.WeaponTypes());
@@ -67,9 +68,25 @@ public class WeaponUI : CRUD
         weapon.Stats.MaxHP = EditorGUILayout.IntField("MaxHP: ", weapon.Stats.MaxHP);
         weapon.Stats.MaxMP = EditorGUILayout.IntField("MaxMP: ", weapon.Stats.MaxMP);
 
-        SaveButton = GUI.Button(new Rect(0, 260, 100, 20), "Save");
+        // Text field to upload image
+        GUI.enabled = false;
+        GUI.TextField(new Rect(0, 280, 300, 20), spritename);
+        GUI.enabled = true;
+
+        // Button to upload image
+        if (GUI.Button(new Rect(300, 280, 100, 20), "Select Sprite"))
+        {
+            ObjectSelectorWrapper.ShowSelector(typeof(Sprite));
+        }
+
+        if (weapon.Image != null)
+        {
+            GUI.DrawTextureWithTexCoords(new Rect(400, 280, weapon.Image.textureRect.width, weapon.Image.textureRect.height), weapon.Image.texture, weapon.GetTextureCoordinate());
+        }
+
+        SaveButton = GUI.Button(new Rect(0, 380, 100, 20), "Save");
         GUI.enabled = !Creating;
-        DeleteButton = GUI.Button(new Rect(100, 260, 100, 20), "Delete");
+        DeleteButton = GUI.Button(new Rect(100, 380, 100, 20), "Delete");
         GUI.enabled = true;
 
         GUILayout.EndArea();
@@ -112,6 +129,17 @@ public class WeaponUI : CRUD
             ListObjects = (Resources.LoadAll("Weapon", typeof(GameObject)));
             weapon = new Weapon();
         }
+
+        //Seleccionar el Sprite
+        if (ObjectSelectorWrapper.isVisible)
+        {
+            weapon.Image = ObjectSelectorWrapper.GetSelectedObject<Sprite>();
+
+            if (weapon.Image != null)
+            {
+                spritename = weapon.Image.name;
+            }
+        }
     }
 
     public void SaveWeapon()
@@ -145,7 +173,7 @@ public class WeaponUI : CRUD
 
     public override void Edit()
     {
-        Weapon wcomponent = elementObject.AddComponent<Weapon>();
+        Weapon wcomponent = elementObject.GetComponent<Weapon>();
         AssignWeapon(ref wcomponent);
         CreatePrefab(ref elementObject, wcomponent);
 
@@ -171,6 +199,7 @@ public class WeaponUI : CRUD
         wcomponent.NumberHit = weapon.NumberHit;
         wcomponent.Stats = weapon.Stats;
         wcomponent.Id = weapon.Id;
+        wcomponent.Image = weapon.Image;
     }
 
     private void CreatePrefab(ref GameObject weaponObject, Weapon wcomponent)

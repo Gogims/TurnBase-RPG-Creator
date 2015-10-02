@@ -30,10 +30,8 @@ public class FileBrowser
 	public FileBrowser (){
 	}
 
-	public FileBrowser (string _path, string _text)
+	public FileBrowser (string _path)
 	{
 		path = _path;
-		EditorGUILayout.TextField (_text);
-
 	}
 }

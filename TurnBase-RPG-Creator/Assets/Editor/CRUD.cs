@@ -10,6 +10,7 @@ public abstract class CRUD : EditorWindow
     protected bool Creating;
     protected Object[] ListObjects;
     protected GameObject elementObject;
+    protected string spritename;
 
     protected bool SaveButton;
     protected bool CreateButton;

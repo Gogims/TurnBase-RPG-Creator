@@ -27,16 +27,16 @@ public class GameEngine : EditorWindow {
         var window = EditorWindow.GetWindow<WeaponUI>();
         window.Init();
         window.Show();
-	}
+	}    
 
     /// <summary>
-	/// Presenta el Mantenimiento de las armas
+	/// Presenta el Mantenimiento de las armaduras
 	/// </summary>
-	[MenuItem("RPG-Creator/Get Weapon")]
-    public static void GetWeapon()
+	[MenuItem("RPG-Creator/Armor")]
+    public static void ShowArmor()
     {
         //Show existing window instance. If one doesn't exist, make one.
-        var window = EditorWindow.GetWindow<GetWeapon>();
+        var window = EditorWindow.GetWindow<ArmorUI>();
         window.Init();
         window.Show();
     }

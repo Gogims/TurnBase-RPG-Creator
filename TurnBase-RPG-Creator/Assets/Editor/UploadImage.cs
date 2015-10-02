@@ -4,26 +4,27 @@ using UnityEditor;
 
 public class UploadImage : EditorWindow
 {	
-	Object PhotoUpload;
-	Texture2D texture = null;
-	FileBrowser image = new FileBrowser ();
+    Texture2D texture;
+	FileBrowser image = new FileBrowser ("Assets/Sprites/96x96.jpg");
 	bool upload;
+    const int width = 96;
+    const int height = 96;
 
 	void OnGUI() 
 	{
         // Text field to upload image
         GUI.enabled = false;
-        image.path =  EditorGUILayout.TextField(image.path, GUILayout.Width(300) );
+        image.path = GUI.TextField(new Rect(0,0, 300, 20), image.path);
 
         // Button to upload image
         GUI.enabled = true;
-        upload = GUILayout.Button ("Upload Photo", GUILayout.Width(100));
-		texture = new Texture2D (320, 137);
+        upload = GUI.Button (new Rect(300, 0, 100, 20), "Upload Photo");
+		texture = new Texture2D (width, height);
 
 		texture.LoadImage (image.GetImage);
 		EditorGUILayout.PrefixLabel("Preview");
 		EditorGUI.PrefixLabel(new Rect(150,45, 320,137),0, new GUIContent("Preview:"));
-		EditorGUI.DrawPreviewTexture(new Rect(150,60,320,137),texture);
+		EditorGUI.DrawPreviewTexture(new Rect(150, 60, width, height), texture);
 	}
 
 	void Update()
