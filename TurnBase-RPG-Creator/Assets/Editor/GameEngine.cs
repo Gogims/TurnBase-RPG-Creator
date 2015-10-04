@@ -64,4 +64,16 @@ public class GameEngine : EditorWindow {
 		EditorWindow.GetWindow(typeof(UploadImage));
 	}
 
+    /// <summary>
+    /// Presenta la ventana de la curva de experiencia
+    /// </summary>
+    [MenuItem("RPG-Creator/Formula")]
+    public static void ShowFormula()
+    {
+        //Show existing window instance. If one doesn't exist, make one.
+        var window = EditorWindow.GetWindow<ExpCurve>();
+        window.Init();
+        window.Show();
+    }
+
 }
