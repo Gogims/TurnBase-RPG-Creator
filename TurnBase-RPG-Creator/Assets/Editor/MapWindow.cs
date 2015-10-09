@@ -53,11 +53,12 @@ public class MapWindow : EditorWindow {
 			for(int j = 0; j < map.Heigth;j++){
 				Vector2 position = new Vector2(i,j);
 				GameObject clone = new GameObject();
+
 				if ( ( i+j ) % 2 == 0 ) 
 					clone = Instantiate(prefab, position, Quaternion.identity) as GameObject; // Agrega un objeto nuevo a la scene.
 				else 
 					clone = Instantiate(prefab2, new Vector3(i,j,0f), Quaternion.identity) as GameObject;
-				//clone.transform.localScale= new Vector2((float)3.049475,(float)3.070369); // Ajusta el scale del objeto.
+				clone.tag = "Floor";
 				DestroyImmediate(GameObject.Find("New Game Object"));
 			}
 		}
