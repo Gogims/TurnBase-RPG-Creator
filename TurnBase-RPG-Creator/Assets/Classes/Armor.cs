@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Armor : Equipppable
 {
+    /// <summary>
+    /// Tipo de armadura: pecho, pantalones, aretes, etc.
+    /// </summary>
     public int ArmorType;
 
     public Armor(int width, int height)

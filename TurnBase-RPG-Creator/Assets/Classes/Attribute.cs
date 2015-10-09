@@ -4,7 +4,6 @@ using UnityEngine;
 
 [Serializable]
 public class Attribute {
-
     public int Attack;
     public int Defense;
     public int Magic;
