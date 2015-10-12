@@ -7,6 +7,7 @@ using UnityEditor;
 /// </summary>
 public class GameEngine : EditorWindow {	
 
+	public static RPGInspector inspectorRpg = EditorWindow.GetWindow<RPGInspector> ();
 	/// <summary>
 	/// Presenta la ventana de crear un nuevo mapa
 	/// </summary>
@@ -75,5 +76,16 @@ public class GameEngine : EditorWindow {
         window.Init();
         window.Show();
     }
+	/// <summary>
+	/// Presenta la ventana del inspector de RPG-CREATOR
+	/// </summary>
+	[MenuItem("RPG-Creator/RPG-Inspector")]
+	public static void ShowInspector()
+	{
+		//Show existing window instance. If one doesn't exist, make one.]
+		inspectorRpg.Init();
+		inspectorRpg.Show();
+	}
+
 
 }
