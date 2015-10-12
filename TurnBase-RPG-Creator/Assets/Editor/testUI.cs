@@ -31,7 +31,7 @@ public class SM : MonoBehaviour {
 		var stateB2 = stateMachineB.AddState("stateB2");
 		stateMachineC.AddState("stateC1");
 		var stateC2 = stateMachineC.AddState("stateC2"); // don’t add an entry transition, should entry to state by default
-        AnimationClip
+        
 		
 		// Add Transitions
 		var exitTransition = stateA1.AddExitTransition();
