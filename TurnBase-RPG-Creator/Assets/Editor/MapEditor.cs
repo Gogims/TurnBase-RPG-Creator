@@ -5,10 +5,14 @@ using UnityEditor;
 [InitializeOnLoad]
 public class MapEditor {
 
-	static GameObject floorObject;
-	static Object DarkFloor; 
+	/// <summary>
+	/// Objeto seleccionado.
+	/// </summary>
+	public static GameObject floorObject;
+	static Object DarkFloor;
 	static Object LightFloor;
 	static MapEditor () {
+	
 		SceneView.onSceneGUIDelegate += OnSceneEvents;
 		DarkFloor =  AssetDatabase.LoadAssetAtPath(@"Assets/Resources/Floors/Dark.prefab", typeof(GameObject));
 		LightFloor =  AssetDatabase.LoadAssetAtPath(@"Assets/Resources/Floors/Light.prefab", typeof(GameObject));
@@ -21,16 +25,32 @@ public class MapEditor {
 	{
 
 		Event e = Event.current;
+		//Revisa si el objeto seleccionado es nulo.
 		if (Selection.activeGameObject != null) {
-
 			ChangeSelectedObject (Selection.activeGameObject);
-		} if (EventType.MouseDown == e.type && e.button == 0 && floorObject != null) {
+		}// si el click izquierdo es precionado y el objeto seleccionado es diferente de nulo inserta un objeto al mapa. 
+		if (EventType.MouseDown == e.type && e.button == 0 && floorObject != null) {
 			DropObject ();
-		} if (EventType.KeyDown == e.type ) {
+		} // Si la tecla del  es precionada borra los objetos seleccionados. 
+		if (EventType.KeyDown == e.type ) {
 			DeleteObject();
+		}// En caso de que hagan drag and drop.
+		if (EventType.DragExited == e.type) {
+			DeleteSelectedObject(Selection.activeGameObject);
 		}
 
 	}
+	/// <summary>
+	/// Borra el objeto que este seleccionado.
+	/// </summary>
+	/// <param name="Selected">Selected.</param>
+	static void DeleteSelectedObject(GameObject Selected)
+	{
+		MapWindow.DestroyImmediate (Selected);
+	}
+	/// <summary>
+	/// Borra los objeto seleccionados.
+	/// </summary>
 	static void DeleteObject()
 	{
 		foreach (GameObject i in Selection.gameObjects) {
@@ -53,6 +73,7 @@ public class MapEditor {
 	static void ChangeSelectedObject(GameObject Selected){
 		if (Selected.tag == "Floor" && !Selected.activeInHierarchy) {
 			floorObject = Selected;
+			GameEngine.inspectorRpg.Focus();
 		}
 
 	}
