@@ -13,16 +13,24 @@ public class RPGInspector : EditorWindow {
 
 	public void Init()
 	{
-		image = MapEditor.floorObject.GetComponent<SpriteRenderer>().sprite.texture.EncodeToJPG();
+		image = new FileBrowser ("Assets/Sprites/96x96.jpg").GetImage;
 	}
 	void OnGUI() 
 	{
-		image = MapEditor.floorObject.GetComponent<SpriteRenderer> ().sprite.texture.EncodeToPNG ();
+		string tag = "";
+		string name = "";
+		if (MapEditor.floorObject != null) {
+			image = MapEditor.floorObject.GetComponent<SpriteRenderer> ().sprite.texture.EncodeToPNG ();
+			tag = MapEditor.floorObject.tag;
+			name = MapEditor.floorObject.name;
+		} else {
+			image = new FileBrowser ("Assets/Sprites/96x96.jpg").GetImage;
+		}
 		GUI.enabled = true;
 		texture = new Texture2D (width, height);
 		texture.LoadImage (image);
-		EditorGUILayout.PrefixLabel(MapEditor.floorObject.tag);
-		EditorGUI.PrefixLabel(new Rect(50,45, 500,137),0, new GUIContent(MapEditor.floorObject.name));
+		EditorGUILayout.PrefixLabel(tag);
+		EditorGUI.PrefixLabel(new Rect(50,45, 500,137),0, new GUIContent(name));
 		EditorGUI.DrawPreviewTexture(new Rect(50, 55, width, height), texture);
 	}
 }
