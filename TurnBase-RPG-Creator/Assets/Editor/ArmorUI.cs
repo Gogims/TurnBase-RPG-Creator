@@ -21,7 +21,8 @@ public class ArmorUI : CRUD
         Armor = new Armor(width, height);        
         ListObjects = (Resources.LoadAll("Armor", typeof(GameObject)));
         Creating = true;
-        listArmors = new ListBox(new Rect(0, 0, 300, 380), new Rect(0, 0, 285, 400), false, true);        
+        listArmors = new ListBox(new Rect(0, 0, 300, 380), new Rect(0, 0, 285, 400), false, true);
+        spritename = "";
 
         for (int i = 0; i < ListObjects.Length; i++)
         {

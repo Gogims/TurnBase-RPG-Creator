@@ -25,9 +25,9 @@ public class GameEngine : EditorWindow {
 	/// </summary>
 	[MenuItem("RPG-Creator/Player")]
 	public static void ShowPlayer()
-	{		
+	{
         //Show existing window instance. If one doesn't exist, make one.
-		EditorWindow.GetWindow(typeof(PlayerUI));
+        EditorWindow.GetWindow<PlayerUI>();
 	}
 	
 	/// <summary>
@@ -38,6 +38,9 @@ public class GameEngine : EditorWindow {
 	{
         //Show existing window instance. If one doesn't exist, make one.
         var window = EditorWindow.GetWindow<WeaponUI>();
+
+        window.maxSize = new Vector2(900, 400);
+        window.minSize = new Vector2(900, 400);
         window.Init();
         window.Show();
 	}    
@@ -50,6 +53,9 @@ public class GameEngine : EditorWindow {
     {
         //Show existing window instance. If one doesn't exist, make one.
         var window = EditorWindow.GetWindow<ArmorUI>();
+
+        window.maxSize = new Vector2(900, 400);
+        window.minSize = new Vector2(900, 400);
         window.Init();
         window.Show();
     }
@@ -75,5 +81,4 @@ public class GameEngine : EditorWindow {
         window.Init();
         window.Show();
     }
-
 }
