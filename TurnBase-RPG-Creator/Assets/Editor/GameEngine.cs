@@ -82,6 +82,8 @@ public class GameEngine : EditorWindow {
 	[MenuItem("RPG-Creator/RPG-Inspector")]
 	public static void ShowInspector()
 	{
+		if (inspectorRpg == null) 
+			inspectorRpg = EditorWindow.GetWindow<RPGInspector> ();
 		//Show existing window instance. If one doesn't exist, make one.]
 		inspectorRpg.Init();
 		inspectorRpg.Show();

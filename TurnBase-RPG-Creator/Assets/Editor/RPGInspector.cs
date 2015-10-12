@@ -17,11 +17,9 @@ public class RPGInspector : EditorWindow {
 	}
 	void OnGUI() 
 	{
-		// Button to upload image
-		image = MapEditor.floorObject.GetComponent<SpriteRenderer>().sprite.texture.EncodeToPNG();
+		image = MapEditor.floorObject.GetComponent<SpriteRenderer> ().sprite.texture.EncodeToPNG ();
 		GUI.enabled = true;
 		texture = new Texture2D (width, height);
-		
 		texture.LoadImage (image);
 		EditorGUILayout.PrefixLabel(MapEditor.floorObject.tag);
 		EditorGUI.PrefixLabel(new Rect(50,45, 500,137),0, new GUIContent(MapEditor.floorObject.name));
