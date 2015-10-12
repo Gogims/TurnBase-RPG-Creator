@@ -2,36 +2,21 @@ using System;
 
 public class Actor
 {
-	public Attribute Stats {
-		get;
-		set;
-	}
+    public Attribute Stats;
 
-	public int Id {
-		get;
-		set;
-	}
+    public int Id;
 
-	public int Level {
-		get;
-		set;
-	}
+    public int Level;
 
-	public string Description {
-		get;
-		set;
-	}
-	public int HP {
-		get;
-		set;
-	}
+    public string Description;
 
-	public int MP {
-		get;
-		set;
-	}
+    public int HP;
+
+    public int MP;
 	
 	public Actor ()
 	{
+        Stats = new Attribute();
+
 	}
 }

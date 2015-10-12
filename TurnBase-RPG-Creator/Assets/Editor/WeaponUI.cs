@@ -16,6 +16,7 @@ public class WeaponUI : CRUD
         weapon = new Weapon();        
         ListObjects = (Resources.LoadAll("Weapon", typeof(GameObject)));
         Creating = true;
+        spritename = "";
 
         for (int i = 0; i < ListObjects.Length; i++)
         {
