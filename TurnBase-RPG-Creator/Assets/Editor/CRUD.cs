@@ -88,6 +88,8 @@ public abstract class CRUD : EditorWindow
 
     public virtual void Delete() { }
 
+    public virtual void AddObject() { }
+
 
     /// <summary>
     /// Revisa si no existe un game object instanceado, en caso de que sí, lo destruye antes de cerrar la ventana.
