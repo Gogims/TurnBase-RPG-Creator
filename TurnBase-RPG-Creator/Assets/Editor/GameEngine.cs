@@ -28,8 +28,12 @@ public class GameEngine : EditorWindow {
 	public static void ShowPlayer()
 	{
         //Show existing window instance. If one doesn't exist, make one.
-        EditorWindow.GetWindow<PlayerUI>();
-	}
+        var window = EditorWindow.GetWindow<PlayerUI>();
+        //window.maxSize = new Vector2(500, 200);
+        //window.minSize = new Vector2(500, 200);
+        window.Init();
+        window.Show();
+    }
 	
 	/// <summary>
 	/// Presenta el Mantenimiento de las armas
