@@ -8,8 +8,8 @@ public class RPGInspector : EditorWindow {
 
 	static Texture2D texture;
 	static public byte[] image;
-	const int width = 150;
-	const int height = 150;
+	const int width = Constatnt.INSPECTOR_IMAGE_WIDTH;
+	const int height = Constatnt.INSPECTOR_IMAGE_HEIGTH;
 
 	public void Init()
 	{
@@ -19,10 +19,10 @@ public class RPGInspector : EditorWindow {
 	{
 		string tag = "";
 		string name = "";
-		if (MapEditor.floorObject != null) {
-			image = MapEditor.floorObject.GetComponent<SpriteRenderer> ().sprite.texture.EncodeToPNG ();
-			tag = MapEditor.floorObject.tag;
-			name = MapEditor.floorObject.name;
+		if (MapEditor.selectedObject != null) {
+			image = MapEditor.selectedObject.GetComponent<SpriteRenderer> ().sprite.texture.EncodeToPNG ();
+			tag = MapEditor.selectedObject.tag;
+			name = MapEditor.selectedObject.name;
 		} else {
 			image = new FileBrowser ("Assets/Sprites/96x96.jpg").GetImage;
 		}
