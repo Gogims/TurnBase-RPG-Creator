@@ -1,97 +1,158 @@
 using UnityEngine;
 using UnityEditor;
 using System.Linq;
+using System.Collections.Generic;
+using Rotorz.ReorderableList;
 
 public class PlayerUI: CRUD
 {
-    Texture2D txt;
-    Sprite[] sprites;
+    Sprite s;
+    List<Sprite> downSprites;
+    List<Sprite> leftSprites;
+    List<Sprite> upSprites;
+    List<Sprite> rightSprites;
+    private Vector2 _downScrollPosition;
+    private Vector2 _leftScrollPosition;
+    private Vector2 _upScrollPosition;
+    private Vector2 _rightScrollPosition;
 
     public PlayerUI() : base(@"\Assets\Resources\Player\") { }
 
     public void Init()
     {
-
+        downSprites = leftSprites = upSprites = rightSprites = new List<Sprite>();
+        s = new Sprite();
     }
 
     void OnGUI()
 	{
-        //Down Sprite
-        GUILayout.BeginArea(new Rect(0, 0, 500, 300));                
-        if (GUILayout.Button("Down Sprite"))
-        {
-            EditorGUIUtility.ShowObjectPicker<Sprite>(null, false, null, 1);            
-        }
+        //Down Sprite        
+        GUILayout.BeginArea(new Rect(0, 0, this.position.width, this.position.height/4));
+
+            if (GUILayout.Button("Down Sprites"))
+            {
+                EditorGUIUtility.ShowObjectPicker<Sprite>(null, false, null, 1);
+            }
+
+            _downScrollPosition = GUILayout.BeginScrollView(_downScrollPosition);
+
+            if (s == null)
+            {
+                ReorderableListGUI.ListField(downSprites, DrawSprite, ReorderableListFlags.HideAddButton);
+            }
+            else
+            {
+                ReorderableListGUI.ListField(downSprites, DrawSprite, s.textureRect.height, ReorderableListFlags.HideAddButton);
+            }
+            GUILayout.EndScrollView();
+
         GUILayout.EndArea();
 
         //Left Sprite
-        GUILayout.BeginArea(new Rect(0, 0, 500, 300));
-        if (GUILayout.Button("Left Sprite"))
+        GUILayout.BeginArea(new Rect(0, this.position.height / 4, this.position.width, this.position.height / 4));
+        if (GUILayout.Button("Left Sprites"))
         {
-            EditorGUIUtility.ShowObjectPicker<Sprite>(null, false, null, 2);
+            EditorGUIUtility.ShowObjectPicker<Sprite>(null, false, null, 2);            
         }
+
+        _leftScrollPosition = GUILayout.BeginScrollView(_leftScrollPosition);
+
+        if (s == null)
+        {
+            ReorderableListGUI.ListField(leftSprites, DrawSprite, ReorderableListFlags.HideAddButton);
+        }
+        else
+        {
+            ReorderableListGUI.ListField(leftSprites, DrawSprite, s.textureRect.height, ReorderableListFlags.HideAddButton);
+        }
+        GUILayout.EndScrollView();
+
         GUILayout.EndArea();
 
         //Up Sprite
-        GUILayout.BeginArea(new Rect(0, 0, 500, 300));
-        if (GUILayout.Button("Up Sprite"))
-        {
-            EditorGUIUtility.ShowObjectPicker<Sprite>(null, false, null, 3);
-        }
+        GUILayout.BeginArea(new Rect(0, this.position.height / 2, this.position.width, this.position.height / 4));
+            if (GUILayout.Button("Up Sprites"))
+            {
+                EditorGUIUtility.ShowObjectPicker<Sprite>(null, false, null, 3);
+            }
+
+            _upScrollPosition = GUILayout.BeginScrollView(_upScrollPosition);
+
+            if (s == null)
+            {
+                ReorderableListGUI.ListField(upSprites, DrawSprite, ReorderableListFlags.HideAddButton);
+            }
+            else
+            {
+                ReorderableListGUI.ListField(upSprites, DrawSprite, s.textureRect.height, ReorderableListFlags.HideAddButton);
+            }
+            GUILayout.EndScrollView();
         GUILayout.EndArea();
 
         //Right Sprite
-        GUILayout.BeginArea(new Rect(0, 0, 500, 300));
-        if (GUILayout.Button("Right Sprite"))
-        {
-            EditorGUIUtility.ShowObjectPicker<Sprite>(null, false, null, 4);
-        }
+        GUILayout.BeginArea(new Rect(0, this.position.height * 3 / 4, this.position.width, this.position.height / 4));
+            if (GUILayout.Button("Right Sprites"))
+            {
+                EditorGUIUtility.ShowObjectPicker<Sprite>(null, false, null, 4);
+            }
+
+            _rightScrollPosition = GUILayout.BeginScrollView(_rightScrollPosition);
+
+            if (s == null)
+            {
+                ReorderableListGUI.ListField(rightSprites, DrawSprite, ReorderableListFlags.HideAddButton);
+            }
+            else
+            {
+                ReorderableListGUI.ListField(rightSprites, DrawSprite, s.textureRect.height, ReorderableListFlags.HideAddButton);
+            }
+            GUILayout.EndScrollView();
         GUILayout.EndArea();
 
-        if (Event.current.commandName == "ObjectSelectorUpdated")
-        {
-            if (EditorGUIUtility.GetObjectPickerControlID() == 1)
-            {
-                
-            }
-            else if (EditorGUIUtility.GetObjectPickerControlID() == 2)
-            {
-
-            }
-            else if (EditorGUIUtility.GetObjectPickerControlID() == 3)
-            {
-
-            }
-            else if (EditorGUIUtility.GetObjectPickerControlID() == 4)
-            {
-
-            }
-
-            txt = (Texture2D)EditorGUIUtility.GetObjectPickerObject();
-            string spritesheet = AssetDatabase.GetAssetPath(txt);
-            sprites = AssetDatabase.LoadAllAssetsAtPath(spritesheet).OfType<Sprite>().ToArray();
-
-            if (sprites != null && sprites.Length > 0)
-            {
-                for (int i = 0; i < sprites.Length; i++)
-                {
-                    GUI.DrawTextureWithTexCoords(new Rect(i * 100, 280, sprites[i].textureRect.width, sprites[i].textureRect.height), sprites[i].texture,
-                        new Rect(sprites[i].textureRect.x / sprites[i].texture.width,
-                            sprites[i].textureRect.y / sprites[i].texture.height,
-                            sprites[i].textureRect.width / sprites[i].texture.width,
-                            sprites[i].textureRect.height / sprites[i].texture.height)
-                            );
-                }
-            }
-        }        
+        AddSprite();
     }
 
     void Update()
     {
-        //Seleccionar el Sprite
-        if (txt != null)
+        
+
+    }
+
+    Sprite DrawSprite(Rect position, Sprite itemValue)
+    {
+        GUI.DrawTextureWithTexCoords(new Rect(position.x, position.y, itemValue.textureRect.width, itemValue.textureRect.height), itemValue.texture,
+                                new Rect(itemValue.textureRect.x / itemValue.texture.width,
+                                        itemValue.textureRect.y / itemValue.texture.height,
+                                        itemValue.textureRect.width / itemValue.texture.width,
+                                        itemValue.textureRect.height / itemValue.texture.height)
+                                        );
+
+        return itemValue;
+    }    
+
+    void AddSprite()
+    {
+        if (Event.current.commandName == "ObjectSelectorUpdated" && Event.current.type == EventType.ExecuteCommand)
         {
-            
+            s = new Sprite();
+            s = (Sprite)EditorGUIUtility.GetObjectPickerObject();
+
+            if (EditorGUIUtility.GetObjectPickerControlID() == 1)
+            {
+                downSprites.Add(s);
+            }
+            else if (EditorGUIUtility.GetObjectPickerControlID() == 2)
+            {                
+                leftSprites.Add(s);
+            }
+            else if (EditorGUIUtility.GetObjectPickerControlID() == 3)
+            {
+                upSprites.Add(s);
+            }
+            else if (EditorGUIUtility.GetObjectPickerControlID() == 4)
+            {
+                rightSprites.Add(s);
+            }
         }
     }
 }

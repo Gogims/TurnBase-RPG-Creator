@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
-using System.Collections;
+using UnityEditor;
+using System.Collections.Generic;
 using System;
 using System.Reflection;
 
@@ -29,8 +30,49 @@ public class ActorAnimation : MonoBehaviour
 
     private Sprite[] sprites = new Sprite[12];
     private SpriteRenderer rend;
+    AnimationClip Clip;
 
-    Animator animator = new Animator();
+    public ActorAnimation(string name, List<Sprite> sprites, int fps, bool raiseEvent = false)
+    {
+        int framecount = sprites.Count;
+        float frameLength = 1f / 30f;
+
+        Clip = new AnimationClip();
+        Clip.frameRate = fps;
+
+        AnimationUtility.GetAnimationClipSettings(Clip).loopTime = true;
+
+        EditorCurveBinding curveBinding = new EditorCurveBinding();
+        curveBinding.type = typeof(SpriteRenderer);
+        curveBinding.propertyName = "m_Sprite";
+        curveBinding.path = "test";
+
+        ObjectReferenceKeyframe[] keyFrames = new ObjectReferenceKeyframe[framecount];
+
+        for (int i = 0; i < framecount; i++)
+        {
+            ObjectReferenceKeyframe kf = new ObjectReferenceKeyframe();
+            kf.time = i * frameLength;
+            kf.value = sprites[i];
+            keyFrames[i] = kf;
+        }
+
+        AnimationCurve curve = AnimationUtility.GetEditorCurve(Clip, curveBinding);
+        Clip.name = name;
+        //AnimationUtility.SetEditorCurve(Clip, curveBinding, curve);
+        Clip.SetCurve("TestAnimation", typeof(SpriteRenderer), "Sprite", curve);
+
+        Clip.wrapMode = WrapMode.Once;
+        //setAnimationLoop(clip);
+        //AnimationUtility.SetObjectReferenceCurve(Clip, curveBinding, keyFrames);
+
+
+        if (raiseEvent)
+        {
+            //AnimationUtility.SetAnimationEvents(clip, new[] { new AnimationEvent() { time = clip.length, functionName = "on" + name } });
+        }
+        //clip.AddEvent(e);
+    }
 
     public void Awake()
     {

@@ -79,8 +79,10 @@ public class ArmorUI : CRUD
         // Button to upload image
         if (GUI.Button(new Rect(300, 240, 100, 20), "Select Sprite"))
         {
-            ObjectSelectorWrapper.ShowSelector(typeof(Sprite));
+            EditorGUIUtility.ShowObjectPicker<Sprite>(null, false, null, 1);
         }
+
+        AddObject();
 
         if (Armor.Image != null)
         {
@@ -132,17 +134,6 @@ public class ArmorUI : CRUD
             Delete();
             ListObjects = (Resources.LoadAll("Armor", typeof(GameObject)));
             Armor = new Armor(width, height);
-        }        
-
-        //Seleccionar el Sprite
-        if (ObjectSelectorWrapper.isVisible)
-        {
-            Armor.Image = ObjectSelectorWrapper.GetSelectedObject<Sprite>();
-
-            if (Armor.Image != null)
-            {
-                spritename = Armor.Image.name;
-            }
         }
     }
 
@@ -191,6 +182,19 @@ public class ArmorUI : CRUD
             DestroyImmediate(elementObject, true);
             AssetDatabase.DeleteAsset("Assets/Resources/Armor/" + Armor.Id + ".prefab");
             listArmors.RemoveItemIndex(listArmors.GetSelectedIndex());
+        }
+    }
+
+    public override void AddObject()
+    {
+        if (Event.current.commandName == "ObjectSelectorUpdated" && Event.current.type == EventType.ExecuteCommand)
+        {
+            Armor.Image = (Sprite)EditorGUIUtility.GetObjectPickerObject();
+
+            if (Armor.Image != null)
+            {
+                spritename = Armor.Image.name;
+            }
         }
     }
 

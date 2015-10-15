@@ -77,8 +77,10 @@ public class WeaponUI : CRUD
         // Button to upload image
         if (GUI.Button(new Rect(300, 280, 100, 20), "Select Sprite"))
         {
-            ObjectSelectorWrapper.ShowSelector(typeof(Sprite));
+            EditorGUIUtility.ShowObjectPicker<Sprite>(null, false, null, 1);
         }
+
+        AddObject();
 
         if (weapon.Image != null)
         {
@@ -130,17 +132,6 @@ public class WeaponUI : CRUD
             ListObjects = (Resources.LoadAll("Weapon", typeof(GameObject)));
             weapon = new Weapon();
         }
-
-        //Seleccionar el Sprite
-        if (ObjectSelectorWrapper.isVisible)
-        {
-            weapon.Image = ObjectSelectorWrapper.GetSelectedObject<Sprite>();
-
-            if (weapon.Image != null)
-            {
-                spritename = weapon.Image.name;
-            }
-        }
     }
 
     public void SaveWeapon()
@@ -189,6 +180,19 @@ public class WeaponUI : CRUD
             AssetDatabase.DeleteAsset("Assets/Resources/Weapon/" + weapon.Id + ".prefab");
             listweapons.RemoveItemIndex(listweapons.GetSelectedIndex());
         }        
+    }
+
+    public override void AddObject()
+    {
+        if (Event.current.commandName == "ObjectSelectorUpdated") //&& Event.current.type == EventType.ExecuteCommand)
+        {
+            weapon.Image = (Sprite)EditorGUIUtility.GetObjectPickerObject();
+
+            if (weapon.Image != null)
+            {
+                spritename = weapon.Image.name;
+            }
+        }
     }
 
     private void AssignWeapon(ref Weapon wcomponent)
