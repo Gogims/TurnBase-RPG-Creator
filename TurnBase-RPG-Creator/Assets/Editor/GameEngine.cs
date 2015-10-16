@@ -72,7 +72,9 @@ public class GameEngine : EditorWindow {
 	public static void ShowImage()
 	{
 		//Show existing window instance. If one doesn't exist, make one.
-		EditorWindow.GetWindow(typeof(UploadImage));
+		var window =EditorWindow.GetWindow<UploadImage>();
+		window.Init ();
+		window.Show ();
 	}
 
     /// <summary>
@@ -86,7 +88,6 @@ public class GameEngine : EditorWindow {
         window.Init();
         window.Show();
     }
-
 	/// <summary>
 	/// Presenta la ventana del inspector de RPG-CREATOR
 	/// </summary>

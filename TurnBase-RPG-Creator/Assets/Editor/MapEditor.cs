@@ -8,7 +8,7 @@ public class MapEditor {
 	/// <summary>
 	/// Objeto seleccionado.
 	/// </summary>
-	public static GameObject floorObject;
+	public static GameObject selectedObject;
 	static Object DarkFloor;
 	static Object LightFloor;
 	static MapEditor () {
@@ -29,7 +29,7 @@ public class MapEditor {
 		if (Selection.activeGameObject != null) {
 			ChangeSelectedObject (Selection.activeGameObject);
 		}// si el click izquierdo es precionado y el objeto seleccionado es diferente de nulo inserta un objeto al mapa. 
-		if (EventType.MouseDown == e.type && e.button == 0 && floorObject != null) {
+		if (EventType.MouseDown == e.type && e.button == 0 && selectedObject != null) {
 			DropObject ();
 		} // Si la tecla del  es precionada borra los objetos seleccionados. 
 		if (EventType.KeyDown == e.type ) {
@@ -72,7 +72,7 @@ public class MapEditor {
 	/// <param name="Selected">objeto seleccionado</param>
 	static void ChangeSelectedObject(GameObject Selected){
 		if (Selected.tag == "Floor" && !Selected.activeInHierarchy) {
-			floorObject = Selected;
+			selectedObject = Selected;
 			GameEngine.inspectorRpg.Focus();
 		}
 
@@ -84,7 +84,7 @@ public class MapEditor {
 	{
 
 		foreach (GameObject i in Selection.gameObjects) {
-			GameObject temp = floorObject;
+			GameObject temp = selectedObject;
 			temp.transform.position = i.transform.position;
 			MapWindow.DestroyImmediate (i);
 			MapWindow.Instantiate (temp, temp.transform.position, Quaternion.identity);
