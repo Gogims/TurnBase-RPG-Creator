@@ -15,19 +15,24 @@ public class PlayerUI: CRUD
     private Vector2 _leftScrollPosition;
     private Vector2 _upScrollPosition;
     private Vector2 _rightScrollPosition;
+    private float listHeight;
 
     public PlayerUI() : base(@"\Assets\Resources\Player\") { }
 
     public void Init()
     {
-        downSprites = leftSprites = upSprites = rightSprites = new List<Sprite>();
-        s = new Sprite();
+        downSprites = new List<Sprite>();
+        leftSprites = new List<Sprite>();
+        upSprites = new List<Sprite>();
+        rightSprites = new List<Sprite>();
     }
 
     void OnGUI()
 	{
+        listHeight = position.height / 4;
+
         //Down Sprite        
-        GUILayout.BeginArea(new Rect(0, 0, this.position.width, this.position.height/4));
+        GUILayout.BeginArea(new Rect(0, 0, this.position.width, listHeight));
 
             if (GUILayout.Button("Down Sprites"))
             {
@@ -49,7 +54,7 @@ public class PlayerUI: CRUD
         GUILayout.EndArea();
 
         //Left Sprite
-        GUILayout.BeginArea(new Rect(0, this.position.height / 4, this.position.width, this.position.height / 4));
+        GUILayout.BeginArea(new Rect(0, listHeight, this.position.width, listHeight));
         if (GUILayout.Button("Left Sprites"))
         {
             EditorGUIUtility.ShowObjectPicker<Sprite>(null, false, null, 2);            
@@ -70,7 +75,7 @@ public class PlayerUI: CRUD
         GUILayout.EndArea();
 
         //Up Sprite
-        GUILayout.BeginArea(new Rect(0, this.position.height / 2, this.position.width, this.position.height / 4));
+        GUILayout.BeginArea(new Rect(0, 2*listHeight, this.position.width, listHeight));
             if (GUILayout.Button("Up Sprites"))
             {
                 EditorGUIUtility.ShowObjectPicker<Sprite>(null, false, null, 3);
@@ -90,7 +95,7 @@ public class PlayerUI: CRUD
         GUILayout.EndArea();
 
         //Right Sprite
-        GUILayout.BeginArea(new Rect(0, this.position.height * 3 / 4, this.position.width, this.position.height / 4));
+        GUILayout.BeginArea(new Rect(0, 3*listHeight, this.position.width, listHeight));
             if (GUILayout.Button("Right Sprites"))
             {
                 EditorGUIUtility.ShowObjectPicker<Sprite>(null, false, null, 4);
@@ -107,14 +112,53 @@ public class PlayerUI: CRUD
                 ReorderableListGUI.ListField(rightSprites, DrawSprite, s.textureRect.height, ReorderableListFlags.HideAddButton);
             }
             GUILayout.EndScrollView();
-        GUILayout.EndArea();
+
+            if (GUILayout.Button("Save"))
+            {
+                ActorAnimation animation = new ActorAnimation();
+                List<Sprite> sprites;
+
+                if (downSprites.Count > 0)
+                {
+                    sprites = new List<Sprite>(downSprites);
+                    sprites.Add(downSprites[0]);
+                    animation.down = ActorAnimation.ConstructAnimation(sprites, "test", "down", 30, true);
+                    animation.downIdle = ActorAnimation.ConstructAnimation(downSprites[0], "test", "downIdle", 30, true);
+                }
+                    
+                if (leftSprites.Count > 0)
+                {
+                    sprites = new List<Sprite>(leftSprites);
+                    sprites.Add(leftSprites[0]);
+                    animation.left = ActorAnimation.ConstructAnimation(sprites, "test", "left", 30, true);
+                    animation.leftIdle = ActorAnimation.ConstructAnimation(leftSprites[0], "test", "leftIdle", 30, true);
+                }
+                    
+                if (upSprites.Count > 0)
+                {
+                    sprites = new List<Sprite>(upSprites);
+                    sprites.Add(upSprites[0]);
+                    animation.up = ActorAnimation.ConstructAnimation(sprites, "test", "up", 30, true);
+                    animation.upIdle = ActorAnimation.ConstructAnimation(upSprites[0], "test", "upIdle", 30, true);
+                }
+                    
+                if (rightSprites.Count > 0)
+                {
+                    sprites = new List<Sprite>(rightSprites);
+                    sprites.Add(rightSprites[0]);
+                    animation.right = ActorAnimation.ConstructAnimation(sprites, "test", "right", 30, true);
+                    animation.rightIdle = ActorAnimation.ConstructAnimation(rightSprites[0], "test", "rightIdle", 30, true);
+                }
+
+                animation.ConstructAnimationControl("test");
+            }
+        GUILayout.EndArea();        
 
         AddSprite();
     }
 
     void Update()
-    {
-        
+    {        
 
     }
 
