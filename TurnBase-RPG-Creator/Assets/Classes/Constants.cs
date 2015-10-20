@@ -20,4 +20,12 @@ public class Constatnt{
 	/// Ancho Minimo del mapa.
 	/// </summary>
 	public const int MIN_MAP_WIDTH = 5;
+	/// <summary>
+	/// Altura de la imagen del RPGInspector
+	/// </summary>
+	public const int INSPECTOR_IMAGE_HEIGTH = 150;
+	/// <summary>
+	/// Ancho de la imagen del RPGInspector
+	/// </summary>
+	public const int INSPECTOR_IMAGE_WIDTH = 150;
 }
