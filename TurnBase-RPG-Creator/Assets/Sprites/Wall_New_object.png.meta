@@ -1,25 +1,23 @@
 fileFormatVersion: 2
-guid: 8e254ce1c2ee69f4ebfb01086961c725
-timeCreated: 1445371803
+guid: 37aca959aff94914eacb2082c1f3862e
+timeCreated: 1445453729
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: chrono_0
-    21300002: chrono_1
-    21300004: chrono_2
-    21300006: chrono_3
-    21300008: chrono_4
-    21300010: chrono_5
-    21300012: chrono_6
-    21300014: chrono_7
-    21300016: chrono_8
-    21300018: chrono_9
-    21300020: chrono_10
-    21300022: chrono_11
-    21300024: chrono_12
-    21300026: chrono_13
-    21300028: chrono_14
-    21300030: chrono_15
+    21300000: Wall_New_object_0
+    21300002: Wall_New_object_1
+    21300004: Wall_New_object_2
+    21300006: Wall_New_object_3
+    21300008: Wall_New_object_4
+    21300010: Wall_New_object_5
+    21300012: Wall_New_object_6
+    21300014: Wall_New_object_7
+    21300016: Wall_New_object_8
+    21300018: Wall_New_object_9
+    21300020: Wall_New_object_10
+    21300022: Wall_New_object_11
+    21300024: Wall_New_object_12
+    21300026: Wall_New_object_13
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -45,7 +43,7 @@ TextureImporter:
   textureFormat: 5
   maxTextureSize: 2048
   textureSettings:
-    filterMode: 0
+    filterMode: -1
     aniso: 16
     mipBias: -1
     wrapMode: 1
@@ -65,163 +63,143 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: chrono_0
+    - name: Wall_New_object_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 216
-        width: 48
+        x: 7
+        y: 215
+        width: 34
         height: 72
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: chrono_1
+    - name: Wall_New_object_1
       rect:
         serializedVersion: 2
-        x: 48
-        y: 216
-        width: 48
+        x: 55
+        y: 215
+        width: 34
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wall_New_object_2
+      rect:
+        serializedVersion: 2
+        x: 103
+        y: 215
+        width: 34
         height: 72
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: chrono_2
+    - name: Wall_New_object_3
       rect:
         serializedVersion: 2
-        x: 96
-        y: 216
-        width: 48
-        height: 72
+        x: 153
+        y: 215
+        width: 34
+        height: 70
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: chrono_3
+    - name: Wall_New_object_4
       rect:
         serializedVersion: 2
-        x: 144
-        y: 216
-        width: 48
-        height: 72
+        x: 9
+        y: 143
+        width: 30
+        height: 70
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: chrono_4
+    - name: Wall_New_object_5
       rect:
         serializedVersion: 2
-        x: 0
-        y: 144
-        width: 48
-        height: 72
+        x: 51
+        y: 143
+        width: 44
+        height: 66
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: chrono_5
+    - name: Wall_New_object_6
       rect:
         serializedVersion: 2
-        x: 48
-        y: 144
-        width: 48
-        height: 72
+        x: 105
+        y: 143
+        width: 30
+        height: 70
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: chrono_6
+    - name: Wall_New_object_7
       rect:
         serializedVersion: 2
-        x: 96
-        y: 144
-        width: 48
-        height: 72
+        x: 145
+        y: 143
+        width: 46
+        height: 66
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: chrono_7
+    - name: Wall_New_object_8
       rect:
         serializedVersion: 2
-        x: 144
-        y: 144
-        width: 48
-        height: 72
+        x: 9
+        y: 71
+        width: 30
+        height: 70
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: chrono_8
+    - name: Wall_New_object_9
       rect:
         serializedVersion: 2
-        x: 0
-        y: 72
-        width: 48
-        height: 72
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: chrono_9
-      rect:
-        serializedVersion: 2
-        x: 48
-        y: 72
-        width: 48
-        height: 72
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: chrono_10
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 72
-        width: 48
-        height: 72
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: chrono_11
-      rect:
-        serializedVersion: 2
-        x: 144
-        y: 72
-        width: 48
-        height: 72
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: chrono_12
-      rect:
-        serializedVersion: 2
-        x: 0
+        x: 49
         y: 0
-        width: 48
-        height: 72
+        width: 44
+        height: 137
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: chrono_13
+    - name: Wall_New_object_10
       rect:
         serializedVersion: 2
-        x: 48
-        y: 0
-        width: 48
-        height: 72
+        x: 105
+        y: 71
+        width: 30
+        height: 70
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: chrono_14
+    - name: Wall_New_object_11
       rect:
         serializedVersion: 2
-        x: 96
+        x: 145
         y: 0
-        width: 48
-        height: 72
+        width: 46
+        height: 137
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: chrono_15
+    - name: Wall_New_object_12
       rect:
         serializedVersion: 2
-        x: 144
-        y: 0
-        width: 48
-        height: 72
+        x: 7
+        y: 1
+        width: 34
+        height: 68
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Wall_New_object_13
+      rect:
+        serializedVersion: 2
+        x: 103
+        y: 1
+        width: 34
+        height: 68
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

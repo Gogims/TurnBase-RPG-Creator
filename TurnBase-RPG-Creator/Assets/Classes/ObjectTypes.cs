@@ -8,8 +8,9 @@ public class ObjectTypes
 	
 	
 	private static void Init(){
-		types.Add ("Wall", @"Specify a wall,an object of this type will collide 
-with other objects.");
+		types.Add ("Wall", @"An object of this type will be use to represent 
+a wall in the map, it will collide with other 
+objects.");
 		types.Add ("Tiles", @"An object of this type will be use to represent tiles 
 of a map, it won't collide with other objects.");
 		types.Add ("Pick Up", @"An object of this type will be use to represent 
@@ -25,6 +26,8 @@ items on the inventory.");
 Weapons on the game.");
 		types.Add ("Armor", @"An object of this type will be use to represent 
 Armors on the game.");
+		types.Add ("Character", @"An object of this type will be use to represent 
+a character (enemy,npc,player).");
 	}
 	static public string [] GetTypes(){
 		if ( types.Count == 0) 

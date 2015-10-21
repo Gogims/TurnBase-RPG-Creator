@@ -66,9 +66,9 @@ public class GameEngine : EditorWindow {
     }
 
     /// <summary>
-    /// Presenta el logo
+    /// Presenta La ventana de importar imagenes
     /// </summary>
-    [MenuItem("RPG-Creator/Image")]
+    [MenuItem("RPG-Creator/Import Image")]
 	public static void ShowImage()
 	{
 		//Show existing window instance. If one doesn't exist, make one.
