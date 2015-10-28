@@ -8,25 +8,25 @@ using UnityEditor;
 public class GameEngine : EditorWindow {	
 
 	public static RPGInspector inspectorRpg = EditorWindow.GetWindow<RPGInspector> ();
-	/// <summary>
-	/// Presenta la ventana de crear un nuevo mapa
-	/// </summary>
-	[MenuItem("RPG-Creator/New Map")]
-	public static void ShowMap()
-	{
-		var window = EditorWindow.GetWindow<MapWindow> ();
+    /// <summary>
+    /// Presenta la ventana de crear un nuevo mapa
+    /// </summary>
+    [MenuItem("RPG-Creator/New Map")]
+    public static void ShowMap()
+    {
+        var window = EditorWindow.GetWindow<MapWindow>();
 
-		window.maxSize = new Vector2 (500,200);
-		window.minSize= new Vector2(500,200);
-		window.Init();
-		window.Show ();
-	}
-	/// <summary>
-	/// Presenta el mantenimiento de jugadores
-	/// </summary>
-	[MenuItem("RPG-Creator/Player")]
-	public static void ShowPlayer()
-	{
+        window.maxSize = new Vector2(500, 200);
+        window.minSize = new Vector2(500, 200);
+        window.Init();
+        window.Show();
+    }
+    /// <summary>
+    /// Presenta el mantenimiento de jugadores
+    /// </summary>
+    [MenuItem("RPG-Creator/Player")]
+    public static void ShowPlayer()
+    {
         //Show existing window instance. If one doesn't exist, make one.
         var window = EditorWindow.GetWindow<PlayerUI>();
         //window.maxSize = new Vector2(500, 200);
@@ -34,13 +34,13 @@ public class GameEngine : EditorWindow {
         window.Init();
         window.Show();
     }
-	
-	/// <summary>
-	/// Presenta el Mantenimiento de las armas
-	/// </summary>
-	[MenuItem("RPG-Creator/Weapon")]
-	public static void ShowWeapon()
-	{
+
+    /// <summary>
+    /// Presenta el Mantenimiento de las armas
+    /// </summary>
+    [MenuItem("RPG-Creator/Weapon")]
+    public static void ShowWeapon()
+    {
         //Show existing window instance. If one doesn't exist, make one.
         var window = EditorWindow.GetWindow<WeaponUI>();
 
@@ -48,12 +48,12 @@ public class GameEngine : EditorWindow {
         window.minSize = new Vector2(900, 400);
         window.Init();
         window.Show();
-	}    
+    }
 
     /// <summary>
-	/// Presenta el Mantenimiento de las armaduras
-	/// </summary>
-	[MenuItem("RPG-Creator/Armor")]
+    /// Presenta el Mantenimiento de las armaduras
+    /// </summary>
+    [MenuItem("RPG-Creator/Armor")]
     public static void ShowArmor()
     {
         //Show existing window instance. If one doesn't exist, make one.
@@ -69,13 +69,13 @@ public class GameEngine : EditorWindow {
     /// Presenta el logo
     /// </summary>
     [MenuItem("RPG-Creator/Image")]
-	public static void ShowImage()
-	{
-		//Show existing window instance. If one doesn't exist, make one.
-		var window =EditorWindow.GetWindow<UploadImage>();
-		window.Init ();
-		window.Show ();
-	}
+    public static void ShowImage()
+    {
+        //Show existing window instance. If one doesn't exist, make one.
+        var window = EditorWindow.GetWindow<UploadImage>();
+        window.Init();
+        window.Show();
+    }
 
     /// <summary>
     /// Presenta la ventana de la curva de experiencia
@@ -88,16 +88,41 @@ public class GameEngine : EditorWindow {
         window.Init();
         window.Show();
     }
-	/// <summary>
-	/// Presenta la ventana del inspector de RPG-CREATOR
-	/// </summary>
-	[MenuItem("RPG-Creator/RPG-Inspector")]
-	public static void ShowInspector()
-	{
-		if (inspectorRpg == null) 
-			inspectorRpg = EditorWindow.GetWindow<RPGInspector> ();
-		//Show existing window instance. If one doesn't exist, make one.]
-		inspectorRpg.Init();
-		inspectorRpg.Show();
-	}
+
+    /// <summary>
+    /// Presenta la ventana de la curva de experiencia
+    /// </summary>
+    [MenuItem("RPG-Creator/Stats")]
+    public static void ShowStats()
+    {
+        //Show existing window instance. If one doesn't exist, make one.
+        var window = EditorWindow.GetWindow<StatsCurve>();
+        window.Init(1);
+        window.Show();
+    }
+
+    /// <summary>
+    /// Presenta la ventana del inspector de RPG-CREATOR
+    /// </summary>
+    [MenuItem("RPG-Creator/RPG-Inspector")]
+    public static void ShowInspector()
+    {
+        if (inspectorRpg == null)
+            inspectorRpg = EditorWindow.GetWindow<RPGInspector>();
+        //Show existing window instance. If one doesn't exist, make one.]
+        inspectorRpg.Init();
+        inspectorRpg.Show();
+    }
+
+    /// <summary>
+    /// Presenta la ventana de las clases
+    /// </summary>
+    [MenuItem("RPG-Creator/Class")]
+    public static void ShowClass()
+    {
+        //Show existing window instance. If one doesn't exist, make one.
+        var window = EditorWindow.GetWindow<StatsCurve>();
+        window.Init(1);
+        window.Show();
+    }
 }

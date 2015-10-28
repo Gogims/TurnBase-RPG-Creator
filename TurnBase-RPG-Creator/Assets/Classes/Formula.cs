@@ -46,6 +46,11 @@ public class Formula : MonoBehaviour
     private Dictionary<int, int> Growth;
 
     /// <summary>
+    /// Nombre de la curva (XP, HP, MP...)
+    /// </summary>
+    private string CurveName;
+
+    /// <summary>
     /// Convierte la aceleración en decimal
     /// </summary>
     private double acc
@@ -59,10 +64,28 @@ public class Formula : MonoBehaviour
     public Formula()
     {
         Growth = new Dictionary<int, int>(MaxLevel);
+        CurveName = "XP";
 
         for (int i = 1; i <= MaxLevel; i++)
         {
             Growth.Add(i, GetLevelValue(i));
+        }
+    }
+
+    /// <summary>
+    /// Constructor que agrega el valor por defecto de los atributos
+    /// </summary>
+    /// <param name="type">1=Max HP</param>
+    public Formula(int type)
+    {
+        Growth = new Dictionary<int, int>(MaxLevel);
+
+        if (type == 1)
+            CurveName = "Max HP";
+
+        for (int i = 1; i <= MaxLevel; i++)
+        {
+            Growth.Add(i, GetStatValue(type, i));
         }
     }
 
@@ -99,6 +122,23 @@ public class Formula : MonoBehaviour
         }
     }
 
+    public void UpdateStat(int type)
+    {
+        for (int i = 1; i <= Growth.Count; i++)
+        {
+            Growth[i] = GetStatValue(type, i);
+        }
+    }
+
+    /// <summary>
+    /// Devuelve el nombre de la curva
+    /// </summary>
+    /// <returns>Nombre de la curva</returns>
+    public string GetName()
+    {
+        return CurveName;
+    }
+
     /// <summary>
     /// Fórmula para calcular la cantidad de experiencia necesitada para pasar al próximo nivel, dado un nivel
     /// </summary>
@@ -112,5 +152,22 @@ public class Formula : MonoBehaviour
             previouslevel = Growth[Level - 1];
 
         return previouslevel + BaseValue + (Level * ExtraValue) + (int)(acc * Level * ExtraValue);
+    }
+
+    /// <summary>
+    /// Fórmula para calcular la cantidad de experiencia necesitada para pasar al próximo nivel, dado un nivel
+    /// </summary>
+    /// <param name="Level">Nivel del personaje</param>
+    /// <returns>Cantidad de experiencia necesitada para pasar al próximo nivel</returns>
+    private int GetStatValue(int type, int level)
+    {
+        int value = 0;
+
+        if (type == 1)
+        {
+            value = BaseValue + (level*ExtraValue);
+        }
+
+        return value;  
     }
 }
