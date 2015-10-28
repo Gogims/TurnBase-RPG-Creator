@@ -215,7 +215,6 @@ public class ListBox
             listItems[index].SetLabel(label);
         }
     }
-
 }
 //*************************
 
