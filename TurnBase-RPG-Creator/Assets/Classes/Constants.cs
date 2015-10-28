@@ -11,7 +11,7 @@ public class Constatnt{
 	/// <summary>
 	/// Ancho maximo del mapa
 	/// </summary>
-	public const int MAX_MAP_WIDTH = 25;
+	public const int MAX_MAP_WIDTH = 17;
 	/// <summary>
 	/// Altura Minima del mapa
 	/// </summary>

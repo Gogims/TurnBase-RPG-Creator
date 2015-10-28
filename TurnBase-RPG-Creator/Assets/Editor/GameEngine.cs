@@ -66,16 +66,16 @@ public class GameEngine : EditorWindow {
     }
 
     /// <summary>
-    /// Presenta el logo
+    /// Presenta La ventana de importar imagenes
     /// </summary>
-    [MenuItem("RPG-Creator/Image")]
-    public static void ShowImage()
-    {
-        //Show existing window instance. If one doesn't exist, make one.
-        var window = EditorWindow.GetWindow<UploadImage>();
-        window.Init();
-        window.Show();
-    }
+    [MenuItem("RPG-Creator/Import Image")]
+	public static void ShowImage()
+	{
+		//Show existing window instance. If one doesn't exist, make one.
+		var window =EditorWindow.GetWindow<UploadImage>();
+		window.Init ();
+		window.Show ();
+	}
 
     /// <summary>
     /// Presenta la ventana de la curva de experiencia

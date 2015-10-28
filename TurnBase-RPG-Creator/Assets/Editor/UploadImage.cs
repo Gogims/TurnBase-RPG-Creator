@@ -48,11 +48,16 @@ public class UploadImage : EditorWindow
 		if (import) {
 			oldname = rpgobject.name;
 			rpgobject.name = obtype[rpgobject.type]+"_"+rpgobject.name;
+			Debug.Log(rpgobject.name);
 			CreateRpgObject();
+			rpgobject.name = oldname;
+			Debug.Log(rpgobject.name);
 		}
 	}
 	void SaveSprites(){
 		if (texture != null) {
+			if (!spritesheet) 
+				TextureScale.Bilinear(texture,32,32);
 			var bytes = texture.EncodeToPNG ();
 			int startindex = image.path.LastIndexOf ('.');
 			FileStream file = File.Open (Application.dataPath + "/Sprites/"+rpgobject.name+image.path.Substring (startindex), FileMode.Create);
@@ -63,8 +68,8 @@ public class UploadImage : EditorWindow
 		}
 	}
 	string GetPath(){
-		int startindex = image.path.LastIndexOf ('/');
-		return "Assets/Sprites"+ image.path.Substring (startindex);
+		int startindex = image.path.LastIndexOf ('.');
+		return "Assets/Sprites/"+ rpgobject.name+image.path.Substring (startindex);
 	}
 	void CreateRpgObject(){
 		SaveSprites ();
@@ -73,9 +78,8 @@ public class UploadImage : EditorWindow
 		x.textureType = TextureImporterType.Advanced;
 		x.isReadable = true;
 		x.textureFormat = TextureImporterFormat.ARGB32;
-		x.spriteImportMode = SpriteImportMode.Single;
+		x.spriteImportMode = spritesheet? SpriteImportMode.Multiple:SpriteImportMode.Single;
 		AssetDatabase.ImportAsset(GetPath(),ImportAssetOptions.ForceUpdate); 
-		rpgobject.name = oldname;
 
 	}
 }

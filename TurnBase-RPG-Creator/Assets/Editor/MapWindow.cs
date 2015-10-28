@@ -15,27 +15,27 @@ public class MapWindow : EditorWindow {
 	void OnGUI () {
 		if (map == null)
 			this.Init ();
-		GUILayout.Label ("Ajustes Basicos", EditorStyles.boldLabel);
+		GUILayout.Label ("Settings", EditorStyles.boldLabel);
 		if (map.Name.Length == 0 )
-			map.Name = EditorGUILayout.TextField ("Nombre Del Mapa","new_map1");
+			map.Name = EditorGUILayout.TextField ("Map Name","new_map1");
 		else 
-			map.Name = EditorGUILayout.TextField ("Nombre Del Mapa",map.Name);
+			map.Name = EditorGUILayout.TextField ("Map Name",map.Name);
 
 		if (map.Width > Constatnt.MAX_MAP_WIDTH)
-			map.Width = EditorGUILayout.IntField ("Ancho",25);
+			map.Width = EditorGUILayout.IntField ("Width",Constatnt.MAX_MAP_WIDTH);
 		else if (map.Width < Constatnt.MIN_MAP_WIDTH )
-			map.Width = EditorGUILayout.IntField ("Ancho",5);
+			map.Width = EditorGUILayout.IntField ("Heigth",Constatnt.MIN_MAP_WIDTH );
 		else
-			map.Width = EditorGUILayout.IntField ("Ancho", map.Width);
+			map.Width = EditorGUILayout.IntField ("Width", map.Width);
 
 		if ( map.Heigth > Constatnt.MAX_MAP_HEIGTH) 
-			map.Heigth = EditorGUILayout.IntField ("Alto", 10);
+			map.Heigth = EditorGUILayout.IntField ("Heigth", Constatnt.MAX_MAP_HEIGTH);
 		else if ( map.Heigth < Constatnt.MIN_MAP_HEIGTH) 
-			map.Heigth = EditorGUILayout.IntField ("Alto", 5);
+			map.Heigth = EditorGUILayout.IntField ("Heigth", Constatnt.MIN_MAP_HEIGTH);
 		else 
-			map.Heigth = EditorGUILayout.IntField ("Alto", map.Heigth);
+			map.Heigth = EditorGUILayout.IntField ("Heigth", map.Heigth);
 
-		if (GUILayout.Button ("Crear Mapa")) {
+		if (GUILayout.Button ("Create Map")) {
 			map.CreateMap();
 		}
 	}
