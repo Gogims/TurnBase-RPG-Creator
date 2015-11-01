@@ -1,14 +1,31 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 using UnityEditor;
 using System.IO;
 
-public abstract class CRUD : EditorWindow
+/// <summary>
+/// Clase encargada de hacer las operaciones de create, update, edit y delete de los objetos del Engine
+/// </summary>
+/// <typeparam name="T">Clase que se desea hacer CRUD</typeparam>
+public abstract class CRUD<T> : EditorWindow
+    where T : RPGElement
 {
     /// <summary>
     /// Maneja el ID que se encuentra almacenado en el txt del recurso
     /// </summary>
     protected int Id;
+    /// <summary>
+    /// Elemento que se utilizará en el CRUD
+    /// </summary>
+    protected T element;
+    /// <summary>
+    /// List de elementos del CRUD
+    /// </summary>
+    protected ListBox listElements;
+    /// <summary>
+    /// Nombre del folder del recurso y la clase (Armor, Weapon, etc.)
+    /// </summary>
+    protected string Type;
     /// <summary>
     /// Propiedad para devolver la variable _path, no se puede modificar
     /// </summary>
@@ -29,7 +46,6 @@ public abstract class CRUD : EditorWindow
     /// Nombre de la imagen del objeto
     /// </summary>
     protected string spritename;
-
     /// <summary>
     /// El botón para salvar, del formulario fue presionado?
     /// </summary>
@@ -41,21 +57,57 @@ public abstract class CRUD : EditorWindow
     /// <summary>
     /// El botón para eliminar, del formulario fue presionado?
     /// </summary>
-    protected bool DeleteButton;
-
+    protected bool DeleteButton;  
     /// <summary>
-    /// Dirección de la imagen del objeto
+    /// Dirección absoluta del objeto
     /// </summary>
     private string _path;
+    /// <summary>
+    /// Dirección relativa del objeto
+    /// </summary>
+    private string relativepath;
     /// <summary>
     /// Dirección del txt que contiene el último ID
     /// </summary>
     private string idPath;
 
-    public CRUD(string p)
+    /// <summary>
+    /// Unico constructor de la clase CRUD
+    /// </summary>
+    /// <param name="type">Nombre del folder del recurso y la clase (debe ser el mismo). Ejemplo: Armor, Weapon, etc.</param>
+    public CRUD(string type)
     {
-        _path = Directory.GetCurrentDirectory() + p;
+        Type = type;
+        relativepath = "Assets/Resources/" + type + "/";
+        _path = Directory.GetCurrentDirectory() + @"\Assets\Resources\" + type + @"\";
         idPath = _path + "id.txt";
+    }
+
+    /// <summary>
+    /// Initializa el formulario, se debe llamar en el Init de la clase concreta
+    /// </summary>
+    public virtual void Init()
+    {
+        ListObjects = (Resources.LoadAll(Type, typeof(GameObject)));
+        Creating = true;
+        listElements = new ListBox(new Rect(0, 0, 300, 380), new Rect(0, 0, 285, 400), false, true);
+        spritename = "";
+        GetId();
+    }
+
+    /// <summary>
+    /// Obtiene el listado de objetos de tipo T
+    /// </summary>
+    /// <returns>Lista de los prefabs de tipo T</returns>
+    public IEnumerable<T> GetObjects()
+    {
+        foreach (var item in ListObjects)
+        {
+            elementObject = (GameObject)Instantiate(item);
+            T temp = elementObject.GetComponent<T>();            
+            DestroyImmediate(elementObject);
+            yield return temp;
+        }
     }
 
     /// <summary>
@@ -82,14 +134,61 @@ public abstract class CRUD : EditorWindow
         File.WriteAllText(idPath, Id.ToString());
     }
 
-    public virtual void Create(){}
+    /// <summary>
+    /// Crea un nuevo prefab de tipo T
+    /// </summary>
+    public virtual void Create()
+    {
+        elementObject = new GameObject(Type);
+        T wcomponent = elementObject.AddComponent<T>();
 
-    public virtual void Edit(){}
+        AssignElement(ref wcomponent);
 
-    public virtual void Delete() { }
+        Id++;
+        wcomponent.Id = Id;
+        CreatePrefab(ref elementObject, wcomponent);
+        listElements.AddItem(wcomponent.Name, wcomponent.Id);
+        Creating = false;
+        SetId();
+    }
 
-    public virtual void AddObject() { }
+    /// <summary>
+    /// Edita un prefab existente de tipo T
+    /// </summary>
+    public virtual void Edit()
+    {
+        T wcomponent = elementObject.GetComponent<T>();
+        AssignElement(ref wcomponent);
+        CreatePrefab(ref elementObject, wcomponent);
 
+        listElements.ChangeName(listElements.GetSelectedIndex(), element.Name);
+    }
+
+    /// <summary>
+    /// Elimina un prefab existente de tipo T
+    /// </summary>
+    public virtual void Delete()
+    {
+        if (elementObject != null)
+        {
+            DestroyImmediate(elementObject, true);
+            AssetDatabase.DeleteAsset(relativepath + element.Id + ".prefab");
+            listElements.RemoveItemIndex(listElements.GetSelectedIndex());
+            Init();
+        }
+    }    
+
+    /// <summary>
+    /// Construye un nuevo objeto de tipo T
+    /// </summary>
+    /// <param name="e">Objeto a construir</param>
+    public virtual void GetNewObject(ref T e) { }
+
+    /// <summary>
+    /// Copia todas las propiedades del objeto del formulario al objeto que será guardado en un prefab.
+    /// </summary>
+    /// <param name="wcomponent"></param>
+    public virtual void AssignElement(ref T wcomponent) { }
 
     /// <summary>
     /// Revisa si no existe un game object instanceado, en caso de que sí, lo destruye antes de cerrar la ventana.
@@ -100,5 +199,97 @@ public abstract class CRUD : EditorWindow
         {
             DestroyImmediate(elementObject);
         }
+    }
+
+    /// <summary>
+    /// Revisa si el objeto a guardar es nuevo o no y llama a su respectiva función
+    /// </summary>
+    public void SaveElement()
+    {
+        if (Creating)
+        {
+            Create();
+        }
+        else
+        {
+            Edit();
+        }
+
+        ListObjects = (Resources.LoadAll(Type, typeof(GameObject)));
+    }
+
+    #region Funciones Unity
+    /// <summary>
+    /// Renderiza el listado de objetos, en la parte izquierda del formulario
+    /// </summary>
+    public void RenderLeftSide()
+    {
+        //Left side area
+        GUILayout.BeginArea(new Rect(0, 0, 300, 400), string.Empty, EditorStyles.helpBox);
+        GUILayout.Space(10);
+
+        if (listElements.ReDraw())
+        {
+            UpdateListBox();
+        }
+
+        CreateButton = GUI.Button(new Rect(0, 380, 100, 20), "Create");
+
+        GUILayout.EndArea();
+    }
+
+    /// <summary>
+    /// Llama la función de actualizar del Unity
+    /// </summary>
+    void Update()
+    {
+        //Si se crea una nueva arma
+        if (CreateButton)
+        {
+            GetNewObject(ref element);
+            Creating = true;
+        }
+
+        //Funcionamineto de guardado
+        if (SaveButton)
+        {
+            SaveElement();
+            GetNewObject(ref element);
+        }
+
+        //Si se elimina un arma
+        if (DeleteButton)
+        {
+            Delete();
+            ListObjects = (Resources.LoadAll(Type, typeof(GameObject)));
+            GetNewObject(ref element);
+        }
+    }
+    #endregion       
+
+    /// <summary>
+    /// Actualiza el listado de objetos
+    /// </summary>
+    private void UpdateListBox()
+    {
+        if (elementObject != null)
+        {
+            DestroyImmediate(elementObject);
+        }
+
+        elementObject = (GameObject)Instantiate(ListObjects[listElements.GetSelectedIndex()]);
+        element = elementObject.GetComponent<T>();        
+        Creating = false;
+    }    
+    
+    /// <summary>
+    /// Crea un prefab y destruye el gameobject de la escena.
+    /// </summary>
+    /// <param name="ElementObject">Game object que se encuentra vivo en la escena</param>
+    /// <param name="component">Componente que se desea guardar como prefab</param>
+    private void CreatePrefab(ref GameObject ElementObject, T component)
+    {
+        PrefabUtility.CreatePrefab(relativepath + component.Id + ".prefab", component.gameObject);
+        DestroyImmediate(ElementObject);
     }
 }

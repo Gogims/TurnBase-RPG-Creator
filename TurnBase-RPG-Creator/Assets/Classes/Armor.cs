@@ -9,7 +9,7 @@ public class Armor : Equipppable
     /// </summary>
     public int ArmorType;
 
-    public Armor(int width, int height)
+    public Armor()
     {
         Stats = new Attribute();
         Image = new Sprite();
