@@ -100,4 +100,30 @@ public class GameEngine : EditorWindow {
 		inspectorRpg.Init();
 		inspectorRpg.Show();
 	}
+	/// <summary>
+	/// Presenta la ventana para crear un proyecto nuevo.
+	/// </summary>
+	[MenuItem("RPG-File/New Project")]
+	public static void ShowNewProject()
+	{
+        var window = EditorWindow.GetWindow<NewProject>();
+        window.Init();
+        window.Show();
+	}
+	/// <summary>
+	/// Presenta la ventana de crear un nuevo proyecto.
+	/// </summary>
+	[MenuItem("RPG-File/Open Project")]
+	public static void ShowOpenProject()
+	{
+        Project.Open(EditorUtility.OpenFolderPanel("Select Project", "", ""));
+	}
+	/// <summary>
+	/// Presenta la ventana para hacer deploy
+	/// </summary>
+	[MenuItem("RPG-File/Deploy")]
+	public static void ShowDeployProject()
+	{
+	}
+
 }
