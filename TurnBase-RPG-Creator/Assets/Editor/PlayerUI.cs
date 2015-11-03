@@ -1,202 +1,169 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEditor;
-using System.Linq;
 using System.Collections.Generic;
-using Rotorz.ReorderableList;
 
-public class PlayerUI : EditorWindow
+public class PlayerUI : CRUD<Player>
 {
-    Sprite s;
-    List<Sprite> downSprites;
-    List<Sprite> leftSprites;
-    List<Sprite> upSprites;
-    List<Sprite> rightSprites;
-    private Vector2 _downScrollPosition;
-    private Vector2 _leftScrollPosition;
-    private Vector2 _upScrollPosition;
-    private Vector2 _rightScrollPosition;
-    private float listHeight;
+    public PlayerUI() : base("Player") { }
 
-    public PlayerUI() { }
-
-    public void Init()
+    public override void Init()
     {
-        downSprites = new List<Sprite>();
-        leftSprites = new List<Sprite>();
-        upSprites = new List<Sprite>();
-        rightSprites = new List<Sprite>();
+        element = new Player();
+        base.Init();
+
+        foreach (var item in GetObjects())
+        {
+            listElements.AddItem(item.Name, item.Id);
+        }
     }
 
     void OnGUI()
     {
-        listHeight = position.height / 4;
+        RenderLeftSide();        
 
-        //Down Sprite        
-        GUILayout.BeginArea(new Rect(0, 0, this.position.width, listHeight));
+        GUILayout.BeginArea(new Rect(300, 0, 600, 400), "Basic Settings", EditorStyles.helpBox);
+        GUILayout.Space(10);
 
-        if (GUILayout.Button("Down Sprites"))
+        element.Name = EditorGUILayout.TextField("Name", element.Name);
+        element.Description = EditorGUILayout.TextField("Description", element.Description);
+        element.Level = EditorGUILayout.IntSlider(new GUIContent("Level:"), element.Level, 1, 100);              
+        
+        // Attributes section
+        GUILayout.Label("Attributes", EditorStyles.boldLabel);
+        element.Stats.MaxHP = EditorGUILayout.IntField("MaxHP: ", element.Stats.MaxHP);
+        element.Stats.MaxMP = EditorGUILayout.IntField("MaxMP: ", element.Stats.MaxMP);
+        element.Stats.Attack = EditorGUILayout.IntField("Attack: ", element.Stats.Attack);
+        element.Stats.Defense = EditorGUILayout.IntField("Defense: ", element.Stats.Defense);
+        element.Stats.Agility = EditorGUILayout.IntField("Agility: ", element.Stats.Agility);
+        element.Stats.Luck = EditorGUILayout.IntField("Luck: ", element.Stats.Luck);
+        element.Stats.Magic = EditorGUILayout.IntField("Magic: ", element.Stats.Magic);
+        element.Stats.MagicDefense = EditorGUILayout.IntField("MagicDefense: ", element.Stats.MagicDefense);
+
+        // Text field to upload image
+        GUI.enabled = false;
+        GUI.TextField(new Rect(0, 280, 300, 20), spritename);
+        GUI.enabled = true;
+
+        // Button to upload image
+        if (GUI.Button(new Rect(300, 280, 100, 20), "Select Sprite"))
         {
             EditorGUIUtility.ShowObjectPicker<Sprite>(null, false, null, 1);
         }
 
-        _downScrollPosition = GUILayout.BeginScrollView(_downScrollPosition);
+        AddObject();
 
-        if (s == null)
+        if (element.Image != null)
         {
-            ReorderableListGUI.ListField(downSprites, DrawSprite, ReorderableListFlags.HideAddButton);
+            GUI.DrawTextureWithTexCoords(new Rect(400, 280, element.Image.textureRect.width, element.Image.textureRect.height), element.Image.texture, element.GetTextureCoordinate());
         }
-        else
+
+        SaveButton = GUI.Button(new Rect(0, 380, 100, 20), "Save");
+        GUI.enabled = !Creating;
+        DeleteButton = GUI.Button(new Rect(100, 380, 100, 20), "Delete");
+        GUI.enabled = true;
+
+        GUI.Label(new Rect(0, 320, 100, 20), "Animation", EditorStyles.boldLabel);
+        if (GUI.Button(new Rect(0, 340, 50, 20), "Down"))
         {
-            ReorderableListGUI.ListField(downSprites, DrawSprite, s.textureRect.height, ReorderableListFlags.HideAddButton);
+            var window = EditorWindow.GetWindow<AnimationUI>();
+            window.Init(ref element.downSprites, "Down Sprites");
+            window.Show();
         }
-        GUILayout.EndScrollView();
+        if (GUI.Button(new Rect(75, 340, 50, 20), "Left"))
+        {
+            var window = EditorWindow.GetWindow<AnimationUI>();
+            window.Init(ref element.leftSprites, "Left Sprites");
+            window.Show();
+        }
+        if (GUI.Button(new Rect(150, 340, 50, 20), "Up"))
+        {
+            var window = EditorWindow.GetWindow<AnimationUI>();
+            window.Init(ref element.upSprites, "Up Sprites");
+            window.Show();
+        }
+        if (GUI.Button(new Rect(225, 340, 50, 20), "Right"))
+        {
+            var window = EditorWindow.GetWindow<AnimationUI>();
+            window.Init(ref element.rightSprites, "Right Sprites");
+            window.Show();
+        }
 
         GUILayout.EndArea();
 
-        //Left Sprite
-        GUILayout.BeginArea(new Rect(0, listHeight, this.position.width, listHeight));
-        if (GUILayout.Button("Left Sprites"))
+        if (CreateButton)
         {
-            EditorGUIUtility.ShowObjectPicker<Sprite>(null, false, null, 2);
+            CreateAnimation();
         }
-
-        _leftScrollPosition = GUILayout.BeginScrollView(_leftScrollPosition);
-
-        if (s == null)
-        {
-            ReorderableListGUI.ListField(leftSprites, DrawSprite, ReorderableListFlags.HideAddButton);
-        }
-        else
-        {
-            ReorderableListGUI.ListField(leftSprites, DrawSprite, s.textureRect.height, ReorderableListFlags.HideAddButton);
-        }
-        GUILayout.EndScrollView();
-
-        GUILayout.EndArea();
-
-        //Up Sprite
-        GUILayout.BeginArea(new Rect(0, 2 * listHeight, this.position.width, listHeight));
-        if (GUILayout.Button("Up Sprites"))
-        {
-            EditorGUIUtility.ShowObjectPicker<Sprite>(null, false, null, 3);
-        }
-
-        _upScrollPosition = GUILayout.BeginScrollView(_upScrollPosition);
-
-        if (s == null)
-        {
-            ReorderableListGUI.ListField(upSprites, DrawSprite, ReorderableListFlags.HideAddButton);
-        }
-        else
-        {
-            ReorderableListGUI.ListField(upSprites, DrawSprite, s.textureRect.height, ReorderableListFlags.HideAddButton);
-        }
-        GUILayout.EndScrollView();
-        GUILayout.EndArea();
-
-        //Right Sprite
-        GUILayout.BeginArea(new Rect(0, 3 * listHeight, this.position.width, listHeight));
-        if (GUILayout.Button("Right Sprites"))
-        {
-            EditorGUIUtility.ShowObjectPicker<Sprite>(null, false, null, 4);
-        }
-
-        _rightScrollPosition = GUILayout.BeginScrollView(_rightScrollPosition);
-
-        if (s == null)
-        {
-            ReorderableListGUI.ListField(rightSprites, DrawSprite, ReorderableListFlags.HideAddButton);
-        }
-        else
-        {
-            ReorderableListGUI.ListField(rightSprites, DrawSprite, s.textureRect.height, ReorderableListFlags.HideAddButton);
-        }
-        GUILayout.EndScrollView();
-
-        if (GUILayout.Button("Save"))
-        {
-            ActorAnimation animation = new ActorAnimation();
-            List<Sprite> sprites;
-
-            if (downSprites.Count > 0)
-            {
-                sprites = new List<Sprite>(downSprites);
-                sprites.Add(downSprites[0]);
-                animation.down = ActorAnimation.ConstructAnimation(sprites, "test", "down", 30, true);
-                animation.downIdle = ActorAnimation.ConstructAnimation(downSprites[0], "test", "downIdle", 30, true);
-            }
-
-            if (leftSprites.Count > 0)
-            {
-                sprites = new List<Sprite>(leftSprites);
-                sprites.Add(leftSprites[0]);
-                animation.left = ActorAnimation.ConstructAnimation(sprites, "test", "left", 30, true);
-                animation.leftIdle = ActorAnimation.ConstructAnimation(leftSprites[0], "test", "leftIdle", 30, true);
-            }
-
-            if (upSprites.Count > 0)
-            {
-                sprites = new List<Sprite>(upSprites);
-                sprites.Add(upSprites[0]);
-                animation.up = ActorAnimation.ConstructAnimation(sprites, "test", "up", 30, true);
-                animation.upIdle = ActorAnimation.ConstructAnimation(upSprites[0], "test", "upIdle", 30, true);
-            }
-
-            if (rightSprites.Count > 0)
-            {
-                sprites = new List<Sprite>(rightSprites);
-                sprites.Add(rightSprites[0]);
-                animation.right = ActorAnimation.ConstructAnimation(sprites, "test", "right", 30, true);
-                animation.rightIdle = ActorAnimation.ConstructAnimation(rightSprites[0], "test", "rightIdle", 30, true);
-            }
-
-            animation.ConstructAnimationControl("test");
-        }
-        GUILayout.EndArea();
-
-        AddSprite();
     }
 
-    void Update()
+    public override void GetNewObject(ref Player e)
     {
-
+        e = new Player();
     }
 
-    Sprite DrawSprite(Rect position, Sprite itemValue)
+    public override void AssignElement(ref Player component)
     {
-        GUI.DrawTextureWithTexCoords(new Rect(position.x, position.y, itemValue.textureRect.width, itemValue.textureRect.height), itemValue.texture,
-                                new Rect(itemValue.textureRect.x / itemValue.texture.width,
-                                        itemValue.textureRect.y / itemValue.texture.height,
-                                        itemValue.textureRect.width / itemValue.texture.width,
-                                        itemValue.textureRect.height / itemValue.texture.height)
-                                        );
-
-        return itemValue;
+        component.Name = element.Name;
+        component.Description = element.Description;
+        component.Stats = element.Stats;
+        component.Id = element.Id;
+        component.Image = element.Image;
+        component.Level = element.Level;
+        component.HP = element.HP;
+        component.MP = element.MP;
     }
 
-    void AddSprite()
+    private void AddObject()
     {
-        if (Event.current.commandName == "ObjectSelectorUpdated" && Event.current.type == EventType.ExecuteCommand)
+        if (Event.current.commandName == "ObjectSelectorUpdated") //&& Event.current.type == EventType.ExecuteCommand)
         {
-            s = new Sprite();
-            s = (Sprite)EditorGUIUtility.GetObjectPickerObject();
+            element.Image = (Sprite)EditorGUIUtility.GetObjectPickerObject();
 
-            if (EditorGUIUtility.GetObjectPickerControlID() == 1)
+            if (element.Image != null)
             {
-                downSprites.Add(s);
+                spritename = element.Image.name;
             }
-            else if (EditorGUIUtility.GetObjectPickerControlID() == 2)
-            {
-                leftSprites.Add(s);
-            }
-            else if (EditorGUIUtility.GetObjectPickerControlID() == 3)
-            {
-                upSprites.Add(s);
-            }
-            else if (EditorGUIUtility.GetObjectPickerControlID() == 4)
-            {
-                rightSprites.Add(s);
-            }
+            Repaint();
         }
+    }
+
+    private void CreateAnimation()
+    {
+        ActorAnimation animation = new ActorAnimation();
+        List<Sprite> sprites;
+
+        if (element.downSprites.Count > 0)
+        {
+            sprites = new List<Sprite>(element.downSprites);
+            sprites.Add(element.downSprites[0]);
+            animation.down = ActorAnimation.ConstructAnimation(sprites, "test", "down", 30, true);
+            animation.downIdle = ActorAnimation.ConstructAnimation(element.downSprites[0], "test", "downIdle", 30, true);
+        }
+
+        if (element.leftSprites.Count > 0)
+        {
+            sprites = new List<Sprite>(element.leftSprites);
+            sprites.Add(element.leftSprites[0]);
+            animation.left = ActorAnimation.ConstructAnimation(sprites, "test", "left", 30, true);
+            animation.leftIdle = ActorAnimation.ConstructAnimation(element.leftSprites[0], "test", "leftIdle", 30, true);
+        }
+
+        if (element.upSprites.Count > 0)
+        {
+            sprites = new List<Sprite>(element.upSprites);
+            sprites.Add(element.upSprites[0]);
+            animation.up = ActorAnimation.ConstructAnimation(sprites, "test", "up", 30, true);
+            animation.upIdle = ActorAnimation.ConstructAnimation(element.upSprites[0], "test", "upIdle", 30, true);
+        }
+
+        if (element.rightSprites.Count > 0)
+        {
+            sprites = new List<Sprite>(element.rightSprites);
+            sprites.Add(element.rightSprites[0]);
+            animation.right = ActorAnimation.ConstructAnimation(sprites, "test", "right", 30, true);
+            animation.rightIdle = ActorAnimation.ConstructAnimation(element.rightSprites[0], "test", "rightIdle", 30, true);
+        }
+
+        animation.ConstructAnimationControl("test");
     }
 }

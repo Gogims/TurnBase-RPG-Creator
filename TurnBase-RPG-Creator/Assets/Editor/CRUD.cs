@@ -140,14 +140,14 @@ public abstract class CRUD<T> : EditorWindow
     public virtual void Create()
     {
         elementObject = new GameObject(Type);
-        T wcomponent = elementObject.AddComponent<T>();
+        T component = elementObject.AddComponent<T>();
 
-        AssignElement(ref wcomponent);
+        AssignElement(ref component);
 
         Id++;
-        wcomponent.Id = Id;
-        CreatePrefab(ref elementObject, wcomponent);
-        listElements.AddItem(wcomponent.Name, wcomponent.Id);
+        component.Id = Id;
+        CreatePrefab(ref elementObject, component);
+        listElements.AddItem(component.Name, component.Id);
         Creating = false;
         SetId();
     }
@@ -157,9 +157,9 @@ public abstract class CRUD<T> : EditorWindow
     /// </summary>
     public virtual void Edit()
     {
-        T wcomponent = elementObject.GetComponent<T>();
-        AssignElement(ref wcomponent);
-        CreatePrefab(ref elementObject, wcomponent);
+        T component = elementObject.GetComponent<T>();
+        AssignElement(ref component);
+        CreatePrefab(ref elementObject, component);
 
         listElements.ChangeName(listElements.GetSelectedIndex(), element.Name);
     }
@@ -187,8 +187,8 @@ public abstract class CRUD<T> : EditorWindow
     /// <summary>
     /// Copia todas las propiedades del objeto del formulario al objeto que será guardado en un prefab.
     /// </summary>
-    /// <param name="wcomponent"></param>
-    public virtual void AssignElement(ref T wcomponent) { }
+    /// <param name="component"></param>
+    public virtual void AssignElement(ref T component) { }
 
     /// <summary>
     /// Revisa si no existe un game object instanceado, en caso de que sí, lo destruye antes de cerrar la ventana.

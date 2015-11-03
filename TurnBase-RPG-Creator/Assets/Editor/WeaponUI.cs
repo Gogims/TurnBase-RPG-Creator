@@ -27,11 +27,8 @@ public class WeaponUI : CRUD<Weapon>
 
         element.Name = EditorGUILayout.TextField("Name", element.Name);
         element.Description = EditorGUILayout.TextField("Description", element.Description);
-        element.Price = EditorGUILayout.IntField("Price: ", element.Price);
-
-        EditorGUILayout.PrefixLabel("Weapon Type");
-        element.HitType = EditorGUILayout.Popup(element.HitType, Weapon.WeaponTypes());
-
+        element.Price = EditorGUILayout.IntField("Price: ", element.Price);        
+        element.HitType = EditorGUILayout.Popup("Weapon Type:", element.HitType, Weapon.WeaponTypes());
         element.HitRate = EditorGUILayout.Slider("Hit Rate(%)", element.HitRate, 0, 100);
 
         //Attributes stats
@@ -76,16 +73,16 @@ public class WeaponUI : CRUD<Weapon>
         e = new Weapon();
     }    
 
-    override public void AssignElement(ref Weapon wcomponent)
+    override public void AssignElement(ref Weapon component)
     {
-        wcomponent.Name = element.Name;
-        wcomponent.Description = element.Description;
-        wcomponent.HitType = element.HitType;
-        wcomponent.HitRate = element.HitRate;
-        wcomponent.NumberHit = element.NumberHit;
-        wcomponent.Stats = element.Stats;
-        wcomponent.Id = element.Id;
-        wcomponent.Image = element.Image;
+        component.Name = element.Name;
+        component.Description = element.Description;
+        component.HitType = element.HitType;
+        component.HitRate = element.HitRate;
+        component.NumberHit = element.NumberHit;
+        component.Stats = element.Stats;
+        component.Id = element.Id;
+        component.Image = element.Image;
     }
 
     private void AddObject()

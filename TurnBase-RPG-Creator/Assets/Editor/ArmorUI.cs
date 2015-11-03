@@ -27,8 +27,7 @@ public class ArmorUI : CRUD<Armor>
 
         element.Name = EditorGUILayout.TextField("Name", element.Name);
         element.Description = EditorGUILayout.TextField("Description", element.Description);
-
-        element.ArmorType = EditorGUILayout.Popup(element.ArmorType, Armor.ArmorTypes());               
+        element.ArmorType = EditorGUILayout.Popup("Armor Type:", element.ArmorType, Armor.ArmorTypes());               
 
         //Attributes stats
         GUILayout.Label("Attributes", EditorStyles.boldLabel);
@@ -73,13 +72,13 @@ public class ArmorUI : CRUD<Armor>
         e = new Armor();
     }
 
-    public override void AssignElement(ref Armor wcomponent)
+    public override void AssignElement(ref Armor component)
     {
-        wcomponent.Name = element.Name;
-        wcomponent.Description = element.Description;
-        wcomponent.Stats = element.Stats;
-        wcomponent.Id = element.Id;
-        wcomponent.Image = element.Image;
+        component.Name = element.Name;
+        component.Description = element.Description;
+        component.Stats = element.Stats;
+        component.Id = element.Id;
+        component.Image = element.Image;
     }
 
     private void AddObject()

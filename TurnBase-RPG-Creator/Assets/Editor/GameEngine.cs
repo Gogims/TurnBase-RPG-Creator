@@ -88,46 +88,6 @@ public class GameEngine : EditorWindow {
         window.Init();
         window.Show();
     }
-<<<<<<< HEAD
-	/// <summary>
-	/// Presenta la ventana del inspector de RPG-CREATOR
-	/// </summary>
-	[MenuItem("RPG-Creator/RPG-Inspector")]
-	public static void ShowInspector()
-	{
-		if (inspectorRpg == null) 
-			inspectorRpg = EditorWindow.GetWindow<RPGInspector> ();
-		//Show existing window instance. If one doesn't exist, make one.]
-		inspectorRpg.Init();
-		inspectorRpg.Show();
-	}
-	/// <summary>
-	/// Presenta la ventana para crear un proyecto nuevo.
-	/// </summary>
-	[MenuItem("RPG-File/New Project")]
-	public static void ShowNewProject()
-	{
-        var window = EditorWindow.GetWindow<NewProject>();
-        window.Init();
-        window.Show();
-	}
-	/// <summary>
-	/// Presenta la ventana de crear un nuevo proyecto.
-	/// </summary>
-	[MenuItem("RPG-File/Open Project")]
-	public static void ShowOpenProject()
-	{
-        Project.Open(EditorUtility.OpenFolderPanel("Select Project", "", ""));
-	}
-	/// <summary>
-	/// Presenta la ventana para hacer deploy
-	/// </summary>
-	[MenuItem("RPG-File/Deploy")]
-	public static void ShowDeployProject()
-	{
-	}
-
-=======
 
     /// <summary>
     /// Presenta la ventana de la curva de experiencia
@@ -165,5 +125,30 @@ public class GameEngine : EditorWindow {
         window.Init(1);
         window.Show();
     }
->>>>>>> 4c5b0929ccb661a1ad2732646c9b69522c14b624
+
+    /// <summary>
+    /// Presenta la ventana para crear un proyecto nuevo.
+    /// </summary>
+    [MenuItem("RPG-File/New Project")]
+    public static void ShowNewProject()
+    {
+        var window = EditorWindow.GetWindow<NewProject>();
+        window.Init();
+        window.Show();
+    }
+    /// <summary>
+    /// Presenta la ventana de crear un nuevo proyecto.
+    /// </summary>
+    [MenuItem("RPG-File/Open Project")]
+    public static void ShowOpenProject()
+    {
+        Project.Open(EditorUtility.OpenFolderPanel("Select Project", "", ""));
+    }
+    /// <summary>
+    /// Presenta la ventana para hacer deploy
+    /// </summary>
+    [MenuItem("RPG-File/Deploy")]
+    public static void ShowDeployProject()
+    {
+    }
 }
