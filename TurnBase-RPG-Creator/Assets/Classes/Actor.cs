@@ -21,11 +21,25 @@ public class Actor : RPGElement
     public List<Sprite> upSprites;
     public List<Sprite> rightSprites;
 
+    public Weapon MainHand;
+    public Armor Head;
+    public Armor UpperBody;
+    public Armor LowerBody;
+    public List<Armor> Accesories;
+
     public Actor ()
 	{
         Stats = new Attribute();
-
-	}
+        downSprites = new List<Sprite>();
+        leftSprites = new List<Sprite>();
+        upSprites = new List<Sprite>();
+        rightSprites = new List<Sprite>();
+        MainHand = new Weapon();
+        Head = new Armor();
+        UpperBody = new Armor();
+        LowerBody = new Armor();
+        Accesories = new List<Armor>();
+    }
 
     /// <summary>
     /// Crea el marco de la imagen del equipamiento

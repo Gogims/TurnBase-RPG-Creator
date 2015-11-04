@@ -11,6 +11,11 @@ public abstract class CRUD<T> : EditorWindow
     where T : RPGElement
 {
     /// <summary>
+    /// El formulario está en modo selección
+    /// </summary>
+    public bool Selected;
+
+    /// <summary>
     /// Maneja el ID que se encuentra almacenado en el txt del recurso
     /// </summary>
     protected int Id;
@@ -57,7 +62,11 @@ public abstract class CRUD<T> : EditorWindow
     /// <summary>
     /// El botón para eliminar, del formulario fue presionado?
     /// </summary>
-    protected bool DeleteButton;  
+    protected bool DeleteButton;
+    /// <summary>
+    /// El botón para seleccionar un elemento del formulario
+    /// </summary>
+    protected bool SelectButton; 
     /// <summary>
     /// Dirección absoluta del objeto
     /// </summary>
@@ -233,7 +242,10 @@ public abstract class CRUD<T> : EditorWindow
             UpdateListBox();
         }
 
-        CreateButton = GUI.Button(new Rect(0, 380, 100, 20), "Create");
+        if (!Selected)
+        {
+            CreateButton = GUI.Button(new Rect(0, 380, 100, 20), "Create"); 
+        }
 
         GUILayout.EndArea();
     }
