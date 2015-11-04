@@ -3,6 +3,9 @@ using System.Diagnostics;
 using System.Collections;
 using System.IO;
 
+/// <summary>
+/// Clase que se encarga de manejar los proyectos de RPG
+/// </summary>
 public class Project  {
     public string ProjectName { get; set; }
     public string Description { get; set; }
@@ -40,7 +43,10 @@ public class Project  {
         }
         return;
     }
-
+    /// <summary>
+    /// Abre un proyecto
+    /// </summary>
+    /// <param name="path"></param>
     public static void Open(string path)
     {
         Process p = new Process();

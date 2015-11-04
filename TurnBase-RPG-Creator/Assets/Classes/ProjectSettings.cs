@@ -3,14 +3,28 @@ using System.IO;
 using UnityEngine;
 using System.Diagnostics;
 
+/// <summary>
+/// Clase que se encarga de las configuraciones del proyecto.
+/// </summary>
 public class ProjectSettings  {
+    /// <summary>
+    /// Path de unity.exe
+    /// </summary>
     static public string UnityPath { get; set; }
-    static private string unitypath; 
+    /// <summary>
+    /// Archivo de configuracion
+    /// </summary>
     const string path = @"Assets/settings.txt";
+    /// <summary>
+    /// Constructor Estatico
+    /// </summary>
     static  ProjectSettings()
     {
         LoadSettings();
     }
+    /// <summary>
+    /// Carga las configuraciones del proyecto
+    /// </summary>
     static private void LoadSettings()
     {
         
@@ -23,13 +37,28 @@ public class ProjectSettings  {
         else
             File.Create(path);
     }
-    static public void SaveSettings()
+    /// <summary>
+    /// Guarda las configuraciones del proyecto.
+    /// </summary>
+    static public bool SaveSettings()
     {
-        string content = UnityPath;
-        File.WriteAllText(path,content);
+        if (CheckPath())
+        {
+            string content = UnityPath;
+            File.WriteAllText(path, content);
+            return true;
+        }
+        else
+            return false;
     }
-    static public bool CheckPath() {
-        if ( File.Exists(UnityPath))
+    /// <summary>
+    /// Revisa si el path que se suministro es correcto.
+    /// </summary>
+    /// <returns></returns>
+    static private bool CheckPath() {
+        string [] unity = UnityPath.Split('/');
+        string unityexe = (string)unity.GetValue(unity.Length - 1);
+        if ( unityexe == "Unity.exe" && File.Exists(UnityPath))
             return true;
         else 
             return false;

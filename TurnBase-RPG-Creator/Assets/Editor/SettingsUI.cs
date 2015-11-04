@@ -6,7 +6,6 @@ public class SettingsUI : EditorWindow {
 
     bool browse = false;
     bool save = false;
-    bool valid = false;
 	public void Init() {
 	}
     void OnGUI() {
@@ -14,14 +13,13 @@ public class SettingsUI : EditorWindow {
         ProjectSettings.UnityPath = GUI.TextField(new Rect(100, 30, 300, 20), ProjectSettings.UnityPath);
         browse = GUI.Button(new Rect(100, 60, 150, 20), "Browse");
         save = GUI.Button(new Rect(0, 90, 100, 20), "Save") ;
-        valid = ProjectSettings.CheckPath();
-        if (save && valid )
+        if (save && ProjectSettings.SaveSettings() )
         {
-           ProjectSettings.SaveSettings();
+           
            Debug.Log(ProjectSettings.UnityPath);
            this.Close();
         }
-        else if (save && !valid)
+        else if (save && !ProjectSettings.SaveSettings())
         {
             Debug.Log("Error en la ruta de unity");
         }
