@@ -8,7 +8,7 @@ public class StatsCurve : EditorWindow
 
     Formula curve;
     private GUIStyle currentStyle;
-    List<Rect> positions = new List<Rect>();
+    //List<Rect> positions = new List<Rect>();
 
     public void Init(int _type)
     {

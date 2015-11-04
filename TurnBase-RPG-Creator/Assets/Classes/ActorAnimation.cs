@@ -182,7 +182,7 @@ public class ActorAnimation : MonoBehaviour
             idle.AddChild(rightIdle, 1);
         }
 
-        idle.useAutomaticThresholds = true;
+        //idle.useAutomaticThresholds = true;  // Problema con esta linea de codigo. Dice que esta propiedad no esta definida
         idle.blendType = BlendTreeType.Simple1D;        
 
         // Add StateMachines        

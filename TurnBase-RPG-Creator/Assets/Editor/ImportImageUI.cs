@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEditor;
 using System.IO;
 
-public class UploadImage : EditorWindow
+public class ImportImageUI : EditorWindow
 {	
     Texture2D texture;
 	FileBrowser image = new FileBrowser ("Assets/Sprites/96x96.jpg");

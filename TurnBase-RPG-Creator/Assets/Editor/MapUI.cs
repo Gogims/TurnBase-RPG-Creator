@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEditor;
 
-public class MapWindow : EditorWindow {
+public class MapUI : EditorWindow {
 
 	Map map; 
 	// Add menu named "My Window" to the Window menu

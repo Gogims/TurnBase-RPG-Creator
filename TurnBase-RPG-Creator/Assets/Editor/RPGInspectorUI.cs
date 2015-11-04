@@ -4,7 +4,7 @@ using UnityEditor;
 /// <summary>
 /// Inspector que presenta cual objeto esta seleccionado.
 /// </summary>
-public class RPGInspector : EditorWindow {
+public class RPGInspectorUI : EditorWindow {
 
 	static Texture2D texture;
 	static public byte[] image;

@@ -46,7 +46,7 @@ public class MapEditor {
 	/// <param name="Selected">Selected.</param>
 	static void DeleteSelectedObject(GameObject Selected)
 	{
-		MapWindow.DestroyImmediate (Selected);
+		MapUI.DestroyImmediate (Selected);
 	}
 	/// <summary>
 	/// Borra los objeto seleccionados.
@@ -60,10 +60,10 @@ public class MapEditor {
 			else 
 				temp = (GameObject)LightFloor;
 			temp.transform.position = i.transform.position;
-			MapWindow.DestroyImmediate (i);
-			MapWindow.Instantiate (temp, temp.transform.position, Quaternion.identity);
+			MapUI.DestroyImmediate (i);
+			MapUI.Instantiate (temp, temp.transform.position, Quaternion.identity);
 			
-			MapWindow.DestroyImmediate (GameObject.Find("New Game Object"));
+			MapUI.DestroyImmediate (GameObject.Find("New Game Object"));
 		}
 	}
 	/// <summary>
@@ -86,10 +86,10 @@ public class MapEditor {
 		foreach (GameObject i in Selection.gameObjects) {
 			GameObject temp = selectedObject;
 			temp.transform.position = i.transform.position;
-			MapWindow.DestroyImmediate (i);
-			MapWindow.Instantiate (temp, temp.transform.position, Quaternion.identity);
+			MapUI.DestroyImmediate (i);
+			MapUI.Instantiate (temp, temp.transform.position, Quaternion.identity);
 			
-			MapWindow.DestroyImmediate (GameObject.Find("New Game Object"));
+			MapUI.DestroyImmediate (GameObject.Find("New Game Object"));
 
 		}
 		                          

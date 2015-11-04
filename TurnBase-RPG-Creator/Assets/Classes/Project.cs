@@ -35,7 +35,7 @@ public class Project  {
                 sw.WriteLine("mkdir " + projectAssets);
                 sw.WriteLine("ROBOCOPY "+dirpath1+ " "+projectAssets+" *.* /E");
                 sw.WriteLine("ROBOCOPY " + dirpath2 + " " + projectSettings+ " *.* /E");
-                sw.WriteLine("E:\\Programs\\Editor\\Unity.exe -createProject "+projectPath);
+                sw.WriteLine(ProjectSettings.UnityPath.Replace('/','\\')+" -createProject "+projectPath);
             }
         }
         return;

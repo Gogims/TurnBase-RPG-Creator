@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEditor;
-public class NewProject : EditorWindow {
+public class ProjectUI : EditorWindow {
     Project newProject;
     bool browse;
     public void Init() {
