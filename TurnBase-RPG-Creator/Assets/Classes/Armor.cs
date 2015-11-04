@@ -9,6 +9,15 @@ public class Armor : Equipppable
     /// </summary>
     public int ArmorType;
 
+    public enum Type
+    {
+        Chest,
+        Leg,
+        Feet,
+        Necklace,
+        Ring
+    };
+
     public Armor()
     {
         Stats = new Attribute();

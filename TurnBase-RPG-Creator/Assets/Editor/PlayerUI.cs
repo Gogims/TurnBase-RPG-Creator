@@ -19,15 +19,16 @@ public class PlayerUI : CRUD<Player>
 
     void OnGUI()
     {
-        RenderLeftSide();        
+        RenderLeftSide();
 
-        GUILayout.BeginArea(new Rect(300, 0, 600, 400), "Basic Settings", EditorStyles.helpBox);
+        // Basic Settings Area
+        GUILayout.BeginArea(new Rect(300, 0, 600, 250), "Basic Settings", EditorStyles.helpBox);
         GUILayout.Space(10);
 
         element.Name = EditorGUILayout.TextField("Name", element.Name);
         element.Description = EditorGUILayout.TextField("Description", element.Description);
-        element.Level = EditorGUILayout.IntSlider(new GUIContent("Level:"), element.Level, 1, 100);              
-        
+        element.Level = EditorGUILayout.IntSlider(new GUIContent("Level:"), element.Level, 1, 100);
+
         // Attributes section
         GUILayout.Label("Attributes", EditorStyles.boldLabel);
         element.Stats.MaxHP = EditorGUILayout.IntField("MaxHP: ", element.Stats.MaxHP);
@@ -38,62 +39,94 @@ public class PlayerUI : CRUD<Player>
         element.Stats.Luck = EditorGUILayout.IntField("Luck: ", element.Stats.Luck);
         element.Stats.Magic = EditorGUILayout.IntField("Magic: ", element.Stats.Magic);
         element.Stats.MagicDefense = EditorGUILayout.IntField("MagicDefense: ", element.Stats.MagicDefense);
+        GUILayout.EndArea();
 
-        // Text field to upload image
-        GUI.enabled = false;
-        GUI.TextField(new Rect(0, 280, 300, 20), spritename);
-        GUI.enabled = true;
+        // Initial Equipment Area
+        GUILayout.BeginArea(new Rect(300, 250, 600, 300), "Initial Equipment", EditorStyles.helpBox);
+        GUILayout.Space(10);
 
-        // Button to upload image
-        if (GUI.Button(new Rect(300, 280, 100, 20), "Select Sprite"))
+        GUILayout.Label("Weapon", EditorStyles.boldLabel);
+        GUILayout.BeginHorizontal();
+        GUILayout.TextField(element.MainHand.Name);
+        if (GUILayout.Button("Select Weapon"))
         {
-            EditorGUIUtility.ShowObjectPicker<Sprite>(null, false, null, 1);
-        }
-
-        AddObject();
-
-        if (element.Image != null)
-        {
-            GUI.DrawTextureWithTexCoords(new Rect(400, 280, element.Image.textureRect.width, element.Image.textureRect.height), element.Image.texture, element.GetTextureCoordinate());
-        }
-
-        SaveButton = GUI.Button(new Rect(0, 380, 100, 20), "Save");
-        GUI.enabled = !Creating;
-        DeleteButton = GUI.Button(new Rect(100, 380, 100, 20), "Delete");
-        GUI.enabled = true;
-
-        GUI.Label(new Rect(0, 320, 100, 20), "Animation", EditorStyles.boldLabel);
-        if (GUI.Button(new Rect(0, 340, 50, 20), "Down"))
-        {
-            var window = EditorWindow.GetWindow<AnimationUI>();
-            window.Init(ref element.downSprites, "Down Sprites");
+            var window = EditorWindow.GetWindow<WeaponUI>();
+            window.Selected = true;
+            window.Initialize(ref element.MainHand);
             window.Show();
         }
-        if (GUI.Button(new Rect(75, 340, 50, 20), "Left"))
-        {
-            var window = EditorWindow.GetWindow<AnimationUI>();
-            window.Init(ref element.leftSprites, "Left Sprites");
+        GUILayout.EndHorizontal();
+        GUILayout.Label("Upper Body", EditorStyles.boldLabel);
+        GUILayout.BeginHorizontal();
+        GUILayout.TextField(element.UpperBody.Name);
+        if (GUILayout.Button("Select Armor"))
+        {            
+            var window = EditorWindow.GetWindow<ArmorUI>();
+            window.Selected = true;
+            window.Initialize(ref element.UpperBody, (int)Armor.Type.Chest);
             window.Show();
         }
-        if (GUI.Button(new Rect(150, 340, 50, 20), "Up"))
-        {
-            var window = EditorWindow.GetWindow<AnimationUI>();
-            window.Init(ref element.upSprites, "Up Sprites");
-            window.Show();
-        }
-        if (GUI.Button(new Rect(225, 340, 50, 20), "Right"))
-        {
-            var window = EditorWindow.GetWindow<AnimationUI>();
-            window.Init(ref element.rightSprites, "Right Sprites");
-            window.Show();
-        }
+        GUILayout.EndHorizontal();
 
         GUILayout.EndArea();
 
-        if (CreateButton)
-        {
-            CreateAnimation();
-        }
+
+        //// Text field to upload image
+        //GUILayout.Label("Avatar", EditorStyles.boldLabel);
+        //GUI.enabled = false;
+        //GUI.TextField(new Rect(0, 280, 300, 20), spritename);
+        //GUI.enabled = true;
+
+        //// Button to upload image
+        //if (GUI.Button(new Rect(300, 280, 100, 20), "Select Picture"))
+        //{
+        //    EditorGUIUtility.ShowObjectPicker<Sprite>(null, false, null, 1);
+        //}
+
+        //AddObject();
+
+        //if (element.Image != null)
+        //{
+        //    GUI.DrawTextureWithTexCoords(new Rect(400, 280, element.Image.textureRect.width, element.Image.textureRect.height), element.Image.texture, element.GetTextureCoordinate());
+        //}
+
+        //SaveButton = GUI.Button(new Rect(0, 380, 100, 20), "Save");
+        //GUI.enabled = !Creating;
+        //DeleteButton = GUI.Button(new Rect(100, 380, 100, 20), "Delete");
+        //GUI.enabled = true;
+
+        //GUI.Label(new Rect(0, 320, 100, 20), "Animation", EditorStyles.boldLabel);
+        //if (GUI.Button(new Rect(0, 340, 50, 20), "Down"))
+        //{
+        //    var window = EditorWindow.GetWindow<AnimationUI>();
+        //    window.Init(ref element.downSprites, "Down Sprites");
+        //    window.Show();
+        //}
+        //if (GUI.Button(new Rect(75, 340, 50, 20), "Left"))
+        //{
+        //    var window = EditorWindow.GetWindow<AnimationUI>();
+        //    window.Init(ref element.leftSprites, "Left Sprites");
+        //    window.Show();
+        //}
+        //if (GUI.Button(new Rect(150, 340, 50, 20), "Up"))
+        //{
+        //    var window = EditorWindow.GetWindow<AnimationUI>();
+        //    window.Init(ref element.upSprites, "Up Sprites");
+        //    window.Show();
+        //}
+        //if (GUI.Button(new Rect(225, 340, 50, 20), "Right"))
+        //{
+        //    var window = EditorWindow.GetWindow<AnimationUI>();
+        //    window.Init(ref element.rightSprites, "Right Sprites");
+        //    window.Show();
+        //}
+
+        //GUILayout.EndArea();
+
+        //if (CreateButton)
+        //{
+        //    CreateAnimation();
+        //}
     }
 
     public override void GetNewObject(ref Player e)

@@ -4,9 +4,26 @@ using UnityEditor;
 
 public class ArmorUI : CRUD<Armor>
 {
+    public Armor AssignedArmor;
+
     public ArmorUI(): base("Armor"){    }
 
-    override public void Init()
+    public void Initialize(ref Armor a, int type)
+    {
+        AssignedArmor = a;
+        element = new Armor();
+        base.Init();
+
+        foreach (var item in GetObjects())
+        {
+            if (item.ArmorType == type)
+            {
+                listElements.AddItem(item.Name, item.Id); 
+            }
+        }
+    }
+
+    public override void Init()
     {
         element = new Armor();
         base.Init();
@@ -14,7 +31,7 @@ public class ArmorUI : CRUD<Armor>
         foreach (var item in GetObjects())
         {
             listElements.AddItem(item.Name, item.Id);
-        }        
+        }
     }
 
     void OnGUI()
@@ -25,6 +42,7 @@ public class ArmorUI : CRUD<Armor>
 
         GUILayout.Space(10);
 
+        GUI.enabled = !Selected;
         element.Name = EditorGUILayout.TextField("Name", element.Name);
         element.Description = EditorGUILayout.TextField("Description", element.Description);
         element.ArmorType = EditorGUILayout.Popup("Armor Type:", element.ArmorType, Armor.ArmorTypes());               
@@ -43,7 +61,7 @@ public class ArmorUI : CRUD<Armor>
         // Text field to upload image
         GUI.enabled = false;
         GUI.TextField(new Rect(0, 240, 300, 20), spritename);
-        GUI.enabled = true;
+        GUI.enabled = true && !Selected;
 
         // Button to upload image
         if (GUI.Button(new Rect(300, 240, 100, 20), "Select Sprite"))
@@ -53,18 +71,38 @@ public class ArmorUI : CRUD<Armor>
 
         AddObject();
 
+        GUI.enabled = true;
+
         if (element.Image != null)
         {
             GUI.DrawTextureWithTexCoords(new Rect(400, 240, element.Image.textureRect.width, element.Image.textureRect.height), element.Image.texture, element.GetTextureCoordinate()); 
         }
 
-        SaveButton = GUI.Button(new Rect(0, 380, 100, 20), "Save");
-        GUI.enabled = !Creating;
-        DeleteButton = GUI.Button(new Rect(100, 380, 100, 20), "Delete");
-        GUI.enabled = true;
-               
+        if (Selected)
+        {
+            GUI.enabled = !Creating;
+            SelectButton = GUI.Button(new Rect(0, 380, 100, 20), "Select");
+            GUI.enabled = true;
+        }
+        else
+        {
+            SaveButton = GUI.Button(new Rect(0, 380, 100, 20), "Save");
+            GUI.enabled = !Creating;
+            DeleteButton = GUI.Button(new Rect(100, 380, 100, 20), "Delete");
+            GUI.enabled = true;
+        }
+
 
         GUILayout.EndArea();
+    }
+
+    void Update()
+    {
+        if (SelectButton)
+        {
+            AssignElement(ref AssignedArmor);
+            this.Close();
+        }
     }
 
     public override void GetNewObject(ref Armor e)

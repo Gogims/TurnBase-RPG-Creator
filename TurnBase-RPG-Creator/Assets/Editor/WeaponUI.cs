@@ -4,7 +4,15 @@ using UnityEditor;
 
 public class WeaponUI : CRUD<Weapon>
 {
+    public Weapon AssignedWeapon;
+
     public WeaponUI() : base("Weapon") { }
+
+    public void Initialize(ref Weapon w)
+    {
+        AssignedWeapon = w;
+        Init();
+    }
 
     override public void Init()
     {
@@ -22,9 +30,9 @@ public class WeaponUI : CRUD<Weapon>
         RenderLeftSide();
 
         GUILayout.BeginArea(new Rect(300, 0, 600, 400), "Basic Settings", EditorStyles.helpBox);
-
         GUILayout.Space(10);
 
+        GUI.enabled = !Selected;
         element.Name = EditorGUILayout.TextField("Name", element.Name);
         element.Description = EditorGUILayout.TextField("Description", element.Description);
         element.Price = EditorGUILayout.IntField("Price: ", element.Price);        
@@ -45,7 +53,7 @@ public class WeaponUI : CRUD<Weapon>
         // Text field to upload image
         GUI.enabled = false;
         GUI.TextField(new Rect(0, 280, 300, 20), spritename);
-        GUI.enabled = true;
+        GUI.enabled = true && !Selected;
 
         // Button to upload image
         if (GUI.Button(new Rect(300, 280, 100, 20), "Select Sprite"))
@@ -55,17 +63,37 @@ public class WeaponUI : CRUD<Weapon>
 
         AddObject();
 
+        GUI.enabled = true;
+
         if (element.Image != null)
         {
             GUI.DrawTextureWithTexCoords(new Rect(400, 280, element.Image.textureRect.width, element.Image.textureRect.height), element.Image.texture, element.GetTextureCoordinate());
         }
 
-        SaveButton = GUI.Button(new Rect(0, 380, 100, 20), "Save");
-        GUI.enabled = !Creating;
-        DeleteButton = GUI.Button(new Rect(100, 380, 100, 20), "Delete");
-        GUI.enabled = true;
+        if (Selected)
+        {
+            GUI.enabled = !Creating;
+            SelectButton = GUI.Button(new Rect(0, 380, 100, 20), "Select");
+            GUI.enabled = true;
+        }
+        else
+        {
+            SaveButton = GUI.Button(new Rect(0, 380, 100, 20), "Save");
+            GUI.enabled = !Creating;
+            DeleteButton = GUI.Button(new Rect(100, 380, 100, 20), "Delete");
+            GUI.enabled = true;
+        }        
 
         GUILayout.EndArea();
+    }
+
+    void Update()
+    {
+        if (SelectButton)
+        {
+            AssignElement(ref AssignedWeapon);
+            this.Close();
+        }
     }
 
     public override void GetNewObject(ref Weapon e)
@@ -82,7 +110,7 @@ public class WeaponUI : CRUD<Weapon>
         component.NumberHit = element.NumberHit;
         component.Stats = element.Stats;
         component.Id = element.Id;
-        component.Image = element.Image;
+        component.Image = element.Image;        
     }
 
     private void AddObject()
