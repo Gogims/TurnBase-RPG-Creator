@@ -41,8 +41,24 @@ public class Project  {
         return;
     }
 
-    public static void Open(string p)
+    public static void Open(string path)
     {
-        return;
+        Process p = new Process();
+        ProcessStartInfo info = new ProcessStartInfo();
+        info.FileName = "cmd.exe";
+        info.RedirectStandardInput = true;
+        info.UseShellExecute = false;
+        p.StartInfo = info;
+        p.Start();
+        path = @""""+path.Replace('/', '\\')+@"""";
+        UnityEngine.Debug.Log(path);
+        using (StreamWriter sw = p.StandardInput)
+        {
+            if (sw.BaseStream.CanWrite)
+            {
+                sw.WriteLine("");
+                sw.WriteLine(ProjectSettings.UnityPath.Replace('/', '\\') + " -projectPath  " + path);
+            }
+        }   
     }
 }

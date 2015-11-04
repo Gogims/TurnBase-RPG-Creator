@@ -42,21 +42,24 @@ public class ImportImageUI : EditorWindow
 
 	void Update()
 	{
+        if (obtype[rpgobject.type] == "Background")
+        {
+            spritesheet = false;
+        }
 		if (upload) {
 			image.path = EditorUtility.OpenFilePanel ("test", "test2", "jpg;*.png");
 		}
 		if (import) {
 			oldname = rpgobject.name;
 			rpgobject.name = obtype[rpgobject.type]+"_"+rpgobject.name;
-			Debug.Log(rpgobject.name);
+            
 			CreateRpgObject();
 			rpgobject.name = oldname;
-			Debug.Log(rpgobject.name);
 		}
 	}
 	void SaveSprites(){
 		if (texture != null) {
-			if (!spritesheet) 
+            if (!spritesheet && obtype[rpgobject.type] != "Background") 
 				TextureScale.Bilinear(texture,32,32);
 			var bytes = texture.EncodeToPNG ();
 			int startindex = image.path.LastIndexOf ('.');

@@ -28,6 +28,8 @@ Weapons on the game.");
 Armors on the game.");
 		types.Add ("Character", @"An object of this type will be use to represent 
 a character (enemy,npc,player).");
+        types.Add("Background", @"An object of this type will be use to represent 
+the background of a battle.");
 	}
 	static public string [] GetTypes(){
 		if ( types.Count == 0) 
