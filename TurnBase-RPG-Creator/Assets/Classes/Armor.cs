@@ -15,7 +15,8 @@ public class Armor : Equipppable
         Leg,
         Feet,
         Necklace,
-        Ring
+        Ring,
+        Helmet
     };
 
     public Armor()
@@ -26,7 +27,7 @@ public class Armor : Equipppable
 
     public static string[] ArmorTypes()
     {
-        string[] types = { "Chest", "Leg", "Feet", "Necklace", "Ring" };
+        string[] types = { "Chest", "Leg", "Feet", "Necklace", "Ring", "Helmet" };
 
         return types;
     }

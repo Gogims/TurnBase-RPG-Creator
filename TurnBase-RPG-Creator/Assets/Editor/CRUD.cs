@@ -79,16 +79,22 @@ public abstract class CRUD<T> : EditorWindow
     /// Dirección del txt que contiene el último ID
     /// </summary>
     private string idPath;
+    /// <summary>
+    /// Size of the listing of the left size
+    /// </summary>
+    private Rect LeftSide;
 
     /// <summary>
     /// Unico constructor de la clase CRUD
     /// </summary>
     /// <param name="type">Nombre del folder del recurso y la clase (debe ser el mismo). Ejemplo: Armor, Weapon, etc.</param>
-    public CRUD(string type)
+    protected CRUD(string type, Rect left)
     {
         Type = type;
         relativepath = "Assets/Resources/" + type + "/";
         _path = Directory.GetCurrentDirectory() + @"\Assets\Resources\" + type + @"\";
+        LeftSide = left;       
+        
         idPath = _path + "id.txt";
     }
 
@@ -97,9 +103,10 @@ public abstract class CRUD<T> : EditorWindow
     /// </summary>
     public virtual void Init()
     {
+        elementObject = NewGameObject();
         ListObjects = (Resources.LoadAll(Type, typeof(GameObject)));
         Creating = true;
-        listElements = new ListBox(new Rect(0, 0, 300, 380), new Rect(0, 0, 285, 400), false, true);
+        listElements = new ListBox(new Rect(LeftSide.x, LeftSide.y, LeftSide.width, LeftSide.height-20), new Rect(LeftSide.x, LeftSide.y, LeftSide.width-15, LeftSide.height), false, true);
         spritename = "";
         GetId();
     }
@@ -108,13 +115,13 @@ public abstract class CRUD<T> : EditorWindow
     /// Obtiene el listado de objetos de tipo T
     /// </summary>
     /// <returns>Lista de los prefabs de tipo T</returns>
-    public IEnumerable<T> GetObjects()
+    protected IEnumerable<T> GetObjects()
     {
         foreach (var item in ListObjects)
         {
-            elementObject = (GameObject)Instantiate(item);
-            T temp = elementObject.GetComponent<T>();            
-            DestroyImmediate(elementObject);
+            GameObject current = (GameObject)Instantiate(item);
+            T temp = current.GetComponent<T>();            
+            DestroyImmediate(current);
             yield return temp;
         }
     }
@@ -122,7 +129,7 @@ public abstract class CRUD<T> : EditorWindow
     /// <summary>
     /// Obtiene el ID del txt
     /// </summary>
-    public void GetId()
+    protected void GetId()
     {
         if (!File.Exists(idPath))
         {
@@ -138,7 +145,7 @@ public abstract class CRUD<T> : EditorWindow
     /// <summary>
     /// Actualiza el ID del txt
     /// </summary>
-    public virtual void SetId()
+    protected virtual void SetId()
     {
         File.WriteAllText(idPath, Id.ToString());
     }
@@ -146,37 +153,28 @@ public abstract class CRUD<T> : EditorWindow
     /// <summary>
     /// Crea un nuevo prefab de tipo T
     /// </summary>
-    public virtual void Create()
+    protected virtual void Create()
     {
-        elementObject = new GameObject(Type);
-        T component = elementObject.AddComponent<T>();
-
-        AssignElement(ref component);
-
         Id++;
-        component.Id = Id;
-        CreatePrefab(ref elementObject, component);
-        listElements.AddItem(component.Name, component.Id);
-        Creating = false;
+        element.Id = Id;
+        CreatePrefab(element);
+        listElements.AddItem(element.Name, element.Id);        
         SetId();
     }
 
     /// <summary>
     /// Edita un prefab existente de tipo T
     /// </summary>
-    public virtual void Edit()
+    protected virtual void Edit()
     {
-        T component = elementObject.GetComponent<T>();
-        AssignElement(ref component);
-        CreatePrefab(ref elementObject, component);
-
+        CreatePrefab(element);
         listElements.ChangeName(listElements.GetSelectedIndex(), element.Name);
     }
 
     /// <summary>
     /// Elimina un prefab existente de tipo T
     /// </summary>
-    public virtual void Delete()
+    protected virtual void Delete()
     {
         if (elementObject != null)
         {
@@ -186,18 +184,6 @@ public abstract class CRUD<T> : EditorWindow
             Init();
         }
     }    
-
-    /// <summary>
-    /// Construye un nuevo objeto de tipo T
-    /// </summary>
-    /// <param name="e">Objeto a construir</param>
-    public virtual void GetNewObject(ref T e) { }
-
-    /// <summary>
-    /// Copia todas las propiedades del objeto del formulario al objeto que será guardado en un prefab.
-    /// </summary>
-    /// <param name="component"></param>
-    public virtual void AssignElement(ref T component) { }
 
     /// <summary>
     /// Revisa si no existe un game object instanceado, en caso de que sí, lo destruye antes de cerrar la ventana.
@@ -213,7 +199,7 @@ public abstract class CRUD<T> : EditorWindow
     /// <summary>
     /// Revisa si el objeto a guardar es nuevo o no y llama a su respectiva función
     /// </summary>
-    public void SaveElement()
+    protected void SaveElement()
     {
         if (Creating)
         {
@@ -231,10 +217,10 @@ public abstract class CRUD<T> : EditorWindow
     /// <summary>
     /// Renderiza el listado de objetos, en la parte izquierda del formulario
     /// </summary>
-    public void RenderLeftSide()
+    protected void RenderLeftSide()
     {
         //Left side area
-        GUILayout.BeginArea(new Rect(0, 0, 300, 400), string.Empty, EditorStyles.helpBox);
+        GUILayout.BeginArea(LeftSide, string.Empty, EditorStyles.helpBox);
         GUILayout.Space(10);
 
         if (listElements.ReDraw())
@@ -244,7 +230,7 @@ public abstract class CRUD<T> : EditorWindow
 
         if (!Selected)
         {
-            CreateButton = GUI.Button(new Rect(0, 380, 100, 20), "Create"); 
+            CreateButton = GUI.Button(new Rect(LeftSide.x, LeftSide.height-20, 100, 20), "Create"); 
         }
 
         GUILayout.EndArea();
@@ -258,7 +244,7 @@ public abstract class CRUD<T> : EditorWindow
         //Si se crea una nueva arma
         if (CreateButton)
         {
-            GetNewObject(ref element);
+            elementObject = NewGameObject();
             Creating = true;
         }
 
@@ -266,7 +252,7 @@ public abstract class CRUD<T> : EditorWindow
         if (SaveButton)
         {
             SaveElement();
-            GetNewObject(ref element);
+            elementObject = NewGameObject();
         }
 
         //Si se elimina un arma
@@ -274,15 +260,26 @@ public abstract class CRUD<T> : EditorWindow
         {
             Delete();
             ListObjects = (Resources.LoadAll(Type, typeof(GameObject)));
-            GetNewObject(ref element);
+            elementObject = NewGameObject();
         }
     }
-    #endregion       
+    #endregion
+
+    /// <summary>
+    /// Crea un prefab y destruye el gameobject de la escena.
+    /// </summary>
+    /// <param name="ElementObject">Game object que se encuentra vivo en la escena</param>
+    /// <param name="component">Componente que se desea guardar como prefab</param>
+    protected void CreatePrefab(T component)
+    {
+        PrefabUtility.CreatePrefab(relativepath + component.Id + ".prefab", component.gameObject);
+        DestroyImmediate(component.gameObject);
+    }
 
     /// <summary>
     /// Actualiza el listado de objetos
     /// </summary>
-    private void UpdateListBox()
+    protected virtual void UpdateListBox()
     {
         if (elementObject != null)
         {
@@ -292,16 +289,13 @@ public abstract class CRUD<T> : EditorWindow
         elementObject = (GameObject)Instantiate(ListObjects[listElements.GetSelectedIndex()]);
         element = elementObject.GetComponent<T>();        
         Creating = false;
-    }    
-    
-    /// <summary>
-    /// Crea un prefab y destruye el gameobject de la escena.
-    /// </summary>
-    /// <param name="ElementObject">Game object que se encuentra vivo en la escena</param>
-    /// <param name="component">Componente que se desea guardar como prefab</param>
-    private void CreatePrefab(ref GameObject ElementObject, T component)
+    }
+
+    private GameObject NewGameObject()
     {
-        PrefabUtility.CreatePrefab(relativepath + component.Id + ".prefab", component.gameObject);
-        DestroyImmediate(ElementObject);
+        GameObject newGameObject = new GameObject(Type);
+        element = newGameObject.AddComponent<T>();
+
+        return newGameObject;
     }
 }

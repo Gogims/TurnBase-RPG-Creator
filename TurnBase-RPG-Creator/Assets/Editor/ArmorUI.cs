@@ -6,12 +6,11 @@ public class ArmorUI : CRUD<Armor>
 {
     public Armor AssignedArmor;
 
-    public ArmorUI(): base("Armor"){    }
+    public ArmorUI(): base("Armor", new Rect(0, 0, 300, 400)) {    }
 
     public void Initialize(ref Armor a, int type)
     {
         AssignedArmor = a;
-        element = new Armor();
         base.Init();
 
         foreach (var item in GetObjects())
@@ -25,7 +24,6 @@ public class ArmorUI : CRUD<Armor>
 
     public override void Init()
     {
-        element = new Armor();
         base.Init();
 
         foreach (var item in GetObjects())
@@ -92,25 +90,16 @@ public class ArmorUI : CRUD<Armor>
             GUI.enabled = true;
         }
 
-
         GUILayout.EndArea();
-    }
 
-    void Update()
-    {
         if (SelectButton)
         {
             AssignElement(ref AssignedArmor);
             this.Close();
         }
-    }
+    }    
 
-    public override void GetNewObject(ref Armor e)
-    {
-        e = new Armor();
-    }
-
-    public override void AssignElement(ref Armor component)
+    private void AssignElement(ref Armor component)
     {
         component.Name = element.Name;
         component.Description = element.Description;

@@ -6,7 +6,7 @@ public class WeaponUI : CRUD<Weapon>
 {
     public Weapon AssignedWeapon;
 
-    public WeaponUI() : base("Weapon") { }
+    public WeaponUI() : base("Weapon", new Rect(0, 0, 300, 400)) { }
 
     public void Initialize(ref Weapon w)
     {
@@ -16,7 +16,6 @@ public class WeaponUI : CRUD<Weapon>
 
     override public void Init()
     {
-        element = new Weapon();
         base.Init();
 
         foreach (var item in GetObjects())
@@ -85,23 +84,15 @@ public class WeaponUI : CRUD<Weapon>
         }        
 
         GUILayout.EndArea();
-    }
 
-    void Update()
-    {
         if (SelectButton)
         {
             AssignElement(ref AssignedWeapon);
             this.Close();
         }
-    }
+    } 
 
-    public override void GetNewObject(ref Weapon e)
-    {
-        e = new Weapon();
-    }    
-
-    override public void AssignElement(ref Weapon component)
+    private void AssignElement(ref Weapon component)
     {
         component.Name = element.Name;
         component.Description = element.Description;

@@ -4,12 +4,38 @@ using System.Collections.Generic;
 
 public class PlayerUI : CRUD<Player>
 {
-    public PlayerUI() : base("Player") { }
+    public List<Sprite> downSprites;
+    public List<Sprite> leftSprites;
+    public List<Sprite> upSprites;
+    public List<Sprite> rightSprites;
+
+    public Weapon MainHand;
+    public Armor Helmet;
+    public Armor UpperBody;
+    public Armor LowerBody;
+    public Armor Feet;
+    public Armor Ring;
+    public Armor Necklace;
+
+    public PlayerUI() : base("Player", new Rect(0, 0, 300, 730)) { }
 
     public override void Init()
     {
         element = new Player();
         base.Init();
+
+        downSprites = new List<Sprite>();
+        leftSprites = new List<Sprite>();
+        upSprites = new List<Sprite>();
+        rightSprites = new List<Sprite>();
+
+        MainHand = elementObject.AddComponent<Weapon>();
+        Helmet = elementObject.AddComponent<Armor>();
+        UpperBody = elementObject.AddComponent<Armor>();
+        LowerBody = elementObject.AddComponent<Armor>();
+        Ring = elementObject.AddComponent<Armor>();
+        Necklace = elementObject.AddComponent<Armor>();
+        Feet = elementObject.AddComponent<Armor>();
 
         foreach (var item in GetObjects())
         {
@@ -42,108 +68,105 @@ public class PlayerUI : CRUD<Player>
         GUILayout.EndArea();
 
         // Initial Equipment Area
-        GUILayout.BeginArea(new Rect(300, 250, 600, 300), "Initial Equipment", EditorStyles.helpBox);
+        GUILayout.BeginArea(new Rect(300, 250, 600, 320), "Initial Equipment", EditorStyles.helpBox);
         GUILayout.Space(10);
 
         GUILayout.Label("Weapon", EditorStyles.boldLabel);
         GUILayout.BeginHorizontal();
-        GUILayout.TextField(element.MainHand.Name);
+        GUILayout.TextField(MainHand.Name);
         if (GUILayout.Button("Select Weapon"))
         {
             var window = EditorWindow.GetWindow<WeaponUI>();
             window.Selected = true;
-            window.Initialize(ref element.MainHand);
+            window.Initialize(ref MainHand);
             window.Show();
         }
         GUILayout.EndHorizontal();
-        GUILayout.Label("Upper Body", EditorStyles.boldLabel);
-        GUILayout.BeginHorizontal();
-        GUILayout.TextField(element.UpperBody.Name);
-        if (GUILayout.Button("Select Armor"))
-        {            
-            var window = EditorWindow.GetWindow<ArmorUI>();
-            window.Selected = true;
-            window.Initialize(ref element.UpperBody, (int)Armor.Type.Chest);
-            window.Show();
-        }
-        GUILayout.EndHorizontal();
+
+        AddArmor("Helmet", ref Helmet, Armor.Type.Helmet);
+        AddArmor("Upper Body", ref UpperBody, Armor.Type.Chest);
+        AddArmor("Lower Body", ref LowerBody, Armor.Type.Leg);
+        AddArmor("Feet", ref Feet, Armor.Type.Feet);
+        AddArmor("Necklace", ref Necklace, Armor.Type.Necklace);
+        AddArmor("Ring", ref Ring, Armor.Type.Ring);        
 
         GUILayout.EndArea();
 
+        GUILayout.BeginArea(new Rect(300, 570, 600, 160), "Design", EditorStyles.helpBox);
+        GUILayout.Space(10);
 
-        //// Text field to upload image
-        //GUILayout.Label("Avatar", EditorStyles.boldLabel);
-        //GUI.enabled = false;
-        //GUI.TextField(new Rect(0, 280, 300, 20), spritename);
-        //GUI.enabled = true;
+        // Text field to upload image
+        GUILayout.Label("Avatar", EditorStyles.boldLabel);
+        GUI.enabled = false;
+        GUI.TextField(new Rect(0, 40, 300, 20), spritename);
+        GUI.enabled = true;
 
-        //// Button to upload image
-        //if (GUI.Button(new Rect(300, 280, 100, 20), "Select Picture"))
-        //{
-        //    EditorGUIUtility.ShowObjectPicker<Sprite>(null, false, null, 1);
-        //}
+        // Button to upload image
+        if (GUI.Button(new Rect(300, 40, 100, 20), "Select Picture"))
+        {
+            EditorGUIUtility.ShowObjectPicker<Sprite>(null, false, null, 1);
+        }
 
-        //AddObject();
+        AddObject();
 
-        //if (element.Image != null)
-        //{
-        //    GUI.DrawTextureWithTexCoords(new Rect(400, 280, element.Image.textureRect.width, element.Image.textureRect.height), element.Image.texture, element.GetTextureCoordinate());
-        //}
+        if (element.Image != null)
+        {
+            GUI.DrawTextureWithTexCoords(new Rect(400, 40, element.Image.textureRect.width, element.Image.textureRect.height), element.Image.texture, element.GetTextureCoordinate());
+        }        
 
-        //SaveButton = GUI.Button(new Rect(0, 380, 100, 20), "Save");
-        //GUI.enabled = !Creating;
-        //DeleteButton = GUI.Button(new Rect(100, 380, 100, 20), "Delete");
-        //GUI.enabled = true;
+        GUI.Label(new Rect(0, 60, 100, 20), "Animation", EditorStyles.boldLabel);        
 
-        //GUI.Label(new Rect(0, 320, 100, 20), "Animation", EditorStyles.boldLabel);
-        //if (GUI.Button(new Rect(0, 340, 50, 20), "Down"))
-        //{
-        //    var window = EditorWindow.GetWindow<AnimationUI>();
-        //    window.Init(ref element.downSprites, "Down Sprites");
-        //    window.Show();
-        //}
-        //if (GUI.Button(new Rect(75, 340, 50, 20), "Left"))
-        //{
-        //    var window = EditorWindow.GetWindow<AnimationUI>();
-        //    window.Init(ref element.leftSprites, "Left Sprites");
-        //    window.Show();
-        //}
-        //if (GUI.Button(new Rect(150, 340, 50, 20), "Up"))
-        //{
-        //    var window = EditorWindow.GetWindow<AnimationUI>();
-        //    window.Init(ref element.upSprites, "Up Sprites");
-        //    window.Show();
-        //}
-        //if (GUI.Button(new Rect(225, 340, 50, 20), "Right"))
-        //{
-        //    var window = EditorWindow.GetWindow<AnimationUI>();
-        //    window.Init(ref element.rightSprites, "Right Sprites");
-        //    window.Show();
-        //}
+        if (GUI.Button(new Rect(0, 80, 50, 20), "Down"))
+        {
+            var window = EditorWindow.GetWindow<AnimationUI>();
+            window.Init(ref downSprites, "Down Sprites");
+            window.Show();
+        }
+        if (GUI.Button(new Rect(75, 80, 50, 20), "Left"))
+        {
+            var window = EditorWindow.GetWindow<AnimationUI>();
+            window.Init(ref leftSprites, "Left Sprites");
+            window.Show();
+        }
+        if (GUI.Button(new Rect(150, 80, 50, 20), "Up"))
+        {
+            var window = EditorWindow.GetWindow<AnimationUI>();
+            window.Init(ref upSprites, "Up Sprites");
+            window.Show();
+        }
+        if (GUI.Button(new Rect(225, 80, 50, 20), "Right"))
+        {
+            var window = EditorWindow.GetWindow<AnimationUI>();
+            window.Init(ref rightSprites, "Right Sprites");
+            window.Show();
+        }
 
-        //GUILayout.EndArea();
+        SaveButton = GUI.Button(new Rect(0, 140, 100, 20), "Save");
+        GUI.enabled = !Creating;
+        DeleteButton = GUI.Button(new Rect(100, 140, 100, 20), "Delete");
+        GUI.enabled = true;
 
-        //if (CreateButton)
-        //{
-        //    CreateAnimation();
-        //}
-    }
+        GUILayout.EndArea();
 
-    public override void GetNewObject(ref Player e)
+        if (CreateButton)
+        {
+            CreateAnimation();
+        }
+    }    
+
+    private void AddArmor(string name, ref Armor current, Armor.Type armortype)
     {
-        e = new Player();
-    }
-
-    public override void AssignElement(ref Player component)
-    {
-        component.Name = element.Name;
-        component.Description = element.Description;
-        component.Stats = element.Stats;
-        component.Id = element.Id;
-        component.Image = element.Image;
-        component.Level = element.Level;
-        component.HP = element.HP;
-        component.MP = element.MP;
+        GUILayout.Label(name, EditorStyles.boldLabel);
+        GUILayout.BeginHorizontal();
+        GUILayout.TextField(current.Name);
+        if (GUILayout.Button("Select Armor"))
+        {
+            var window = EditorWindow.GetWindow<ArmorUI>();
+            window.Selected = true;
+            window.Initialize(ref current, (int)armortype);
+            window.Show();
+        }
+        GUILayout.EndHorizontal();
     }
 
     private void AddObject()
@@ -165,38 +188,72 @@ public class PlayerUI : CRUD<Player>
         ActorAnimation animation = new ActorAnimation();
         List<Sprite> sprites;
 
-        if (element.downSprites.Count > 0)
+        if (downSprites.Count > 0)
         {
-            sprites = new List<Sprite>(element.downSprites);
-            sprites.Add(element.downSprites[0]);
+            sprites = new List<Sprite>(downSprites);
+            sprites.Add(downSprites[0]);
             animation.down = ActorAnimation.ConstructAnimation(sprites, "test", "down", 30, true);
-            animation.downIdle = ActorAnimation.ConstructAnimation(element.downSprites[0], "test", "downIdle", 30, true);
+            animation.downIdle = ActorAnimation.ConstructAnimation(downSprites[0], "test", "downIdle", 30, true);
         }
 
-        if (element.leftSprites.Count > 0)
+        if (leftSprites.Count > 0)
         {
-            sprites = new List<Sprite>(element.leftSprites);
-            sprites.Add(element.leftSprites[0]);
+            sprites = new List<Sprite>(leftSprites);
+            sprites.Add(leftSprites[0]);
             animation.left = ActorAnimation.ConstructAnimation(sprites, "test", "left", 30, true);
-            animation.leftIdle = ActorAnimation.ConstructAnimation(element.leftSprites[0], "test", "leftIdle", 30, true);
+            animation.leftIdle = ActorAnimation.ConstructAnimation(leftSprites[0], "test", "leftIdle", 30, true);
         }
 
-        if (element.upSprites.Count > 0)
+        if (upSprites.Count > 0)
         {
-            sprites = new List<Sprite>(element.upSprites);
-            sprites.Add(element.upSprites[0]);
+            sprites = new List<Sprite>(upSprites);
+            sprites.Add(upSprites[0]);
             animation.up = ActorAnimation.ConstructAnimation(sprites, "test", "up", 30, true);
-            animation.upIdle = ActorAnimation.ConstructAnimation(element.upSprites[0], "test", "upIdle", 30, true);
+            animation.upIdle = ActorAnimation.ConstructAnimation(upSprites[0], "test", "upIdle", 30, true);
         }
 
-        if (element.rightSprites.Count > 0)
+        if (rightSprites.Count > 0)
         {
-            sprites = new List<Sprite>(element.rightSprites);
-            sprites.Add(element.rightSprites[0]);
+            sprites = new List<Sprite>(rightSprites);
+            sprites.Add(rightSprites[0]);
             animation.right = ActorAnimation.ConstructAnimation(sprites, "test", "right", 30, true);
-            animation.rightIdle = ActorAnimation.ConstructAnimation(element.rightSprites[0], "test", "rightIdle", 30, true);
+            animation.rightIdle = ActorAnimation.ConstructAnimation(rightSprites[0], "test", "rightIdle", 30, true);
         }
 
-        animation.ConstructAnimationControl("test");
+        animation.ConstructAnimationControl(element.Name);
+    }
+
+    protected override void Create()
+    {
+        Id++;
+        element.Id = Id;
+        CreatePrefab(element);
+        listElements.AddItem(element.Name, element.Id);
+        SetId();
+    }
+
+    protected override void UpdateListBox()
+    {
+        base.UpdateListBox();
+
+        MainHand = elementObject.GetComponent<Weapon>();
+        Armor[] armors = elementObject.GetComponents<Armor>();
+
+        for (int i = 0; i < armors.Length; i++)
+        {
+
+            if (i == 0)
+                Helmet = armors[i];
+            if (i == 1)
+                UpperBody = armors[i];
+            if (i == 2)
+                LowerBody = armors[i];
+            if (i == 3)
+                Feet = armors[i];
+            if (i == 4)
+                Necklace = armors[i];
+            if (i == 5)
+                Ring = armors[i];
+        }
     }
 }
