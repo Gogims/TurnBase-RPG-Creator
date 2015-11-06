@@ -8,6 +8,7 @@ using System.IO;
 /// </summary>
 public class Project  {
     public string ProjectName { get; set; }
+    public string UnityPath { get; set; }
     public string Description { get; set; }
     public string Path { get; set; }
     /// <summary>
@@ -23,10 +24,10 @@ public class Project  {
         p.Start();
         Path = Path.Replace('/', '\\');
         string dirpath = Directory.GetCurrentDirectory().Replace("C:", "");
-        string dirpath1 = @""""+dirpath + "\\Assets"+@"""";
+        string dirpath1 = @"""" + dirpath + "\\Assets\\TurnBaseRPG-Creator" + @"""";
         string dirpath2 = @""""+dirpath + "\\ProjectSettings"+@"""";
         string projectPath = @""""+Path + @"\" + ProjectName+@"""";
-        string projectAssets= @""""+Path + @"\" + ProjectName+"\\Assets"+@"""";
+        string projectAssets = Path + @"\" + ProjectName + "\\Assets" ;
         string projectSettings = @""""+Path + @"\" + ProjectName+"\\ProjectSettings"+@"""";
         using (StreamWriter sw = p.StandardInput)
         {
@@ -35,9 +36,31 @@ public class Project  {
                 sw.WriteLine("");
                 sw.WriteLine("mkdir "+projectPath);
                 sw.WriteLine("mkdir " + projectSettings);
-                sw.WriteLine("mkdir " + projectAssets);
-                sw.WriteLine("ROBOCOPY "+dirpath1+ " "+projectAssets+" *.* /E");
+                sw.WriteLine("mkdir " + @"""" + projectAssets +"\\TurnBaseRPG-Creator"+@"""");
+                sw.WriteLine("mkdir " + @"""" + projectAssets + "\\Sprites" + @"""");
+                sw.WriteLine("mkdir " + @"""" + projectAssets + "\\Maps" + @"""");
+                sw.WriteLine("mkdir " + @"""" + projectAssets + "\\Anmation" + @"""");
+                sw.WriteLine("mkdir " + @"""" + projectAssets + "\\Resources" + @"""");
+                sw.WriteLine("mkdir " + @"""" + projectAssets + "\\AnimationController" + @"""");
+                sw.WriteLine("ROBOCOPY " + dirpath1 + " "+@""""+projectAssets + "\\TurnBaseRPG-Creator"+@""""+" *.* /E");
                 sw.WriteLine("ROBOCOPY " + dirpath2 + " " + projectSettings+ " *.* /E");
+                //Copia de la carpeta de rpg-resources a resources
+                sw.WriteLine("ROBOCOPY "+@""""+projectAssets + "\\TurnBaseRPG-Creator\\RPG-Resources"+@""""+
+                                         @" """+projectAssets + "\\Resources"+@""""+ " *.* /E");
+                //Copia de la carpeta de rpg-Maps a maps
+                sw.WriteLine("ROBOCOPY " + @"""" + projectAssets + "\\TurnBaseRPG-Creator\\RPG-Maps" + @"""" +
+                           @" """ + projectAssets + "\\Maps" + @"""" + " *.* /E");
+                //Copia de la carpeta de rpg-animation a animation
+                sw.WriteLine("ROBOCOPY " + @"""" + projectAssets + "\\TurnBaseRPG-Creator\\RPG-Animation" + @"""" +
+                           @" """ + projectAssets + "\\Animation" + @"""" + " *.* /E");
+                //Copia de la carpeta de rpg-animation a animation
+                sw.WriteLine("ROBOCOPY " + @"""" + projectAssets + "\\TurnBaseRPG-Creator\\RPG-Sprites" + @"""" +
+                           @" """ + projectAssets + "\\Sprites" + @"""" + " *.* /E");
+                //Copia de la carpeta de rpg-animationController a animationController
+                sw.WriteLine("ROBOCOPY " + @"""" + projectAssets + "\\TurnBaseRPG-Creator\\RPG-AnimationController" + @"""" +
+                           @" """ + projectAssets + "\\AnimationController" + @"""" + " *.* /E");
+                sw.WriteLine("echo "+UnityPath.Replace('\\','/')+">"+@""""+projectAssets+"\\Settings.txt"+@"""");
+                UnityEngine.Debug.Log(ProjectSettings.UnityPath);
                 sw.WriteLine(ProjectSettings.UnityPath.Replace('/','\\')+" -createProject "+projectPath);
             }
         }
@@ -67,4 +90,6 @@ public class Project  {
             }
         }   
     }
+
+
 }
