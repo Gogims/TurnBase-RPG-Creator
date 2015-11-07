@@ -10,8 +10,11 @@ public class Actor : RPGElement
     public int HP;
     public int MP;
     public Sprite Image;
-    
-    
+
+    public List<Sprite> downSprites;
+    public List<Sprite> leftSprites;
+    public List<Sprite> upSprites;
+    public List<Sprite> rightSprites;
 
     public Actor ()
 	{

@@ -291,8 +291,13 @@ public abstract class CRUD<T> : EditorWindow
         Creating = false;
     }
 
-    private GameObject NewGameObject()
+    protected virtual GameObject NewGameObject()
     {
+        if (elementObject != null)
+        {
+            DestroyImmediate(elementObject);
+        }
+
         GameObject newGameObject = new GameObject(Type);
         element = newGameObject.AddComponent<T>();
 
