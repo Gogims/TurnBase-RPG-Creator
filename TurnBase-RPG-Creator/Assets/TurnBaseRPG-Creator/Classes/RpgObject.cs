@@ -1,11 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
-
-public class RpgObject  {
-	Texture2D texture;
-	public string Tag { set; get;}
+/// <summary>
+/// Representa una imagen para RPG
+/// </summary>
+public class RPGImage  {
+    /// <summary>
+    /// Imagen
+    /// </summary>
+    public Texture2D texture { get; set; }
+    /// <summary>
+    /// Nombre de la imagen
+    /// </summary>
 	public string name { set; get; }
+    /// <summary>
+    /// Tipo de imagen ( Tiles,Wall,etc.)
+    /// </summary>
 	public int type { set; get; } 	
-	public  static string[] ObjectTypes = {"Tiles","Wall"};	
 
 }

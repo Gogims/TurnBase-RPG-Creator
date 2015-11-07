@@ -1,0 +1,46 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2008
+
+Project("{31FB0345-0477-CA17-0320-E86D4B4E97DC}") = "TurnBase-RPG-Creator", "Assembly-CSharp-vs.csproj", "{038FB830-0CEF-54A7-2C95-EFEF74F22B38}"
+EndProject
+Project("{31FB0345-0477-CA17-0320-E86D4B4E97DC}") = "TurnBase-RPG-Creator", "Assembly-CSharp-Editor-vs.csproj", "{C9CCF2E5-6B4F-6A14-4CF4-62D2A8BBCA8C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{038FB830-0CEF-54A7-2C95-EFEF74F22B38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{038FB830-0CEF-54A7-2C95-EFEF74F22B38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{038FB830-0CEF-54A7-2C95-EFEF74F22B38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{038FB830-0CEF-54A7-2C95-EFEF74F22B38}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9CCF2E5-6B4F-6A14-4CF4-62D2A8BBCA8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9CCF2E5-6B4F-6A14-4CF4-62D2A8BBCA8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9CCF2E5-6B4F-6A14-4CF4-62D2A8BBCA8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9CCF2E5-6B4F-6A14-4CF4-62D2A8BBCA8C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+														GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
+		Policies = $0
+		$0.TextStylePolicy = $1
+		$1.inheritsSet = null
+		$1.scope = text/x-csharp
+		$0.CSharpFormattingPolicy = $2
+		$2.inheritsSet = Mono
+		$2.inheritsScope = text/x-csharp
+		$2.scope = text/x-csharp
+		$0.TextStylePolicy = $3
+		$3.FileWidth = 120
+		$3.TabWidth = 4
+		$3.IndentWidth = 4
+		$3.EolMarker = Unix
+		$3.inheritsSet = Mono
+		$3.inheritsScope = text/plain
+		$3.scope = text/plain
+	EndGlobalSection
+
+EndGlobal

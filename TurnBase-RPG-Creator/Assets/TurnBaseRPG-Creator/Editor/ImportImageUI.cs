@@ -5,9 +5,14 @@ using System.IO;
 
 public class ImportImageUI : EditorWindow
 {	
+<<<<<<< HEAD
     Texture2D texture;
 	FileBrowser image = new FileBrowser ("Assets/TurnBaseRPG-Creator/Sprites/96x96.jpg");
 	RpgObject rpgobject = new RpgObject();
+=======
+	FileBrowser image = new FileBrowser ("Assets/Sprites/96x96.jpg");
+	RPGImage rpgobject = new RPGImage();
+>>>>>>> Leonel
 	bool upload;
 	bool import=false;
     const int width = 120;
@@ -26,8 +31,8 @@ public class ImportImageUI : EditorWindow
         // Button to upload image
         GUI.enabled = true;
         upload = GUI.Button (new Rect(300, 0, 100, 20), "Upload Photo");
-		texture = new Texture2D (width, height);
-		texture.LoadImage (image.GetImage);
+        rpgobject.texture= new Texture2D(width, height);
+        rpgobject.texture.LoadImage(image.GetImage);
 		EditorGUI.LabelField(new Rect(0,30,100,20),new GUIContent("Name:"));
 		rpgobject.name = EditorGUI.TextField(new Rect(90,30,200,20),rpgobject.name);
 		EditorGUI.LabelField(new Rect(0,70,100,20),new GUIContent("Sprite Type:"));
@@ -36,7 +41,7 @@ public class ImportImageUI : EditorWindow
 		EditorGUI.TextField(new Rect(0,110,290,120),ObjectTypes.GetDescription(obtype[rpgobject.type]));
 		EditorGUI.LabelField(new Rect(300,70, 80,20),new GUIContent("Sprite Sheet:"));
 		spritesheet = EditorGUI.Toggle(new Rect(300,90,20,20),spritesheet);
-		EditorGUI.DrawPreviewTexture(new Rect(300, 110, width, height), texture);
+        EditorGUI.DrawPreviewTexture(new Rect(300, 110, width, height), rpgobject.texture);
 		import = GUI.Button (new Rect(60, 240,300, 20), "Import Object");
 	}
 
@@ -58,10 +63,11 @@ public class ImportImageUI : EditorWindow
 		}
 	}
 	void SaveSprites(){
-		if (texture != null) {
-            if (!spritesheet && obtype[rpgobject.type] != "Background") 
-				TextureScale.Bilinear(texture,32,32);
-			var bytes = texture.EncodeToPNG ();
+        if (rpgobject.texture != null)
+        {
+            if (!spritesheet && obtype[rpgobject.type] != "Background")
+                TextureScale.Bilinear(rpgobject.texture, 32, 32);
+            var bytes = rpgobject.texture.EncodeToPNG();
 			int startindex = image.path.LastIndexOf ('.');
 			FileStream file = File.Open (Application.dataPath + "/Sprites/"+rpgobject.name+image.path.Substring (startindex), FileMode.Create);
 			var binary = new BinaryWriter (file);
