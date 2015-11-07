@@ -6,7 +6,7 @@ using System.IO;
 public class ImportImageUI : EditorWindow
 {	
     Texture2D texture;
-	FileBrowser image = new FileBrowser ("Assets/Sprites/96x96.jpg");
+	FileBrowser image = new FileBrowser ("Assets/TurnBaseRPG-Creator/Sprites/96x96.jpg");
 	RpgObject rpgobject = new RpgObject();
 	bool upload;
 	bool import=false;
