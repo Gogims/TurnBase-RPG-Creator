@@ -13,18 +13,18 @@ public class RPGInspectorUI : EditorWindow {
 
 	public void Init()
 	{
-		image = new FileBrowser ("Assets/Sprites/96x96.jpg").GetImage;
+		image = new FileBrowser ("Assets/TurnBaseRPG-Creator/RPG-Sprites/96x96.jpg").GetImage;
 	}
 	void OnGUI() 
 	{
 		string tag = "";
 		string name = "";
-		if (MapEditor.selectedObject != null) {
+		if (MapEditor.selectedObject != null && MapEditor.selectedObject.tag == "Tile") {
 			image = MapEditor.selectedObject.GetComponent<SpriteRenderer> ().sprite.texture.EncodeToPNG ();
 			tag = MapEditor.selectedObject.tag;
 			name = MapEditor.selectedObject.name;
 		} else {
-			image = new FileBrowser ("Assets/Sprites/96x96.jpg").GetImage;
+            image = new FileBrowser("Assets/TurnBaseRPG-Creator/RPG-Sprites/96x96.jpg").GetImage;
 		}
 		GUI.enabled = true;
 		texture = new Texture2D (width, height);

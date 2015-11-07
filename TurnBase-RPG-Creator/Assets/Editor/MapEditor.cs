@@ -29,7 +29,7 @@ public class MapEditor {
 		if (Selection.activeGameObject != null) {
 			ChangeSelectedObject (Selection.activeGameObject);
 		}// si el click izquierdo es precionado y el objeto seleccionado es diferente de nulo inserta un objeto al mapa. 
-		if (EventType.MouseDown == e.type && e.button == 0 && selectedObject != null) {
+		if (EventType.MouseDown == e.type && e.button == 0 && selectedObject != null && selectedObject.tag == "Tile") {
 			DropObject ();
 		} // Si la tecla del  es precionada borra los objetos seleccionados. 
 		if (EventType.KeyDown == e.type ) {
@@ -46,7 +46,7 @@ public class MapEditor {
 	/// <param name="Selected">Selected.</param>
 	static void DeleteSelectedObject(GameObject Selected)
 	{
-		MapUI.DestroyImmediate (Selected);
+		MapUI.DestroyImmediate (Selected,true);
 	}
 	/// <summary>
 	/// Borra los objeto seleccionados.
@@ -60,10 +60,10 @@ public class MapEditor {
 			else 
 				temp = (GameObject)LightFloor;
 			temp.transform.position = i.transform.position;
-			MapUI.DestroyImmediate (i);
+			MapUI.DestroyImmediate (i,true);
 			MapUI.Instantiate (temp, temp.transform.position, Quaternion.identity);
 			
-			MapUI.DestroyImmediate (GameObject.Find("New Game Object"));
+			MapUI.DestroyImmediate (GameObject.Find("New Game Object"),true);
 		}
 	}
 	/// <summary>
@@ -71,7 +71,7 @@ public class MapEditor {
 	/// </summary>
 	/// <param name="Selected">objeto seleccionado</param>
 	static void ChangeSelectedObject(GameObject Selected){
-		if (Selected.tag == "Floor" && !Selected.activeInHierarchy) {
+		if (Selected.tag == "Tile" && Selected != selectedObject && !Selected.activeInHierarchy) {
 			selectedObject = Selected;
 			GameEngine.inspectorRpg.Focus();
 		}
@@ -84,12 +84,13 @@ public class MapEditor {
 	{
 
 		foreach (GameObject i in Selection.gameObjects) {
+            if (i.name == selectedObject.name) continue;
 			GameObject temp = selectedObject;
 			temp.transform.position = i.transform.position;
-			MapUI.DestroyImmediate (i);
+			MapUI.DestroyImmediate (i,true);
 			MapUI.Instantiate (temp, temp.transform.position, Quaternion.identity);
 			
-			MapUI.DestroyImmediate (GameObject.Find("New Game Object"));
+			MapUI.DestroyImmediate (GameObject.Find("New Game Object"),true);
 
 		}
 		                          

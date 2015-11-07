@@ -4,7 +4,9 @@ using UnityEditor;
 
 public class DeployUI : EditorWindow {
 
-
+    public void Init() { 
+    
+    }
     void OnGui()
     {
 

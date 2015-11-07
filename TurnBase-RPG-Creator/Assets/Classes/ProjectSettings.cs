@@ -14,7 +14,7 @@ public class ProjectSettings  {
     /// <summary>
     /// Archivo de configuracion
     /// </summary>
-    const string path = @"Assets/settings.txt";
+    const string path = "Assets/settings.txt";
     /// <summary>
     /// Constructor Estatico
     /// </summary>
@@ -32,7 +32,7 @@ public class ProjectSettings  {
         {
             string text = File.ReadAllText(path);
             var settings = text.Split('|');
-            UnityPath = settings[0];
+            UnityPath = settings[0].Replace(System.Environment.NewLine,"");
         }
         else
             File.Create(path);
@@ -40,27 +40,38 @@ public class ProjectSettings  {
     /// <summary>
     /// Guarda las configuraciones del proyecto.
     /// </summary>
-    static public bool SaveSettings()
+    static public bool SaveSettings(string pathSave,string unitypath)
     {
-        if (CheckPath())
+
+        if (CheckPath(unitypath))
         {
-            string content = UnityPath;
-            File.WriteAllText(path, content);
+            UnityEngine.Debug.Log(pathSave);
+            File.Open(pathSave,FileMode.OpenOrCreate);
+            string content = unitypath;
+            File.WriteAllText(pathSave, content);
             return true;
         }
         else
             return false;
     }
     /// <summary>
+    /// Guarda las configuraciones del proyecto.
+    /// </summary>
+    static public bool SaveSettings()
+    {
+        return SaveSettings(path,UnityPath);
+    }
+    /// <summary>
     /// Revisa si el path que se suministro es correcto.
     /// </summary>
     /// <returns></returns>
-    static private bool CheckPath() {
-        string [] unity = UnityPath.Split('/');
+    static private bool CheckPath(string unitypath)
+    {
+        string[] unity = UnityPath.Split('/');
         string unityexe = (string)unity.GetValue(unity.Length - 1);
-        if ( unityexe == "Unity.exe" && File.Exists(UnityPath))
+        if (unityexe == "Unity.exe" && File.Exists(UnityPath))
             return true;
-        else 
+        else
             return false;
     }
 }
