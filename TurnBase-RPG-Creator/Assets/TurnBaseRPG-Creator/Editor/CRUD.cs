@@ -241,7 +241,7 @@ public abstract class CRUD<T> : EditorWindow
     /// </summary>
     void Update()
     {
-        //Si se crea una nueva arma
+        //Si se crea un nuevo elemento
         if (CreateButton)
         {
             elementObject = NewGameObject();
@@ -255,7 +255,7 @@ public abstract class CRUD<T> : EditorWindow
             elementObject = NewGameObject();
         }
 
-        //Si se elimina un arma
+        //Si se elimina un elemento
         if (DeleteButton)
         {
             Delete();
@@ -291,8 +291,13 @@ public abstract class CRUD<T> : EditorWindow
         Creating = false;
     }
 
-    private GameObject NewGameObject()
+    protected virtual GameObject NewGameObject()
     {
+        if (elementObject != null)
+        {
+            DestroyImmediate(elementObject);
+        }
+
         GameObject newGameObject = new GameObject(Type);
         element = newGameObject.AddComponent<T>();
 

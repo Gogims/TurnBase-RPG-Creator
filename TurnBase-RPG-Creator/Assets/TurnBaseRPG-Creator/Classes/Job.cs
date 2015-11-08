@@ -2,12 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Job : MonoBehaviour
+public class Job : RPGElement
 {
-    public int id;
-
-    public string Name;
-
     public Formula MaxHP;
 
     public Formula MaxMP;

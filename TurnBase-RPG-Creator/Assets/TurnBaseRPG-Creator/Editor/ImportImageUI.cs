@@ -5,14 +5,8 @@ using System.IO;
 
 public class ImportImageUI : EditorWindow
 {	
-<<<<<<< HEAD
-    Texture2D texture;
-	FileBrowser image = new FileBrowser ("Assets/TurnBaseRPG-Creator/Sprites/96x96.jpg");
-	RpgObject rpgobject = new RpgObject();
-=======
 	FileBrowser image = new FileBrowser ("Assets/Sprites/96x96.jpg");
 	RPGImage rpgobject = new RPGImage();
->>>>>>> Leonel
 	bool upload;
 	bool import=false;
     const int width = 120;

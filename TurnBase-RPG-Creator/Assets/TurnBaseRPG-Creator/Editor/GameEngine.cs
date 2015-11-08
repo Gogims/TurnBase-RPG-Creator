@@ -60,28 +60,7 @@ public class GameEngine : EditorWindow {
         window.minSize = new Vector2(900, 400);
         window.Init();
         window.Show();
-    }
-    /// <summary>
-    /// Presenta la ventana de la curva de experiencia
-    /// </summary>
-    [MenuItem("RPG-Creator/Formula")]
-    public static void ShowFormula()
-    {
-        var window = EditorWindow.GetWindow<ExpCurve>();
-        window.Init();
-        window.Show();
-    }
-
-    /// <summary>
-    /// Presenta la ventana de la curva de experiencia
-    /// </summary>
-    [MenuItem("RPG-Creator/Stats")]
-    public static void ShowStats()
-    {
-        var window = EditorWindow.GetWindow<StatsCurve>();
-        window.Init(1);
-        window.Show();
-    }
+    }    
 
     /// <summary>
     /// Presenta la ventana del inspector de RPG-CREATOR
@@ -101,8 +80,8 @@ public class GameEngine : EditorWindow {
     [MenuItem("RPG-Creator/Class")]
     public static void ShowClass()
     {
-        var window = EditorWindow.GetWindow<StatsCurve>();
-        window.Init(1);
+        var window = EditorWindow.GetWindow<JobUI>();
+        window.Init();
         window.Show();
     }
 

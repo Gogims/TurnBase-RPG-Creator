@@ -4,11 +4,6 @@ using System.Collections.Generic;
 
 public class PlayerUI : CRUD<Player>
 {
-    public List<Sprite> downSprites;
-    public List<Sprite> leftSprites;
-    public List<Sprite> upSprites;
-    public List<Sprite> rightSprites;
-
     public Weapon MainHand;
     public Armor Helmet;
     public Armor UpperBody;
@@ -17,25 +12,15 @@ public class PlayerUI : CRUD<Player>
     public Armor Ring;
     public Armor Necklace;
 
+    Animator animations;
+
     public PlayerUI() : base("Player", new Rect(0, 0, 300, 730)) { }
 
     public override void Init()
     {
         element = new Player();
         base.Init();
-
-        downSprites = new List<Sprite>();
-        leftSprites = new List<Sprite>();
-        upSprites = new List<Sprite>();
-        rightSprites = new List<Sprite>();
-
-        MainHand = elementObject.AddComponent<Weapon>();
-        Helmet = elementObject.AddComponent<Armor>();
-        UpperBody = elementObject.AddComponent<Armor>();
-        LowerBody = elementObject.AddComponent<Armor>();
-        Ring = elementObject.AddComponent<Armor>();
-        Necklace = elementObject.AddComponent<Armor>();
-        Feet = elementObject.AddComponent<Armor>();
+        NewPlayer();        
 
         foreach (var item in GetObjects())
         {
@@ -119,25 +104,25 @@ public class PlayerUI : CRUD<Player>
         if (GUI.Button(new Rect(0, 80, 50, 20), "Down"))
         {
             var window = EditorWindow.GetWindow<AnimationUI>();
-            window.Init(ref downSprites, "Down Sprites");
+            window.Init(ref element.downSprites, "Down Sprites");
             window.Show();
         }
         if (GUI.Button(new Rect(75, 80, 50, 20), "Left"))
         {
             var window = EditorWindow.GetWindow<AnimationUI>();
-            window.Init(ref leftSprites, "Left Sprites");
+            window.Init(ref element.leftSprites, "Left Sprites");
             window.Show();
         }
         if (GUI.Button(new Rect(150, 80, 50, 20), "Up"))
         {
             var window = EditorWindow.GetWindow<AnimationUI>();
-            window.Init(ref upSprites, "Up Sprites");
+            window.Init(ref element.upSprites, "Up Sprites");
             window.Show();
         }
         if (GUI.Button(new Rect(225, 80, 50, 20), "Right"))
         {
             var window = EditorWindow.GetWindow<AnimationUI>();
-            window.Init(ref rightSprites, "Right Sprites");
+            window.Init(ref element.rightSprites, "Right Sprites");
             window.Show();
         }
 
@@ -147,11 +132,6 @@ public class PlayerUI : CRUD<Player>
         GUI.enabled = true;
 
         GUILayout.EndArea();
-
-        if (CreateButton)
-        {
-            CreateAnimation();
-        }
     }    
 
     private void AddArmor(string name, ref Armor current, Armor.Type armortype)
@@ -188,45 +168,47 @@ public class PlayerUI : CRUD<Player>
         ActorAnimation animation = new ActorAnimation();
         List<Sprite> sprites;
 
-        if (downSprites.Count > 0)
+        if (element.downSprites.Count > 0)
         {
-            sprites = new List<Sprite>(downSprites);
-            sprites.Add(downSprites[0]);
-            animation.down = ActorAnimation.ConstructAnimation(sprites, "test", "down", 30, true);
-            animation.downIdle = ActorAnimation.ConstructAnimation(downSprites[0], "test", "downIdle", 30, true);
+            sprites = new List<Sprite>(element.downSprites);
+            sprites.Add(element.downSprites[0]);
+            animation.down = ActorAnimation.ConstructAnimation(sprites, element.Name, "down", 30, true);
+            animation.downIdle = ActorAnimation.ConstructAnimation(element.downSprites[0], element.Name, "downIdle", 30, true);
         }
 
-        if (leftSprites.Count > 0)
+        if (element.leftSprites.Count > 0)
         {
-            sprites = new List<Sprite>(leftSprites);
-            sprites.Add(leftSprites[0]);
-            animation.left = ActorAnimation.ConstructAnimation(sprites, "test", "left", 30, true);
-            animation.leftIdle = ActorAnimation.ConstructAnimation(leftSprites[0], "test", "leftIdle", 30, true);
+            sprites = new List<Sprite>(element.leftSprites);
+            sprites.Add(element.leftSprites[0]);
+            animation.left = ActorAnimation.ConstructAnimation(sprites, element.Name, "left", 30, true);
+            animation.leftIdle = ActorAnimation.ConstructAnimation(element.leftSprites[0], element.Name, "leftIdle", 30, true);
         }
 
-        if (upSprites.Count > 0)
+        if (element.upSprites.Count > 0)
         {
-            sprites = new List<Sprite>(upSprites);
-            sprites.Add(upSprites[0]);
-            animation.up = ActorAnimation.ConstructAnimation(sprites, "test", "up", 30, true);
-            animation.upIdle = ActorAnimation.ConstructAnimation(upSprites[0], "test", "upIdle", 30, true);
+            sprites = new List<Sprite>(element.upSprites);
+            sprites.Add(element.upSprites[0]);
+            animation.up = ActorAnimation.ConstructAnimation(sprites, element.Name, "up", 30, true);
+            animation.upIdle = ActorAnimation.ConstructAnimation(element.upSprites[0], element.Name, "upIdle", 30, true);
         }
 
-        if (rightSprites.Count > 0)
+        if (element.rightSprites.Count > 0)
         {
-            sprites = new List<Sprite>(rightSprites);
-            sprites.Add(rightSprites[0]);
-            animation.right = ActorAnimation.ConstructAnimation(sprites, "test", "right", 30, true);
-            animation.rightIdle = ActorAnimation.ConstructAnimation(rightSprites[0], "test", "rightIdle", 30, true);
+            sprites = new List<Sprite>(element.rightSprites);
+            sprites.Add(element.rightSprites[0]);
+            animation.right = ActorAnimation.ConstructAnimation(sprites, element.Name, "right", 30, true);
+            animation.rightIdle = ActorAnimation.ConstructAnimation(element.rightSprites[0], element.Name, "rightIdle", 30, true);
         }
 
-        animation.ConstructAnimationControl(element.Name);
+        animations.runtimeAnimatorController = animation.ConstructAnimationControl(element.Name);        
     }
 
     protected override void Create()
     {
         Id++;
         element.Id = Id;
+
+        CreateAnimation();
         CreatePrefab(element);
         listElements.AddItem(element.Name, element.Id);
         SetId();
@@ -238,6 +220,7 @@ public class PlayerUI : CRUD<Player>
 
         MainHand = elementObject.GetComponent<Weapon>();
         Armor[] armors = elementObject.GetComponents<Armor>();
+        animations = elementObject.GetComponent<Animator>();
 
         for (int i = 0; i < armors.Length; i++)
         {
@@ -255,5 +238,32 @@ public class PlayerUI : CRUD<Player>
             if (i == 5)
                 Ring = armors[i];
         }
+    }
+
+    protected override GameObject NewGameObject()
+    {
+        elementObject = base.NewGameObject();
+        NewPlayer();
+
+        return elementObject;
+    }
+
+    private void NewPlayer()
+    {
+        MainHand = elementObject.AddComponent<Weapon>();
+
+        Helmet = elementObject.AddComponent<Armor>();
+        UpperBody = elementObject.AddComponent<Armor>();
+        LowerBody = elementObject.AddComponent<Armor>();
+        Ring = elementObject.AddComponent<Armor>();
+        Necklace = elementObject.AddComponent<Armor>();
+        Feet = elementObject.AddComponent<Armor>();
+
+        animations = elementObject.AddComponent<Animator>();
+
+        element.downSprites = new List<Sprite>();
+        element.leftSprites = new List<Sprite>();
+        element.upSprites = new List<Sprite>();
+        element.rightSprites = new List<Sprite>();        
     }
 }

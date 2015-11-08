@@ -80,7 +80,7 @@ public class ErrorHandler  {
             bool result = false; 
             foreach(ErrorCondition j in properties[i].Validations.Keys){
                 bool innerResult = false;
-                Debug.Log(i + ":" + properties[i].Value + " validacion:" + properties[i].Validations[j].Value);
+                //Debug.Log(i + ":" + properties[i].Value + " validacion:" + properties[i].Validations[j].Value);
                 if ( j == ErrorCondition.Equal) {
                     if ( properties[i].Validations[j].Value == properties[i].Value )
                         innerResult = true;
@@ -98,7 +98,7 @@ public class ErrorHandler  {
                 {
                     if (properties[i].Value > properties[i].Validations[j].Value )
                     {
-                        Debug.Log(i + " Cumple Mayor");
+                       // Debug.Log(i + " Cumple Mayor");
                           innerResult = true;
                     }
                     else
@@ -108,7 +108,7 @@ public class ErrorHandler  {
                 {
                     if (properties[i].Value >= properties[i].Validations[j].Value)
                     {
-                        Debug.Log(i + " Cumple Mayor o igual ");
+                       // Debug.Log(i + " Cumple Mayor o igual ");
                         innerResult = true;
                     }
                     else
@@ -118,7 +118,7 @@ public class ErrorHandler  {
                 {
                     if (properties[i].Value < properties[i].Validations[j].Value)
                     {
-                        Debug.Log(i+" Cumple Menor");
+                       // Debug.Log(i+" Cumple Menor");
                         innerResult = true;
                     }
                     else
@@ -128,7 +128,7 @@ public class ErrorHandler  {
                 {
                     if (properties[i].Value <= properties[i].Validations[j].Value)
                     {
-                        Debug.Log(i + " Cumple menor o igual ");
+                     //   Debug.Log(i + " Cumple menor o igual ");
                         innerResult = true;
                     }
                     else
@@ -149,14 +149,15 @@ public class ErrorHandler  {
                     break;
                 }
             }
+
             if (!result)
             {
-                Err = true;
+                if (!Err)
+                    Err = true;
                 properties[i].Error = true;
             }
             else
             {
-                Err = false;
                 properties[i].Error = false;
             }
 

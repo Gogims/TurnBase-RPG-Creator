@@ -32,7 +32,7 @@ public class Map{
 					clone = EditorWindow.Instantiate(prefab, position, Quaternion.identity) as GameObject; // Agrega un objeto nuevo a la scene.
 				else 
 					clone = EditorWindow.Instantiate(prefab2, new Vector3(i,j,0f), Quaternion.identity) as GameObject;
-				clone.tag = "Floor";
+				clone.tag = "RPG-CREATOR";
 				EditorWindow.DestroyImmediate(GameObject.Find("New Game Object"));
 			}
 		}

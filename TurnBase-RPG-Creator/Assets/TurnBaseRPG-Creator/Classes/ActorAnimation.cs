@@ -2,8 +2,6 @@
 using UnityEditor;
 using UnityEditor.Animations;
 using System.Collections.Generic;
-using System;
-using System.IO;
 
 /// <summary>
 /// Clase encargada de acceder a los settings de los animation clip
@@ -143,7 +141,7 @@ public class ActorAnimation : MonoBehaviour
     /// Construye el controlador de animación a partir de todos las animaciones obtenidas
     /// </summary>
     /// <param name="name">Nombre del controlador de animación</param>
-    public void ConstructAnimationControl(string name)
+    public AnimatorController ConstructAnimationControl(string name)
     {
         BlendTree idle = new BlendTree();
 
@@ -220,6 +218,8 @@ public class ActorAnimation : MonoBehaviour
         root.AddTransition(upState).AddCondition(AnimatorConditionMode.If, 0, "up");
         root.AddTransition(rightState).AddCondition(AnimatorConditionMode.If, 0, "right");
         root.AddTransition(downState).AddCondition(AnimatorConditionMode.If, 0, "down");
+
+        return controller;
     }
 
     /// <summary>
