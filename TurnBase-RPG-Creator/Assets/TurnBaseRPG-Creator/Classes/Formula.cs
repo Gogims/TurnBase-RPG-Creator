@@ -2,44 +2,46 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
-public class Formula : MonoBehaviour
+[Serializable]
+public class Formula
 {
+    public enum FormulaType
+    {
+        XP,
+        MaxHP,
+        MaxMP,
+        Attack,
+        Defense,
+        MagicAttack,
+        MagicDefense,
+        Agility,
+        Luck
+    };    
+    
     /// <summary>
     /// Valor inicial con el que la formula empezará
     /// </summary>
     public int BaseValue = 30;
-
     /// <summary>
     /// Simple valor adicional que se le agrega por cada nivel
     /// </summary>
     public int ExtraValue = 20;
-
     /// <summary>
     /// Valor para hacer crecer los últimos niveles
     /// </summary>
     public int Acceleration = 30;
-
-    /// <summary>
-    /// Notifica si uno de los valores que comprenden la formula a cambiado, para actualizarlos
-    /// </summary>
-    public bool updated;
-
     /// <summary>
     /// Valor mínimo de los sliders de la curva de experiencia
     /// </summary>
     public const int MinValue = 10;
-
     /// <summary>
     /// Valor máximo de los sliders de la curva de experiencia
     /// </summary>
     public const int MaxValue = 50;
-
     /// <summary>
     /// Máximo nivel que un personaje puede llegar
     /// </summary>
     public const int MaxLevel = 99;
-
     /// <summary>
     /// Estructura que contiene el (nivel, cantidad de xp para subir al próximo nivel)
     /// </summary>
@@ -58,13 +60,16 @@ public class Formula : MonoBehaviour
         get { return (double)Acceleration / 100; }
     }
 
+    private FormulaType type;
+
     /// <summary>
     /// Constructor que agrega el nivel máximo de items en el diccionario y le asigna un valor por defecto
     /// </summary>
     public Formula()
     {
         Growth = new Dictionary<int, int>(MaxLevel);
-        CurveName = "XP";
+        CurveName = "Experience";
+        type = FormulaType.XP;
 
         for (int i = 1; i <= MaxLevel; i++)
         {
@@ -76,16 +81,31 @@ public class Formula : MonoBehaviour
     /// Constructor que agrega el valor por defecto de los atributos
     /// </summary>
     /// <param name="type">1=Max HP</param>
-    public Formula(int type)
+    public Formula(FormulaType _type)
     {
         Growth = new Dictionary<int, int>(MaxLevel);
+        type = _type;
 
-        if (type == 1)
+        if (type == FormulaType.MaxHP)
             CurveName = "Max HP";
+        else if (type == FormulaType.MaxMP)
+            CurveName = "Max MP";
+        else if (type == FormulaType.Attack)
+            CurveName = "Attack";
+        else if (type == FormulaType.Defense)
+            CurveName = "Defense";
+        else if (type == FormulaType.MagicAttack)
+            CurveName = "Magic Attack";
+        else if (type == FormulaType.MagicDefense)
+            CurveName = "Magic Defense";
+        else if (type == FormulaType.Agility)
+            CurveName = "Agility";
+        else if (type == FormulaType.Luck)
+            CurveName = "Luck";
 
         for (int i = 1; i <= MaxLevel; i++)
         {
-            Growth.Add(i, GetStatValue(type, i));
+            Growth.Add(i, GetStatValue(i));
         }
     }
 
@@ -112,21 +132,23 @@ public class Formula : MonoBehaviour
     }
 
     /// <summary>
-    /// Actualiza el diccionario completo a partir del valor base, valor extra y la acceleración
+    /// Actualiza el diccionario completo a partir del valor base, valor extra y la acceleración (si aplica)
     /// </summary>
-    public void UpdateValue()
+    public void Update()
     {
-        for (int i = 1; i <= Growth.Count; i++)
+        if (type != FormulaType.XP)
         {
-            Growth[i] = GetLevelValue(i);
+            for (int i = 1; i <= Growth.Count; i++)
+            {
+                Growth[i] = GetStatValue(i);
+            }
         }
-    }
-
-    public void UpdateStat(int type)
-    {
-        for (int i = 1; i <= Growth.Count; i++)
+        else
         {
-            Growth[i] = GetStatValue(type, i);
+            for (int i = 1; i <= Growth.Count; i++)
+            {
+                Growth[i] = GetLevelValue(i);
+            }
         }
     }
 
@@ -137,6 +159,15 @@ public class Formula : MonoBehaviour
     public string GetName()
     {
         return CurveName;
+    }
+
+    /// <summary>
+    /// Devuelve el tipo de curva que es
+    /// </summary>
+    /// <returns>Tipo de curva</returns>
+    public FormulaType GetFormulaType()
+    {
+        return type;
     }
 
     /// <summary>
@@ -159,14 +190,16 @@ public class Formula : MonoBehaviour
     /// </summary>
     /// <param name="Level">Nivel del personaje</param>
     /// <returns>Cantidad de experiencia necesitada para pasar al próximo nivel</returns>
-    private int GetStatValue(int type, int level)
+    private int GetStatValue(int level)
     {
         int value = 0;
 
-        if (type == 1)
+        if (type == FormulaType.MaxHP)
         {
-            value = BaseValue + (level*ExtraValue);
+            
         }
+
+        value = BaseValue + (level * ExtraValue);
 
         return value;  
     }
