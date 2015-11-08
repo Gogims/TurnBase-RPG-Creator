@@ -5,12 +5,20 @@ public class ProjectUI : EditorWindow {
     Project newProject;
     bool browse;
     bool browsePath;
+    ErrorHandler err;
     public void Init() {
         newProject = new Project();
         newProject.ProjectName = "new_Project1";
         newProject.Description = "This is my first Project";
         newProject.Path = ""; 
-        newProject.UnityPath = ""; 
+        newProject.UnityPath = "";
+        err = new ErrorHandler();
+        err.InsertPropertyError("name", newProject.ProjectName.Length, "The name of the project has to be greater than 5", new Rect(450, 30, 100, 20));
+        err.InsertPropertyError("path", newProject.Path.Length, "You have to select the project path", new Rect(450, 140, 100, 20));
+        err.InsertPropertyError("unity", newProject.UnityPath.Length, "You have to select unity path", new Rect(450, 90, 100, 20));
+        err.InsertCondition("name", 5, ErrorCondition.Greater, LogicalCondition.None);
+        err.InsertCondition("path", 0, ErrorCondition.Greater, LogicalCondition.None);
+        err.InsertCondition("unity", 0, ErrorCondition.Greater, LogicalCondition.None);
     }
     void OnGUI() {
         if (newProject == null)
@@ -31,7 +39,9 @@ public class ProjectUI : EditorWindow {
         // Button to upload image
         GUI.enabled = true;
         browse = GUI.Button(new Rect(150, 160, 150, 20), "Browse");
-        if (GUI.Button(new Rect(0, 200, 300, 20), "Create"))
+        err.ShowErrors();
+        UpdateValidationVal();
+        if (GUI.Button(new Rect(0, 200, 300, 20), "Create") && !err.CheckErrors())
         {
             if (ValidateInput())
             {
@@ -40,6 +50,11 @@ public class ProjectUI : EditorWindow {
             }
             
         }
+    }
+    void UpdateValidationVal() {
+        err.UpdateValue("name", newProject.ProjectName.Length);
+        err.UpdateValue("unity", newProject.UnityPath.Length);
+        err.UpdateValue("path", newProject.Path.Length);
     }
     void Update()
     {

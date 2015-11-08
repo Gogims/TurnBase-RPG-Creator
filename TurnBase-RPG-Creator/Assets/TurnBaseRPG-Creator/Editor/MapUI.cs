@@ -6,9 +6,6 @@ public class MapUI : EditorWindow {
 
 	Map map;
     ErrorHandler err;
-    int Heigth = 10;
-    int Width = 10;
-    int name = 8;
     bool create = false;
 	public void Init () {
 		map = new Map ();

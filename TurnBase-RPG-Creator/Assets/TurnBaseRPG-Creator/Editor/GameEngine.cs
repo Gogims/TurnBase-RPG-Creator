@@ -65,7 +65,7 @@ public class GameEngine : EditorWindow {
     /// <summary>
     /// Presenta la ventana del inspector de RPG-CREATOR
     /// </summary>
-    [MenuItem("RPG-Creator/RPG-Inspector")]
+    [MenuItem("RPG-Tools/RPG-Inspector")]
     public static void ShowInspector()
     {
         if (inspectorRpg == null)

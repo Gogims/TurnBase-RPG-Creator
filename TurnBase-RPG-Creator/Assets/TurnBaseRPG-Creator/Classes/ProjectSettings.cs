@@ -21,21 +21,25 @@ public class ProjectSettings  {
     static  ProjectSettings()
     {
         LoadSettings();
+        
     }
     /// <summary>
     /// Carga las configuraciones del proyecto
     /// </summary>
     static private void LoadSettings()
     {
-        
+
         if (File.Exists(path))
         {
             string text = File.ReadAllText(path);
             var settings = text.Split('|');
-            UnityPath = settings[0].Replace(System.Environment.NewLine,"");
+            UnityPath = settings[0].Replace(System.Environment.NewLine, "");
         }
         else
-            File.Create(path);
+        {
+            var file = File.Create(path);
+            file.Close();
+        }
     }
     /// <summary>
     /// Guarda las configuraciones del proyecto.
@@ -46,7 +50,6 @@ public class ProjectSettings  {
         if (CheckPath(unitypath))
         {
             UnityEngine.Debug.Log(pathSave);
-            File.Open(pathSave,FileMode.OpenOrCreate);
             string content = unitypath;
             File.WriteAllText(pathSave, content);
             return true;

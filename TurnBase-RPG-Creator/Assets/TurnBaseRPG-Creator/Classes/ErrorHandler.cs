@@ -40,7 +40,7 @@ public class ErrorHandler  {
     {
         foreach (string i in properties.Keys) { 
             if (properties[i].Error)
-                EditorGUI.LabelField((Rect)properties[i].Position, new GUIContent(properties[i].Message));
+                EditorGUI.LabelField((Rect)properties[i].Position, new GUIContent(properties[i].Message),style);
         }
     }
     public void UpdateValue(string property, int val) {
@@ -51,9 +51,10 @@ public class ErrorHandler  {
     /// su posicion en dado caso que se requiera especificar.
     /// </summary>
     /// <param name="property">Nombre de la propiedad</param>
+    /// <param name="val">Valor de la propiedad.</param>
     /// <param name="errorMessage">Mensaje que se mostrara</param>
     /// <param name="positionError">Posicion donde se va mostrar el mensaje(opcional)</param>
-    public void InsertPropertyError(string property, int val,  string errorMessage, Nullable<Rect> positionError = null) 
+    public void InsertPropertyError(string property, int? val,  string errorMessage, Nullable<Rect> positionError = null) 
     {
         properties.Add(property, new Field(errorMessage, positionError,val));
     }
@@ -184,9 +185,9 @@ public class ErrorHandler  {
         public string Message { get; set; }
         public Nullable<Rect> Position { get; set; }
         public Dictionary<ErrorCondition,Values> Validations { get; set; }
-        public int Value { get; set; }
+        public int? Value { get; set; }
         public bool Error { get; set; }
-        public Field(string msg, Nullable<Rect> pos,int val)
+        public Field(string msg, Nullable<Rect> pos,int? val)
         {
             Message = msg;
             Position = pos;
