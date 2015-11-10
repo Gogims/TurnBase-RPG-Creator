@@ -4,13 +4,11 @@ using UnityEditor;
 
 public class ArmorUI : CRUD<Armor>
 {
-    public Armor AssignedArmor;
-
     public ArmorUI(): base("Armor", new Rect(0, 0, 300, 400)) {    }
 
     public void Initialize(ref Armor a, int type)
     {
-        AssignedArmor = a;
+        AssignedElement = a;
         base.Init();
 
         foreach (var item in GetObjects())
@@ -90,22 +88,16 @@ public class ArmorUI : CRUD<Armor>
             GUI.enabled = true;
         }
 
-        GUILayout.EndArea();
-
-        if (SelectButton)
-        {
-            AssignElement(ref AssignedArmor);
-            this.Close();
-        }
+        GUILayout.EndArea();        
     }    
 
-    private void AssignElement(ref Armor component)
+    override protected void AssignElement()
     {
-        component.Name = element.Name;
-        component.Description = element.Description;
-        component.Stats = element.Stats;
-        component.Id = element.Id;
-        component.Image = element.Image;
+        AssignedElement.Name = element.Name;
+        AssignedElement.Description = element.Description;
+        AssignedElement.Stats = element.Stats;
+        AssignedElement.Id = element.Id;
+        AssignedElement.Image = element.Image;
     }
 
     private void AddObject()

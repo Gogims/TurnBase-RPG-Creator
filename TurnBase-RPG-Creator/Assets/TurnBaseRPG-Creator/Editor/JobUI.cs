@@ -6,6 +6,12 @@ public class JobUI : CRUD<Job>
 {
     public JobUI(): base("Job", new Rect(0, 0, 300, 400)) { }
 
+    public void Initialize(ref Job a)
+    {
+        AssignedElement = a;
+        Init();
+    }
+
     public override void Init()
     {
         base.Init();
@@ -20,6 +26,8 @@ public class JobUI : CRUD<Job>
     void OnGUI()
     {
         RenderLeftSide();
+
+        GUI.enabled = !Selected;
 
         GUILayout.BeginArea(new Rect(300, 0, 600, 250), "Basic Settings", EditorStyles.helpBox);
         GUILayout.Space(10);
@@ -40,10 +48,20 @@ public class JobUI : CRUD<Job>
         GUILayout.BeginArea(new Rect(300, 250, 600, 150), "Skills", EditorStyles.helpBox);
         GUILayout.Space(10);
 
-        SaveButton = GUI.Button(new Rect(0, 130, 100, 20), "Save");
-        GUI.enabled = !Creating;
-        DeleteButton = GUI.Button(new Rect(100, 130, 100, 20), "Delete");
-        GUI.enabled = true;
+        if (Selected)
+        {
+            GUI.enabled = !Creating;
+            SelectButton = GUI.Button(new Rect(0, 130, 100, 20), "Select");
+            GUI.enabled = true;
+        }
+        else
+        {
+            SaveButton = GUI.Button(new Rect(0, 130, 100, 20), "Save");
+            GUI.enabled = !Creating;
+            DeleteButton = GUI.Button(new Rect(100, 130, 100, 20), "Delete");
+            GUI.enabled = true;
+        }
+
         GUILayout.EndArea();
     }    
 
@@ -59,7 +77,7 @@ public class JobUI : CRUD<Job>
             description = curve.BaseValue.ToString() + ", " + curve.ExtraValue.ToString();
 
         EditorGUILayout.TextField(curve.GetName(), description);
-        GUI.enabled = true;
+        GUI.enabled = true && !Selected;
 
         if (GUILayout.Button("..."))
         {
@@ -68,6 +86,21 @@ public class JobUI : CRUD<Job>
             window.Show();
         }
         GUILayout.EndHorizontal();
+    }
+
+    protected override void AssignElement()
+    {
+        AssignedElement.Agility = element.Agility;
+        AssignedElement.Attack = element.Attack;
+        AssignedElement.Defense = element.Defense;
+        AssignedElement.Id = element.Id;
+        AssignedElement.Luck = element.Luck;
+        AssignedElement.MagicAttack = element.MagicAttack;
+        AssignedElement.MagicDefense = element.MagicDefense;
+        AssignedElement.MaxHP = element.MaxHP;
+        AssignedElement.MaxMP = element.MaxMP;
+        AssignedElement.Name = element.Name;
+        AssignedElement.XP = element.XP;
     }
 
     protected override GameObject NewGameObject()

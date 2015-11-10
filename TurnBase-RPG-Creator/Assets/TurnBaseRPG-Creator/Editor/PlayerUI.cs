@@ -11,14 +11,14 @@ public class PlayerUI : CRUD<Player>
     public Armor Feet;
     public Armor Ring;
     public Armor Necklace;
+    public Job PlayerJob;
 
     Animator animations;
 
-    public PlayerUI() : base("Player", new Rect(0, 0, 300, 730)) { }
+    public PlayerUI() : base("Player", new Rect(0, 0, 300, 770)) { }
 
     public override void Init()
     {
-        element = new Player();
         base.Init();
         NewPlayer();        
 
@@ -33,12 +33,24 @@ public class PlayerUI : CRUD<Player>
         RenderLeftSide();
 
         // Basic Settings Area
-        GUILayout.BeginArea(new Rect(300, 0, 600, 250), "Basic Settings", EditorStyles.helpBox);
+        GUILayout.BeginArea(new Rect(300, 0, 600, 290), "Basic Settings", EditorStyles.helpBox);
         GUILayout.Space(10);
 
         element.Name = EditorGUILayout.TextField("Name", element.Name);
         element.Description = EditorGUILayout.TextField("Description", element.Description);
         element.Level = EditorGUILayout.IntSlider(new GUIContent("Level:"), element.Level, 1, 100);
+
+        GUILayout.Label("Class:", EditorStyles.boldLabel);
+        GUILayout.BeginHorizontal();
+        GUILayout.TextField("");
+        if (GUILayout.Button("Select Class"))
+        {
+            var window = EditorWindow.GetWindow<JobUI>();
+            window.Selected = true;
+            window.Initialize(ref PlayerJob);
+            window.Show();
+        }
+        GUILayout.EndHorizontal();
 
         // Attributes section
         GUILayout.Label("Attributes", EditorStyles.boldLabel);
@@ -53,7 +65,7 @@ public class PlayerUI : CRUD<Player>
         GUILayout.EndArea();
 
         // Initial Equipment Area
-        GUILayout.BeginArea(new Rect(300, 250, 600, 320), "Initial Equipment", EditorStyles.helpBox);
+        GUILayout.BeginArea(new Rect(300, 290, 600, 320), "Initial Equipment", EditorStyles.helpBox);
         GUILayout.Space(10);
 
         GUILayout.Label("Weapon", EditorStyles.boldLabel);
@@ -73,11 +85,11 @@ public class PlayerUI : CRUD<Player>
         AddArmor("Lower Body", ref LowerBody, Armor.Type.Leg);
         AddArmor("Feet", ref Feet, Armor.Type.Feet);
         AddArmor("Necklace", ref Necklace, Armor.Type.Necklace);
-        AddArmor("Ring", ref Ring, Armor.Type.Ring);        
+        AddArmor("Ring", ref Ring, Armor.Type.Ring);
 
         GUILayout.EndArea();
 
-        GUILayout.BeginArea(new Rect(300, 570, 600, 160), "Design", EditorStyles.helpBox);
+        GUILayout.BeginArea(new Rect(300, 610, 600, 160), "Design", EditorStyles.helpBox);
         GUILayout.Space(10);
 
         // Text field to upload image
@@ -99,32 +111,11 @@ public class PlayerUI : CRUD<Player>
             GUI.DrawTextureWithTexCoords(new Rect(400, 40, element.Image.textureRect.width, element.Image.textureRect.height), element.Image.texture, element.GetTextureCoordinate());
         }        
 
-        GUI.Label(new Rect(0, 60, 100, 20), "Animation", EditorStyles.boldLabel);        
-
-        if (GUI.Button(new Rect(0, 80, 50, 20), "Down"))
-        {
-            var window = EditorWindow.GetWindow<AnimationUI>();
-            window.Init(ref element.downSprites, "Down Sprites");
-            window.Show();
-        }
-        if (GUI.Button(new Rect(75, 80, 50, 20), "Left"))
-        {
-            var window = EditorWindow.GetWindow<AnimationUI>();
-            window.Init(ref element.leftSprites, "Left Sprites");
-            window.Show();
-        }
-        if (GUI.Button(new Rect(150, 80, 50, 20), "Up"))
-        {
-            var window = EditorWindow.GetWindow<AnimationUI>();
-            window.Init(ref element.upSprites, "Up Sprites");
-            window.Show();
-        }
-        if (GUI.Button(new Rect(225, 80, 50, 20), "Right"))
-        {
-            var window = EditorWindow.GetWindow<AnimationUI>();
-            window.Init(ref element.rightSprites, "Right Sprites");
-            window.Show();
-        }
+        GUI.Label(new Rect(0, 60, 100, 20), "Animation", EditorStyles.boldLabel);
+        AddAnimation("Down", ref element.downSprites, new Rect(0, 80, 75, 20));
+        AddAnimation("Left", ref element.leftSprites, new Rect(100, 80, 75, 20));
+        AddAnimation("Up", ref element.upSprites, new Rect(200, 80, 75, 20));
+        AddAnimation("Right", ref element.rightSprites, new Rect(300, 80, 75, 20));
 
         SaveButton = GUI.Button(new Rect(0, 140, 100, 20), "Save");
         GUI.enabled = !Creating;
@@ -133,6 +124,16 @@ public class PlayerUI : CRUD<Player>
 
         GUILayout.EndArea();
     }    
+
+    private void AddAnimation(string name, ref List<Sprite> animation, Rect position)
+    {
+        if (GUI.Button(position, name + " (" + animation.Count.ToString() + ")"))
+        {
+            var window = EditorWindow.GetWindow<AnimationUI>();
+            window.Init(ref element.downSprites, name + " Sprites");
+            window.Show();
+        }
+    }
 
     private void AddArmor(string name, ref Armor current, Armor.Type armortype)
     {
@@ -219,8 +220,9 @@ public class PlayerUI : CRUD<Player>
         base.UpdateListBox();
 
         MainHand = elementObject.GetComponent<Weapon>();
-        Armor[] armors = elementObject.GetComponents<Armor>();
+        PlayerJob = elementObject.GetComponent<Job>();
         animations = elementObject.GetComponent<Animator>();
+        Armor[] armors = elementObject.GetComponents<Armor>();
 
         for (int i = 0; i < armors.Length; i++)
         {
@@ -258,6 +260,8 @@ public class PlayerUI : CRUD<Player>
         Ring = elementObject.AddComponent<Armor>();
         Necklace = elementObject.AddComponent<Armor>();
         Feet = elementObject.AddComponent<Armor>();
+
+        PlayerJob = elementObject.AddComponent<Job>();        
 
         animations = elementObject.AddComponent<Animator>();
 

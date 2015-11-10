@@ -45,7 +45,7 @@ public class Formula
     /// <summary>
     /// Estructura que contiene el (nivel, cantidad de xp para subir al próximo nivel)
     /// </summary>
-    private Dictionary<int, int> Growth;
+    public List<int> Growth;
 
     /// <summary>
     /// Nombre de la curva (XP, HP, MP...)
@@ -60,6 +60,7 @@ public class Formula
         get { return (double)Acceleration / 100; }
     }
 
+    [SerializeField]
     private FormulaType type;
 
     /// <summary>
@@ -67,13 +68,13 @@ public class Formula
     /// </summary>
     public Formula()
     {
-        Growth = new Dictionary<int, int>(MaxLevel);
+        Growth = new List<int>(MaxLevel);
         CurveName = "Experience";
         type = FormulaType.XP;
 
-        for (int i = 1; i <= MaxLevel; i++)
+        for (int i = 0; i < MaxLevel; i++)
         {
-            Growth.Add(i, GetLevelValue(i));
+            Growth.Add(GetLevelValue(i));
         }
     }
 
@@ -83,7 +84,7 @@ public class Formula
     /// <param name="type">1=Max HP</param>
     public Formula(FormulaType _type)
     {
-        Growth = new Dictionary<int, int>(MaxLevel);
+        Growth = new List<int>(MaxLevel);
         type = _type;
 
         if (type == FormulaType.MaxHP)
@@ -105,7 +106,7 @@ public class Formula
 
         for (int i = 1; i <= MaxLevel; i++)
         {
-            Growth.Add(i, GetStatValue(i));
+            Growth.Add(GetStatValue(i));
         }
     }
 
@@ -116,6 +117,7 @@ public class Formula
     /// <returns>Cantidad de nivel necesitado para el próximo nivel</returns>
     public int GetValue(int Level)
     {
+        Level--;
         return Growth[Level];
     }
 
@@ -127,7 +129,7 @@ public class Formula
     {
         foreach (var item in Growth)
         {
-            yield return item.Value;
+            yield return item;
         }
     }
 
@@ -138,14 +140,14 @@ public class Formula
     {
         if (type != FormulaType.XP)
         {
-            for (int i = 1; i <= Growth.Count; i++)
+            for (int i = 0; i < Growth.Count; i++)
             {
                 Growth[i] = GetStatValue(i);
             }
         }
         else
         {
-            for (int i = 1; i <= Growth.Count; i++)
+            for (int i = 0; i < Growth.Count; i++)
             {
                 Growth[i] = GetLevelValue(i);
             }
@@ -178,9 +180,10 @@ public class Formula
     private int GetLevelValue(int Level)
     {
         int previouslevel = 0;
+        Level++;
 
         if (Level > 1)
-            previouslevel = Growth[Level - 1];
+            previouslevel = Growth[Level - 2];
 
         return previouslevel + BaseValue + (Level * ExtraValue) + (int)(acc * Level * ExtraValue);
     }

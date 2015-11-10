@@ -24,6 +24,10 @@ public abstract class CRUD<T> : EditorWindow
     /// </summary>
     protected T element;
     /// <summary>
+    /// Elemento que se seleccionará para el CRUD de un objeto más complejo
+    /// </summary>
+    protected T AssignedElement;
+    /// <summary>
     /// List de elementos del CRUD
     /// </summary>
     protected ListBox listElements;
@@ -262,6 +266,12 @@ public abstract class CRUD<T> : EditorWindow
             ListObjects = (Resources.LoadAll(Type, typeof(GameObject)));
             elementObject = NewGameObject();
         }
+
+        if (SelectButton)
+        {
+            AssignElement();
+            this.Close();
+        }
     }
     #endregion
 
@@ -303,4 +313,6 @@ public abstract class CRUD<T> : EditorWindow
 
         return newGameObject;
     }
+
+    protected virtual void AssignElement() { }
 }

@@ -4,13 +4,11 @@ using UnityEditor;
 
 public class WeaponUI : CRUD<Weapon>
 {
-    public Weapon AssignedWeapon;
-
     public WeaponUI() : base("Weapon", new Rect(0, 0, 300, 400)) { }
 
     public void Initialize(ref Weapon w)
     {
-        AssignedWeapon = w;
+        AssignedElement = w;
         Init();
     }
 
@@ -84,24 +82,18 @@ public class WeaponUI : CRUD<Weapon>
         }        
 
         GUILayout.EndArea();
-
-        if (SelectButton)
-        {
-            AssignElement(ref AssignedWeapon);
-            this.Close();
-        }
     } 
 
-    private void AssignElement(ref Weapon component)
+    override protected void AssignElement()
     {
-        component.Name = element.Name;
-        component.Description = element.Description;
-        component.HitType = element.HitType;
-        component.HitRate = element.HitRate;
-        component.NumberHit = element.NumberHit;
-        component.Stats = element.Stats;
-        component.Id = element.Id;
-        component.Image = element.Image;        
+        AssignedElement.Name = element.Name;
+        AssignedElement.Description = element.Description;
+        AssignedElement.HitType = element.HitType;
+        AssignedElement.HitRate = element.HitRate;
+        AssignedElement.NumberHit = element.NumberHit;
+        AssignedElement.Stats = element.Stats;
+        AssignedElement.Id = element.Id;
+        AssignedElement.Image = element.Image;        
     }
 
     private void AddObject()
