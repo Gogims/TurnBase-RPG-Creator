@@ -35,7 +35,7 @@ class AnimationClipSettings
 /// <summary>
 /// Clase encarga de crear los animation clip y animation controller
 /// </summary>
-public class ActorAnimation : MonoBehaviour
+public class ActorAnimation
 {
     /// <summary>
     /// Animación cuando el personaje se encuentra parado mirando a la izquierda
@@ -70,6 +70,15 @@ public class ActorAnimation : MonoBehaviour
     /// Animación cuando el personaje se mueve para abajo
     /// </summary>
     public AnimationClip down;
+    /// <summary>
+    /// Tipo de animacion (enemigo o player)
+    /// </summary>
+    public string type;
+
+    public ActorAnimation(string _type)
+    {
+        type = _type;
+    }
 
     /// <summary>
     /// Se encarga de construir el clip de animación
@@ -80,7 +89,7 @@ public class ActorAnimation : MonoBehaviour
     /// <param name="fps">Cantidad de frames por segundo</param>
     /// <param name="loop">Si se desea que se repita indefinidamente la animación</param>
     /// <returns>Animación</returns>
-    public static AnimationClip ConstructAnimation(List<Sprite> sprites, string actorName, string animationName, int fps, bool loop)
+    public AnimationClip ConstructAnimation(List<Sprite> sprites, int id, string animationName, int fps, bool loop)
     {
         AnimationClip animClip = new AnimationClip();
         EditorCurveBinding spriteBinding = new EditorCurveBinding();
@@ -106,14 +115,15 @@ public class ActorAnimation : MonoBehaviour
             ApplyLoop(animClip);
         }
 
-        // Guardando animation clip        
+        // Guardando animation clip      
+        string test;  
 
-        if (!AssetDatabase.IsValidFolder("Assets/Animation/" + actorName))
+        if (!AssetDatabase.IsValidFolder("Assets/Animation/" + type + "/" + id))
         {
-            AssetDatabase.CreateFolder("Assets/Animation", actorName);            
+            test = AssetDatabase.CreateFolder("Assets/Animation/" + type, id.ToString());            
         }
 
-        AssetDatabase.CreateAsset(animClip, "Assets/Animation/" + actorName + "/" + animationName + ".anim");
+        AssetDatabase.CreateAsset(animClip, "Assets/Animation/" + type + "/" + id + "/" + animationName + ".anim");
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
 
@@ -129,24 +139,31 @@ public class ActorAnimation : MonoBehaviour
     /// <param name="fps">Cantidad de frames por segundo</param>
     /// <param name="loop">Si se desea que se repita indefinidamente la animación</param>
     /// <returns>Animación</returns>
-    public static AnimationClip ConstructAnimation(Sprite s, string actorName, string animationName, int fps, bool loop)
+    public AnimationClip ConstructAnimation(Sprite s, int id, string animationName, int fps, bool loop)
     {
         List<Sprite> sprites = new List<Sprite>();
         sprites.Add(s);
 
-        return ConstructAnimation(sprites, actorName, animationName, fps, loop);
+        return ConstructAnimation(sprites, id, animationName, fps, loop);
     }
 
     /// <summary>
     /// Construye el controlador de animación a partir de todos las animaciones obtenidas
     /// </summary>
     /// <param name="name">Nombre del controlador de animación</param>
-    public AnimatorController ConstructAnimationControl(string name)
+    public AnimatorController ConstructAnimationControl(int id)
     {
         BlendTree idle = new BlendTree();
+        string path = "Assets/AnimationController/" + type + "/" + id.ToString() + ".controller";
 
         // Creates the controller
-        var controller = AnimatorController.CreateAnimatorControllerAtPath("Assets/AnimationController/" + name + ".controller");
+
+        if (AssetDatabase.FindAssets(path).Length > 0)
+        {
+            AssetDatabase.DeleteAsset(path);
+        }
+
+        var controller = AnimatorController.CreateAnimatorControllerAtPath(path);
 
         // Add parameters
         controller.AddParameter("left", AnimatorControllerParameterType.Bool);

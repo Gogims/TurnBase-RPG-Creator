@@ -2,7 +2,7 @@
 using UnityEditor;
 using System.Collections.Generic;
 
-public class PlayerUI : CRUD<Player>
+public class EnemyUI : CRUD<Enemy>
 {
     Weapon MainHand;
     Armor Helmet;
@@ -14,12 +14,12 @@ public class PlayerUI : CRUD<Player>
     Job PlayerJob;
     Animator animations;
 
-    public PlayerUI() : base("Player", new Rect(0, 0, 300, 770)) { }
+    public EnemyUI() : base("Enemy", new Rect(0, 0, 300, 810)) { }
 
     public override void Init()
     {
         base.Init();
-        NewPlayer();        
+        NewEnemy();        
 
         foreach (var item in GetObjects())
         {
@@ -32,12 +32,14 @@ public class PlayerUI : CRUD<Player>
         RenderLeftSide();
 
         // Basic Settings Area
-        GUILayout.BeginArea(new Rect(300, 0, 600, 290), "Basic Settings", EditorStyles.helpBox);
+        GUILayout.BeginArea(new Rect(300, 0, 600, 330), "Basic Settings", EditorStyles.helpBox);
         GUILayout.Space(10);
 
         element.Name = EditorGUILayout.TextField("Name", element.Name);
         element.Description = EditorGUILayout.TextField("Description", element.Description);
         element.Level = EditorGUILayout.IntSlider(new GUIContent("Level:"), element.Level, 1, 100);
+        element.RewardExperience = EditorGUILayout.IntField("Experience Earned: ", element.RewardExperience);
+        element.RewardCurrency = EditorGUILayout.IntField("Currency Earned: ", element.RewardCurrency);
 
         GUILayout.Label("Class:", EditorStyles.boldLabel);
         GUILayout.BeginHorizontal();
@@ -64,7 +66,7 @@ public class PlayerUI : CRUD<Player>
         GUILayout.EndArea();
 
         // Initial Equipment Area
-        GUILayout.BeginArea(new Rect(300, 290, 600, 320), "Initial Equipment", EditorStyles.helpBox);
+        GUILayout.BeginArea(new Rect(300, 330, 600, 320), "Initial Equipment", EditorStyles.helpBox);
         GUILayout.Space(10);
 
         GUILayout.Label("Weapon", EditorStyles.boldLabel);
@@ -88,7 +90,7 @@ public class PlayerUI : CRUD<Player>
 
         GUILayout.EndArea();
 
-        GUILayout.BeginArea(new Rect(300, 610, 600, 160), "Design", EditorStyles.helpBox);
+        GUILayout.BeginArea(new Rect(300, 650, 600, 160), "Design", EditorStyles.helpBox);
         GUILayout.Space(10);
 
         // Text field to upload image
@@ -165,7 +167,7 @@ public class PlayerUI : CRUD<Player>
 
     private void CreateAnimation()
     {
-        ActorAnimation animation = new ActorAnimation("Player");
+        ActorAnimation animation = new ActorAnimation("Enemy");
         List<Sprite> sprites;
 
         if (element.downSprites.Count > 0)
@@ -173,7 +175,7 @@ public class PlayerUI : CRUD<Player>
             sprites = new List<Sprite>(element.downSprites);
             sprites.Add(element.downSprites[0]);
             animation.down = animation.ConstructAnimation(sprites, element.Id, "down", 30, true);
-            animation.downIdle = animation.ConstructAnimation(element.downSprites[0], element.Id, "downIdle", 30, true);
+            animation.downIdle = animation.ConstructAnimation(element.downSprites[0],  element.Id, "downIdle", 30, true);
         }
 
         if (element.leftSprites.Count > 0)
@@ -250,12 +252,12 @@ public class PlayerUI : CRUD<Player>
     protected override GameObject NewGameObject()
     {
         elementObject = base.NewGameObject();
-        NewPlayer();
+        NewEnemy();
 
         return elementObject;
     }
 
-    private void NewPlayer()
+    private void NewEnemy()
     {
         MainHand = elementObject.AddComponent<Weapon>();
 

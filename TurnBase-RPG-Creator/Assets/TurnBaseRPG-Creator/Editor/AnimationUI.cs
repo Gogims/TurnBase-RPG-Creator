@@ -20,7 +20,7 @@ public class AnimationUI : EditorWindow
     void OnGUI()
     {
         //Down Sprite        
-        GUILayout.BeginArea(new Rect(0, 0, this.position.width, this.position.height));
+        GUILayout.BeginArea(new Rect(0, 0, this.position.width, this.position.height-20));
 
         if (GUILayout.Button("Add " + SpriteName))
         {
@@ -37,8 +37,13 @@ public class AnimationUI : EditorWindow
         {
             ReorderableListGUI.ListField(spriteList, DrawSprite, spriteList[0].textureRect.height, ReorderableListFlags.HideAddButton);
         }
-        GUILayout.EndScrollView();
+        GUILayout.EndScrollView();  
         GUILayout.EndArea();
+
+        if (GUI.Button(new Rect(position.width - 100, position.height - 20, 100, 20), "Close"))
+        {
+            this.Close();
+        }
 
         AddSprite();
     }    

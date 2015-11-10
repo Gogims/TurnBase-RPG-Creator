@@ -296,7 +296,7 @@ public abstract class CRUD<T> : EditorWindow
             DestroyImmediate(elementObject);
         }
 
-        elementObject = (GameObject)Instantiate(ListObjects[listElements.GetSelectedIndex()]);
+        elementObject = Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>(relativepath + listElements.GetSelectedID() + ".prefab"));
         element = elementObject.GetComponent<T>();        
         Creating = false;
     }

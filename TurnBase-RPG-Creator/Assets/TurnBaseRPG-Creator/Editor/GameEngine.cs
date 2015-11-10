@@ -10,6 +10,7 @@ public class GameEngine : EditorWindow {
 	public static RPGInspectorUI inspectorRpg = EditorWindow.GetWindow<RPGInspectorUI> ();
     static GameEngine() {
     }
+
     /// <summary>
     /// Presenta la ventana de crear un nuevo mapa
     /// </summary>
@@ -21,6 +22,7 @@ public class GameEngine : EditorWindow {
         window.Init();
         window.Show();
     }
+
     /// <summary>
     /// Presenta el mantenimiento de jugadores
     /// </summary>
@@ -28,6 +30,19 @@ public class GameEngine : EditorWindow {
     public static void ShowPlayer()
     {
         var window = EditorWindow.GetWindow<PlayerUI>();
+        //window.maxSize = new Vector2(500, 200);
+        //window.minSize = new Vector2(500, 200);
+        window.Init();
+        window.Show();
+    }
+
+    /// <summary>
+    /// Presenta el mantenimiento de enemigos
+    /// </summary>
+    [MenuItem("RPG-Creator/Enemy")]
+    public static void ShowEnemy()
+    {
+        var window = EditorWindow.GetWindow<EnemyUI>();
         //window.maxSize = new Vector2(500, 200);
         //window.minSize = new Vector2(500, 200);
         window.Init();
