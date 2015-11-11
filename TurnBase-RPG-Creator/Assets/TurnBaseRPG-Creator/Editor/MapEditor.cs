@@ -14,8 +14,8 @@ public class MapEditor {
 	static MapEditor () {
 	
 		SceneView.onSceneGUIDelegate += OnSceneEvents;
-		DarkFloor =  AssetDatabase.LoadAssetAtPath(@"Assets/Resources/Floors/Dark.prefab", typeof(GameObject));
-		LightFloor =  AssetDatabase.LoadAssetAtPath(@"Assets/Resources/Floors/Light.prefab", typeof(GameObject));
+		DarkFloor =  AssetDatabase.LoadAssetAtPath(@"Assets/Resources/Tile/Dark.prefab", typeof(GameObject));
+		LightFloor =  AssetDatabase.LoadAssetAtPath(@"Assets/Resources/Tile/Light.prefab", typeof(GameObject));
 	}
 	/// <summary>
 	/// Funcion que se llama cada vez que ocurre algun evento en la escena actual.
@@ -27,7 +27,7 @@ public class MapEditor {
 		Event e = Event.current;
 		//Revisa si el objeto seleccionado es nulo.
 		if (Selection.activeGameObject != null) {
-			ChangeSelectedObject (Selection.activeGameObject);
+			//ChangeSelectedObject (Selection.activeGameObject);
 		}// si el click izquierdo es precionado y el objeto seleccionado es diferente de nulo inserta un objeto al mapa. 
 		if (EventType.MouseDown == e.type && e.button == 0 && selectedObject != null && selectedObject.tag == "Tile") {
 			DropObject ();

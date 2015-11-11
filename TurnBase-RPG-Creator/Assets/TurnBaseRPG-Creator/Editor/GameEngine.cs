@@ -156,5 +156,15 @@ public class GameEngine : EditorWindow {
     public static void ShowImportSound()
     {
     }
+    /// <summary>
+    /// Presenta La ventana de importar imagenes
+    /// </summary>
+    [MenuItem("RPG-File/Object Browser")]
+    public static void ShowObjectBrowser()
+    {
+        var window = EditorWindow.GetWindow<ObjectBrowserUI>();
+        window.Init();
+        window.Show();
+    }
     
 }

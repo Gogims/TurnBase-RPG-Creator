@@ -19,7 +19,7 @@ public class RPGInspectorUI : EditorWindow {
 	{
 		string tag = "";
 		string name = "";
-		if (MapEditor.selectedObject != null && MapEditor.selectedObject.tag == "Tile") {
+		if (MapEditor.selectedObject != null && MapEditor.selectedObject.tag != "RPG-CREATOR") {
 			image = MapEditor.selectedObject.GetComponent<SpriteRenderer> ().sprite.texture.EncodeToPNG ();
 			tag = MapEditor.selectedObject.tag;
 			name = MapEditor.selectedObject.name;
