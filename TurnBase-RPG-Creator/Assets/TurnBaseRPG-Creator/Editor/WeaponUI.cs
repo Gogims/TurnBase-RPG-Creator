@@ -32,8 +32,8 @@ public class WeaponUI : CRUD<Weapon>
         GUI.enabled = !Selected;
         element.Name = EditorGUILayout.TextField("Name", element.Name);
         element.Description = EditorGUILayout.TextField("Description", element.Description);
-        element.Price = EditorGUILayout.IntField("Price: ", element.Price);        
-        element.HitType = EditorGUILayout.Popup("Weapon Type:", element.HitType, Weapon.WeaponTypes());
+        element.Price = EditorGUILayout.IntField("Price: ", element.Price);
+        element.Type = (Weapon.WeaponType) EditorGUILayout.EnumPopup("Type:", element.Type);
         element.HitRate = EditorGUILayout.Slider("Hit Rate(%)", element.HitRate, 0, 100);
 
         //Attributes stats
@@ -88,7 +88,7 @@ public class WeaponUI : CRUD<Weapon>
     {
         AssignedElement.Name = element.Name;
         AssignedElement.Description = element.Description;
-        AssignedElement.HitType = element.HitType;
+        AssignedElement.Type = element.Type;
         AssignedElement.HitRate = element.HitRate;
         AssignedElement.NumberHit = element.NumberHit;
         AssignedElement.Stats = element.Stats;

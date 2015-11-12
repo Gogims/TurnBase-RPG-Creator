@@ -81,12 +81,12 @@ public class EnemyUI : CRUD<Enemy>
         }
         GUILayout.EndHorizontal();
 
-        AddArmor("Helmet", ref Helmet, Armor.Type.Helmet);
-        AddArmor("Upper Body", ref UpperBody, Armor.Type.Chest);
-        AddArmor("Lower Body", ref LowerBody, Armor.Type.Leg);
-        AddArmor("Feet", ref Feet, Armor.Type.Feet);
-        AddArmor("Necklace", ref Necklace, Armor.Type.Necklace);
-        AddArmor("Ring", ref Ring, Armor.Type.Ring);
+        AddArmor("Helmet", ref Helmet, Armor.ArmorType.Helmet);
+        AddArmor("Upper Body", ref UpperBody, Armor.ArmorType.Chest);
+        AddArmor("Lower Body", ref LowerBody, Armor.ArmorType.Leg);
+        AddArmor("Feet", ref Feet, Armor.ArmorType.Feet);
+        AddArmor("Necklace", ref Necklace, Armor.ArmorType.Necklace);
+        AddArmor("Ring", ref Ring, Armor.ArmorType.Ring);
 
         GUILayout.EndArea();
 
@@ -136,7 +136,7 @@ public class EnemyUI : CRUD<Enemy>
         }
     }
 
-    private void AddArmor(string name, ref Armor current, Armor.Type armortype)
+    private void AddArmor(string name, ref Armor current, Armor.ArmorType armortype)
     {
         GUILayout.Label(name, EditorStyles.boldLabel);
         GUILayout.BeginHorizontal();
@@ -145,7 +145,7 @@ public class EnemyUI : CRUD<Enemy>
         {
             var window = EditorWindow.GetWindow<ArmorUI>();
             window.Selected = true;
-            window.Initialize(ref current, (int)armortype);
+            window.Initialize(ref current, armortype);
             window.Show();
         }
         GUILayout.EndHorizontal();

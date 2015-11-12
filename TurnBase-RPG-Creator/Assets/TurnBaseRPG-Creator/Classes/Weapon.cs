@@ -5,11 +5,6 @@ using UnityEngine;
 public class Weapon : Equipppable
 {
     /// <summary>
-    /// Tipo de arma: Espada, Lanza, Hacha, etc.
-    /// </summary>
-    public int HitType;
-
-    /// <summary>
     /// Porcentaje que el arma tiene para realizar su ataque
     /// </summary>
     public float HitRate;
@@ -20,13 +15,14 @@ public class Weapon : Equipppable
     public int NumberHit;
 
     /// <summary>
-    /// Método encargado de devolver todos los tipos de armas del engine
+    /// Tipo de arma: Espada, Lanza, Hacha, etc.
     /// </summary>
-    /// <returns>Listado de todos los tipos de armas</returns>
-    public static string[] WeaponTypes()
+    public WeaponType Type;
+
+    public enum WeaponType
     {
-        string[] types = { "Axe", "Sword", "Spear"};        
-       
-        return types;
-    }
+        Axe,
+        Sword,
+        Spear
+    };
 }

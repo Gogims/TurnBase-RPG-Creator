@@ -30,8 +30,8 @@ public class GameEngine : EditorWindow {
     public static void ShowPlayer()
     {
         var window = EditorWindow.GetWindow<PlayerUI>();
-        //window.maxSize = new Vector2(500, 200);
-        //window.minSize = new Vector2(500, 200);
+        window.maxSize = new Vector2(900, 770);
+        window.minSize = new Vector2(900, 770);
         window.Init();
         window.Show();
     }
@@ -43,8 +43,21 @@ public class GameEngine : EditorWindow {
     public static void ShowEnemy()
     {
         var window = EditorWindow.GetWindow<EnemyUI>();
-        //window.maxSize = new Vector2(500, 200);
-        //window.minSize = new Vector2(500, 200);
+        window.maxSize = new Vector2(900, 770);
+        window.minSize = new Vector2(900, 770);
+        window.Init();
+        window.Show();
+    }
+
+    /// <summary>
+    /// Presenta el mantenimiento de enemigos
+    /// </summary>
+    [MenuItem("RPG-Creator/State")]
+    public static void ShowState()
+    {
+        var window = EditorWindow.GetWindow<StateUI>();
+        //window.maxSize = new Vector2(900, 770);
+        //window.minSize = new Vector2(900, 770);
         window.Init();
         window.Show();
     }

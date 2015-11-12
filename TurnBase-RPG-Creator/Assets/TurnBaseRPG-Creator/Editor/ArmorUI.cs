@@ -6,14 +6,14 @@ public class ArmorUI : CRUD<Armor>
 {
     public ArmorUI(): base("Armor", new Rect(0, 0, 300, 400)) {    }
 
-    public void Initialize(ref Armor a, int type)
+    public void Initialize(ref Armor a, Armor.ArmorType type)
     {
         AssignedElement = a;
         base.Init();
 
         foreach (var item in GetObjects())
         {
-            if (item.ArmorType == type)
+            if (item.Type == type)
             {
                 listElements.AddItem(item.Name, item.Id); 
             }
@@ -41,7 +41,7 @@ public class ArmorUI : CRUD<Armor>
         GUI.enabled = !Selected;
         element.Name = EditorGUILayout.TextField("Name", element.Name);
         element.Description = EditorGUILayout.TextField("Description", element.Description);
-        element.ArmorType = EditorGUILayout.Popup("Armor Type:", element.ArmorType, Armor.ArmorTypes());               
+        element.Type = (Armor.ArmorType) EditorGUILayout.EnumPopup("Armor Type:", element.Type);
 
         //Attributes stats
         GUILayout.Label("Attributes", EditorStyles.boldLabel);
@@ -95,9 +95,10 @@ public class ArmorUI : CRUD<Armor>
     {
         AssignedElement.Name = element.Name;
         AssignedElement.Description = element.Description;
+        AssignedElement.Type = element.Type;
         AssignedElement.Stats = element.Stats;
         AssignedElement.Id = element.Id;
-        AssignedElement.Image = element.Image;
+        AssignedElement.Image = element.Image;        
     }
 
     private void AddObject()
