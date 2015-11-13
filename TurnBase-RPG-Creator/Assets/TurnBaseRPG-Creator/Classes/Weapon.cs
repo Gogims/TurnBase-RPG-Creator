@@ -17,22 +17,7 @@ public class Weapon : Equipppable
     /// <summary>
     /// Tipo de arma: Espada, Lanza, Hacha, etc.
     /// </summary>
-    public WeaponType Type;
-
-    /// <summary>
-    /// Estado que aplica el arma al atacar
-    /// </summary>
-    public AbstractState State;
-
-    /// <summary>
-    /// Probabilidad de aplicar el estado al atacar
-    /// </summary>
-    public float PercentageState;
-
-    public Weapon():base()
-    {
-        State = new AbstractState();
-    }
+    public WeaponType Type;    
 
     public enum WeaponType
     {

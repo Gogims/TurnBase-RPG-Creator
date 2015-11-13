@@ -30,9 +30,20 @@ public abstract class Equipppable : RPGElement
     /// </summary>
     public Attribute Stats;
 
+    /// <summary>
+    /// Estado que aplica el equipamiento
+    /// </summary>
+    public AbstractState State;
+
+    /// <summary>
+    /// Probabilidad de aplicar el estado
+    /// </summary>
+    public float PercentageState;
+
     public Equipppable()
     {
         Stats = new Attribute();
+        State = new AbstractState();
     }    
 
     /// <summary>

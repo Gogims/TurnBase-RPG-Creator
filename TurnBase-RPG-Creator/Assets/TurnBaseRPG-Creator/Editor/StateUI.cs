@@ -79,7 +79,7 @@ public class StateUI : CRUD<State>
         element.Data.DurationStartTurn = EditorGUILayout.IntField(element.Data.DurationStartTurn);
         element.Data.DurationEndTurn = EditorGUILayout.IntField(element.Data.DurationEndTurn);        
         GUI.enabled = !Selected;
-        EditorGUILayout.EndHorizontal();
+        EditorGUILayout.EndHorizontal();        
 
         GUILayout.EndArea();
 

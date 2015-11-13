@@ -47,6 +47,8 @@ public class WeaponUI : CRUD<Weapon>
         element.Stats.MaxHP = EditorGUILayout.IntField("MaxHP: ", element.Stats.MaxHP);
         element.Stats.MaxMP = EditorGUILayout.IntField("MaxMP: ", element.Stats.MaxMP);
 
+        GUILayout.Label("State", EditorStyles.boldLabel);
+
         GUILayout.BeginHorizontal();
         GUILayout.TextField(element.State.State);
         if (GUILayout.Button("Select State"))
@@ -56,17 +58,20 @@ public class WeaponUI : CRUD<Weapon>
             window.Initialize(ref element.State);
             window.Show();
         }
+        element.PercentageState = EditorGUILayout.Slider("Apply State(%)", element.PercentageState, 0, 100);
         GUILayout.EndHorizontal();
 
         // Text field to upload image
+        GUILayout.Label("Sprite", EditorStyles.boldLabel);
         GUI.enabled = false;
-        GUI.TextField(new Rect(0, 280, 300, 20), spritename);
+        GUI.TextField(new Rect(0, 320, 300, 20), spritename);
         GUI.enabled = true && !Selected;
 
         // Button to upload image
-        if (GUI.Button(new Rect(300, 280, 100, 20), "Select Sprite"))
+        if (GUI.Button(new Rect(300, 320, 100, 20), "Select Sprite"))
         {
             EditorGUIUtility.ShowObjectPicker<Sprite>(null, false, null, 1);
+            Repaint();
         }
 
         AddObject();
@@ -75,7 +80,7 @@ public class WeaponUI : CRUD<Weapon>
 
         if (element.Image != null)
         {
-            GUI.DrawTextureWithTexCoords(new Rect(400, 280, element.Image.textureRect.width, element.Image.textureRect.height), element.Image.texture, element.GetTextureCoordinate());
+            GUI.DrawTextureWithTexCoords(new Rect(400, 300, element.Image.textureRect.width, element.Image.textureRect.height), element.Image.texture, element.GetTextureCoordinate());
         }
 
         if (Selected)
