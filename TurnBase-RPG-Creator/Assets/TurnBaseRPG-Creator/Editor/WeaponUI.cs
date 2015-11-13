@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections.Generic;
 using UnityEditor;
 
 public class WeaponUI : CRUD<Weapon>
@@ -30,11 +29,11 @@ public class WeaponUI : CRUD<Weapon>
         GUILayout.Space(10);
 
         GUI.enabled = !Selected;
-        element.Name = EditorGUILayout.TextField("Name", element.Name);
-        element.Description = EditorGUILayout.TextField("Description", element.Description);
+        element.Name = EditorGUILayout.TextField("Name: ", element.Name);
+        element.Description = EditorGUILayout.TextField("Description: ", element.Description);
         element.Price = EditorGUILayout.IntField("Price: ", element.Price);
-        element.Type = (Weapon.WeaponType) EditorGUILayout.EnumPopup("Type:", element.Type);
-        element.HitRate = EditorGUILayout.Slider("Hit Rate(%)", element.HitRate, 0, 100);
+        element.Type = (Weapon.WeaponType) EditorGUILayout.EnumPopup("Type: ", element.Type);
+        element.HitRate = EditorGUILayout.Slider("Hit Rate(%): ", element.HitRate, 0, 100);
 
         //Attributes stats
         GUILayout.Label("Attributes", EditorStyles.boldLabel);
@@ -58,7 +57,7 @@ public class WeaponUI : CRUD<Weapon>
             window.Initialize(ref element.State);
             window.Show();
         }
-        element.PercentageState = EditorGUILayout.Slider("Apply State(%)", element.PercentageState, 0, 100);
+        element.PercentageState = EditorGUILayout.Slider("Apply State(%): ", element.PercentageState, 0, 100);
         GUILayout.EndHorizontal();
 
         // Text field to upload image

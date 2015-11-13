@@ -14,7 +14,6 @@ public abstract class CRUD<T> : EditorWindow
     /// El formulario está en modo selección
     /// </summary>
     public bool Selected;
-
     /// <summary>
     /// Maneja el ID que se encuentra almacenado en el txt del recurso
     /// </summary>

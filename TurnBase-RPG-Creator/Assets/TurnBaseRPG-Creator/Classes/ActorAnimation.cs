@@ -115,12 +115,11 @@ public class ActorAnimation
             ApplyLoop(animClip);
         }
 
-        // Guardando animation clip      
-        string test;  
+        // Guardando animation clip
 
         if (!AssetDatabase.IsValidFolder("Assets/Animation/" + type + "/" + id))
         {
-            test = AssetDatabase.CreateFolder("Assets/Animation/" + type, id.ToString());            
+            AssetDatabase.CreateFolder("Assets/Animation/" + type, id.ToString());            
         }
 
         AssetDatabase.CreateAsset(animClip, "Assets/Animation/" + type + "/" + id + "/" + animationName + ".anim");

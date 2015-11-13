@@ -23,7 +23,7 @@ public class AbstractState
     /// <summary>
     /// Nombre del estado
     /// </summary>
-    public string State = "";
+    public string State = string.Empty;
     /// <summary>
     /// Acción que realiza el estado
     /// </summary>

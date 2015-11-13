@@ -63,6 +63,19 @@ public class GameEngine : EditorWindow {
     }
 
     /// <summary>
+    /// Presenta el mantenimiento de jugadores
+    /// </summary>
+    [MenuItem("RPG-Creator/Ability")]
+    public static void ShowAbility()
+    {
+        var window = EditorWindow.GetWindow<AbilityUI>();
+        window.maxSize = new Vector2(900, 400);
+        window.minSize = new Vector2(900, 400);
+        window.Init();
+        window.Show();
+    }
+
+    /// <summary>
     /// Presenta el Mantenimiento de las armas
     /// </summary>
     [MenuItem("RPG-Creator/Weapon")]

@@ -1,10 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using UnityEditor;
+using Rotorz.ReorderableList;
 
 public class JobUI : CRUD<Job>
 {
-    public JobUI(): base("Job", new Rect(0, 0, 300, 400)) { }
+    private Vector2 ScrollPosition;
+
+    public JobUI() : base("Job", new Rect(0, 0, 300, 400)) { }
 
     public void Initialize(ref Job a)
     {
@@ -29,6 +32,7 @@ public class JobUI : CRUD<Job>
 
         GUI.enabled = !Selected;
 
+        // Basic Settings
         GUILayout.BeginArea(new Rect(300, 0, 600, 250), "Basic Settings", EditorStyles.helpBox);
         GUILayout.Space(10);
 
@@ -45,8 +49,13 @@ public class JobUI : CRUD<Job>
 
         GUILayout.EndArea();
 
+        // Skills
         GUILayout.BeginArea(new Rect(300, 250, 600, 150), "Skills", EditorStyles.helpBox);
         GUILayout.Space(10);
+
+        ScrollPosition = GUILayout.BeginScrollView(ScrollPosition);
+        ReorderableListGUI.ListField(element.Abilities, DrawAbilityUI, ReorderableListFlags.DisableReordering);
+        GUILayout.EndScrollView();
 
         if (Selected)
         {
@@ -63,7 +72,28 @@ public class JobUI : CRUD<Job>
         }
 
         GUILayout.EndArea();
-    }    
+    }
+
+    private AbstractAbility DrawAbilityUI(Rect position, AbstractAbility Ability)
+    {
+        if (Ability == null)
+        {
+            Ability = new AbstractAbility();
+        }
+        
+        GUI.enabled = false;
+        GUI.TextField(new Rect(position.x, position.y, position.width-100, position.height), Ability.Ability);
+        GUI.enabled = true;
+        if (GUI.Button(new Rect(position.width - 100, position.y, 100, position.height), "Select Ability"))
+        {
+            var window = EditorWindow.GetWindow<AbilityUI>();
+            window.Selected = true;
+            window.Initialize(ref Ability);
+            window.Show();
+        }
+
+        return Ability;
+    }
 
     private void CurveUI(ref Formula curve, Color curveColor)
     {

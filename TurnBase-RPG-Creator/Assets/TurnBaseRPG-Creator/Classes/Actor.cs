@@ -9,7 +9,6 @@ public class Actor : RPGElement
     public string Description;
     public int HP;
     public int MP;
-    public Sprite Image;
 
     public List<Sprite> downSprites;
     public List<Sprite> leftSprites;

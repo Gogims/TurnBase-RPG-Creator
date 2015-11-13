@@ -18,12 +18,7 @@ public abstract class Equipppable : RPGElement
     /// <summary>
     /// El valor que tiene el equipamiento
     /// </summary>
-    public int Price;
-
-    /// <summary>
-    /// Imagen del equipamiento
-    /// </summary>
-    public Sprite Image;
+    public int Price;    
 
     /// <summary>
     /// Str, DEX, Int, etc.

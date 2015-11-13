@@ -21,4 +21,11 @@ public class Job : RPGElement
     public Formula Luck;
 
     public Formula XP;
+
+    public List<AbstractAbility> Abilities;
+
+    public Job()
+    {
+        Abilities = new List<AbstractAbility>();
+    }
 }

@@ -37,7 +37,7 @@ public class AnimationUI : EditorWindow
         {
             ReorderableListGUI.ListField(spriteList, DrawSprite, spriteList[0].textureRect.height, ReorderableListFlags.HideAddButton);
         }
-        GUILayout.EndScrollView();  
+        GUILayout.EndScrollView();
         GUILayout.EndArea();
 
         if (GUI.Button(new Rect(position.width - 100, position.height - 20, 100, 20), "Close"))

@@ -33,10 +33,10 @@ public class StateUI : CRUD<State>
         GUILayout.Space(10);
 
         GUI.enabled = !Selected;
-        element.Data.State = element.Name = EditorGUILayout.TextField("Name", element.Name);
+        element.Data.State = element.Name = EditorGUILayout.TextField("Name: ", element.Name);
 
         EditorGUILayout.BeginHorizontal();
-        element.Data.ActionRestriction = (AbstractState.ActionType)EditorGUILayout.EnumPopup("Action Restriction ", element.Data.ActionRestriction);
+        element.Data.ActionRestriction = (AbstractState.ActionType)EditorGUILayout.EnumPopup("Action Restriction: ", element.Data.ActionRestriction);
         element.Data.Priority = EditorGUILayout.IntSlider(new GUIContent("Priority:"), element.Data.Priority, 1, 100);
         EditorGUILayout.EndHorizontal();
         GUILayout.EndArea();
@@ -49,7 +49,7 @@ public class StateUI : CRUD<State>
         element.Data.PercentageDamage = EditorGUILayout.Slider("Damage Rate(%)", element.Data.PercentageDamage, 0, 100);
         element.Data.ActiveOnSteps = EditorGUILayout.IntField("Steps to Activate: ", element.Data.ActiveOnSteps);
         GUI.enabled = GUI.enabled & element.Data.ActionRestriction == AbstractState.ActionType.AttackEnemyOrAlly;
-        element.Data.PercentageAttackAlly = EditorGUILayout.Slider("Chance Attack Ally(%)", element.Data.PercentageAttackAlly, 0, 100);
+        element.Data.PercentageAttackAlly = EditorGUILayout.Slider("Chance Attack Ally(%): ", element.Data.PercentageAttackAlly, 0, 100);
         GUI.enabled = !Selected;
         GUILayout.EndArea();
 
@@ -59,7 +59,7 @@ public class StateUI : CRUD<State>
         element.Data.RemoveBattleEnd = EditorGUILayout.Toggle("Remove End of Battle", element.Data.RemoveBattleEnd);
 
         EditorGUILayout.BeginHorizontal();
-        element.Data.RemoveByWalking = EditorGUILayout.Toggle("Remove by Steps Taken", element.Data.RemoveByWalking);
+        element.Data.RemoveByWalking = EditorGUILayout.Toggle("Remove by Steps Taken: ", element.Data.RemoveByWalking);
         GUI.enabled = element.Data.RemoveByWalking;
         element.Data.NumberOfSteps = EditorGUILayout.IntField(element.Data.NumberOfSteps);
         GUI.enabled = !Selected;
@@ -87,10 +87,10 @@ public class StateUI : CRUD<State>
         GUILayout.BeginArea(new Rect(300, 270, 600, 130), "Messages", EditorStyles.helpBox);
         GUILayout.Space(15);
 
-        element.Data.MessageActor = EditorGUILayout.TextField("Inflicted Ally:", element.Data.MessageActor);
-        element.Data.MessageEnemy = EditorGUILayout.TextField("Inflicted Enemy:", element.Data.MessageEnemy);
-        element.Data.MessageRemains = EditorGUILayout.TextField("Continued Infliction:", element.Data.MessageRemains);
-        element.Data.MessageRecovery = EditorGUILayout.TextField("Recovery:", element.Data.MessageRecovery);        
+        element.Data.MessageActor = EditorGUILayout.TextField("Inflicted Ally: ", element.Data.MessageActor);
+        element.Data.MessageEnemy = EditorGUILayout.TextField("Inflicted Enemy: ", element.Data.MessageEnemy);
+        element.Data.MessageRemains = EditorGUILayout.TextField("Continued Infliction: ", element.Data.MessageRemains);
+        element.Data.MessageRecovery = EditorGUILayout.TextField("Recovery: ", element.Data.MessageRecovery);        
 
         if (Selected)
         {
