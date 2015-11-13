@@ -47,6 +47,17 @@ public class WeaponUI : CRUD<Weapon>
         element.Stats.MaxHP = EditorGUILayout.IntField("MaxHP: ", element.Stats.MaxHP);
         element.Stats.MaxMP = EditorGUILayout.IntField("MaxMP: ", element.Stats.MaxMP);
 
+        GUILayout.BeginHorizontal();
+        GUILayout.TextField(element.State.State);
+        if (GUILayout.Button("Select State"))
+        {
+            var window = EditorWindow.GetWindow<StateUI>();
+            window.Selected = true;
+            window.Initialize(ref element.State);
+            window.Show();
+        }
+        GUILayout.EndHorizontal();
+
         // Text field to upload image
         GUI.enabled = false;
         GUI.TextField(new Rect(0, 280, 300, 20), spritename);
@@ -93,8 +104,9 @@ public class WeaponUI : CRUD<Weapon>
         AssignedElement.NumberHit = element.NumberHit;
         AssignedElement.Stats = element.Stats;
         AssignedElement.Id = element.Id;
-        AssignedElement.Image = element.Image;        
-    }
+        AssignedElement.Image = element.Image;
+        AssignedElement.State = element.State;
+    }  
 
     private void AddObject()
     {

@@ -3,12 +3,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-public class State : RPGElement
+public class State: RPGElement
+{
+    public AbstractState Data;
+
+    public State()
+    {
+        Data = new AbstractState();
+    }
+}
+
+[Serializable]
+public class AbstractState
 {
     /// <summary>
     /// Prioridad del estado (1 = más alto)
     /// </summary>
     public int Priority;
+    /// <summary>
+    /// Nombre del estado
+    /// </summary>
+    public string State = "";
     /// <summary>
     /// Acción que realiza el estado
     /// </summary>
