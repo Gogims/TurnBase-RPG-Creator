@@ -46,6 +46,7 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Ability.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Actor.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\ActorAnimation.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Armor.cs" />
@@ -73,6 +74,7 @@
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\ProxyInput.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\RPGElement.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\RPGImage.cs" />
+     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\State.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\TextureScale.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Tile.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Wall.cs" />
@@ -83,12 +85,14 @@
      <None Include="Assets\Resources\Weapon\id.txt" />
      <None Include="Assets\TurnBaseRPG-Creator\RPG-Resources\Weapon\id.txt" />
      <None Include="Assets\TurnBaseRPG-Creator\RPG-Resources\Job\id.txt" />
+     <None Include="Assets\Resources\Ability\id.txt" />
      <None Include="Assets\TurnBaseRPG-Creator\Rotorz\Reorderable List Field\README.txt" />
      <None Include="Assets\TurnBaseRPG-Creator\RPG-Resources\Player\id.txt" />
      <None Include="Assets\Resources\Armor\id.txt" />
      <None Include="Assets\TurnBaseRPG-Creator\Rotorz\Reorderable List Field\LICENSE.txt" />
      <None Include="Assets\Resources\Enemy\id.txt" />
      <None Include="Assets\Resources\Job\id.txt" />
+     <None Include="Assets\Resources\State\id.txt" />
      <None Include="Assets\TurnBaseRPG-Creator\Rotorz\Reorderable List Field\Editor\Editor.ReorderableList.xml" />
  <Reference Include="UnityEngine.UI">
  <HintPath>E:/Programs/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
