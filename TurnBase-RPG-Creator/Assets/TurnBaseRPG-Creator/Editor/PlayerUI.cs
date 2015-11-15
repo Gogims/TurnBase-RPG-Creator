@@ -18,8 +18,7 @@ public class PlayerUI : CRUD<Player>
 
     public override void Init()
     {
-        base.Init();
-        NewPlayer();        
+        base.Init();    
 
         foreach (var item in GetObjects())
         {
@@ -41,7 +40,7 @@ public class PlayerUI : CRUD<Player>
 
         GUILayout.Label("Class:", EditorStyles.boldLabel);
         GUILayout.BeginHorizontal();
-        GUILayout.TextField("");
+        GUILayout.TextField(PlayerJob.Name);
         if (GUILayout.Button("Select Class"))
         {
             var window = EditorWindow.GetWindow<JobUI>();
@@ -165,42 +164,47 @@ public class PlayerUI : CRUD<Player>
 
     private void CreateAnimation()
     {
-        ActorAnimation animation = new ActorAnimation("Player");
+        ActorAnimation playerAnimation = new ActorAnimation("Player");
         List<Sprite> sprites;
+
+        if (animations == null)
+        {
+            animations = elementObject.GetComponent<Animator>();
+        }
 
         if (element.downSprites.Count > 0)
         {
             sprites = new List<Sprite>(element.downSprites);
             sprites.Add(element.downSprites[0]);
-            animation.down = animation.ConstructAnimation(sprites, element.Id, "down", 30, true);
-            animation.downIdle = animation.ConstructAnimation(element.downSprites[0], element.Id, "downIdle", 30, true);
+            playerAnimation.down = playerAnimation.ConstructAnimation(sprites, element.Id, "down", 30, true);
+            playerAnimation.downIdle = playerAnimation.ConstructAnimation(element.downSprites[0], element.Id, "downIdle", 30, true);
         }
 
         if (element.leftSprites.Count > 0)
         {
             sprites = new List<Sprite>(element.leftSprites);
             sprites.Add(element.leftSprites[0]);
-            animation.left = animation.ConstructAnimation(sprites, element.Id, "left", 30, true);
-            animation.leftIdle = animation.ConstructAnimation(element.leftSprites[0], element.Id, "leftIdle", 30, true);
+            playerAnimation.left = playerAnimation.ConstructAnimation(sprites, element.Id, "left", 30, true);
+            playerAnimation.leftIdle = playerAnimation.ConstructAnimation(element.leftSprites[0], element.Id, "leftIdle", 30, true);
         }
 
         if (element.upSprites.Count > 0)
         {
             sprites = new List<Sprite>(element.upSprites);
             sprites.Add(element.upSprites[0]);
-            animation.up = animation.ConstructAnimation(sprites, element.Id, "up", 30, true);
-            animation.upIdle = animation.ConstructAnimation(element.upSprites[0], element.Id, "upIdle", 30, true);
+            playerAnimation.up = playerAnimation.ConstructAnimation(sprites, element.Id, "up", 30, true);
+            playerAnimation.upIdle = playerAnimation.ConstructAnimation(element.upSprites[0], element.Id, "upIdle", 30, true);
         }
 
         if (element.rightSprites.Count > 0)
         {
             sprites = new List<Sprite>(element.rightSprites);
             sprites.Add(element.rightSprites[0]);
-            animation.right = animation.ConstructAnimation(sprites, element.Id, "right", 30, true);
-            animation.rightIdle = animation.ConstructAnimation(element.rightSprites[0], element.Id, "rightIdle", 30, true);
+            playerAnimation.right = playerAnimation.ConstructAnimation(sprites, element.Id, "right", 30, true);
+            playerAnimation.rightIdle = playerAnimation.ConstructAnimation(element.rightSprites[0], element.Id, "rightIdle", 30, true);
         }
 
-        animations.runtimeAnimatorController = animation.ConstructAnimationControl(element.Id);
+        animations.runtimeAnimatorController = playerAnimation.ConstructAnimationControl(element.Id);
     }
 
     protected override void Create()
@@ -209,6 +213,13 @@ public class PlayerUI : CRUD<Player>
         element.Id = Id;
 
         CreateAnimation();
+
+        if (element.downSprites.Count > 0)
+        {
+            SpriteRenderer character = elementObject.AddComponent<SpriteRenderer>();
+            character.sprite = element.downSprites[0];
+        }
+
         CreatePrefab(element);
         listElements.AddItem(element.Name, element.Id);
         SetId();
@@ -250,13 +261,7 @@ public class PlayerUI : CRUD<Player>
     protected override GameObject NewGameObject()
     {
         elementObject = base.NewGameObject();
-        NewPlayer();
 
-        return elementObject;
-    }
-
-    private void NewPlayer()
-    {
         MainHand = elementObject.AddComponent<Weapon>();
 
         Helmet = elementObject.AddComponent<Armor>();
@@ -266,13 +271,15 @@ public class PlayerUI : CRUD<Player>
         Necklace = elementObject.AddComponent<Armor>();
         Feet = elementObject.AddComponent<Armor>();
 
-        PlayerJob = elementObject.AddComponent<Job>();        
+        PlayerJob = elementObject.AddComponent<Job>();
 
         animations = elementObject.AddComponent<Animator>();
 
         element.downSprites = new List<Sprite>();
         element.leftSprites = new List<Sprite>();
         element.upSprites = new List<Sprite>();
-        element.rightSprites = new List<Sprite>();        
+        element.rightSprites = new List<Sprite>();
+
+        return elementObject;
     }
 }

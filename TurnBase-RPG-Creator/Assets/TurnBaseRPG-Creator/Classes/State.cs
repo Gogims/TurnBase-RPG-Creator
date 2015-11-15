@@ -96,6 +96,17 @@ public class AbstractState
     /// Probabilidad de atacar a tu aliado
     /// </summary>
     public float PercentageAttackAlly;
+    /// <summary>
+    /// El estado se ha eliminado? Read-only
+    /// </summary>
+    public bool Removed {
+        get { return _removed; }
+    }
+
+    /// <summary>
+    /// Deja de aplicar el estado al actor (se remueve)
+    /// </summary>
+    private bool _removed;
 
     public enum RemovalTiming
     {

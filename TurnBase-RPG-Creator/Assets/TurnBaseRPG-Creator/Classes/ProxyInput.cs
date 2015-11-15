@@ -100,4 +100,7 @@ public class ProxyInput{
 	public bool Select(){
 		return OnSelect();
 	}
+    public bool Movement(){
+        return OnDown() || OnRight() || OnLeft() || OnUp();
+    }
 }
