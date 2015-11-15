@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class Player : Actor
 {
-	public Player ():base()
+    public List<AbstractState> States;
+
+    public Player ():base()
 	{
         
     }

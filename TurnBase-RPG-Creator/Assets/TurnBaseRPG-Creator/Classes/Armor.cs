@@ -7,9 +7,9 @@ public class Armor : Equipppable
     /// <summary>
     /// Tipo de armadura: pecho, pantalones, aretes, etc.
     /// </summary>
-    public int ArmorType;
+    public ArmorType Type;
 
-    public enum Type
+    public enum ArmorType
     {
         Chest,
         Leg,
@@ -23,12 +23,5 @@ public class Armor : Equipppable
     {
         Stats = new Attribute();
         Image = new Sprite();
-    }
-
-    public static string[] ArmorTypes()
-    {
-        string[] types = { "Chest", "Leg", "Feet", "Necklace", "Ring", "Helmet" };
-
-        return types;
     }
 }

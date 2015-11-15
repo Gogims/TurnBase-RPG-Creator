@@ -6,14 +6,14 @@ public class ArmorUI : CRUD<Armor>
 {
     public ArmorUI(): base("Armor", new Rect(0, 0, 300, 400)) {    }
 
-    public void Initialize(ref Armor a, int type)
+    public void Initialize(ref Armor a, Armor.ArmorType type)
     {
         AssignedElement = a;
         base.Init();
 
         foreach (var item in GetObjects())
         {
-            if (item.ArmorType == type)
+            if (item.Type == type)
             {
                 listElements.AddItem(item.Name, item.Id); 
             }
@@ -41,7 +41,7 @@ public class ArmorUI : CRUD<Armor>
         GUI.enabled = !Selected;
         element.Name = EditorGUILayout.TextField("Name", element.Name);
         element.Description = EditorGUILayout.TextField("Description", element.Description);
-        element.ArmorType = EditorGUILayout.Popup("Armor Type:", element.ArmorType, Armor.ArmorTypes());               
+        element.Type = (Armor.ArmorType) EditorGUILayout.EnumPopup("Armor Type:", element.Type);
 
         //Attributes stats
         GUILayout.Label("Attributes", EditorStyles.boldLabel);
@@ -54,15 +54,31 @@ public class ArmorUI : CRUD<Armor>
         element.Stats.MaxHP = EditorGUILayout.IntField("MaxHP: ", element.Stats.MaxHP);
         element.Stats.MaxMP = EditorGUILayout.IntField("MaxMP: ", element.Stats.MaxMP);
 
+        GUILayout.Label("State", EditorStyles.boldLabel);
+
+        GUILayout.BeginHorizontal();
+        GUILayout.TextField(element.State.State);
+        if (GUILayout.Button("Select State"))
+        {
+            var window = EditorWindow.GetWindow<StateUI>();
+            window.Selected = true;
+            window.Initialize(ref element.State);
+            window.Show();
+        }
+        element.PercentageState = EditorGUILayout.Slider("Apply State(%)", element.PercentageState, 0, 100);
+        GUILayout.EndHorizontal();
+
         // Text field to upload image
+        GUILayout.Label("Sprite", EditorStyles.boldLabel);
         GUI.enabled = false;
-        GUI.TextField(new Rect(0, 240, 300, 20), spritename);
+        GUI.TextField(new Rect(0, 300, 300, 20), spritename);
         GUI.enabled = true && !Selected;
 
         // Button to upload image
-        if (GUI.Button(new Rect(300, 240, 100, 20), "Select Sprite"))
+        if (GUI.Button(new Rect(300, 300, 100, 20), "Select Sprite"))
         {
             EditorGUIUtility.ShowObjectPicker<Sprite>(null, false, null, 1);
+            Repaint();
         }
 
         AddObject();
@@ -71,7 +87,7 @@ public class ArmorUI : CRUD<Armor>
 
         if (element.Image != null)
         {
-            GUI.DrawTextureWithTexCoords(new Rect(400, 240, element.Image.textureRect.width, element.Image.textureRect.height), element.Image.texture, element.GetTextureCoordinate()); 
+            GUI.DrawTextureWithTexCoords(new Rect(400, 300, element.Image.textureRect.width, element.Image.textureRect.height), element.Image.texture, element.GetTextureCoordinate()); 
         }
 
         if (Selected)
@@ -95,9 +111,10 @@ public class ArmorUI : CRUD<Armor>
     {
         AssignedElement.Name = element.Name;
         AssignedElement.Description = element.Description;
+        AssignedElement.Type = element.Type;
         AssignedElement.Stats = element.Stats;
         AssignedElement.Id = element.Id;
-        AssignedElement.Image = element.Image;
+        AssignedElement.Image = element.Image;        
     }
 
     private void AddObject()
