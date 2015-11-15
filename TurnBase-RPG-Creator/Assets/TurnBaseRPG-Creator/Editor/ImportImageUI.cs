@@ -6,7 +6,9 @@ using System.IO;
 public class ImportImageUI : EditorWindow
 {	
 	FileBrowser image = new FileBrowser ("Assets/Sprites/96x96.jpg");
-	RPGImage rpgobject = new RPGImage();
+    int Type;
+    Texture2D Texture;
+    string Name;
     string path = "";
     bool upload;
 	bool import=false;
@@ -20,19 +22,20 @@ public class ImportImageUI : EditorWindow
     /// Incializa la ventana.
     /// </summary>
 	public void Init(){
-		rpgobject.name = "New_object";
+        Name = string.Empty;
         err = new ErrorHandler();
-        err.InsertPropertyError("Name", rpgobject.name.Length, "The length of the name has to be greater than 5",new Rect(290,30,200,20));
+        err.InsertPropertyError("Name",Name.Length, "The length of the name has to be greater than 1",new Rect(290,30,200,20));
         err.InsertPropertyError("Image", path.Length, "You have to select a image.",new Rect(410,0,100,20));
-        err.InsertCondition("Name", 5, ErrorCondition.Greater, LogicalCondition.None);
-        err.InsertCondition("Image", 0, ErrorCondition.Greater, LogicalCondition.None);
+        err.InsertCondition("Name", 1, ErrorCondition.Greater, LogicalOperators.None);
+        err.InsertCondition("Image", 0, ErrorCondition.Greater, LogicalOperators.None);
+        obtype = ObjectTypes.GetTypes();
 	}
     /// <summary>
-    /// Funciona que se llama cuando la ventana esta en focus
+    /// Funcion que se llama cuando la ventana esta en focus
     /// </summary>
 	void OnGUI() 
 	{
-        if (rpgobject == null || err == null)
+        if ( err == null || obtype == null )
             Init();
         GUI.enabled = false;
         path = GUI.TextField(new Rect(0,0, 300, 20),path);
@@ -40,17 +43,17 @@ public class ImportImageUI : EditorWindow
             image.path = path;
         GUI.enabled = true;
         upload = GUI.Button (new Rect(300, 0, 100, 20), "Upload Photo");
-        rpgobject.texture= new Texture2D(width, height);
-        rpgobject.texture.LoadImage(image.GetImage);
+        Texture= new Texture2D(width, height);
+       Texture.LoadImage(image.GetImage);
 		EditorGUI.LabelField(new Rect(0,30,100,20),new GUIContent("Name:"));
-		rpgobject.name = EditorGUI.TextField(new Rect(90,30,200,20),rpgobject.name);
+		Name = EditorGUI.TextField(new Rect(90,30,200,20),Name);
 		EditorGUI.LabelField(new Rect(0,70,100,20),new GUIContent("Sprite Type:"));
-		rpgobject.type = EditorGUI.Popup(new Rect(90,70,200,10),rpgobject.type,obtype);
+		Type = EditorGUI.Popup(new Rect(90,70,200,10),Type,obtype);
 		EditorGUI.LabelField(new Rect(0,90,100,20),new GUIContent("Description:"));
-		EditorGUI.TextField(new Rect(0,110,290,120),ObjectTypes.GetDescription(obtype[rpgobject.type]));
+		EditorGUI.TextField(new Rect(0,110,290,120),ObjectTypes.GetDescription(obtype[Type]));
 		EditorGUI.LabelField(new Rect(300,70, 80,20),new GUIContent("Sprite Sheet:"));
 		spritesheet = EditorGUI.Toggle(new Rect(300,90,20,20),spritesheet);
-        EditorGUI.DrawPreviewTexture(new Rect(300, 110, width, height), rpgobject.texture);
+        EditorGUI.DrawPreviewTexture(new Rect(300, 110, width, height), Texture);
         UpdateValidationVal();
 		import = GUI.Button (new Rect(60, 240,300, 20), "Import Object");
         err.ShowErrors();
@@ -65,7 +68,7 @@ public class ImportImageUI : EditorWindow
     /// </summary>
     void UpdateValidationVal()
     {
-        err.UpdateValue("Name", rpgobject.name.Length);
+        err.UpdateValue("Name", Name.Length);
         err.UpdateValue("Image", path.Length);
     }
     /// <summary>
@@ -73,7 +76,7 @@ public class ImportImageUI : EditorWindow
     /// </summary>
 	void Update()
 	{
-        if (obtype[rpgobject.type] == "Background")
+        if (obtype[Type] == "Background")
         {
             spritesheet = false;
         }
@@ -81,24 +84,24 @@ public class ImportImageUI : EditorWindow
 			path = EditorUtility.OpenFilePanel ("test", "test2", "jpg;*.png");
 		}
 		if (import) {
-			oldname = rpgobject.name;
-			rpgobject.name = obtype[rpgobject.type]+"_"+rpgobject.name;
+			oldname = Name;
+			Name = obtype[Type]+"_"+Name;
             
 			CreateRpgObject();
-			rpgobject.name = oldname;
+			Name = oldname;
 		}
 	}
     /// <summary>
     /// Guarda el sprite en la carpeta de sprites
     /// </summary>
 	void SaveSprites(){
-        if (rpgobject.texture != null)
+        if (Texture != null)
         {
-            if (!spritesheet && obtype[rpgobject.type] != "Background")
-                TextureScale.Bilinear(rpgobject.texture, 32, 32);
-            var bytes = rpgobject.texture.EncodeToPNG();
+            if (!spritesheet && obtype[Type] != "Background")
+                TextureScale.Bilinear(Texture, 32, 32);
+            var bytes = Texture.EncodeToPNG();
 			int startindex = image.path.LastIndexOf ('.');
-			FileStream file = File.Open (Application.dataPath + "/Sprites/"+rpgobject.name+image.path.Substring (startindex), FileMode.Create);
+			FileStream file = File.Open (Application.dataPath + "/Sprites/"+Name+image.path.Substring (startindex), FileMode.Create);
 			var binary = new BinaryWriter (file);
 			binary.Write (bytes);
 			file.Close ();
@@ -111,7 +114,7 @@ public class ImportImageUI : EditorWindow
     /// <returns></returns>
 	string GetPath(){
 		int startindex = image.path.LastIndexOf ('.');
-		return "Assets/Sprites/"+ rpgobject.name+image.path.Substring (startindex);
+		return "Assets/Sprites/"+ Name+image.path.Substring (startindex);
 	}
     /// <summary>
     /// Crea el objeto RPG.

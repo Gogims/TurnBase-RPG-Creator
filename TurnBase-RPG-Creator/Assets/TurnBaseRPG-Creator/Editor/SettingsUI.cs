@@ -7,12 +7,12 @@ public class SettingsUI : EditorWindow {
     bool browse = false;
     bool save = false;
     bool error = false;
-    bool validate = false;
+
     ErrorHandler err;
 	public void Init() {
         err = new ErrorHandler();
         err.InsertPropertyError("Path", ProjectSettings.UnityPath.Length, "*You have to select unity path",new Rect(0,0,100,20));
-        err.InsertCondition("Path", 0, ErrorCondition.Greater, LogicalCondition.None);
+        err.InsertCondition("Path", 0, ErrorCondition.Greater, LogicalOperators.None);
 	}
     void OnGUI() {
         if (err == null)

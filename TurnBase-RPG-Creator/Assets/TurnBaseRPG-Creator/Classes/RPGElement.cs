@@ -13,4 +13,9 @@ public abstract class RPGElement : MonoBehaviour
     /// Nombre del elemento
     /// </summary>
     public string Name = string.Empty;
+    /// <summary>
+    /// Icono del elemento
+    /// </summary>
+    public Sprite Icon; 
+
 }

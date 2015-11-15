@@ -1,7 +1,9 @@
 ﻿// Only works on ARGB32, RGB24 and Alpha8 textures that are marked readable
 using System.Threading;
 using UnityEngine;
-
+/// <summary>
+/// Cambia la escala de una imagen.
+/// </summary>
 public class TextureScale
 {
 	public class ThreadData

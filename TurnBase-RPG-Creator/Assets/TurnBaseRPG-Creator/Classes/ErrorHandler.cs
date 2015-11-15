@@ -4,6 +4,9 @@ using UnityEditor;
 using System;
 using System.Collections.Generic;
 
+/// <summary>
+/// Clase para el manejo de errores de las ventanas
+/// </summary>
 public class ErrorHandler  {
     /// <summary>
     /// Estilo del mensage
@@ -65,7 +68,7 @@ public class ErrorHandler  {
     /// <param name="value">Valor de la condicion</param>
     /// <param name="Condition">Condicion que se va evaluar(mayor, menor , igual,etc.)</param>
     /// <param name="logic">Condicion logica de esta propiedad (AND,OR,NONE) </param>
-    public void InsertCondition(string property, Nullable<int> value , ErrorCondition Condition, LogicalCondition logic)
+    public void InsertCondition(string property, Nullable<int> value , ErrorCondition Condition, LogicalOperators logic)
     {
         properties[property].Validations.Add(Condition,new Values(value,logic));
     }
@@ -135,16 +138,16 @@ public class ErrorHandler  {
                     else
                         innerResult = false;
                 }
-                if (properties[i].Validations[j].logic == LogicalCondition.None) {
+                if (properties[i].Validations[j].logic == LogicalOperators.None) {
                     result = innerResult;
                     break;
                 }
-                else if (properties[i].Validations[j].logic == LogicalCondition.OR && innerResult)
+                else if (properties[i].Validations[j].logic == LogicalOperators.OR && innerResult)
                 {
                     result = innerResult;
                     break;
                 }
-                else if (properties[i].Validations[j].logic == LogicalCondition.AND && !innerResult)
+                else if (properties[i].Validations[j].logic == LogicalOperators.AND && !innerResult)
                 {
                     result = innerResult;
                     break;
@@ -169,9 +172,9 @@ public class ErrorHandler  {
     /// Clase que almacena el valor de la propiedad
     /// </summary>
     private class Values {
-        public LogicalCondition logic { get; set; }
+        public LogicalOperators logic { get; set; }
         public Nullable<int> Value { get; set; }
-        public Values(Nullable<int> v, LogicalCondition l)
+        public Values(Nullable<int> v, LogicalOperators l)
         {
             logic = l;
             Value = v;

@@ -62,13 +62,13 @@ public class ObjectBrowserUI : EditorWindow
                     Objects = Resources.LoadAll("PickUp", typeof(GameObject));
                     break;
                 case 3:
-                    Objects = Resources.LoadAll("Obstacles", typeof(GameObject));
+                    Objects = Resources.LoadAll("Obstacle", typeof(GameObject));
                     break;
                 case 4:
                     Objects = Resources.LoadAll("Door", typeof(GameObject));
                     break;
                 case 5:
-                    Objects = Resources.LoadAll("Houses", typeof(GameObject));
+                    Objects = Resources.LoadAll("House", typeof(GameObject));
                     break;
                    
                 default:
@@ -95,10 +95,16 @@ public class ObjectBrowserUI : EditorWindow
         int y = 10;
         foreach (var obj in Objects)
         {
+           
             GameObject temp = (GameObject)obj;
+            if (temp.tag == "RPG-CORE") continue;
             SpriteRenderer texture = temp.GetComponent<SpriteRenderer>();
             Rect position = new Rect(x, y, 44, 44);
             GUI.DrawTexture(position, texture.sprite.texture);
+            if (texture.name.Length > 6)
+                GUI.Label(new Rect(x, y + 54, 44, 20), texture.name.Substring(0, 4) + "...");
+            else
+                GUI.Label(new Rect(x, y + 54, 44, 20), texture.name);
             if (GUI.Button(position, "", new GUIStyle()))
             {
                 Debug.Log(temp.tag);
@@ -109,9 +115,9 @@ public class ObjectBrowserUI : EditorWindow
                 x += 84;
             else
             {
+                GUILayout.Label("", GUILayout.Height(44 + 25), GUILayout.Width(x+25));
                 y += 64;
                 x = 10;
-                GUILayout.Label("", GUILayout.Height(44 + 25));
             }
         }
     }
@@ -155,7 +161,7 @@ public class ObjectBrowserUI : EditorWindow
         if (GUILayout.Button("Background")){
             optionSelected = "Background";
             mapObjects = false;
-            Objects = Resources.LoadAll("Backround", typeof(GameObject));
+            Objects = Resources.LoadAll("Background", typeof(GameObject));
         }
         GUILayout.EndArea();
     }

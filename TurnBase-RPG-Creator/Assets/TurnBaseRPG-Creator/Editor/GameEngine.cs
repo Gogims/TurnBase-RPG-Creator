@@ -166,5 +166,16 @@ public class GameEngine : EditorWindow {
         window.Init();
         window.Show();
     }
+
+    /// <summary>
+    /// Presenta la ventana de las clases
+    /// </summary>
+    [MenuItem("RPG-Creator/Map Objects")]
+    public static void ShowMapObjects()
+    {
+        var window = EditorWindow.GetWindow<MapObjectsUI>();
+        window.Init();
+        window.Show();
+    }
     
 }

@@ -6,8 +6,7 @@ using System.IO;
 /// <summary>
 /// Clase que se encarga de manejar los proyectos de RPG
 /// </summary>
-public class Project  {
-    public string ProjectName { get; set; }
+public class Project:RPGElement  {
     public string UnityPath { get; set; }
     public string Description { get; set; }
     public string Path { get; set; }
@@ -26,9 +25,9 @@ public class Project  {
         string dirpath = Directory.GetCurrentDirectory().Replace("C:", "");
         string dirpath1 = @"""" + dirpath + "\\Assets\\TurnBaseRPG-Creator" + @"""";
         string dirpath2 = @""""+dirpath + "\\ProjectSettings"+@"""";
-        string projectPath = @""""+Path + @"\" + ProjectName+@"""";
-        string projectAssets = Path + @"\" + ProjectName + "\\Assets" ;
-        string projectSettings = @""""+Path + @"\" + ProjectName+"\\ProjectSettings"+@"""";
+        string projectPath = @""""+Path + @"\" + Name+@"""";
+        string projectAssets = Path + @"\" + Name + "\\Assets" ;
+        string projectSettings = @""""+Path + @"\" + Name+"\\ProjectSettings"+@"""";
         using (StreamWriter sw = p.StandardInput)
         {
             if (sw.BaseStream.CanWrite)
@@ -69,7 +68,7 @@ public class Project  {
     /// <summary>
     /// Abre un proyecto
     /// </summary>
-    /// <param name="path"></param>
+    /// <param name="path">path del proyecto</param>
     public static void Open(string path)
     {
         Process p = new Process();

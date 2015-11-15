@@ -14,8 +14,8 @@ public class MapEditor {
 	static MapEditor () {
 	
 		SceneView.onSceneGUIDelegate += OnSceneEvents;
-		DarkFloor =  AssetDatabase.LoadAssetAtPath(@"Assets/Resources/Tile/Dark.prefab", typeof(GameObject));
-		LightFloor =  AssetDatabase.LoadAssetAtPath(@"Assets/Resources/Tile/Light.prefab", typeof(GameObject));
+		DarkFloor =  AssetDatabase.LoadAssetAtPath(@"Assets/Resources/Tile/DefaultTile1.prefab", typeof(GameObject));
+        LightFloor = AssetDatabase.LoadAssetAtPath(@"Assets/Resources/Tile/DefaultTile2.prefab", typeof(GameObject));
 	}
 	/// <summary>
 	/// Funcion que se llama cada vez que ocurre algun evento en la escena actual.
@@ -29,7 +29,7 @@ public class MapEditor {
 		if (Selection.activeGameObject != null) {
 			//ChangeSelectedObject (Selection.activeGameObject);
 		}// si el click izquierdo es precionado y el objeto seleccionado es diferente de nulo inserta un objeto al mapa. 
-		if (EventType.MouseDown == e.type && e.button == 0 && selectedObject != null && selectedObject.tag == "Tile") {
+		if (EventType.MouseDown == e.type && e.button == 0 && selectedObject != null && selectedObject.tag == "RPG-MAPOBJECT") {
 			DropObject ();
 		} // Si la tecla del  es precionada borra los objetos seleccionados. 
 		if (EventType.KeyDown == e.type ) {
@@ -71,7 +71,8 @@ public class MapEditor {
 	/// </summary>
 	/// <param name="Selected">objeto seleccionado</param>
 	static void ChangeSelectedObject(GameObject Selected){
-		if (Selected.tag == "Tile" && Selected != selectedObject && !Selected.activeInHierarchy) {
+        if (Selected.tag == "RPG-MAPOBJECT" && Selected != selectedObject && !Selected.activeInHierarchy)
+        {
 			selectedObject = Selected;
 			GameEngine.inspectorRpg.Focus();
 		}
