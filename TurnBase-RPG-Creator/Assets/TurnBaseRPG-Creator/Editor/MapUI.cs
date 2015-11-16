@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEditor;
+using System;
 
 public class MapUI : EditorWindow {
 
@@ -9,7 +10,7 @@ public class MapUI : EditorWindow {
     bool create = false;
 	public void Init () {
 		map = new Map ();
-		map.Heigth = 10;
+		map.Heigth = 10; 
 		map.Width=10;
         map.Name = "new_map1";
         err = new ErrorHandler();
@@ -32,7 +33,7 @@ public class MapUI : EditorWindow {
 		map.Width = EditorGUILayout.IntField ("Width", map.Width);
 		map.Heigth = EditorGUILayout.IntField ("Heigth", map.Heigth);
         UpdateValidationVal();
-       create =  GUILayout.Button ("Create Map");
+        create =  GUILayout.Button ("Create Map");
 		if (!err.CheckErrors() && create  ) {
 			map.CreateMap();
 		}

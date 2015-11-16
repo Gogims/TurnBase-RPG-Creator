@@ -78,17 +78,24 @@ public class MapObjectsUI : EditorWindow {
     public void Init() {
         GameObject tempobj = new GameObject();
         tile = tempobj.AddComponent<Tile>();
+        DestroyImmediate(tempobj);
         GameObject tempobj1 = new GameObject();
         obstacle = tempobj1.AddComponent<Obstacle>();
+        DestroyImmediate(tempobj1);
         GameObject tempobj2 = new GameObject();
         door = tempobj2.AddComponent<Door>();
+        DestroyImmediate(tempobj2);
         GameObject tempobj3 = new GameObject();
         house = tempobj3.AddComponent<House>();
+        DestroyImmediate(tempobj3);
         GameObject tempobj4 = new GameObject();
         pickup = tempobj4.AddComponent<Pickup>();
+        DestroyImmediate(tempobj4);
         GameObject tempobj5 = new GameObject();
         wall = tempobj5.AddComponent<Wall>();
-        name = string.Empty;
+        DestroyImmediate(tempobj5);
+        if (name == null)
+            name = string.Empty;
     }
     /// <summary>
     /// Metodo que se llama cuando la ventana esta abierta.
@@ -213,7 +220,7 @@ public class MapObjectsUI : EditorWindow {
             
         if (texture != null)
         {
-            GUI.DrawTextureWithTexCoords(new Rect((float)(this.position.width * 0.5), 0, 96, 96), texture.texture, GetTextureCoordinate());
+            GUI.DrawTextureWithTexCoords(new Rect((float)(this.position.width * 0.5), 0, 96, 96), texture.texture, GetTextureCoordinate(texture));
         }
     }
 
@@ -315,12 +322,12 @@ public class MapObjectsUI : EditorWindow {
             Repaint();
         }
     }
-    public Rect GetTextureCoordinate()
+    public Rect GetTextureCoordinate(Sprite T )
     {
-        return new Rect(texture.textureRect.x / texture.texture.width,
-                        texture.textureRect.y / texture.texture.height,
-                        texture.textureRect.width / texture.texture.width,
-                        texture.textureRect.height / texture.texture.height);
+        return new Rect(T.textureRect.x / T.texture.width,
+                        T.textureRect.y / T.texture.height,
+                        T.textureRect.width / T.texture.width,
+                        T.textureRect.height / T.texture.height);
     }
     /// <summary>
     /// Renderisa la parte izquierda de la ventana.
@@ -403,7 +410,7 @@ public class MapObjectsUI : EditorWindow {
             RPGElement comp = temp.GetComponent<RPGElement>();
             Sprite sprite = comp.Icon;
             Rect position = new Rect(x, y, 64, 64);
-            GUI.DrawTexture(position, sprite.texture);
+            GUI.DrawTextureWithTexCoords(position, sprite.texture,GetTextureCoordinate(sprite));
             if (comp.name.Length > 8)
                 GUI.Label(new Rect(x, y + 74, 64, 20), comp.Name.Substring(0, 6) + "...");
             else
@@ -426,6 +433,7 @@ public class MapObjectsUI : EditorWindow {
     private void updateFields(){
         var obj = Selected.GetComponent<RPGElement>();
         name = obj.Name;
+        Debug.Log(name);
         texture = obj.Icon;
         textureName = obj.Icon.name;
         switch (tab)

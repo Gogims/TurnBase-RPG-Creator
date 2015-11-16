@@ -98,16 +98,15 @@ public class ObjectBrowserUI : EditorWindow
            
             GameObject temp = (GameObject)obj;
             if (temp.tag == "RPG-CORE") continue;
-            SpriteRenderer texture = temp.GetComponent<SpriteRenderer>();
+            RPGElement ob = temp.GetComponent<RPGElement>();
             Rect position = new Rect(x, y, 44, 44);
-            GUI.DrawTexture(position, texture.sprite.texture);
-            if (texture.name.Length > 6)
-                GUI.Label(new Rect(x, y + 54, 44, 20), texture.name.Substring(0, 4) + "...");
+            GUI.DrawTextureWithTexCoords(position, ob.Icon.texture,GetTextureCoordinate(ob.Icon));
+            if (ob.name.Length > 6)
+                GUI.Label(new Rect(x, y + 54, 44, 20), ob.name.Substring(0, 4) + "...");
             else
-                GUI.Label(new Rect(x, y + 54, 44, 20), texture.name);
+                GUI.Label(new Rect(x, y + 54, 44, 20), ob.name);
             if (GUI.Button(position, "", new GUIStyle()))
             {
-                Debug.Log(temp.tag);
                 MapEditor.selectedObject = temp;
                 GameEngine.inspectorRpg.Focus();
             }
@@ -120,6 +119,13 @@ public class ObjectBrowserUI : EditorWindow
                 x = 10;
             }
         }
+    }
+    public Rect GetTextureCoordinate(Sprite T)
+    {
+        return new Rect(T.textureRect.x / T.texture.width,
+                        T.textureRect.y / T.texture.height,
+                        T.textureRect.width / T.texture.width,
+                        T.textureRect.height / T.texture.height);
     }
     /// <summary>
     /// Renderisa la parte izquierda de la ventana.
