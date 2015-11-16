@@ -40,4 +40,58 @@ public class Constant{
                         Image.textureRect.width / Image.texture.width,
                         Image.textureRect.height / Image.texture.height);
     }
+
+    public enum AttackType
+    {
+        MagicAttack,
+        NormalAttack
+    }
+
+    public enum AOE
+    {
+        OneEnemy,
+        TwoEnemies,
+        AllEnemies,
+        SingleAlly,
+        TwoAllies,
+        AllAllies,
+        Self
+    };
+
+    public enum OffenseDefense
+    {
+        Offensive,
+        Defensive
+    };
+
+    public enum TurnTiming
+    {
+        None,
+        BeginTurn,
+        EndTurn
+    };
+
+    public enum ActionType
+    {
+        None,
+        AttackEnemy,
+        AttackEnemyOrAlly,
+        AttackAlly,
+        SelfDamage,
+        DoNothing
+    };
+
+    public enum DamageHeal
+    {
+        Damage,
+        Heal
+    };
+
+    public enum TriggerTurnType
+    {
+        None,
+        BeginTurn,
+        DuringAction,
+        EndTurn
+    };
 }

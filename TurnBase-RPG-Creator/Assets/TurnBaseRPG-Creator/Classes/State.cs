@@ -27,15 +27,19 @@ public class AbstractState
     /// <summary>
     /// Acción que realiza el estado
     /// </summary>
-    public ActionType ActionRestriction;
+    public Constant.ActionType ActionRestriction;
     /// <summary>
-    /// Daño fijo que realizará el estado
+    /// Valor fijo que realizará el estado
     /// </summary>
-    public int ConstantDamage;
+    public int Constant;
     /// <summary>
-    /// Cuanto prociento de daño de tu ataque realizará el estado
+    /// Tipo de ataque que realizará el estado
     /// </summary>
-    public float PercentageDamage;
+    public Constant.AttackType AttackType;
+    /// <summary>
+    /// Cuanto prociento de daño del tipo de ataque elegido realizará el estado
+    /// </summary>
+    public float ActionRate;
     /// <summary>
     /// Se remueve el efecto despues del combate?
     /// </summary>
@@ -83,7 +87,7 @@ public class AbstractState
     /// <summary>
     /// 0=none, 1=Inicio del Turno, 2= Al final del turno
     /// </summary>
-    public RemovalTiming AutoRemovalTiming;
+    public Constant.TurnTiming AutoRemovalTiming;
     /// <summary>
     /// Rango de turnos que tomará para remover el estado (rango inferior)
     /// </summary>
@@ -92,6 +96,10 @@ public class AbstractState
     /// Rango de turnos que tomará para remover el estado (rango superior)
     /// </summary>
     public int DurationEndTurn;
+    /// <summary>
+    /// Contador de turnos pasados con el estado
+    /// </summary>
+    public int Turn;
     /// <summary>
     /// Probabilidad de atacar a tu aliado
     /// </summary>
@@ -102,25 +110,17 @@ public class AbstractState
     public bool Removed {
         get { return _removed; }
     }
+    /// <summary>
+    /// Momento en el que el estado se activa
+    /// </summary>
+    public Constant.TriggerTurnType TriggerTurn;
+    /// <summary>
+    /// Tipo de estado
+    /// </summary>
+    public Constant.DamageHeal Type;
 
     /// <summary>
     /// Deja de aplicar el estado al actor (se remueve)
     /// </summary>
-    private bool _removed;
-
-    public enum RemovalTiming
-    {
-        None,
-        InicioTurno,
-        FinalTurno        
-    }
-
-    public enum ActionType
-    {
-       AttackEnemy,
-       AttackEnemyOrAlly,
-       AttackAlly,
-       SelfDamage,
-       UnableToAct
-    };
+    private bool _removed;  
 }

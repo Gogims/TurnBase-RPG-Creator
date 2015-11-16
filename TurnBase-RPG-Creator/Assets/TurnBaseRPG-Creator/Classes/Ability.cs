@@ -45,31 +45,18 @@ public class AbstractAbility
     /// <summary>
     /// Cuantos aliados/enemigos afectará la habilidad
     /// </summary>
-    public AOE AreaOfEffect;
+    public Constant.AOE AreaOfEffect;
     /// <summary>
     /// Si la habilidad es ofensiva o defensiva.
     /// </summary>
-    public AbilityType Type;
+    public Constant.OffenseDefense Type;
+
+    public Constant.AttackType AttackType;
 
     public AbstractAbility()
     {
         State = new AbstractState();
     }
 
-    public enum AOE
-    {
-        OneEnemy,
-        TwoEnemies,
-        AllEnemies,
-        SingleAlly,
-        TwoAllies,
-        AllAllies,
-        Self
-    }
-
-    public enum AbilityType
-    {
-        Offensive,
-        Defensive
-    }
+    
 }

@@ -25,13 +25,18 @@ public class AbilityUI : CRUD<Ability>
         element.Name = element.Data.Ability = EditorGUILayout.TextField("Name: ", element.Name);
         element.Data.Description = EditorGUILayout.TextField("Description: ", element.Data.Description);
         element.Data.MinLevel = EditorGUILayout.IntSlider("Minimum Level: ", element.Data.MinLevel, 1, 99);
-        element.Data.AttackPower = EditorGUILayout.IntField("Attack Power: ", element.Data.AttackPower);
         element.Data.MPCost = EditorGUILayout.IntField("Mana Cost: ", element.Data.MPCost);
+
+        GUILayout.Label("Attack (Power + Type)", EditorStyles.boldLabel);
+        GUILayout.BeginHorizontal();
+        element.Data.AttackType = (Constant.AttackType)EditorGUILayout.EnumPopup("Type: ", element.Data.AttackType);
+        element.Data.AttackPower = EditorGUILayout.IntField("Power: ", element.Data.AttackPower);        
+        GUILayout.EndHorizontal();        
 
         GUILayout.Label("Type", EditorStyles.boldLabel);
         GUILayout.BeginHorizontal();
-        element.Data.Type = (AbstractAbility.AbilityType)EditorGUILayout.EnumPopup("Ability: ", element.Data.Type);
-        element.Data.AreaOfEffect = (AbstractAbility.AOE)EditorGUILayout.EnumPopup("Area of Effect: ", element.Data.AreaOfEffect);
+        element.Data.Type = (Constant.OffenseDefense)EditorGUILayout.EnumPopup("Ability: ", element.Data.Type);
+        element.Data.AreaOfEffect = (Constant.AOE)EditorGUILayout.EnumPopup("Area of Effect: ", element.Data.AreaOfEffect);
         GUILayout.EndHorizontal();
 
 
