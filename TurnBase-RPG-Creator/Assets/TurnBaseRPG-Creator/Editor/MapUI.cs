@@ -16,10 +16,10 @@ public class MapUI : EditorWindow {
         err.InsertPropertyError("Heigth", map.Heigth, "The Heigth has to be greater than 5 and less than 10");
         err.InsertPropertyError("Width", map.Width, "The Width has to be greater than 5 and less than 17");
         err.InsertPropertyError("Name", map.Name.Length, "The length of the name hast o be grater than 5");
-        err.InsertCondition("Heigth", Constatnt.MIN_MAP_HEIGTH, ErrorCondition.GreaterOrEqual, LogicalOperators.AND);
-        err.InsertCondition("Heigth", Constatnt.MAX_MAP_HEIGTH, ErrorCondition.LessOrEqual, LogicalOperators.None);
-        err.InsertCondition("Width", Constatnt.MIN_MAP_WIDTH, ErrorCondition.GreaterOrEqual, LogicalOperators.AND);
-        err.InsertCondition("Width", Constatnt.MAX_MAP_WIDTH, ErrorCondition.LessOrEqual, LogicalOperators.None);
+        err.InsertCondition("Heigth", Constant.MIN_MAP_HEIGTH, ErrorCondition.GreaterOrEqual, LogicalOperators.AND);
+        err.InsertCondition("Heigth", Constant.MAX_MAP_HEIGTH, ErrorCondition.LessOrEqual, LogicalOperators.None);
+        err.InsertCondition("Width", Constant.MIN_MAP_WIDTH, ErrorCondition.GreaterOrEqual, LogicalOperators.AND);
+        err.InsertCondition("Width", Constant.MAX_MAP_WIDTH, ErrorCondition.LessOrEqual, LogicalOperators.None);
         err.InsertCondition("Name", 5, ErrorCondition.GreaterOrEqual, LogicalOperators.None);
        
 	}

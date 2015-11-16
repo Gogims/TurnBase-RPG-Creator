@@ -15,10 +15,6 @@ public abstract class CRUD<T> : EditorWindow
     /// </summary>
     public bool Selected;
     /// <summary>
-    /// Maneja el ID que se encuentra almacenado en el txt del recurso
-    /// </summary>
-    protected int Id;
-    /// <summary>
     /// Elemento que se utilizará en el CRUD
     /// </summary>
     protected T element;
@@ -26,10 +22,6 @@ public abstract class CRUD<T> : EditorWindow
     /// Elemento que se seleccionará para el CRUD de un objeto más complejo
     /// </summary>
     protected T AssignedElement;
-    /// <summary>
-    /// List de elementos del CRUD
-    /// </summary>
-    protected ListBox listElements;
     /// <summary>
     /// Nombre del folder del recurso y la clase (Armor, Weapon, etc.)
     /// </summary>
@@ -79,13 +71,13 @@ public abstract class CRUD<T> : EditorWindow
     /// </summary>
     private string relativepath;
     /// <summary>
-    /// Dirección del txt que contiene el último ID
-    /// </summary>
-    private string idPath;
-    /// <summary>
     /// Size of the listing of the left size
     /// </summary>
     private Rect LeftSide;
+    /// <summary>
+    /// Variable para el scroll del listado
+    /// </summary>
+    private Vector2 ScrollPosition;
 
     /// <summary>
     /// Unico constructor de la clase CRUD
@@ -96,9 +88,7 @@ public abstract class CRUD<T> : EditorWindow
         Type = type;
         relativepath = "Assets/Resources/" + type + "/";
         _path = Directory.GetCurrentDirectory() + @"\Assets\Resources\" + type + @"\";
-        LeftSide = left;       
-        
-        idPath = _path + "id.txt";
+        LeftSide = left;
     }
 
     /// <summary>
@@ -109,48 +99,7 @@ public abstract class CRUD<T> : EditorWindow
         elementObject = NewGameObject();
         ListObjects = (Resources.LoadAll(Type, typeof(GameObject)));
         Creating = true;
-        listElements = new ListBox(new Rect(LeftSide.x, LeftSide.y, LeftSide.width, LeftSide.height-20), new Rect(LeftSide.x, LeftSide.y, LeftSide.width-15, LeftSide.height), false, true);
         spritename = "";
-        GetId();
-    }
-
-    /// <summary>
-    /// Obtiene el listado de objetos de tipo T
-    /// </summary>
-    /// <returns>Lista de los prefabs de tipo T</returns>
-    protected IEnumerable<T> GetObjects()
-    {
-        foreach (var item in ListObjects)
-        {
-            GameObject current = (GameObject)Instantiate(item);
-            T temp = current.GetComponent<T>();            
-            DestroyImmediate(current);
-            yield return temp;
-        }
-    }
-
-    /// <summary>
-    /// Obtiene el ID del txt
-    /// </summary>
-    protected void GetId()
-    {
-        if (!File.Exists(idPath))
-        {
-            File.WriteAllText(idPath, "0");
-            Id = 0;
-        }
-        else
-        {
-            Id = int.Parse(File.ReadAllText(idPath).Trim());
-        }
-    }
-
-    /// <summary>
-    /// Actualiza el ID del txt
-    /// </summary>
-    protected virtual void SetId()
-    {
-        File.WriteAllText(idPath, Id.ToString());
     }
 
     /// <summary>
@@ -158,11 +107,8 @@ public abstract class CRUD<T> : EditorWindow
     /// </summary>
     protected virtual void Create()
     {
-        Id++;
-        element.Id = Id;
+        element.Id = element.GetInstanceID();
         CreatePrefab(element);
-        listElements.AddItem(element.Name, element.Id);        
-        SetId();
     }
 
     /// <summary>
@@ -171,7 +117,6 @@ public abstract class CRUD<T> : EditorWindow
     protected virtual void Edit()
     {
         CreatePrefab(element);
-        listElements.ChangeName(listElements.GetSelectedIndex(), element.Name);
     }
 
     /// <summary>
@@ -183,7 +128,6 @@ public abstract class CRUD<T> : EditorWindow
         {
             DestroyImmediate(elementObject, true);
             AssetDatabase.DeleteAsset(relativepath + element.Id + ".prefab");
-            listElements.RemoveItemIndex(listElements.GetSelectedIndex());
             Init();
         }
     }    
@@ -223,20 +167,66 @@ public abstract class CRUD<T> : EditorWindow
     protected void RenderLeftSide()
     {
         //Left side area
-        GUILayout.BeginArea(LeftSide, string.Empty, EditorStyles.helpBox);
+        GUILayout.BeginArea(new Rect(LeftSide.x, LeftSide.y, LeftSide.width, LeftSide.height-20), string.Empty, EditorStyles.helpBox);
         GUILayout.Space(10);
 
-        if (listElements.ReDraw())
-        {
-            UpdateListBox();
-        }
+        ScrollPosition = GUILayout.BeginScrollView(ScrollPosition);
+        DrawObjectList();
+        GUILayout.EndScrollView();
+        GUILayout.EndArea();
 
         if (!Selected)
         {
-            CreateButton = GUI.Button(new Rect(LeftSide.x, LeftSide.height-20, 100, 20), "Create"); 
-        }
+            CreateButton = GUI.Button(new Rect(LeftSide.x, LeftSide.height - 20, 100, 20), "Create");
+        }        
+    }
 
-        GUILayout.EndArea();
+    /// <summary>
+    /// Dibuja los objetos que estan en el arreglo
+    /// </summary>
+    void DrawObjectList()
+    {
+        int x = 10;
+        int y = 26;
+        foreach (var obj in ListObjects)
+        {
+            GameObject temp = (GameObject)obj;
+            
+            T comp = temp.GetComponent<T>();
+            Rect position = new Rect(x, y, 64, 64);
+
+            if (comp.Icon != null)
+            {
+                GUI.DrawTexture(position, comp.Icon.texture);
+                GUI.DrawTextureWithTexCoords(position, comp.Icon.texture, Constant.GetTextureCoordinate(comp.Icon));
+            }
+
+            if (comp.name.Length > 8)
+                GUI.Label(new Rect(x, y + 74, 64, 20), comp.Name.Substring(0, 6) + "...");
+            else
+                GUI.Label(new Rect(x, y + 74, 64, 20), comp.Name);
+
+            if (GUI.Button(position, "", new GUIStyle()))
+            {
+                if (elementObject != null)
+                {
+                    DestroyImmediate(elementObject);
+                }
+
+                elementObject = Instantiate(temp);
+                element = elementObject.GetComponent<T>();
+                Creating = false;
+            }
+
+            if (x + 84 + 64 < LeftSide.width)
+                x += 84;
+            else
+            {
+                GUILayout.Label("", GUILayout.Height(64 + 25), GUILayout.Width(x + 60));
+                y += 94;
+                x = 10;
+            }
+        }
     }
 
     /// <summary>
@@ -271,6 +261,8 @@ public abstract class CRUD<T> : EditorWindow
             AssignElement();
             this.Close();
         }
+
+        UpdateForm();
     }
     #endregion
 
@@ -283,21 +275,6 @@ public abstract class CRUD<T> : EditorWindow
     {
         PrefabUtility.CreatePrefab(relativepath + component.Id + ".prefab", component.gameObject);
         DestroyImmediate(component.gameObject);
-    }
-
-    /// <summary>
-    /// Actualiza el listado de objetos
-    /// </summary>
-    protected virtual void UpdateListBox()
-    {
-        if (elementObject != null)
-        {
-            DestroyImmediate(elementObject);
-        }
-
-        elementObject = Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>(relativepath + listElements.GetSelectedID() + ".prefab"));
-        element = elementObject.GetComponent<T>();        
-        Creating = false;
     }
 
     protected virtual GameObject NewGameObject()
@@ -314,4 +291,6 @@ public abstract class CRUD<T> : EditorWindow
     }
 
     protected virtual void AssignElement() { }
+
+    protected virtual void UpdateForm() { }
 }

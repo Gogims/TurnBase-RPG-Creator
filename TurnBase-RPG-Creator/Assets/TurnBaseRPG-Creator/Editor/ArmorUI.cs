@@ -10,24 +10,6 @@ public class ArmorUI : CRUD<Armor>
     {
         AssignedElement = a;
         base.Init();
-
-        foreach (var item in GetObjects())
-        {
-            if (item.Type == type)
-            {
-                listElements.AddItem(item.Name, item.Id); 
-            }
-        }
-    }
-
-    public override void Init()
-    {
-        base.Init();
-
-        foreach (var item in GetObjects())
-        {
-            listElements.AddItem(item.Name, item.Id);
-        }
     }
 
     void OnGUI()
@@ -87,7 +69,7 @@ public class ArmorUI : CRUD<Armor>
 
         if (element.Image != null)
         {
-            GUI.DrawTextureWithTexCoords(new Rect(400, 300, element.Image.textureRect.width, element.Image.textureRect.height), element.Image.texture, element.GetTextureCoordinate()); 
+            GUI.DrawTextureWithTexCoords(new Rect(400, 300, element.Image.textureRect.width, element.Image.textureRect.height), element.Image.texture, Constant.GetTextureCoordinate(element.Image)); 
         }
 
         if (Selected)
@@ -121,7 +103,7 @@ public class ArmorUI : CRUD<Armor>
     {
         if (Event.current.commandName == "ObjectSelectorUpdated" && Event.current.type == EventType.ExecuteCommand)
         {
-            element.Image = (Sprite)EditorGUIUtility.GetObjectPickerObject();
+            element.Icon = element.Image = (Sprite)EditorGUIUtility.GetObjectPickerObject();
 
             if (element.Image != null)
             {

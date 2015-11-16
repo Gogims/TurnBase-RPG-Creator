@@ -15,17 +15,6 @@ public class JobUI : CRUD<Job>
         Init();
     }
 
-    public override void Init()
-    {
-        base.Init();
-        elementObject = NewGameObject();
-
-        foreach (var item in GetObjects())
-        {
-            listElements.AddItem(item.Name, item.Id);
-        }
-    }
-
     void OnGUI()
     {
         RenderLeftSide();

@@ -8,8 +8,8 @@ public class RPGInspectorUI : EditorWindow {
 
 	static Texture2D texture;
 	static public byte[] image;
-	const int width = Constatnt.INSPECTOR_IMAGE_WIDTH;
-	const int height = Constatnt.INSPECTOR_IMAGE_HEIGTH;
+	const int width = Constant.INSPECTOR_IMAGE_WIDTH;
+	const int height = Constant.INSPECTOR_IMAGE_HEIGTH;
 
 	public void Init()
 	{

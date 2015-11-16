@@ -14,17 +14,7 @@ public class PlayerUI : CRUD<Player>
     Job PlayerJob;
     Animator animations;
 
-    public PlayerUI() : base("Player", new Rect(0, 0, 300, 770)) { }
-
-    public override void Init()
-    {
-        base.Init();    
-
-        foreach (var item in GetObjects())
-        {
-            listElements.AddItem(item.Name, item.Id);
-        }
-    }
+    public PlayerUI() : base("Player", new Rect(0, 0, 300, 770)) { }    
 
     void OnGUI()
     {
@@ -150,9 +140,9 @@ public class PlayerUI : CRUD<Player>
 
     private void AddObject()
     {
-        if (Event.current.commandName == "ObjectSelectorUpdated") //&& Event.current.type == EventType.ExecuteCommand)
+        if (Event.current.commandName == "ObjectSelectorUpdated")
         {
-            element.Image = (Sprite)EditorGUIUtility.GetObjectPickerObject();
+            element.Icon = element.Image = (Sprite)EditorGUIUtility.GetObjectPickerObject();
 
             if (element.Image != null)
             {
@@ -209,8 +199,7 @@ public class PlayerUI : CRUD<Player>
 
     protected override void Create()
     {
-        Id++;
-        element.Id = Id;
+        element.Id = element.GetInstanceID();
 
         CreateAnimation();
 
@@ -221,8 +210,6 @@ public class PlayerUI : CRUD<Player>
         }
 
         CreatePrefab(element);
-        listElements.AddItem(element.Name, element.Id);
-        SetId();
     }
 
     protected override void Edit()
@@ -231,10 +218,8 @@ public class PlayerUI : CRUD<Player>
         base.Edit();
     }
 
-    protected override void UpdateListBox()
+    protected override void UpdateForm()
     {
-        base.UpdateListBox();
-
         MainHand = elementObject.GetComponent<Weapon>();
         PlayerJob = elementObject.GetComponent<Job>();
         animations = elementObject.GetComponent<Animator>();

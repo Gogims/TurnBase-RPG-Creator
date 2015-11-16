@@ -3,7 +3,7 @@ using System.Collections;
 /// <summary>
 /// Constantes de TurnBase-RPG-Creator.
 /// </summary>
-public class Constatnt{
+public class Constant{
 	/// <summary>
 	/// La altura maxima del mapa
 	/// </summary>
@@ -28,4 +28,16 @@ public class Constatnt{
 	/// Ancho de la imagen del RPGInspector
 	/// </summary>
 	public const int INSPECTOR_IMAGE_WIDTH = 150;
+
+    /// <summary>
+    /// Crea el marco de la imagen del equipamiento
+    /// </summary>
+    /// <returns>Rectángulo con sus coordenadas definidas</returns>
+    public static Rect GetTextureCoordinate(Sprite Image)
+    {
+        return new Rect(Image.textureRect.x / Image.texture.width,
+                        Image.textureRect.y / Image.texture.height,
+                        Image.textureRect.width / Image.texture.width,
+                        Image.textureRect.height / Image.texture.height);
+    }
 }

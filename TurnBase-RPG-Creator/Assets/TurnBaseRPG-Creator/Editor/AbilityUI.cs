@@ -13,16 +13,6 @@ public class AbilityUI : CRUD<Ability>
         Init();
     }
 
-    override public void Init()
-    {
-        base.Init();
-
-        foreach (var item in GetObjects())
-        {
-            listElements.AddItem(item.Name, item.Id);
-        }
-    }
-
     void OnGUI()
     {
         RenderLeftSide();

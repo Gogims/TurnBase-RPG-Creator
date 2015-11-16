@@ -24,7 +24,10 @@ public class Actor : RPGElement
     /// Cantidad de mana disponible por el actor
     /// </summary>
     public int MP;
-
+    /// <summary>
+    /// Imagen del actor
+    /// </summary>
+    public Sprite Image;
     /// <summary>
     /// Listado de las animaciones para caminar hacia abajo
     /// </summary>

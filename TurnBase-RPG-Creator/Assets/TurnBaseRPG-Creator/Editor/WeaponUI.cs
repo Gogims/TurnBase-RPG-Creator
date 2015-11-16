@@ -11,16 +11,6 @@ public class WeaponUI : CRUD<Weapon>
         Init();
     }
 
-    override public void Init()
-    {
-        base.Init();
-
-        foreach (var item in GetObjects())
-        {
-            listElements.AddItem(item.Name, item.Id);
-        }
-    }
-
     void OnGUI()
     {
         RenderLeftSide();
@@ -79,7 +69,7 @@ public class WeaponUI : CRUD<Weapon>
 
         if (element.Image != null)
         {
-            GUI.DrawTextureWithTexCoords(new Rect(400, 300, element.Image.textureRect.width, element.Image.textureRect.height), element.Image.texture, element.GetTextureCoordinate());
+            GUI.DrawTextureWithTexCoords(new Rect(400, 300, element.Image.textureRect.width, element.Image.textureRect.height), element.Image.texture, Constant.GetTextureCoordinate(element.Image));
         }
 
         if (Selected)
@@ -116,7 +106,7 @@ public class WeaponUI : CRUD<Weapon>
     {
         if (Event.current.commandName == "ObjectSelectorUpdated") //&& Event.current.type == EventType.ExecuteCommand)
         {
-            element.Image = (Sprite)EditorGUIUtility.GetObjectPickerObject();
+            element.Icon = element.Image = (Sprite)EditorGUIUtility.GetObjectPickerObject();
 
             if (element.Image != null)
             {

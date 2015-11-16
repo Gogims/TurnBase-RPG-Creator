@@ -19,12 +19,7 @@ public class EnemyUI : CRUD<Enemy>
     public override void Init()
     {
         base.Init();
-        NewEnemy();        
-
-        foreach (var item in GetObjects())
-        {
-            listElements.AddItem(item.Name, item.Id);
-        }
+        NewEnemy();
     }
 
     void OnGUI()
@@ -153,9 +148,9 @@ public class EnemyUI : CRUD<Enemy>
 
     private void AddObject()
     {
-        if (Event.current.commandName == "ObjectSelectorUpdated") //&& Event.current.type == EventType.ExecuteCommand)
+        if (Event.current.commandName == "ObjectSelectorUpdated")
         {
-            element.Image = (Sprite)EditorGUIUtility.GetObjectPickerObject();
+            element.Icon =  element.Image = (Sprite)EditorGUIUtility.GetObjectPickerObject();
 
             if (element.Image != null)
             {
@@ -207,13 +202,10 @@ public class EnemyUI : CRUD<Enemy>
 
     protected override void Create()
     {
-        Id++;
-        element.Id = Id;
+        element.Id = element.GetInstanceID();
 
         CreateAnimation();
-        CreatePrefab(element);
-        listElements.AddItem(element.Name, element.Id);
-        SetId();
+        CreatePrefab(element);   
     }
 
     protected override void Edit()
@@ -222,10 +214,8 @@ public class EnemyUI : CRUD<Enemy>
         base.Edit();
     }
 
-    protected override void UpdateListBox()
+    protected override void UpdateForm()
     {
-        base.UpdateListBox();
-
         MainHand = elementObject.GetComponent<Weapon>();
         PlayerJob = elementObject.GetComponent<Job>();
         animations = elementObject.GetComponent<Animator>();
