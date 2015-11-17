@@ -47,19 +47,19 @@ public class AbstractState
     /// <summary>
     /// Mensaje que mostrará cuando el estado se quede
     /// </summary>
-    public string MessageRemains;
+    public string MessageRemains = string.Empty;
     /// <summary>
     /// Mensaje que mostrará cuando te recuperes del estado
     /// </summary>
-    public string MessageRecovery;
+    public string MessageRecovery = string.Empty;
     /// <summary>
     /// Mensaje que mostrará cuando se le aplique al personaje el estado
     /// </summary>
-    public string MessageActor;
+    public string MessageActor = string.Empty;
     /// <summary>
     /// Mensaje que mostrará cuando se le aplique al enemigo el estado
     /// </summary>
-    public string MessageEnemy;
+    public string MessageEnemy = string.Empty;
     /// <summary>
     /// Se elimina el estado al caminar?
     /// </summary>

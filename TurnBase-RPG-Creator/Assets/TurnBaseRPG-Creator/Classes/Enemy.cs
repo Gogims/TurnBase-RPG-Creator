@@ -7,5 +7,5 @@ public class Enemy : Actor
 {
     public int RewardExperience;
     public int RewardCurrency;
-    public List<int> RewardItems;
+    public List<float> PercentageItems;
 }

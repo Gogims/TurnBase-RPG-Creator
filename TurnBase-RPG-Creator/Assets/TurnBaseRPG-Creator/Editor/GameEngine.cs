@@ -122,6 +122,21 @@ public class GameEngine : EditorWindow {
     public static void ShowClass()
     {
         var window = EditorWindow.GetWindow<JobUI>();
+        window.maxSize = new Vector2(900, 400);
+        window.minSize = new Vector2(900, 400);
+        window.Init();
+        window.Show();
+    }
+
+    /// <summary>
+    /// Presenta la ventana de los items
+    /// </summary>
+    [MenuItem("RPG-Creator/Item")]
+    public static void ShowItem()
+    {
+        var window = EditorWindow.GetWindow<ItemUI>();
+        window.maxSize = new Vector2(900, 400);
+        window.minSize = new Vector2(900, 400);
         window.Init();
         window.Show();
     }

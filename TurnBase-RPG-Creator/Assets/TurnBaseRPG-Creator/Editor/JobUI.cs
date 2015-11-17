@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections.Generic;
 using UnityEditor;
 using Rotorz.ReorderableList;
 
@@ -39,28 +38,27 @@ public class JobUI : CRUD<Job>
         GUILayout.EndArea();
 
         // Skills
-        GUILayout.BeginArea(new Rect(300, 250, 600, 150), "Skills", EditorStyles.helpBox);
+        GUILayout.BeginArea(new Rect(300, 250, 600, 130), "Skills", EditorStyles.helpBox);
         GUILayout.Space(10);
 
         ScrollPosition = GUILayout.BeginScrollView(ScrollPosition);
         ReorderableListGUI.ListField(element.Abilities, DrawAbilityUI, ReorderableListFlags.DisableReordering);
-        GUILayout.EndScrollView();
+        GUILayout.EndScrollView();  
+        GUILayout.EndArea();
 
         if (Selected)
         {
             GUI.enabled = !Creating;
-            SelectButton = GUI.Button(new Rect(0, 130, 100, 20), "Select");
+            SelectButton = GUI.Button(new Rect(300, 380, 100, 20), "Select");
             GUI.enabled = true;
         }
         else
         {
-            SaveButton = GUI.Button(new Rect(0, 130, 100, 20), "Save");
+            SaveButton = GUI.Button(new Rect(300, 380, 100, 20), "Save");
             GUI.enabled = !Creating;
-            DeleteButton = GUI.Button(new Rect(100, 130, 100, 20), "Delete");
+            DeleteButton = GUI.Button(new Rect(400, 380, 100, 20), "Delete");
             GUI.enabled = true;
         }
-
-        GUILayout.EndArea();
     }
 
     private AbstractAbility DrawAbilityUI(Rect position, AbstractAbility Ability)

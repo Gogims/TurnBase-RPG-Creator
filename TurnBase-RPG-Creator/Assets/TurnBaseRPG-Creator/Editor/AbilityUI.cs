@@ -31,7 +31,7 @@ public class AbilityUI : CRUD<Ability>
         GUILayout.BeginHorizontal();
         element.Data.AttackType = (Constant.AttackType)EditorGUILayout.EnumPopup("Type: ", element.Data.AttackType);
         element.Data.AttackPower = EditorGUILayout.IntField("Power: ", element.Data.AttackPower);        
-        GUILayout.EndHorizontal();        
+        GUILayout.EndHorizontal();
 
         GUILayout.Label("Type", EditorStyles.boldLabel);
         GUILayout.BeginHorizontal();

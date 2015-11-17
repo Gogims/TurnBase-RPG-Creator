@@ -9,7 +9,7 @@ public abstract class Item : RPGElement
     /// <summary>
     /// Descripción del equipamiento
     /// </summary>
-    public string Description;
+    public string Description = string.Empty;
 
     /// <summary>
     /// El valor que tiene el equipamiento

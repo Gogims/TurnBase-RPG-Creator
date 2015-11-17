@@ -33,4 +33,9 @@ public class Usable : Item
     /// Listado de efectos que remueve/agrega al objetivo
     /// </summary>
     public List<AbstractState> States;
+
+    public Usable()
+    {
+        States = new List<AbstractState>();
+    }
 }
