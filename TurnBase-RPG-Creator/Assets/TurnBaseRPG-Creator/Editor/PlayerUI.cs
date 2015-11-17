@@ -77,17 +77,15 @@ public class PlayerUI : CRUD<Player>
 
         GUILayout.EndArea();
 
-        GUILayout.BeginArea(new Rect(300, 610, 600, 160), "Design", EditorStyles.helpBox);
+        // Design
+        GUILayout.BeginArea(new Rect(300, 610, 600, 140), "Design", EditorStyles.helpBox);
         GUILayout.Space(10);
 
         // Text field to upload image
         GUILayout.Label("Avatar", EditorStyles.boldLabel);
-        GUI.enabled = false;
-        GUI.TextField(new Rect(0, 40, 300, 20), spritename);
-        GUI.enabled = true;
 
         // Button to upload image
-        if (GUI.Button(new Rect(300, 40, 100, 20), "Select Picture"))
+        if (GUI.Button(new Rect(0, 40, 400, 20), "Select Picture"))
         {
             EditorGUIUtility.ShowObjectPicker<Sprite>(null, false, null, 1);
         }
@@ -96,7 +94,7 @@ public class PlayerUI : CRUD<Player>
 
         if (element.Image != null)
         {
-            GUI.DrawTextureWithTexCoords(new Rect(400, 40, element.Image.textureRect.width, element.Image.textureRect.height), element.Image.texture, element.GetTextureCoordinate());
+            GUI.DrawTextureWithTexCoords(new Rect(400, 40, element.Image.textureRect.width, element.Image.textureRect.height), element.Image.texture, Constant.GetTextureCoordinate(element.Image));
         }        
 
         GUI.Label(new Rect(0, 60, 100, 20), "Animation", EditorStyles.boldLabel);
@@ -104,13 +102,12 @@ public class PlayerUI : CRUD<Player>
         AddAnimation("Left", ref element.leftSprites, new Rect(100, 80, 75, 20));
         AddAnimation("Up", ref element.upSprites, new Rect(200, 80, 75, 20));
         AddAnimation("Right", ref element.rightSprites, new Rect(300, 80, 75, 20));
-
-        SaveButton = GUI.Button(new Rect(0, 140, 100, 20), "Save");
-        GUI.enabled = !Creating;
-        DeleteButton = GUI.Button(new Rect(100, 140, 100, 20), "Delete");
-        GUI.enabled = true;
-
         GUILayout.EndArea();
+
+        SaveButton = GUI.Button(new Rect(300, 750, 100, 20), "Save");
+        GUI.enabled = !Creating;
+        DeleteButton = GUI.Button(new Rect(400, 750, 100, 20), "Delete");
+        GUI.enabled = true;
     }    
 
     private void AddAnimation(string name, ref List<Sprite> animation, Rect position)
@@ -136,20 +133,6 @@ public class PlayerUI : CRUD<Player>
             window.Show();
         }
         GUILayout.EndHorizontal();
-    }
-
-    private void AddObject()
-    {
-        if (Event.current.commandName == "ObjectSelectorUpdated")
-        {
-            element.Icon = element.Image = (Sprite)EditorGUIUtility.GetObjectPickerObject();
-
-            if (element.Image != null)
-            {
-                spritename = element.Image.name;
-            }
-            Repaint();
-        }
     }
 
     private void CreateAnimation()

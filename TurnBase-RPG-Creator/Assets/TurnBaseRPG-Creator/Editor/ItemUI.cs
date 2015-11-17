@@ -6,24 +6,36 @@ public class ItemUI : CRUD<Usable>
 {
     private Vector2 ScrollPosition;
 
-    public ItemUI() : base("Item", new Rect(0, 0, 300, 400)) { }
+    public ItemUI() : base("Item", new Rect(0, 0, 300, 500)) { }
     
     void OnGUI()
     {
         RenderLeftSide();
 
         // Configuraciones básicas
-        GUILayout.BeginArea(new Rect(300, 0, 600, 100), "Basic Settings", EditorStyles.helpBox);
+        GUILayout.BeginArea(new Rect(300, 0, 600, 200), "Basic Settings", EditorStyles.helpBox);
         GUILayout.Space(15);
 
         GUI.enabled = !Selected;
         element.Name = EditorGUILayout.TextField("Name: ", element.Name);
         element.Description = EditorGUILayout.TextField("Description: ", element.Description);
         element.Price = EditorGUILayout.IntField("Price: ", element.Price);
+        if (GUI.Button(new Rect(0, 80, 400, 20), "Select Picture"))
+        {
+            EditorGUIUtility.ShowObjectPicker<Sprite>(null, false, null, 1);
+        }
+
+        AddObject();
+
+        if (element.Icon != null)
+        {
+            GUI.DrawTextureWithTexCoords(new Rect(400, 80, element.Icon.textureRect.width, element.Icon.textureRect.height), element.Icon.texture, Constant.GetTextureCoordinate(element.Icon));
+        }
+
         GUILayout.EndArea();
 
         // Item Type
-        GUILayout.BeginArea(new Rect(300, 100, 600, 100), "Item Type", EditorStyles.helpBox);
+        GUILayout.BeginArea(new Rect(300, 200, 600, 100), "Item Type", EditorStyles.helpBox);
         GUILayout.Space(15);
 
         GUILayout.BeginHorizontal();
@@ -38,7 +50,7 @@ public class ItemUI : CRUD<Usable>
         GUILayout.EndArea();
 
         // Advance Settings
-        GUILayout.BeginArea(new Rect(300, 200, 600, 180), "Advance Settings", EditorStyles.helpBox);
+        GUILayout.BeginArea(new Rect(300, 300, 600, 180), "Advance Settings", EditorStyles.helpBox);
         GUILayout.Space(15);
 
         GUILayout.BeginHorizontal();
@@ -54,14 +66,14 @@ public class ItemUI : CRUD<Usable>
         if (Selected)
         {
             GUI.enabled = !Creating;
-            SelectButton = GUI.Button(new Rect(300, 380, 100, 20), "Select");
+            SelectButton = GUI.Button(new Rect(300, 480, 100, 20), "Select");
             GUI.enabled = true;
         }
         else
         {
-            SaveButton = GUI.Button(new Rect(300, 380, 100, 20), "Save");
+            SaveButton = GUI.Button(new Rect(300, 480, 100, 20), "Save");
             GUI.enabled = !Creating;
-            DeleteButton = GUI.Button(new Rect(400, 380, 100, 20), "Delete");
+            DeleteButton = GUI.Button(new Rect(400, 480, 100, 20), "Delete");
             GUI.enabled = true;
         }
     }

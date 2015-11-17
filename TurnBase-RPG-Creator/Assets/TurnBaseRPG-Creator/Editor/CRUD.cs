@@ -43,10 +43,6 @@ public abstract class CRUD<T> : EditorWindow
     /// </summary>
     protected GameObject elementObject;
     /// <summary>
-    /// Nombre de la imagen del objeto
-    /// </summary>
-    protected string spritename;
-    /// <summary>
     /// El botón para salvar, del formulario fue presionado?
     /// </summary>
     protected bool SaveButton;
@@ -99,7 +95,6 @@ public abstract class CRUD<T> : EditorWindow
         elementObject = NewGameObject();
         ListObjects = (Resources.LoadAll(Type, typeof(GameObject)));
         Creating = true;
-        spritename = "";
     }
 
     /// <summary>
@@ -288,6 +283,15 @@ public abstract class CRUD<T> : EditorWindow
         element = newGameObject.AddComponent<T>();
 
         return newGameObject;
+    }
+
+    protected void AddObject()
+    {
+        if (Event.current.commandName == "ObjectSelectorUpdated")
+        {
+            element.Icon = (Sprite)EditorGUIUtility.GetObjectPickerObject();
+            Repaint();
+        }
     }
 
     protected virtual void AssignElement() { }

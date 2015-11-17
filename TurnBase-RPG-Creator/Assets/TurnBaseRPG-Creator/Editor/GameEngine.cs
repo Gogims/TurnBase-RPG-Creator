@@ -43,8 +43,8 @@ public class GameEngine : EditorWindow {
     public static void ShowEnemy()
     {
         var window = EditorWindow.GetWindow<EnemyUI>();
-        window.maxSize = new Vector2(900, 770);
-        window.minSize = new Vector2(900, 770);
+        window.maxSize = new Vector2(900, 830);
+        window.minSize = new Vector2(900, 830);
         window.Init();
         window.Show();
     }
@@ -56,8 +56,8 @@ public class GameEngine : EditorWindow {
     public static void ShowState()
     {
         var window = EditorWindow.GetWindow<StateUI>();
-        //window.maxSize = new Vector2(900, 770);
-        //window.minSize = new Vector2(900, 770);
+        window.maxSize = new Vector2(900, 530);
+        window.minSize = new Vector2(900, 530);
         window.Init();
         window.Show();
     }
@@ -122,8 +122,8 @@ public class GameEngine : EditorWindow {
     public static void ShowClass()
     {
         var window = EditorWindow.GetWindow<JobUI>();
-        window.maxSize = new Vector2(900, 400);
-        window.minSize = new Vector2(900, 400);
+        window.maxSize = new Vector2(900, 600);
+        window.minSize = new Vector2(900, 600);
         window.Init();
         window.Show();
     }
@@ -135,8 +135,8 @@ public class GameEngine : EditorWindow {
     public static void ShowItem()
     {
         var window = EditorWindow.GetWindow<ItemUI>();
-        window.maxSize = new Vector2(900, 400);
-        window.minSize = new Vector2(900, 400);
+        window.maxSize = new Vector2(900, 500);
+        window.minSize = new Vector2(900, 500);
         window.Init();
         window.Show();
     }

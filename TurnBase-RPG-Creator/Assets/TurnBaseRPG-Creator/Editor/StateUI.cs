@@ -6,7 +6,7 @@ public class StateUI : CRUD<State>
 {
     AbstractState StateSelected;
 
-    public StateUI() : base("State", new Rect(0, 0, 300, 450)) { }
+    public StateUI() : base("State", new Rect(0, 0, 300, 530)) { }
 
     public void Initialize(ref AbstractState state)
     {
@@ -19,23 +19,38 @@ public class StateUI : CRUD<State>
         RenderLeftSide();
 
         // Configuraciones básicas
-        GUILayout.BeginArea(new Rect(300, 0, 600, 100), "Basic Settings", EditorStyles.helpBox);
+        GUILayout.BeginArea(new Rect(300, 0, 600, 180), "Basic Settings", EditorStyles.helpBox);
         GUILayout.Space(15);
-
         GUI.enabled = !Selected;
+
+        GUILayout.BeginHorizontal();
         element.Data.State = element.Name = EditorGUILayout.TextField("Name: ", element.Name);
         element.Data.Priority = EditorGUILayout.IntSlider(new GUIContent("Priority:"), element.Data.Priority, 1, 100);
+        GUILayout.EndHorizontal();        
         
         EditorGUILayout.BeginHorizontal();
         element.Data.ActionRestriction = (Constant.ActionType)EditorGUILayout.EnumPopup("Restriction: ", element.Data.ActionRestriction);
         element.Data.TriggerTurn = (Constant.TriggerTurnType)EditorGUILayout.EnumPopup("Trigger: ", element.Data.TriggerTurn);
         EditorGUILayout.EndHorizontal();
 
-        element.Data.ActiveOnSteps = EditorGUILayout.IntField("Steps to Activate: ", element.Data.ActiveOnSteps);
+        element.Data.ActiveOnSteps = EditorGUI.IntField(new Rect(0, 60, 200, 20), "Steps to Activate: ", element.Data.ActiveOnSteps);
+        
+        if (GUI.Button(new Rect(300, 60, 100, 20), "Select Picture"))
+        {
+            EditorGUIUtility.ShowObjectPicker<Sprite>(null, false, null, 1);
+        }
+
+        AddObject();
+
+        if (element.Icon != null)
+        {
+            GUI.DrawTextureWithTexCoords(new Rect(400, 60, element.Icon.textureRect.width, element.Icon.textureRect.height), element.Icon.texture, Constant.GetTextureCoordinate(element.Icon));
+        }
+
         GUILayout.EndArea();
 
         // Daño
-        GUILayout.BeginArea(new Rect(300, 100, 600, 100), "Action", EditorStyles.helpBox);
+        GUILayout.BeginArea(new Rect(300, 180, 600, 100), "Action", EditorStyles.helpBox);
         GUILayout.Space(15);
 
         element.Data.Type = (Constant.DamageHeal)EditorGUILayout.EnumPopup("Type: ", element.Data.Type);
@@ -53,7 +68,7 @@ public class StateUI : CRUD<State>
         GUILayout.EndArea();
 
         // Recuperación
-        GUILayout.BeginArea(new Rect(300, 200, 600, 120), "Recovery Conditions", EditorStyles.helpBox);
+        GUILayout.BeginArea(new Rect(300, 280, 600, 120), "Recovery Conditions", EditorStyles.helpBox);
         GUILayout.Space(15);
         element.Data.RemoveBattleEnd = EditorGUILayout.Toggle("Remove End of Battle", element.Data.RemoveBattleEnd);
 
@@ -83,29 +98,28 @@ public class StateUI : CRUD<State>
         GUILayout.EndArea();
 
         // Mensajes
-        GUILayout.BeginArea(new Rect(300, 320, 600, 130), "Messages", EditorStyles.helpBox);
+        GUILayout.BeginArea(new Rect(300, 400, 600, 110), "Messages", EditorStyles.helpBox);
         GUILayout.Space(15);
 
         element.Data.MessageActor = EditorGUILayout.TextField("Inflicted Ally: ", element.Data.MessageActor);
         element.Data.MessageEnemy = EditorGUILayout.TextField("Inflicted Enemy: ", element.Data.MessageEnemy);
         element.Data.MessageRemains = EditorGUILayout.TextField("Continued Infliction: ", element.Data.MessageRemains);
-        element.Data.MessageRecovery = EditorGUILayout.TextField("Recovery: ", element.Data.MessageRecovery);        
+        element.Data.MessageRecovery = EditorGUILayout.TextField("Recovery: ", element.Data.MessageRecovery);
+        GUILayout.EndArea();
 
         if (Selected)
         {
             GUI.enabled = !Creating;
-            SelectButton = GUI.Button(new Rect(0, 110, 100, 20), "Select");
+            SelectButton = GUI.Button(new Rect(300, 510, 100, 20), "Select");
             GUI.enabled = true;
         }
         else
         {
-            SaveButton = GUI.Button(new Rect(0, 110, 100, 20), "Save");
+            SaveButton = GUI.Button(new Rect(300, 510, 100, 20), "Save");
             GUI.enabled = !Creating;
-            DeleteButton = GUI.Button(new Rect(100, 110, 100, 20), "Delete");
+            DeleteButton = GUI.Button(new Rect(400, 510, 100, 20), "Delete");
             GUI.enabled = true;
         }
-
-        GUILayout.EndArea();
     } 
 
     override protected void AssignElement()

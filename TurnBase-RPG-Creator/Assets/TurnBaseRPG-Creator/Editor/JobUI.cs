@@ -6,7 +6,7 @@ public class JobUI : CRUD<Job>
 {
     private Vector2 ScrollPosition;
 
-    public JobUI() : base("Job", new Rect(0, 0, 300, 400)) { }
+    public JobUI() : base("Job", new Rect(0, 0, 300, 600)) { }
 
     public void Initialize(ref Job a)
     {
@@ -21,10 +21,28 @@ public class JobUI : CRUD<Job>
         GUI.enabled = !Selected;
 
         // Basic Settings
-        GUILayout.BeginArea(new Rect(300, 0, 600, 250), "Basic Settings", EditorStyles.helpBox);
+        GUILayout.BeginArea(new Rect(300, 0, 600, 200), "Basic Settings", EditorStyles.helpBox);
         GUILayout.Space(10);
 
         element.Name = EditorGUILayout.TextField("Name", element.Name);
+
+        if (GUI.Button(new Rect(0, 40, 400, 20), "Select Picture"))
+        {
+            EditorGUIUtility.ShowObjectPicker<Sprite>(null, false, null, 1);
+        }
+
+        AddObject();
+
+        if (element.Icon != null)
+        {
+            GUI.DrawTextureWithTexCoords(new Rect(400, 40, element.Icon.textureRect.width, element.Icon.textureRect.height), element.Icon.texture, Constant.GetTextureCoordinate(element.Icon));
+        }
+
+        GUILayout.EndArea();
+
+        GUILayout.BeginArea(new Rect(300, 200, 600, 200), "Curves", EditorStyles.helpBox);
+        GUILayout.Space(10);
+
         CurveUI(ref element.XP, Color.white);
         CurveUI(ref element.MaxHP, Color.red);
         CurveUI(ref element.MaxMP, Color.blue);
@@ -38,7 +56,7 @@ public class JobUI : CRUD<Job>
         GUILayout.EndArea();
 
         // Skills
-        GUILayout.BeginArea(new Rect(300, 250, 600, 130), "Skills", EditorStyles.helpBox);
+        GUILayout.BeginArea(new Rect(300, 400, 600, 180), "Skills", EditorStyles.helpBox);
         GUILayout.Space(10);
 
         ScrollPosition = GUILayout.BeginScrollView(ScrollPosition);
@@ -49,14 +67,14 @@ public class JobUI : CRUD<Job>
         if (Selected)
         {
             GUI.enabled = !Creating;
-            SelectButton = GUI.Button(new Rect(300, 380, 100, 20), "Select");
+            SelectButton = GUI.Button(new Rect(300, position.height - 20, 100, 20), "Select");
             GUI.enabled = true;
         }
         else
         {
-            SaveButton = GUI.Button(new Rect(300, 380, 100, 20), "Save");
+            SaveButton = GUI.Button(new Rect(300, 580, 100, 20), "Save");
             GUI.enabled = !Creating;
-            DeleteButton = GUI.Button(new Rect(400, 380, 100, 20), "Delete");
+            DeleteButton = GUI.Button(new Rect(400, 580, 100, 20), "Delete");
             GUI.enabled = true;
         }
     }
