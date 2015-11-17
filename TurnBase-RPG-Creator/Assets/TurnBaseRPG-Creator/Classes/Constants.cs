@@ -94,4 +94,12 @@ public class Constant{
         DuringAction,
         EndTurn
     };
+
+    public enum ItemAvailable
+    {
+        Always,
+        OnlyBattle,
+        OnlyMenu,
+        Never
+    }
 }

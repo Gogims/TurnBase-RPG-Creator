@@ -3,22 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public abstract class Equipppable : RPGElement
+public abstract class Equipppable : Item
 {
-    /// <summary>
-    /// Descripción del equipamiento
-    /// </summary>
-    public string Description;
-
     /// <summary>
     /// Nivel mínimo que se necesita para equipar
     /// </summary>
-    public int MinLevel;
-
-    /// <summary>
-    /// El valor que tiene el equipamiento
-    /// </summary>
-    public int Price;    
+    public int MinLevel;     
 
     /// <summary>
     /// Str, DEX, Int, etc.
