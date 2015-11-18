@@ -8,7 +8,7 @@ public class WeaponUI : CRUD<Weapon>
     public void Initialize(ref Weapon w)
     {
         AssignedElement = w;
-        Init();
+        Init();        
     }
 
     void OnGUI()

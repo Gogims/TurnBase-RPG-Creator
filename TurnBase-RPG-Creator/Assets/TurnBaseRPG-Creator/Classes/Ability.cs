@@ -17,7 +17,7 @@ public class AbstractAbility
     /// <summary>
     /// Descripción de la habilidad
     /// </summary>
-    public string Description;
+    public string Description = string.Empty;
     /// <summary>
     /// El poder de ataque es influencia por la cantidad de Inteligencia del personaje
     /// </summary>
@@ -41,7 +41,7 @@ public class AbstractAbility
     /// <summary>
     /// Nombre de la habilidad
     /// </summary>
-    public string Ability;
+    public string Ability = string.Empty;
     /// <summary>
     /// Cuantos aliados/enemigos afectará la habilidad
     /// </summary>

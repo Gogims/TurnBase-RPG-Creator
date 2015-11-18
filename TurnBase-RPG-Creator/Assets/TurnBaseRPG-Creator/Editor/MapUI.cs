@@ -179,7 +179,11 @@ public class MapUI : EditorWindow {
     }
     void OnDestroy()
     {
-        DestroyImmediate(temp);
+        if (temp != null)
+        {
+            DestroyImmediate(temp);
+        }
+        
 		this.Close ();
 	}
     void UpdateValidationVal()
