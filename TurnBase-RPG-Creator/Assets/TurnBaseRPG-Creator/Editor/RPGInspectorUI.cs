@@ -14,7 +14,6 @@ public class RPGInspectorUI : EditorWindow {
 	public void Init()
 	{
 		defaultText = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/TurnBaseRPG-Creator/RPG-Sprites/96x96.jpg");
-        Debug.Log(defaultText);
 	}
 	void OnGUI() 
 	{

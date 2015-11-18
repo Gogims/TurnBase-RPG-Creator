@@ -390,11 +390,6 @@ public class MapObjectsUI : EditorWindow {
         house.Heigth = 0;
         Selected = null;
     }
-
-    private void RenderRightSide(string p)
-    {
-        
-    }
     /// <summary>
     /// Dibuja los objetos que estan en el arreglo
     /// </summary>

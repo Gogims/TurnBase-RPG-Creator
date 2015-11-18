@@ -60,6 +60,7 @@
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\ErrorHandler.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Formula.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\House.cs" />
+     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Item.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Job.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\ListBox.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\LoigcalCondition.cs" />
@@ -77,6 +78,7 @@
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\State.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\TextureScale.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Tile.cs" />
+     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Usable.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Wall.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Weapon.cs" />
      <None Include="Assets\TurnBaseRPG-Creator\RPG-Resources\Armor\id.txt" />
