@@ -28,6 +28,14 @@ public class Constant{
 	/// Ancho de la imagen del RPGInspector
 	/// </summary>
 	public const int INSPECTOR_IMAGE_WIDTH = 150;
+    /// <summary>
+    /// Ancho de los sprites de los elementos del juego
+    /// </summary>
+    public const int SpriteWidth = 64;
+    /// <summary>
+    /// Alto de los sprites de los elementos del juego
+    /// </summary>
+    public const int SpriteHeight = 64;
 
     /// <summary>
     /// Crea el marco de la imagen del equipamiento

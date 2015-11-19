@@ -20,18 +20,19 @@ public class WeaponUI : CRUD<Weapon>
         GUILayout.Space(15);
 
         GUI.enabled = !Selected;
-        element.Name = EditorGUILayout.TextField("Name", element.Name);
-        element.Description = EditorGUILayout.TextField("Description", element.Description);
-        element.Type = (Weapon.WeaponType)EditorGUILayout.EnumPopup("Weapon Type:", element.Type);
+        element.Name = EditorGUILayout.TextField("Name: ", element.Name);
+        element.Description = EditorGUILayout.TextField("Description: ", element.Description);
+        element.Type = (Weapon.WeaponType)EditorGUILayout.EnumPopup("Weapon Type: ", element.Type);
+        element.Price = EditorGUILayout.IntField("Price: ", element.Price);
 
-        if (GUI.Button(new Rect(0, 80, 400, 20), "Select Sprite"))
+        if (GUI.Button(new Rect(0, 100, 400, 20), "Select Sprite"))
         {
             EditorGUIUtility.ShowObjectPicker<Sprite>(null, false, null, 1);
         }
 
         if (element.Image != null)
         {
-            GUI.DrawTextureWithTexCoords(new Rect(400, 80, element.Image.textureRect.width, element.Image.textureRect.height), element.Image.texture, Constant.GetTextureCoordinate(element.Image));
+            GUI.DrawTextureWithTexCoords(new Rect(400, 100, Constant.SpriteWidth, Constant.SpriteHeight), element.Image.texture, Constant.GetTextureCoordinate(element.Image));
         }
 
         AddObject();
