@@ -11,13 +11,55 @@ public class WeaponUI : CRUD<Weapon>
         Init();        
     }
 
+    protected override void InitErrors()
+    {
+        // Insertando las validaciones de propiedades
+        err.InsertPropertyError("Name", element.name.Length, "The Name field can't be empty");
+        err.InsertPropertyError("Agility", element.Stats.Agility, "The Agility field can't be negative");
+        err.InsertPropertyError("Attack", element.Stats.Attack, "The Attack field can't be negative");
+        err.InsertPropertyError("Luck", element.Stats.Luck, "The Luck field can't be negative");
+        err.InsertPropertyError("Magic", element.Stats.Magic, "The Magic field can't be negative");
+        err.InsertPropertyError("MagicDefense", element.Stats.MagicDefense, "The Magic Defense field can't be negative");
+        err.InsertPropertyError("MaxHP", element.Stats.MaxHP, "The MaxHP field can't be negative");
+        err.InsertPropertyError("MaxMP", element.Stats.MaxMP, "The MaxMP field can't be negative");
+        err.InsertPropertyError("Price", element.Price, "The Price field can't be negative");
+        //err.InsertPropertyError("Sprite", SpriteName.Length, "The Image field can't be empty");
+
+        // Insertando las condiciones de las propiedades
+        err.InsertCondition("Name", 0, ErrorCondition.Greater, LogicalOperators.None);
+        err.InsertCondition("Agility", 0, ErrorCondition.GreaterOrEqual, LogicalOperators.None);
+        err.InsertCondition("Attack", 0, ErrorCondition.GreaterOrEqual, LogicalOperators.None);
+        err.InsertCondition("Luck", 0, ErrorCondition.GreaterOrEqual, LogicalOperators.None);
+        err.InsertCondition("Magic", 0, ErrorCondition.GreaterOrEqual, LogicalOperators.None);
+        err.InsertCondition("MagicDefense", 0, ErrorCondition.GreaterOrEqual, LogicalOperators.None);
+        err.InsertCondition("MaxHP", 0, ErrorCondition.GreaterOrEqual, LogicalOperators.None);
+        err.InsertCondition("MaxMP", 0, ErrorCondition.GreaterOrEqual, LogicalOperators.None);
+        err.InsertCondition("Price", 0, ErrorCondition.GreaterOrEqual, LogicalOperators.None);
+        //err.InsertCondition("Sprite", 0, ErrorCondition.Greater, LogicalOperators.None);
+    }
+
+    protected override void UpdateValidations()
+    {
+        err.UpdateValue("Name", element.Name.Length);
+        err.UpdateValue("Agility", element.Stats.Agility);
+        err.UpdateValue("Attack", element.Stats.Attack);
+        err.UpdateValue("Luck", element.Stats.Agility);
+        err.UpdateValue("Magic", element.Stats.Agility);
+        err.UpdateValue("MagicDefense", element.Stats.Agility);
+        err.UpdateValue("MaxHP", element.Stats.Agility);
+        err.UpdateValue("MaxMP", element.Stats.Agility);
+        err.UpdateValue("Price", element.Price);
+        //err.UpdateValue("Sprite", SpriteName.Length);
+    }
+
     void OnGUI()
     {
-        RenderLeftSide();
+        RenderLeftSide();        
 
         // Basic Settings
         GUILayout.BeginArea(new Rect(300, 0, 600, 180), "Basic Settings", EditorStyles.helpBox);
         GUILayout.Space(15);
+        err.ShowErrorsLayout();
 
         GUI.enabled = !Selected;
         element.Name = EditorGUILayout.TextField("Name: ", element.Name);
@@ -44,7 +86,7 @@ public class WeaponUI : CRUD<Weapon>
         GUILayout.Space(15);
 
         element.Stats.Agility = EditorGUILayout.IntField("Agility: ", element.Stats.Agility);
-        element.Stats.Defense = EditorGUILayout.IntField("Attack: ", element.Stats.Attack);
+        element.Stats.Attack = EditorGUILayout.IntField("Attack: ", element.Stats.Attack);
         element.Stats.Luck = EditorGUILayout.IntField("Luck: ", element.Stats.Luck);
         element.Stats.Magic = EditorGUILayout.IntField("Magic: ", element.Stats.Magic);
         element.Stats.MagicDefense = EditorGUILayout.IntField("MagicDefense: ", element.Stats.MagicDefense);

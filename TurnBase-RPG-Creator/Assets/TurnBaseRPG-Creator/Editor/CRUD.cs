@@ -57,7 +57,16 @@ public abstract class CRUD<T> : EditorWindow
     /// <summary>
     /// El botón para seleccionar un elemento del formulario
     /// </summary>
-    protected bool SelectButton; 
+    protected bool SelectButton;
+    /// <summary>
+    /// Variable que se encarga del manejo de errores
+    /// </summary>
+    protected ErrorHandler err = new ErrorHandler();
+    /// <summary>
+    /// Nombre del sprite del formulario
+    /// </summary>
+    //protected string SpriteName = string.Empty;
+
     /// <summary>
     /// Dirección absoluta del objeto
     /// </summary>
@@ -73,7 +82,7 @@ public abstract class CRUD<T> : EditorWindow
     /// <summary>
     /// Variable para el scroll del listado
     /// </summary>
-    private Vector2 ScrollPosition;
+    private Vector2 ScrollPosition;    
 
     /// <summary>
     /// Unico constructor de la clase CRUD
@@ -85,6 +94,7 @@ public abstract class CRUD<T> : EditorWindow
         relativepath = "Assets/Resources/" + type + "/";
         _path = Directory.GetCurrentDirectory() + @"\Assets\Resources\" + type + @"\";
         LeftSide = left;
+        err = new ErrorHandler();
     }
 
     /// <summary>
@@ -94,6 +104,7 @@ public abstract class CRUD<T> : EditorWindow
     {
         elementObject = NewGameObject();
         ListObjects = (Resources.LoadAll(Type, typeof(GameObject)));
+        InitErrors();
         Creating = true;
     }
 
@@ -211,6 +222,11 @@ public abstract class CRUD<T> : EditorWindow
                 elementObject = Instantiate(temp);
                 element = elementObject.GetComponent<T>();
                 Creating = false;
+
+                //if (element.Icon != null)
+                //{
+                //    SpriteName = element.Icon.name;
+                //}
             }
 
             if (x + 84 + 64 < LeftSide.width)
@@ -237,7 +253,7 @@ public abstract class CRUD<T> : EditorWindow
         }
 
         //Funcionamineto de guardado
-        if (SaveButton)
+        if (SaveButton && !err.CheckErrors())
         {
             SaveElement();
             elementObject = NewGameObject();
@@ -258,6 +274,7 @@ public abstract class CRUD<T> : EditorWindow
         }
 
         UpdateForm();
+        UpdateValidations();
     }
     #endregion
 
@@ -279,6 +296,7 @@ public abstract class CRUD<T> : EditorWindow
             DestroyImmediate(elementObject);
         }
 
+        //SpriteName = string.Empty;
         GameObject newGameObject = new GameObject(Type);
         element = newGameObject.AddComponent<T>();
 
@@ -297,4 +315,6 @@ public abstract class CRUD<T> : EditorWindow
     protected virtual void AssignElement() { }
 
     protected virtual void UpdateForm() { }
+    protected virtual void InitErrors() { }
+    protected virtual void UpdateValidations() { }
 }
