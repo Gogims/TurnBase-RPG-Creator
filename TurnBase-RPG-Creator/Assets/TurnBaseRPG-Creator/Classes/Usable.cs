@@ -5,6 +5,21 @@ using System.Text;
 
 public class Usable : Item
 {
+    public AbstractUsable Data;
+
+    public Usable()
+    {
+        Data = new AbstractUsable();
+    }
+}
+
+[Serializable]
+public class AbstractUsable
+{
+    /// <summary>
+    /// Nombre del item
+    /// </summary>
+    public string ItemName = string.Empty;
     /// <summary>
     /// Si se gasta el item luego de utilizar
     /// </summary>
@@ -34,7 +49,7 @@ public class Usable : Item
     /// </summary>
     public List<AbstractState> States;
 
-    public Usable()
+    public AbstractUsable()
     {
         States = new List<AbstractState>();
     }

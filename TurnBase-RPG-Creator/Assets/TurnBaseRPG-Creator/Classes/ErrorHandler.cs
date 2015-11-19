@@ -32,9 +32,10 @@ public class ErrorHandler  {
     {
         foreach (string i in properties.Keys)
         {
-            if (properties[i].Error)
-                GUILayout.Label("* " + properties[i].Message, style);
+                if (properties[i].Error)
+                    GUILayout.Label("* " + properties[i].Message, style);
         }
+       
     }
     /// <summary>
     /// Muestra los mensajes utilizando la ubicacion de cada mensaje.

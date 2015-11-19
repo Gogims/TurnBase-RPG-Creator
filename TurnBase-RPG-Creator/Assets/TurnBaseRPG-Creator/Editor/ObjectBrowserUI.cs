@@ -80,7 +80,7 @@ public class ObjectBrowserUI : EditorWindow
         GUILayout.BeginArea(new Rect(300, diff, this.position.width - 300, this.position.height-diff), string.Empty, EditorStyles.helpBox);
         GUILayout.Label(optionSelected, fontStyle);
         GUILayout.BeginVertical();
-        scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition, false, true);
+        scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition);
         DrawObjectList();
         GUILayout.EndVertical();
         GUILayout.EndScrollView();

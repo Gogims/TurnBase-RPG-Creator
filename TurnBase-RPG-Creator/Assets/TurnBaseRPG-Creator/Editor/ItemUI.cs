@@ -5,9 +5,16 @@ using Rotorz.ReorderableList;
 public class ItemUI : CRUD<Usable>
 {
     private Vector2 ScrollPosition;
+    private AbstractUsable UsableSelected;
 
     public ItemUI() : base("Item", new Rect(0, 0, 300, 500)) { }
-    
+
+    public void Initialize(ref AbstractUsable item)
+    {
+        UsableSelected = item;
+        Init();
+    }
+
     void OnGUI()
     {
         RenderLeftSide();
@@ -17,7 +24,7 @@ public class ItemUI : CRUD<Usable>
         GUILayout.Space(15);
 
         GUI.enabled = !Selected;
-        element.Name = EditorGUILayout.TextField("Name: ", element.Name);
+        element.Data.ItemName = element.Name = EditorGUILayout.TextField("Name: ", element.Name);
         element.Description = EditorGUILayout.TextField("Description: ", element.Description);
         element.Price = EditorGUILayout.IntField("Price: ", element.Price);
         if (GUI.Button(new Rect(0, 80, 400, 20), "Select Picture"))
@@ -39,13 +46,13 @@ public class ItemUI : CRUD<Usable>
         GUILayout.Space(15);
 
         GUILayout.BeginHorizontal();
-        element.Consumeable = EditorGUILayout.Toggle("Consumeable ", element.Consumeable);
-        element.AreaOfEffect = (Constant.AOE)EditorGUILayout.EnumPopup("Area of Effect: ", element.AreaOfEffect);
+        element.Data.Consumeable = EditorGUILayout.Toggle("Consumeable ", element.Data.Consumeable);
+        element.Data.AreaOfEffect = (Constant.AOE)EditorGUILayout.EnumPopup("Area of Effect: ", element.Data.AreaOfEffect);
         GUILayout.EndHorizontal();
 
         GUILayout.BeginHorizontal();
-        element.KeyItem = EditorGUILayout.Toggle("Key Item ", element.KeyItem);
-        element.Available = (Constant.ItemAvailable)EditorGUILayout.EnumPopup("Available: ", element.Available);
+        element.Data.KeyItem = EditorGUILayout.Toggle("Key Item ", element.Data.KeyItem);
+        element.Data.Available = (Constant.ItemAvailable)EditorGUILayout.EnumPopup("Available: ", element.Data.Available);
         GUILayout.EndHorizontal();
         GUILayout.EndArea();
 
@@ -54,12 +61,12 @@ public class ItemUI : CRUD<Usable>
         GUILayout.Space(15);
 
         GUILayout.BeginHorizontal();
-        element.StateType = (Constant.OffenseDefense)EditorGUILayout.EnumPopup("Type: ", element.StateType);
-        element.HitRate = EditorGUILayout.Slider("Hit Rate: ", element.HitRate, 0, 100);        
+        element.Data.StateType = (Constant.OffenseDefense)EditorGUILayout.EnumPopup("Type: ", element.Data.StateType);
+        element.Data.HitRate = EditorGUILayout.Slider("Hit Rate: ", element.Data.HitRate, 0, 100);        
         GUILayout.EndHorizontal();
 
         ScrollPosition = GUILayout.BeginScrollView(ScrollPosition);
-        ReorderableListGUI.ListField(element.States, DrawStateUI, ReorderableListFlags.DisableReordering);
+        ReorderableListGUI.ListField(element.Data.States, DrawStateUI, ReorderableListFlags.DisableReordering);
         GUILayout.EndScrollView();    
         GUILayout.EndArea();
 
@@ -76,6 +83,18 @@ public class ItemUI : CRUD<Usable>
             DeleteButton = GUI.Button(new Rect(400, 480, 100, 20), "Delete");
             GUI.enabled = true;
         }
+    }
+
+    protected override void AssignElement()
+    {
+        UsableSelected.AreaOfEffect = element.Data.AreaOfEffect;
+        UsableSelected.Available = element.Data.Available;
+        UsableSelected.Consumeable = element.Data.Consumeable;
+        UsableSelected.HitRate = element.Data.HitRate;
+        UsableSelected.ItemName = element.Data.ItemName;
+        UsableSelected.KeyItem = element.Data.KeyItem;
+        UsableSelected.States = element.Data.States;
+        UsableSelected.StateType = element.Data.StateType;
     }
 
     private AbstractState DrawStateUI(Rect position, AbstractState state)

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
+using Rotorz.ReorderableList;
 
 public class EnemyUI : CRUD<Enemy>
 {
@@ -13,8 +14,9 @@ public class EnemyUI : CRUD<Enemy>
     Armor Necklace;
     Job PlayerJob;
     Animator animations;
+    Vector2 ScrollPosition;
 
-    public EnemyUI() : base("Enemy", new Rect(0, 0, 300, 830)) { }
+    public EnemyUI() : base("Enemy", new Rect(0, 0, 300, 930)) { }
 
     public override void Init()
     {
@@ -87,7 +89,7 @@ public class EnemyUI : CRUD<Enemy>
 
         // Design
         GUILayout.BeginArea(new Rect(300, 650, 600, 160), "Design", EditorStyles.helpBox);
-        GUILayout.Space(10);
+        GUILayout.Space(15);
 
         // Text field to upload image
         GUILayout.Label("Avatar", EditorStyles.boldLabel);
@@ -112,11 +114,44 @@ public class EnemyUI : CRUD<Enemy>
         AddAnimation("Right", ref element.rightSprites, new Rect(300, 80, 75, 20));
         GUILayout.EndArea();
 
-        SaveButton = GUI.Button(new Rect(300, 810, 100, 20), "Save");
+        // Items
+        GUILayout.BeginArea(new Rect(300, 810, 600, 100), "Items", EditorStyles.helpBox);
+        GUILayout.Space(15);
+
+        ScrollPosition = GUILayout.BeginScrollView(ScrollPosition);
+        ReorderableListGUI.ListField(element.Items, DrawItem, ReorderableListFlags.DisableReordering);
+        GUILayout.EndScrollView();
+        GUILayout.EndArea();
+
+        SaveButton = GUI.Button(new Rect(300, 910, 100, 20), "Save");
         GUI.enabled = !Creating;
-        DeleteButton = GUI.Button(new Rect(400, 810, 100, 20), "Delete");
+        DeleteButton = GUI.Button(new Rect(400, 910, 100, 20), "Delete");
         GUI.enabled = true;
     }    
+
+    private Rate DrawItem(Rect position, Rate item)
+    {
+        if (item == null)
+        {
+            item = new Rate();
+        }    
+
+        GUI.enabled = false;
+        GUI.TextField(new Rect(position.x, position.y, position.width - 400, position.height), item.Element.ItemName);
+        GUI.enabled = true;
+        
+        if (GUI.Button(new Rect(position.width - 400, position.y, 100, position.height), "Select Item"))
+        {
+            var window = EditorWindow.GetWindow<ItemUI>();
+            window.Selected = true;
+            window.Initialize(ref item.Element);
+            window.Show();
+        }
+
+        item.ApplyRate = EditorGUI.Slider(new Rect(position.width - 300, position.y, 300, position.height), "Drop Rate(%): ", item.ApplyRate, 0, 100);
+
+        return item;
+    }
 
     private void AddAnimation(string name, ref List<Sprite> animation, Rect position)
     {

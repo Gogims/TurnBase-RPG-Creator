@@ -43,8 +43,8 @@ public class GameEngine : EditorWindow {
     public static void ShowEnemy()
     {
         var window = EditorWindow.GetWindow<EnemyUI>();
-        window.maxSize = new Vector2(900, 830);
-        window.minSize = new Vector2(900, 830);
+        window.maxSize = new Vector2(900, 930);
+        window.minSize = new Vector2(900, 930);
         window.Init();
         window.Show();
     }

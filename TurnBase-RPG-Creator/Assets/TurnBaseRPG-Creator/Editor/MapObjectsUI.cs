@@ -70,30 +70,17 @@ public class MapObjectsUI : EditorWindow {
     /// <summary>
     /// tipo de dato del tab seleccionado
     /// </summary>
-    private string type;
+    string type;
+    /// <summary>
+    /// El objeto que se va crear.
+    /// </summary>
+    GameObject CreateObj;
     /// <summary>
     /// Inicializa los valores de la ventana
     /// </summary>
-    /// 
     public void Init() {
-        GameObject tempobj = new GameObject();
-        tile = tempobj.AddComponent<Tile>();
-        DestroyImmediate(tempobj);
-        GameObject tempobj1 = new GameObject();
-        obstacle = tempobj1.AddComponent<Obstacle>();
-        DestroyImmediate(tempobj1);
-        GameObject tempobj2 = new GameObject();
-        door = tempobj2.AddComponent<Door>();
-        DestroyImmediate(tempobj2);
-        GameObject tempobj3 = new GameObject();
-        house = tempobj3.AddComponent<House>();
-        DestroyImmediate(tempobj3);
-        GameObject tempobj4 = new GameObject();
-        pickup = tempobj4.AddComponent<Pickup>();
-        DestroyImmediate(tempobj4);
-        GameObject tempobj5 = new GameObject();
-        wall = tempobj5.AddComponent<Wall>();
-        DestroyImmediate(tempobj5);
+        CreateObj = new GameObject();
+        tile = CreateObj.AddComponent<Tile>();
         if (name == null)
             name = string.Empty;
     }
@@ -102,12 +89,10 @@ public class MapObjectsUI : EditorWindow {
     /// </summary>
     void OnGUI()
     {
-        if (tile == null || wall == null || pickup == null | house == null || obstacle == null || door == null)
-            Init();
         RenderLeftSide();
         GUILayout.BeginArea(new Rect((float)(this.position.width * 0.5), 0, 96, 96), string.Empty, EditorStyles.helpBox);
         GUILayout.EndArea();
-        GUILayout.BeginArea(new Rect((float)(this.position.width*0.5), 96, (float)(this.position.width * 0.5), this.position.height), string.Empty, EditorStyles.helpBox);
+        GUILayout.BeginArea(new Rect((float)(this.position.width*0.5), 96, (float)(this.position.width * 0.5), this.position.height-20), string.Empty, EditorStyles.helpBox);
         GUILayout.BeginHorizontal();
         GUILayout.Label("Name:",GUILayout.Width(labelWidth));
         name = GUILayout.TextField(name);
@@ -155,29 +140,11 @@ public class MapObjectsUI : EditorWindow {
         else if (tab == 4 ){
             door.Name = name;
             door.Icon = texture;
-            GUILayout.BeginHorizontal();
-            if (GUILayout.Button("Select Inside Map", GUILayout.Width(labelWidth)))
-            {
-
-                //TODO falta la ventana de item
-
-            }
-            GUI.enabled = false;
-            GUILayout.TextField(door.InMap);
-            GUI.enabled = true;
-            GUILayout.EndHorizontal();
             GUILayout.Space(15);
-            GUILayout.BeginHorizontal();
-            if (GUILayout.Button("Select Outside Map", GUILayout.Width(labelWidth)))
-            {
-
-                //TODO falta la ventana de item
-
-            }
-            GUI.enabled = false;
-            GUILayout.TextField(door.OutMap);
-            GUI.enabled = true;
-            GUILayout.EndHorizontal();
+            AddMap(ref door.InMap, "Select Inside Map");
+            GUILayout.Space(15);
+            AddMap(ref door.OutMap, "Select Outside Map");
+            
 
         }
         else if (tab == 5) {
@@ -195,11 +162,11 @@ public class MapObjectsUI : EditorWindow {
         }
 
         GUILayout.EndArea();
-        if (GUI.Button(new Rect((float)(this.position.width * 0.5), this.position.height - 20, 100, 20), "New"))
+        if (GUI.Button(new Rect(0, this.position.height-20, 100, 20), "Create"))
         {
             ClearFields();    
         }
-        if (GUI.Button(new Rect((float)(this.position.width * 0.5) + 105, this.position.height - 20, 100, 20), "Save"))
+        if (GUI.Button(new Rect((float)(this.position.width * 0.5), this.position.height - 20, 100, 20), "Save"))
         {
             if (Selected != null)
                 SaveSelected();
@@ -211,7 +178,7 @@ public class MapObjectsUI : EditorWindow {
             GUI.enabled = true;
         else
             GUI.enabled = false;
-        if (GUI.Button(new Rect((float)(this.position.width * 0.5) + 210, this.position.height - 20, 100, 20), "Delete"))
+        if (GUI.Button(new Rect((float)(this.position.width * 0.5) +100, this.position.height - 20, 100, 20), "Delete"))
         {
             DeleteSelected();
             ClearFields();
@@ -223,13 +190,27 @@ public class MapObjectsUI : EditorWindow {
             GUI.DrawTextureWithTexCoords(new Rect((float)(this.position.width * 0.5), 0, 96, 96), texture.texture, GetTextureCoordinate(texture));
         }
     }
-
-    private void DeleteSelected()
+    private void AddMap(ref string current, string map)
+    {
+        GUILayout.BeginHorizontal();
+        if (GUILayout.Button(map,GUILayout.Width(labelWidth)))
+        {
+            var window = EditorWindow.GetWindow<MapUI>();
+            window.Init(ref current);
+            window.Show();
+        }
+        GUI.enabled = false;
+        GUILayout.TextField(current);
+        GUI.enabled = true;
+        Debug.Log(current);
+        GUILayout.EndHorizontal();
+    }
+     void DeleteSelected()
     {
         AssetDatabase.DeleteAsset("Assets/Resources/" + type + "/" + Selected.name + ".prefab");
     }
 
-    private void CreateNew()
+     void CreateNew()
     {
 
         switch (tab)
@@ -281,7 +262,7 @@ public class MapObjectsUI : EditorWindow {
        
     }
 
-    private void SaveSelected()
+     void SaveSelected()
     {
         var obj = Selected.GetComponent<RPGElement>();
         obj.Name = name;
@@ -307,7 +288,7 @@ public class MapObjectsUI : EditorWindow {
                 break;
         }
     }
-    private void AddObject()
+     void AddObject()
     {
         if (Event.current.commandName == "ObjectSelectorUpdated") 
         {
@@ -334,43 +315,79 @@ public class MapObjectsUI : EditorWindow {
     /// </summary>
     void RenderLeftSide()
     {
-
-        GUILayout.BeginArea(new Rect(0, 0, (float)(this.position.width * 0.5), this.position.height), string.Empty, EditorStyles.helpBox);
+        GUILayout.BeginArea(new Rect(0, 0, (float)(this.position.width * 0.5), this.position.height-20), string.Empty, EditorStyles.helpBox);
         tab = GUILayout.Toolbar(tab, new string[] { "Tiles", "Walls", "PickUps", "Obstacles", "Doors", "Houses" });
         GUILayout.BeginVertical();
-        scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition, false, true);
-        if (tab != oldtab)
-        {
-            oldtab = tab;
-            ClearFields();
-        }
+        scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition);
+
         switch (tab)
         {
             case 1:
+                if (oldtab != tab)
+                {
+                    DestroyImmediate(CreateObj);
+                    CreateObj = new GameObject();
+                    wall = CreateObj.AddComponent<Wall>();
+                }
                 Objects = Resources.LoadAll("Wall", typeof(GameObject));
                 type = "Wall";
                 break;
             case 2:
+                if (oldtab != tab)
+                {
+                    DestroyImmediate(CreateObj);
+                    CreateObj = new GameObject();
+                    pickup = CreateObj.AddComponent<Pickup>();
+                }
                 Objects = Resources.LoadAll("PickUp", typeof(GameObject));
                 type = "PickUp";
                 break;
             case 3:
+                if (oldtab != tab)
+                {
+                    DestroyImmediate(CreateObj);
+                    CreateObj = new GameObject();
+                    obstacle = CreateObj.AddComponent<Obstacle>();
+                }
                 Objects = Resources.LoadAll("Obstacle", typeof(GameObject));
                 type = "Obstacle";
                 break;
             case 4:
+                if (oldtab != tab)
+                {
+                    DestroyImmediate(CreateObj);
+                    CreateObj = new GameObject();
+                    door = CreateObj.AddComponent<Door>();
+                }
                 Objects = Resources.LoadAll("Door", typeof(GameObject));
                 type = "Door";
                 break;
             case 5:
+                if (oldtab != tab)
+                {
+                    DestroyImmediate(CreateObj);
+                    CreateObj = new GameObject();
+                    house = CreateObj.AddComponent<House>();
+                }
                 Objects = Resources.LoadAll("House", typeof(GameObject));
                 type = "House";
                 break;
 
             default:
+                if (oldtab != tab)
+                {
+                    DestroyImmediate(CreateObj);
+                    CreateObj = new GameObject();
+                    tile = CreateObj.AddComponent<Tile>();
+                }
                 Objects = Resources.LoadAll("Tile", typeof(GameObject));
                 type = "Tile";
                 break;
+        }
+        if (tab != oldtab)
+        {
+            oldtab = tab;
+            ClearFields();
         }
         DrawObjectList();
         GUILayout.EndVertical();
@@ -378,17 +395,28 @@ public class MapObjectsUI : EditorWindow {
         GUILayout.EndArea();
     }
 
-    private void ClearFields()
+     void ClearFields()
     {
         textureName = string.Empty;
         texture = new Sprite();
         name = string.Empty;
-        obstacle.hp = 0;
-        door.InMap = string.Empty;
-        door.OutMap = string.Empty;
-        house.Width = 0;
-        house.Heigth = 0;
+        if ( tab == 3)
+            obstacle.hp = 0;
+        if (tab == 4)
+        {
+            door.InMap = string.Empty;
+            door.OutMap = string.Empty;
+        }
+        if (tab == 5)
+        {
+            house.Width = 0;
+            house.Heigth = 0;
+        }
         Selected = null;
+    }
+     void OnDestroy()
+     {
+        DestroyImmediate(CreateObj);
     }
     /// <summary>
     /// Dibuja los objetos que estan en el arreglo
@@ -425,7 +453,7 @@ public class MapObjectsUI : EditorWindow {
             }
         }
     }
-    private void updateFields(){
+     void updateFields(){
         var obj = Selected.GetComponent<RPGElement>();
         name = obj.Name;
         Debug.Log(name);
