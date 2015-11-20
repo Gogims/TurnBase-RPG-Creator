@@ -7,10 +7,6 @@ using System.Collections.Generic;
 /// </summary>
 public class Obstacle:RPGElement  {
     /// <summary>
-    /// Propiedad para especificar de que es un obejto fisico
-    /// </summary>
-    public Rigidbody2D Body;
-    /// <summary>
     /// Hp del obstaculo
     /// </summary>
     public int hp;
@@ -18,6 +14,16 @@ public class Obstacle:RPGElement  {
     /// Imagenes del obstaculo
     /// </summary>
     public Sprite Image;
+    //DamageWall is called when the player attacks a wall.
+    public void DamageWall(int loss)
+    {
+        //Subtract loss from hit point total.
+        hp -= loss;
 
+        //If hit points are less than or equal to zero:
+        if (hp <= 0)
+            //Disable the gameObject.
+            gameObject.SetActive(false);
+    }
 }
 

@@ -78,6 +78,7 @@
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\State.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\TextureScale.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Tile.cs" />
+     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Troop.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Usable.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Wall.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Weapon.cs" />

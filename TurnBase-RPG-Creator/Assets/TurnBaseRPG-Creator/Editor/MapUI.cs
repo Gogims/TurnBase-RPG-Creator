@@ -46,23 +46,30 @@ public class MapUI : EditorWindow {
     bool errores;
     /// <summary>
     /// Indica si esta en el modo de seleccion.
+    /// 1 es para la seleccion del in map en la ventana de mapobjects doors
+    /// 2 es para la seleccion del out map en la ventana de mapobjects doors
     /// </summary>
-    bool selectMode;
+    int selectMode = 0 ;
     /// <summary>
-    /// Objeto que se selecciono en el modo de seleccion.
+    /// Objeto  que se selecciono en el modo de seleccion (mapin).
     /// </summary>
-    public string SelectMap; 
+    public static string SelectMap1 = string.Empty;
     /// <summary>
-    /// Inicializa la ventana en modo de seleccion o en modo de creacion.
+    /// Objeto que se selecciono en el modo de seleccion (mapout).
     /// </summary>
-    /// <param name="Select">Modo en e que se va inicializar la ventana( true modo de seleccion, false modo de creacion)</param>
+    public static string SelectMap2 =string.Empty;
+    /// <summary>
+    /// Nombre de la scene que esta abierta cuando se abre la ventana.
+    /// </summary>
+    private string scene;
 	public void Init () {
-            temp = new GameObject();
             Selected = new KeyValuePair<string, string>("", "");
             LoadList();
+            temp = new GameObject();
             map = temp.AddComponent<Map>();
             InitErr();
             fontStyle.fontStyle = FontStyle.BoldAndItalic;
+            scene = EditorApplication.currentScene;
 	}
     private void InitErr(){
             err.InsertPropertyError("Heigth", map.Heigth, "The Heigth has to be greater than 5 and less than 10");
@@ -74,25 +81,28 @@ public class MapUI : EditorWindow {
             err.InsertCondition("Width", Constant.MAX_MAP_WIDTH, ErrorCondition.LessOrEqual, LogicalOperators.None);
             err.InsertCondition("Name", 5, ErrorCondition.GreaterOrEqual, LogicalOperators.None);
     }
-    public void Init(ref string name)
+
+    /// <summary>
+    /// Inicializa la ventana en modo de seleccion o en modo de creacion.
+    /// </summary>
+    /// <param name="Select">Modo en e que se va inicializar la ventana( true modo de seleccion, false modo de creacion)</param>
+    public void Init(int mode)
     {
-        SelectMap = name;
-        Debug.Log(SelectMap);
+        scene = EditorApplication.currentScene;
         LoadList();
         temp = new GameObject();
         map = temp.AddComponent<Map>();
         InitErr();
         fontStyle.fontStyle = FontStyle.BoldAndItalic;
         Selected = new KeyValuePair<string, string>("", "");
-        selectMode = true;
+        selectMode = mode;
     }
     /// <summary>
     /// Funcion que se llama cuando la ventana esta abierta. dibuja los objetos de la ventana.
     /// </summary>
 	void OnGUI () {
-
         RenderLeftSide();
-        if (selectMode)
+        if (selectMode != 0 )
             GUI.enabled = false;
         GUILayout.BeginArea(new Rect((float)(this.position.width * 0.3), 0, (float)(this.position.width * 0.7), this.position.height-20),EditorStyles.helpBox);
         err.ShowErrorsLayout();
@@ -101,16 +111,13 @@ public class MapUI : EditorWindow {
         map.Width = EditorGUILayout.IntField("Width", map.Width);
         map.Heigth = EditorGUILayout.IntField("Heigth", map.Heigth);
         UpdateValidationVal();
-
         GUILayout.EndArea();
         if (GUI.Button(new Rect(0, this.position.height - 20, 100, 20), "Create"))
         {
             ClearFields();
         }
-
-
         errores = err.CheckErrors();
-        if (!selectMode)
+        if (selectMode == 0)
         {
             if (GUI.Button(new Rect((float)(this.position.width * 0.3), this.position.height - 20, 100, 20), "Save") && !errores)
             {
@@ -137,9 +144,13 @@ public class MapUI : EditorWindow {
             GUI.enabled = true;
             if (GUI.Button(new Rect((float)(this.position.width * 0.3) , this.position.height - 20, 100, 20), "Select"))
             {
-                SelectMap = Selected.Key;
-                Debug.Log(SelectMap);
+                if (selectMode == 1)
+                    SelectMap1 = Selected.Key;
+                else if (selectMode == 2)
+                    SelectMap2 = Selected.Key;
+                DestroyImmediate(temp);
                 this.Close();
+
             }
         }
 	}
@@ -151,11 +162,23 @@ public class MapUI : EditorWindow {
         System.IO.DirectoryInfo directory = new System.IO.DirectoryInfo(Directory.GetCurrentDirectory() + @"\Assets\Maps");
         foreach (FileInfo file in directory.GetFiles())
         {
-            if (file.FullName == Selected.Value)
+            if (file.FullName == Selected.Value && Maps.Count > 1 )
             {
+
+                if (ComparePath(Selected.Value, EditorApplication.currentScene))
+                {
+                    DestroyImmediate(temp);
+                    if (Selected.Value != Maps[0].Value)
+                        EditorApplication.OpenScene(Maps[0].Value);
+                    else
+                        EditorApplication.OpenScene(Maps[1].Value);
+                }
                 file.Delete();
                 Maps.Remove(Selected);
+
                 temp = new GameObject();
+                map = temp.AddComponent<Map>();
+                
                 break;
             }
         }
@@ -166,10 +189,13 @@ public class MapUI : EditorWindow {
     /// </summary>
     private void CreateNew()
     {
-        map.CreateMap();
+        string newpath = map.CreateMap();
+        Maps = null;
+        Maps = new List<KeyValuePair<string, string>>();
+        LoadList();
         DestroyImmediate(temp);
         temp = new GameObject();
-        Maps.Add(new KeyValuePair<string, string>(map.Name, Directory.GetCurrentDirectory()+"\\Assets\\Maps\\" + map.Name + ".unity"));
+        map = temp.AddComponent<Map>();
         Repaint();
     }
     /// <summary>
@@ -203,6 +229,15 @@ public class MapUI : EditorWindow {
         GUILayout.EndArea();
     }
     /// <summary>
+    /// Compara la ruta absoluta con una ruta relativa
+    /// </summary>
+    /// <param name="path1">ruta absoluta</param>
+    /// <param name="path2">ruta relativa</param>
+    private bool ComparePath(string absoulutePath, string relativePath)
+    {
+        return absoulutePath.Replace('\\', '/') == Directory.GetCurrentDirectory().Replace('\\', '/') + "/" + relativePath;
+    }
+    /// <summary>
     /// Dibuja la lista de mapas
     /// </summary>
     private void DrawObjectList()
@@ -211,15 +246,21 @@ public class MapUI : EditorWindow {
         {
             if (GUILayout.Button(i.Key))
             {
-                string temp = EditorApplication.currentScene;
-                EditorApplication.OpenScene(i.Value);
+                if (!ComparePath(i.Value,EditorApplication.currentScene))
+                {
+                    DestroyImmediate(temp);
+                    EditorApplication.SaveScene();
+                    EditorApplication.OpenScene(i.Value);
+                    temp = new GameObject();
+                    map = temp.AddComponent<Map>();
+
+                }
                 GameObject obj = GameObject.Find("Settings");
                 Map aux = obj.GetComponent<Map>();
                 map.Name = aux.Name;
                 map.Width = aux.Width;
                 map.Heigth = aux.Heigth;
                 Selected = i;
-                EditorApplication.OpenScene(temp);
             }
         }
     }
@@ -228,15 +269,21 @@ public class MapUI : EditorWindow {
     /// </summary>
     void LoadList() {
         string[] fileEntries = Directory.GetFiles(Directory.GetCurrentDirectory()+@"\Assets\Maps");
+        string aux = EditorApplication.currentScene;
+        EditorApplication.SaveScene();
         foreach (string path in fileEntries)
         {
             if (path.Substring(path.LastIndexOf('.') + 1) == "meta")
                 continue;
-                string key = path.Substring(path.LastIndexOf('\\') + 1);
-                key = key.Substring(0, key.LastIndexOf('.') );
-                KeyValuePair<string, string> newObj = new KeyValuePair<string, string>(key,path);
-                Maps.Add(newObj);
+                if (!ComparePath(path, EditorApplication.currentScene))
+                    EditorApplication.OpenScene(path);
+                GameObject Obj = GameObject.Find("Settings");
+                string key = Obj.GetComponent<Map>().Name;
+
+                Maps.Add(new KeyValuePair<string, string>(key,path));
         }
+        if (EditorApplication.currentScene != aux) 
+            EditorApplication.OpenScene(aux);
         Repaint();
     }
     /// <summary>
@@ -244,10 +291,13 @@ public class MapUI : EditorWindow {
     /// </summary>
     void OnDestroy()
     {
-        if (temp != null)
+        DestroyImmediate(temp);
+        if (scene != EditorApplication.currentScene)
         {
-            DestroyImmediate(temp);
+            EditorApplication.SaveScene();
+            EditorApplication.OpenScene(scene);
         }
+        
     }
     /// <summary>
     /// Actualiza los campos en el manejador de errores.

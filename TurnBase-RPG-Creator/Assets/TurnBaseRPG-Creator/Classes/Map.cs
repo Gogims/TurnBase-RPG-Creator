@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using UnityEditor;
 using UnityEngine;
 
@@ -15,7 +16,7 @@ public class Map : RPGElement{
 	/// <summary>
 	/// Crea un mapa dado su ancho, alto y nombre.
 	/// </summary>
-	public void CreateMap(){
+	public string CreateMap(){
 		EditorApplication.NewScene(); // Crea una scene nueva.
 		Camera.main.orthographicSize = 5; // Ajusta el tamaño de la camara ( la cantidad de espacio que va enfocar)
 		Camera.main.transform.localPosition = new Vector3((float)(Width-1)/2,(float)(Heigth-1)/2,-10); // Posiciona la camara en el centro del mapa
@@ -42,7 +43,9 @@ public class Map : RPGElement{
         x.Width = this.Width;
         x.Heigth = this.Heigth;
         x.Icon = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/TurnBaseRPG-Creator/RPG-Sprites/MapIcon.png");
-		EditorApplication.SaveScene("Assets/Maps/"+Name+".unity");// Guarda la scene.
+        string returnPath = "Assets/Maps/" + Guid.NewGuid() + ".unity";
+		EditorApplication.SaveScene("Assets/Maps/"+Guid.NewGuid()+".unity");// Guarda la scene.
+        return Directory.GetCurrentDirectory() + '\\' + returnPath.Replace('/', '\\');
 	}
     /// <summary>
     /// Actualiza un mapa dado su path
@@ -50,8 +53,6 @@ public class Map : RPGElement{
     /// <param name="Path">Path del mapa (scene)</param>
     public void updateMap(string Path)
     {
-        string temp = EditorApplication.currentScene;
-        EditorApplication.OpenScene(Path);
         GameObject obj = GameObject.Find("Settings");
         Map aux = obj.GetComponent<Map>();
 
@@ -131,11 +132,12 @@ public class Map : RPGElement{
             clone.tag = "RPG-CORE";
             EditorWindow.DestroyImmediate(GameObject.Find("New Game Object"));
         }
+        EditorWindow.DestroyImmediate(GameObject.Find("New Game Object"));
         aux.Name = this.Name;
         aux.Width = this.Width;
         aux.Heigth = this.Heigth;
         EditorApplication.SaveScene();
-        EditorApplication.OpenScene(temp);
+
 
     }
 }

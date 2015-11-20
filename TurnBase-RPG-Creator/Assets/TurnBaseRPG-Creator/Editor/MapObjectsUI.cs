@@ -122,12 +122,18 @@ public class MapObjectsUI : EditorWindow {
         else if (tab == 2 ){
             pickup.Name = name;
             pickup.Icon = texture;
+            GUILayout.BeginHorizontal();
             if (GUILayout.Button("Select Item", GUILayout.Width(labelWidth))) 
             {
-            
-                //TODO falta la ventana de item
+
+                var window = EditorWindow.GetWindow<ItemUI>();
+                window.Initialize(ref pickup.Items);
+                window.Show();
 
             }
+            GUILayout.TextField(pickup.Items.ItemName);
+            GUILayout.EndHorizontal();
+
         }
         else if (tab == 3){
             GUILayout.BeginHorizontal();
@@ -141,9 +147,33 @@ public class MapObjectsUI : EditorWindow {
             door.Name = name;
             door.Icon = texture;
             GUILayout.Space(15);
-            AddMap(ref door.InMap, "Select Inside Map");
+            GUILayout.BeginHorizontal();
+            if (GUILayout.Button("Select Inside Map", GUILayout.Width(labelWidth)))
+            {
+                var window = EditorWindow.GetWindow<MapUI>();
+                window.Init(1);
+                window.Show();
+            }
+
+            GUI.enabled = false;
+            door.InMap = MapUI.SelectMap1;
+            GUILayout.TextField(door.InMap);
+            GUI.enabled = true;
+            GUILayout.EndHorizontal();
             GUILayout.Space(15);
-            AddMap(ref door.OutMap, "Select Outside Map");
+            GUILayout.BeginHorizontal();
+            if (GUILayout.Button("Select Inside Map", GUILayout.Width(labelWidth)))
+            {
+                var window = EditorWindow.GetWindow<MapUI>();
+                window.Init(2);
+                window.Show();
+            }
+
+            GUI.enabled = false;
+            door.OutMap = MapUI.SelectMap2;
+            GUILayout.TextField(door.OutMap);
+            GUI.enabled = true;
+            GUILayout.EndHorizontal();
             
 
         }
@@ -172,7 +202,6 @@ public class MapObjectsUI : EditorWindow {
                 SaveSelected();
             else
                 CreateNew();
-            ClearFields();
         }
         if (Selected != null)
             GUI.enabled = true;
@@ -190,21 +219,6 @@ public class MapObjectsUI : EditorWindow {
             GUI.DrawTextureWithTexCoords(new Rect((float)(this.position.width * 0.5), 0, 96, 96), texture.texture, GetTextureCoordinate(texture));
         }
     }
-    private void AddMap(ref string current, string map)
-    {
-        GUILayout.BeginHorizontal();
-        if (GUILayout.Button(map,GUILayout.Width(labelWidth)))
-        {
-            var window = EditorWindow.GetWindow<MapUI>();
-            window.Init(ref current);
-            window.Show();
-        }
-        GUI.enabled = false;
-        GUILayout.TextField(current);
-        GUI.enabled = true;
-        Debug.Log(current);
-        GUILayout.EndHorizontal();
-    }
      void DeleteSelected()
     {
         AssetDatabase.DeleteAsset("Assets/Resources/" + type + "/" + Selected.name + ".prefab");
@@ -218,47 +232,76 @@ public class MapObjectsUI : EditorWindow {
             case 1:
                 wall.gameObject.tag = tag;
                 SpriteRenderer image1 =  wall.gameObject.AddComponent<SpriteRenderer>();
+                wall.gameObject.AddComponent<BoxCollider2D>();
                 image1.sprite = wall.Icon;
-                 PrefabUtility.CreatePrefab("Assets/Resources/" + type + "/"+name+".prefab",wall.gameObject);
-                 DestroyImmediate(wall.gameObject);
+                wall.Image = wall.Icon;
+                PrefabUtility.CreatePrefab("Assets/Resources/" + type + "/"+name+".prefab",wall.gameObject);
+                DestroyImmediate(wall.gameObject);
+                CreateObj = new GameObject();
+                wall = CreateObj.AddComponent<Wall>();
                 break;
             case 2:
                 pickup.gameObject.tag = tag;
                 SpriteRenderer image2 = pickup.gameObject.AddComponent<SpriteRenderer>();
+                pickup.gameObject.AddComponent<BoxCollider2D>();
                 image2.sprite = pickup.Icon;
+                pickup.Image = pickup.Icon;
                 PrefabUtility.CreatePrefab("Assets/Resources/" + type + "/"+name+".prefab",pickup.gameObject);
                  DestroyImmediate(pickup.gameObject);
+                 CreateObj = new GameObject();
+                 pickup = CreateObj.AddComponent<Pickup>();
+                
                 break;
             case 3:
                 SpriteRenderer image3 = obstacle.gameObject.AddComponent<SpriteRenderer>();
+                obstacle.gameObject.AddComponent<BoxCollider2D>();
                 image3.sprite = obstacle.Icon;
+                obstacle.Image = obstacle.Icon;
                 obstacle.gameObject.tag = tag;
                 PrefabUtility.CreatePrefab("Assets/Resources/" + type + "/"+name+".prefab",obstacle.gameObject);
                  DestroyImmediate(obstacle.gameObject);
+                 CreateObj = new GameObject();
+                 obstacle = CreateObj.AddComponent<Obstacle>();
                 break;
             case 4:
-                SpriteRenderer image4 = door.gameObject.AddComponent<SpriteRenderer>();
+                Door temp = GameObject.Find("New Game Object").GetComponent<Door>();
+                SpriteRenderer image4 = temp.gameObject.AddComponent<SpriteRenderer>();
                 image4.sprite = door.Icon;
-                door.gameObject.tag = tag;
-                PrefabUtility.CreatePrefab("Assets/Resources/" + type + "/"+name+".prefab",door.gameObject);
-                 DestroyImmediate(door.gameObject);
+                temp.InMap = door.InMap;
+                temp.OutMap = door.OutMap;
+                temp.Name = door.Name;
+                temp.Icon = door.Icon;
+                temp.Image = door.Icon;
+                temp.gameObject.tag = tag;
+                temp.gameObject.AddComponent<BoxCollider2D>();
+                PrefabUtility.CreatePrefab("Assets/Resources/" + type + "/"+name+".prefab",temp.gameObject);
+                 DestroyImmediate(temp.gameObject);
+                 CreateObj = new GameObject();
+                 door = CreateObj.AddComponent<Door>();
                 break;
             case 5:
                 SpriteRenderer image5 = house.gameObject.AddComponent<SpriteRenderer>();
+                house.gameObject.AddComponent<BoxCollider2D>();
                 image5.sprite = house.Icon;
+                house.Image = house.Icon;
                 house.gameObject.tag = tag;
                 PrefabUtility.CreatePrefab("Assets/Resources/" + type + "/"+name+".prefab",house.gameObject);
                  DestroyImmediate(house.gameObject);
+                 CreateObj = new GameObject();
+                 house = CreateObj.AddComponent<House>();
                 break;
             default:
                 SpriteRenderer image = tile.gameObject.AddComponent<SpriteRenderer>();
                  image.sprite = tile.Icon;
+                 tile.Image = tile.Icon;
                  tile.gameObject.tag = tag;
                  PrefabUtility.CreatePrefab("Assets/Resources/" + type + "/"+name+".prefab",tile.gameObject);
                  DestroyImmediate(tile.gameObject);
+                 CreateObj = new GameObject();
+                 tile = CreateObj.AddComponent<Tile>();
                  break;
         }
-       
+        ClearFields();
        
     }
 
@@ -266,10 +309,17 @@ public class MapObjectsUI : EditorWindow {
     {
         var obj = Selected.GetComponent<RPGElement>();
         obj.Name = name;
-        obj.Icon = texture; 
+        obj.Icon = texture;
+        SpriteRenderer Image = Selected.gameObject.GetComponent<SpriteRenderer>();
         switch (tab)
         {
+            case 1:
+                var temp = obj as Wall;
+                Image.sprite = temp.Image = wall.Icon;
+                break;
             case 2:
+                var temp6 = obj as Pickup;
+                Image.sprite = temp6.Image = pickup.Icon;
                 //pickup.Item= temp.Item; Falta el crud de items
                 break;
             case 3:
@@ -277,16 +327,28 @@ public class MapObjectsUI : EditorWindow {
                 temp1.hp = obstacle.hp ;
                 break;
             case 4:
+                Door aux = GameObject.Find("New Game Object").GetComponent<Door>();
                 var temp2 = obj as Door;
+                Image.sprite = temp2.Image = door.Icon;
                 temp2.OutMap = door.OutMap;
                 temp2.InMap = door.InMap;
+                 DestroyImmediate(aux.gameObject);
+                 CreateObj = new GameObject();
+                 door = CreateObj.AddComponent<Door>();
+
                 break;
             case 5:
                 var temp3 = obj as House;
+                Image.sprite = temp3.Image = house.Icon;
                 temp3.Width = house.Width;
                 temp3.Heigth = house.Heigth;
                 break;
+            default:
+                var temp4 = obj as Tile;
+                Image.sprite = temp4.Image = tile.Icon;
+                break;
         }
+        ClearFields();
     }
      void AddObject()
     {
@@ -338,6 +400,8 @@ public class MapObjectsUI : EditorWindow {
                     DestroyImmediate(CreateObj);
                     CreateObj = new GameObject();
                     pickup = CreateObj.AddComponent<Pickup>();
+                    pickup.Items = new AbstractUsable();
+                    
                 }
                 Objects = Resources.LoadAll("PickUp", typeof(GameObject));
                 type = "PickUp";
@@ -404,8 +468,8 @@ public class MapObjectsUI : EditorWindow {
             obstacle.hp = 0;
         if (tab == 4)
         {
-            door.InMap = string.Empty;
-            door.OutMap = string.Empty;
+            MapUI.SelectMap1= string.Empty;
+            MapUI.SelectMap2= string.Empty;
         }
         if (tab == 5)
         {
@@ -456,28 +520,40 @@ public class MapObjectsUI : EditorWindow {
      void updateFields(){
         var obj = Selected.GetComponent<RPGElement>();
         name = obj.Name;
-        Debug.Log(name);
         texture = obj.Icon;
         textureName = obj.Icon.name;
         switch (tab)
         { 
+            case 1:
+                var temp4 = obj as Wall;
+                wall.Image = temp4.Image;
+                break;
             case 2:
-               // var temp = obj as Pickup;
+               var temp = obj as Pickup;
+               pickup.Image = temp.Image;
                 //pickup.Item= temp.Item; Falta el crud de items
                 break;
             case 3:
                 var temp1 = obj as Obstacle;
                 obstacle.hp = temp1.hp;
+                obstacle.Image = temp1.Image;
                 break;
             case 4:
                 var temp2 = obj as Door;
-                door.OutMap = temp2.OutMap;
-                door.InMap = temp2.InMap;
+                MapUI.SelectMap2 = temp2.OutMap;
+                MapUI.SelectMap1 = temp2.InMap;
+                door.Image = temp2.Image;
                 break;
             case 5:
+
                 var temp3 = obj as House;
                 house.Width = temp3.Width;
                 house.Heigth = temp3.Heigth;
+                house.Image = temp3.Image;
+                break;
+            default:
+                var temp5 = obj as Tile;
+                tile.Image = temp5.Image;
                 break;
         }
 

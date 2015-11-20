@@ -37,6 +37,10 @@ Armors on the game.");
 a character (enemy,npc,player).");
         types.Add("Background", @"An object of this type will be use to represent 
 the background of a battle.");
+        types.Add("Door", @"An object of this type will be use to represent 
+a door in the game.");
+        types.Add("House", @"An object of this type will be use to represent 
+a House in the game.");
 	}
     /// <summary>
     /// Retorna en un arreglo de string todos los tipos.

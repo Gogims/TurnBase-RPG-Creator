@@ -10,8 +10,8 @@ public class Pickup : RPGElement {
     /// </summary>
     public Sprite Image;
     /// <summary>
-    /// Lista de items que da el objeto.
+    /// items que da el objeto.
     /// </summary>
-    //public Item Items { get; set; }
+    public AbstractUsable Items;
 
 }
