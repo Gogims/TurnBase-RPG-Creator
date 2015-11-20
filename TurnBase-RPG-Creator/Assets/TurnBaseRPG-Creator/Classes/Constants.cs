@@ -36,6 +36,14 @@ public class Constant{
     /// Alto de los sprites de los elementos del juego
     /// </summary>
     public const int SpriteHeight = 64;
+    /// <summary>
+    /// Ancho del fondo de pantalla del combate
+    /// </summary>
+    public const int BackgroundWidth = 580;
+    /// <summary>
+    /// Alto del fondo de pantalla del combate
+    /// </summary>
+    public const int BackgroundHeight= 580;
 
     /// <summary>
     /// Crea el marco de la imagen del equipamiento

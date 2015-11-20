@@ -6,14 +6,14 @@ using UnityEngine;
 public class Player : Actor
 {
     /// <summary>
-    /// Listado de estados que posee el actor actualmente
+    /// Información del jugador
     /// </summary>
-    public List<AbstractState> States;    
+    public AbstractPlayer Data;
 
-    public Player ():base()
-	{
-        
-    }    
+    public Player()
+    {
+        Data = new AbstractPlayer();
+    }
 
     void Update()
     {
@@ -56,4 +56,13 @@ public class Player : Actor
 
         return true;
     }
+}
+
+[Serializable]
+public class AbstractPlayer : AbstractActor
+{
+    /// <summary>
+    /// Listado de estados que posee el actor actualmente
+    /// </summary>
+    public List<AbstractState> States;
 }

@@ -3,11 +3,13 @@ using UnityEditor;
 
 public class WeaponUI : CRUD<Weapon>
 {
+    AbstractWeapon SelectedWeapon;
+
     public WeaponUI() : base("Weapon", new Rect(0, 0, 300, 400)) { }
 
-    public void Initialize(ref Weapon w)
+    public void Initialize(ref AbstractWeapon weapon)
     {
-        AssignedElement = w;
+        SelectedWeapon = weapon;
         Init();        
     }
 
@@ -15,14 +17,14 @@ public class WeaponUI : CRUD<Weapon>
     {
         // Insertando las validaciones de propiedades
         err.InsertPropertyError("Name", element.name.Length, "The Name field can't be empty");
-        err.InsertPropertyError("Agility", element.Stats.Agility, "The Agility field can't be negative");
-        err.InsertPropertyError("Attack", element.Stats.Attack, "The Attack field can't be negative");
-        err.InsertPropertyError("Luck", element.Stats.Luck, "The Luck field can't be negative");
-        err.InsertPropertyError("Magic", element.Stats.Magic, "The Magic field can't be negative");
-        err.InsertPropertyError("MagicDefense", element.Stats.MagicDefense, "The Magic Defense field can't be negative");
-        err.InsertPropertyError("MaxHP", element.Stats.MaxHP, "The MaxHP field can't be negative");
-        err.InsertPropertyError("MaxMP", element.Stats.MaxMP, "The MaxMP field can't be negative");
-        err.InsertPropertyError("Price", element.Price, "The Price field can't be negative");
+        err.InsertPropertyError("Agility", element.Data.Stats.Agility, "The Agility field can't be negative");
+        err.InsertPropertyError("Attack", element.Data.Stats.Attack, "The Attack field can't be negative");
+        err.InsertPropertyError("Luck", element.Data.Stats.Luck, "The Luck field can't be negative");
+        err.InsertPropertyError("Magic", element.Data.Stats.Magic, "The Magic field can't be negative");
+        err.InsertPropertyError("MagicDefense", element.Data.Stats.MagicDefense, "The Magic Defense field can't be negative");
+        err.InsertPropertyError("MaxHP", element.Data.Stats.MaxHP, "The MaxHP field can't be negative");
+        err.InsertPropertyError("MaxMP", element.Data.Stats.MaxMP, "The MaxMP field can't be negative");
+        err.InsertPropertyError("Price", element.Data.Price, "The Price field can't be negative");
         //err.InsertPropertyError("Sprite", SpriteName.Length, "The Image field can't be empty");
 
         // Insertando las condiciones de las propiedades
@@ -41,14 +43,14 @@ public class WeaponUI : CRUD<Weapon>
     protected override void UpdateValidations()
     {
         err.UpdateValue("Name", element.Name.Length);
-        err.UpdateValue("Agility", element.Stats.Agility);
-        err.UpdateValue("Attack", element.Stats.Attack);
-        err.UpdateValue("Luck", element.Stats.Agility);
-        err.UpdateValue("Magic", element.Stats.Agility);
-        err.UpdateValue("MagicDefense", element.Stats.Agility);
-        err.UpdateValue("MaxHP", element.Stats.Agility);
-        err.UpdateValue("MaxMP", element.Stats.Agility);
-        err.UpdateValue("Price", element.Price);
+        err.UpdateValue("Agility", element.Data.Stats.Agility);
+        err.UpdateValue("Attack", element.Data.Stats.Attack);
+        err.UpdateValue("Luck", element.Data.Stats.Agility);
+        err.UpdateValue("Magic", element.Data.Stats.Agility);
+        err.UpdateValue("MagicDefense", element.Data.Stats.Agility);
+        err.UpdateValue("MaxHP", element.Data.Stats.Agility);
+        err.UpdateValue("MaxMP", element.Data.Stats.Agility);
+        err.UpdateValue("Price", element.Data.Price);
         //err.UpdateValue("Sprite", SpriteName.Length);
     }
 
@@ -62,19 +64,19 @@ public class WeaponUI : CRUD<Weapon>
         err.ShowErrorsLayout();
 
         GUI.enabled = !Selected;
-        element.Name = EditorGUILayout.TextField("Name: ", element.Name);
-        element.Description = EditorGUILayout.TextField("Description: ", element.Description);
-        element.Type = (Weapon.WeaponType)EditorGUILayout.EnumPopup("Weapon Type: ", element.Type);
-        element.Price = EditorGUILayout.IntField("Price: ", element.Price);
+        element.Data.WeaponName = element.Name = EditorGUILayout.TextField("Name: ", element.Name);
+        element.Data.Description = EditorGUILayout.TextField("Description: ", element.Data.Description);
+        element.Data.Type = (AbstractWeapon.WeaponType)EditorGUILayout.EnumPopup("Weapon Type: ", element.Data.Type);
+        element.Data.Price = EditorGUILayout.IntField("Price: ", element.Data.Price);
 
         if (GUI.Button(new Rect(0, 100, 400, 20), "Select Sprite"))
         {
             EditorGUIUtility.ShowObjectPicker<Sprite>(null, false, null, 1);
         }
 
-        if (element.Image != null)
+        if (element.Icon != null)
         {
-            GUI.DrawTextureWithTexCoords(new Rect(400, 100, Constant.SpriteWidth, Constant.SpriteHeight), element.Image.texture, Constant.GetTextureCoordinate(element.Image));
+            GUI.DrawTextureWithTexCoords(new Rect(400, 100, Constant.SpriteWidth, Constant.SpriteHeight), element.Icon.texture, Constant.GetTextureCoordinate(element.Icon));
         }
 
         AddObject();
@@ -85,13 +87,13 @@ public class WeaponUI : CRUD<Weapon>
         GUILayout.BeginArea(new Rect(300, 180, 600, 160), "Attributes", EditorStyles.helpBox);
         GUILayout.Space(15);
 
-        element.Stats.Agility = EditorGUILayout.IntField("Agility: ", element.Stats.Agility);
-        element.Stats.Attack = EditorGUILayout.IntField("Attack: ", element.Stats.Attack);
-        element.Stats.Luck = EditorGUILayout.IntField("Luck: ", element.Stats.Luck);
-        element.Stats.Magic = EditorGUILayout.IntField("Magic: ", element.Stats.Magic);
-        element.Stats.MagicDefense = EditorGUILayout.IntField("MagicDefense: ", element.Stats.MagicDefense);
-        element.Stats.MaxHP = EditorGUILayout.IntField("MaxHP: ", element.Stats.MaxHP);
-        element.Stats.MaxMP = EditorGUILayout.IntField("MaxMP: ", element.Stats.MaxMP);
+        element.Data.Stats.Agility = EditorGUILayout.IntField("Agility: ", element.Data.Stats.Agility);
+        element.Data.Stats.Attack = EditorGUILayout.IntField("Attack: ", element.Data.Stats.Attack);
+        element.Data.Stats.Luck = EditorGUILayout.IntField("Luck: ", element.Data.Stats.Luck);
+        element.Data.Stats.Magic = EditorGUILayout.IntField("Magic: ", element.Data.Stats.Magic);
+        element.Data.Stats.MagicDefense = EditorGUILayout.IntField("MagicDefense: ", element.Data.Stats.MagicDefense);
+        element.Data.Stats.MaxHP = EditorGUILayout.IntField("MaxHP: ", element.Data.Stats.MaxHP);
+        element.Data.Stats.MaxMP = EditorGUILayout.IntField("MaxMP: ", element.Data.Stats.MaxMP);
 
         GUILayout.EndArea();
 
@@ -100,13 +102,13 @@ public class WeaponUI : CRUD<Weapon>
         GUILayout.Space(15);
 
         GUILayout.BeginHorizontal();
-        element.PercentageState = EditorGUILayout.Slider("Apply State(%)", element.PercentageState, 0, 100);
-        GUILayout.TextField(element.State.State);
+        element.Data.PercentageState = EditorGUILayout.Slider("Apply State(%)", element.Data.PercentageState, 0, 100);
+        GUILayout.TextField(element.Data.State.State);
         if (GUILayout.Button("Select State"))
         {
             var window = EditorWindow.GetWindow<StateUI>();
             window.Selected = true;
-            window.Initialize(ref element.State);
+            window.Initialize(ref element.Data.State);
             window.Show();
         }
         GUILayout.EndHorizontal();
@@ -127,18 +129,26 @@ public class WeaponUI : CRUD<Weapon>
             DeleteButton = GUI.Button(new Rect(400, 380, 100, 20), "Delete");
             GUI.enabled = true;
         }
-    } 
+    }
+
+    protected override void Create()
+    {
+        element.Data.Image = element.Icon;
+        base.Create();
+    }
 
     override protected void AssignElement()
     {
-        AssignedElement.Name = element.Name;
-        AssignedElement.Description = element.Description;
-        AssignedElement.Type = element.Type;
-        AssignedElement.HitRate = element.HitRate;
-        AssignedElement.NumberHit = element.NumberHit;
-        AssignedElement.Stats = element.Stats;
-        AssignedElement.Id = element.Id;
-        AssignedElement.Image = element.Image;
-        AssignedElement.State = element.State;
+        SelectedWeapon.WeaponName = element.Name;
+        SelectedWeapon.Description = element.Data.Description;
+        SelectedWeapon.HitRate = element.Data.HitRate;
+        SelectedWeapon.Image = element.Data.Image;
+        SelectedWeapon.MinLevel = element.Data.MinLevel;
+        SelectedWeapon.NumberHit = element.Data.NumberHit;
+        SelectedWeapon.PercentageState = element.Data.PercentageState;
+        SelectedWeapon.Price = element.Data.Price;
+        SelectedWeapon.State = element.Data.State;
+        SelectedWeapon.Stats = element.Data.Stats;
+        SelectedWeapon.Type = element.Data.Type;
     }
 }

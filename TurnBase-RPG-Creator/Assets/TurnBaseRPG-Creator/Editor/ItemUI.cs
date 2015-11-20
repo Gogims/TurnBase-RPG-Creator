@@ -25,8 +25,8 @@ public class ItemUI : CRUD<Usable>
 
         GUI.enabled = !Selected;
         element.Data.ItemName = element.Name = EditorGUILayout.TextField("Name: ", element.Name);
-        element.Description = EditorGUILayout.TextField("Description: ", element.Description);
-        element.Price = EditorGUILayout.IntField("Price: ", element.Price);
+        element.Data.Description = EditorGUILayout.TextField("Description: ", element.Data.Description);
+        element.Data.Price = EditorGUILayout.IntField("Price: ", element.Data.Price);
         if (GUI.Button(new Rect(0, 80, 400, 20), "Select Picture"))
         {
             EditorGUIUtility.ShowObjectPicker<Sprite>(null, false, null, 1);
@@ -83,6 +83,12 @@ public class ItemUI : CRUD<Usable>
             DeleteButton = GUI.Button(new Rect(400, 480, 100, 20), "Delete");
             GUI.enabled = true;
         }
+    }
+
+    protected override void Create()
+    {
+        element.Data.Image = element.Icon;
+        base.Create();
     }
 
     protected override void AssignElement()

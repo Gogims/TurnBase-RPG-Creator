@@ -3,31 +3,7 @@ using UnityEngine;
 using System.Collections.Generic;
 
 public class Actor : RPGElement
-{
-    /// <summary>
-    /// Atributos actuales del actor
-    /// </summary>
-    public Attribute Stats;
-    /// <summary>
-    /// Nivel actual del actor
-    /// </summary>
-    public int Level;
-    /// <summary>
-    /// Breve descripcion del actor
-    /// </summary>
-    public string Description;
-    /// <summary>
-    /// Cantidad de vida disponible por el actor
-    /// </summary>
-    public int HP;
-    /// <summary>
-    /// Cantidad de mana disponible por el actor
-    /// </summary>
-    public int MP;
-    /// <summary>
-    /// Imagen del actor
-    /// </summary>
-    public Sprite Image;
+{    
     /// <summary>
     /// Listado de las animaciones para caminar hacia abajo
     /// </summary>
@@ -62,12 +38,7 @@ public class Actor : RPGElement
         }
 
         rb2D.isKinematic = true;
-    }
-
-    public Actor ()
-	{
-        Stats = new Attribute();        
-    }    
+    }      
 
     //Move returns true if it is able to move and false if not. 
     //Move takes parameters for x direction, y direction and a RaycastHit2D to check collision.
@@ -85,5 +56,79 @@ public class Actor : RPGElement
 
         //Return true to say that Move was successful
         return true;
+    }
+}
+
+[Serializable]
+public class AbstractActor
+{
+    /// <summary>
+    /// Atributos actuales del actor
+    /// </summary>
+    public Attribute Stats;
+    /// <summary>
+    /// Nivel actual del actor
+    /// </summary>
+    public int Level;
+    /// <summary>
+    /// Breve descripcion del actor
+    /// </summary>
+    public string Description;
+    /// <summary>
+    /// Cantidad de vida disponible por el actor
+    /// </summary>
+    public int HP;
+    /// <summary>
+    /// Cantidad de mana disponible por el actor
+    /// </summary>
+    public int MP;
+    /// <summary>
+    /// Imagen del actor
+    /// </summary>
+    public Sprite Image;
+    /// <summary>
+    /// Arma del actor
+    /// </summary>
+    public AbstractWeapon MainHand;
+    /// <summary>
+    /// Cabeza del actor
+    /// </summary>
+    public AbstractArmor Helmet;
+    /// <summary>
+    /// Pecho del actor
+    /// </summary>
+    public AbstractArmor UpperBody;
+    /// <summary>
+    /// Piernas del actor
+    /// </summary>
+    public AbstractArmor LowerBody;
+    /// <summary>
+    /// Zapatos del actor
+    /// </summary>
+    public AbstractArmor Feet;
+    /// <summary>
+    /// Anillo del actor
+    /// </summary>
+    public AbstractArmor Ring;
+    /// <summary>
+    /// Collar del actor
+    /// </summary>
+    public AbstractArmor Necklace;
+    /// <summary>
+    /// Clase del actor
+    /// </summary>
+    public AbstractJob Job;
+
+    public AbstractActor()
+    {
+        Stats = new Attribute();
+        MainHand = new AbstractWeapon();
+        Helmet = new AbstractArmor();
+        UpperBody = new AbstractArmor();
+        LowerBody = new AbstractArmor();
+        Feet = new AbstractArmor();
+        Ring = new AbstractArmor();
+        Necklace = new AbstractArmor();
+        Job = new AbstractJob();
     }
 }

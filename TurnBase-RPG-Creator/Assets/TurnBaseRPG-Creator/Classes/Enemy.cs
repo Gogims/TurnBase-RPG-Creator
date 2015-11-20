@@ -5,13 +5,27 @@ using System.Text;
 
 public class Enemy : Actor
 {
+    /// <summary>
+    /// Información del enemigo
+    /// </summary>
+    public AbstractEnemy Data;
+
+    public Enemy()
+    {
+        Data = new AbstractEnemy();
+    }
+}
+
+[Serializable]
+public class AbstractEnemy : AbstractActor
+{
     public int RewardExperience;
     public int RewardCurrency;
     public List<Rate> Items;
 
-    public Enemy()
+    public AbstractEnemy()
     {
-        Items = new List<Rate>();        
+        Items = new List<Rate>();
     }
 }
 
