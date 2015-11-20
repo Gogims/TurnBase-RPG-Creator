@@ -4,14 +4,18 @@ using System.Collections;
 /// Representa una puerta en el juego.
 /// </summary>
 public class Door: RPGElement  {
+    public Door() {
+        InMap = new AbstractMap();
+        OutMap = new AbstractMap();
+    }
     /// <summary>
-    /// Nombre del mapa que carga cuando se ingresa a la puerta.
+    /// Define cual es el mapa que se va mostrar al salir por la puerta
     /// </summary>
-    public string InMap = string.Empty;
+    public AbstractMap InMap;
     /// <summary>
-    /// Nombre del mapa que carga cuando se sale por la puerta.
+    // Define cual es el mapa que se va mostrar al salir por la puerta
     /// </summary>
-    public string OutMap = string.Empty;
+    public AbstractMap OutMap;
     /// <summary>
     /// Sprite que representa la puerta.
     /// </summary>

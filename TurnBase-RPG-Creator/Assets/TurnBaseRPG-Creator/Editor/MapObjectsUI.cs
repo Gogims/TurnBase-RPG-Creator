@@ -127,11 +127,11 @@ public class MapObjectsUI : EditorWindow {
             {
 
                 var window = EditorWindow.GetWindow<ItemUI>();
-                window.Initialize(ref pickup.Items);
+                window.Initialize(ref pickup.ItemUsable);
                 window.Show();
 
             }
-            GUILayout.TextField(pickup.Items.ItemName);
+            GUILayout.TextField(pickup.ItemUsable.ItemName);
             GUILayout.EndHorizontal();
 
         }
@@ -148,16 +148,15 @@ public class MapObjectsUI : EditorWindow {
             door.Icon = texture;
             GUILayout.Space(15);
             GUILayout.BeginHorizontal();
+
             if (GUILayout.Button("Select Inside Map", GUILayout.Width(labelWidth)))
             {
                 var window = EditorWindow.GetWindow<MapUI>();
-                window.Init(1);
+                window.Initialize(ref door.InMap);
                 window.Show();
             }
-
             GUI.enabled = false;
-            door.InMap = MapUI.SelectMap1;
-            GUILayout.TextField(door.InMap);
+            GUILayout.TextField(door.InMap.Name);
             GUI.enabled = true;
             GUILayout.EndHorizontal();
             GUILayout.Space(15);
@@ -165,13 +164,11 @@ public class MapObjectsUI : EditorWindow {
             if (GUILayout.Button("Select Inside Map", GUILayout.Width(labelWidth)))
             {
                 var window = EditorWindow.GetWindow<MapUI>();
-                window.Init(2);
+                window.Initialize(ref door.OutMap);
                 window.Show();
             }
-
             GUI.enabled = false;
-            door.OutMap = MapUI.SelectMap2;
-            GUILayout.TextField(door.OutMap);
+            GUILayout.TextField(door.OutMap.Name);
             GUI.enabled = true;
             GUILayout.EndHorizontal();
             
@@ -247,9 +244,9 @@ public class MapObjectsUI : EditorWindow {
                 image2.sprite = pickup.Icon;
                 pickup.Image = pickup.Icon;
                 PrefabUtility.CreatePrefab("Assets/Resources/" + type + "/"+name+".prefab",pickup.gameObject);
-                 DestroyImmediate(pickup.gameObject);
-                 CreateObj = new GameObject();
-                 pickup = CreateObj.AddComponent<Pickup>();
+                DestroyImmediate(pickup.gameObject);
+                CreateObj = new GameObject();
+                pickup = CreateObj.AddComponent<Pickup>();
                 
                 break;
             case 3:
@@ -400,7 +397,7 @@ public class MapObjectsUI : EditorWindow {
                     DestroyImmediate(CreateObj);
                     CreateObj = new GameObject();
                     pickup = CreateObj.AddComponent<Pickup>();
-                    pickup.Items = new AbstractUsable();
+                    pickup.ItemUsable = new AbstractUsable();
                     
                 }
                 Objects = Resources.LoadAll("PickUp", typeof(GameObject));
@@ -468,8 +465,8 @@ public class MapObjectsUI : EditorWindow {
             obstacle.hp = 0;
         if (tab == 4)
         {
-            MapUI.SelectMap1= string.Empty;
-            MapUI.SelectMap2= string.Empty;
+            door.InMap = new AbstractMap() ;
+            door.OutMap = new AbstractMap() ;
         }
         if (tab == 5)
         {
@@ -540,8 +537,8 @@ public class MapObjectsUI : EditorWindow {
                 break;
             case 4:
                 var temp2 = obj as Door;
-                MapUI.SelectMap2 = temp2.OutMap;
-                MapUI.SelectMap1 = temp2.InMap;
+                door.OutMap = temp2.OutMap;
+                door.InMap = temp2.InMap;
                 door.Image = temp2.Image;
                 break;
             case 5:
