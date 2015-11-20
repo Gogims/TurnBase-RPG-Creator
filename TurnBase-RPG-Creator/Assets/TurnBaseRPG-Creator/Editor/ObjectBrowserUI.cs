@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEditor;
 using System.Collections.Generic;
+using System.IO;
 /// <summary>
 /// Clase que se encarga de mostrar la ventana de objectBrowser.
 /// </summary>
@@ -101,14 +102,24 @@ public class ObjectBrowserUI : EditorWindow
             RPGElement ob = temp.GetComponent<RPGElement>();
             Rect position = new Rect(x, y, 44, 44);
             GUI.DrawTextureWithTexCoords(position, ob.Icon.texture,GetTextureCoordinate(ob.Icon));
-            if (ob.name.Length > 6)
-                GUI.Label(new Rect(x, y + 54, 44, 20), ob.name.Substring(0, 4) + "...");
+            if (ob.Name.Length > 6)
+                GUI.Label(new Rect(x, y + 54, 44, 20), ob.Name.Substring(0, 4) + "...");
             else
-                GUI.Label(new Rect(x, y + 54, 44, 20), ob.name);
+                GUI.Label(new Rect(x, y + 54, 44, 20), ob.Name);
             if (GUI.Button(position, "", new GUIStyle()))
             {
                 MapEditor.selectedObject = temp;
                 GameEngine.inspectorRpg.Focus();
+                if (optionSelected == "Maps")
+                {
+                    string OpenScene = temp.GetComponent<Map>().Data.MapPath;
+                    if (OpenScene != Directory.GetCurrentDirectory() + "\\" + EditorApplication.currentScene.Replace('/', '\\'))
+                    {
+                        EditorApplication.SaveScene();
+                        EditorApplication.OpenScene(OpenScene);
+                    }
+                }
+
             }
             if (x + 84 + 64 < this.position.width)
                 x += 84;
@@ -164,10 +175,10 @@ public class ObjectBrowserUI : EditorWindow
             Objects = Resources.LoadAll("Item", typeof(GameObject));
         }
         GUILayout.Space(10);
-        if (GUILayout.Button("Background")){
-            optionSelected = "Background";
+        if (GUILayout.Button("Maps")){
+            optionSelected = "Maps";
             mapObjects = false;
-            Objects = Resources.LoadAll("Background", typeof(GameObject));
+            Objects = Resources.LoadAll("Maps", typeof(GameObject));
         }
         GUILayout.EndArea();
     }

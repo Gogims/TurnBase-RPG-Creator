@@ -12,6 +12,5 @@ public class Pickup : RPGElement {
     /// <summary>
     /// items que da el objeto.
     /// </summary>
-    public AbstractUsable Items;
-
+    public AbstractUsable ItemUsable;
 }

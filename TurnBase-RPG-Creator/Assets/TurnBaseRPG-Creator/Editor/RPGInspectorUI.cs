@@ -24,7 +24,8 @@ public class RPGInspectorUI : EditorWindow {
 		if (MapEditor.selectedObject != null && MapEditor.selectedObject.tag != "RPG-CREATOR") {
             texture = MapEditor.selectedObject.GetComponent<RPGElement>().Icon;
 			tag = MapEditor.selectedObject.tag;
-			name = MapEditor.selectedObject.name;
+
+            name = MapEditor.selectedObject.GetComponent<RPGElement>().Name;
 		} else {
             texture = defaultText;
 		}

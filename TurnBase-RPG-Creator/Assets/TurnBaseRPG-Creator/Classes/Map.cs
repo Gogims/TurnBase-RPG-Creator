@@ -8,23 +8,24 @@ using UnityEngine;
 /// Representa un Mapa en RPG.
 /// </summary>
 public class Map : RPGElement{
-    public int Heigth;
-    /// <summary>
-    /// Representa el ancho del mapa.
-    /// </summary>
-    public int Width;
+    public Map() {
+        Data = new AbstractMap();
+    }
+    public AbstractMap Data;
 	/// <summary>
 	/// Crea un mapa dado su ancho, alto y nombre.
 	/// </summary>
 	public string CreateMap(){
 		EditorApplication.NewScene(); // Crea una scene nueva.
 		Camera.main.orthographicSize = 5; // Ajusta el tamaño de la camara ( la cantidad de espacio que va enfocar)
-		Camera.main.transform.localPosition = new Vector3((float)(Width-1)/2,(float)(Heigth-1)/2,-10); // Posiciona la camara en el centro del mapa
+        Camera.main.transform.localPosition = new Vector3((float)(Data.Width - 1) / 2, (float)(Data.Heigth - 1) / 2, -10); // Posiciona la camara en el centro del mapa
 		Camera.main.backgroundColor = Color.black;
         UnityEngine.Object prefab = AssetDatabase.LoadAssetAtPath(@"Assets/Resources/Tile/DefaultTile1.prefab", typeof(GameObject)); // Carga el prefab que esta por defecto para crear el mapa
         UnityEngine.Object prefab2 = AssetDatabase.LoadAssetAtPath(@"Assets/Resources/Tile/DefaultTile2.prefab", typeof(GameObject)); // Carga el prefab que esta por defecto para crear el mapa
-		for (int i =0; i < Width;i++){
-			for(int j = 0; j < Heigth;j++){
+        for (int i = 0; i < Data.Width; i++)
+        {
+            for (int j = 0; j < Data.Heigth; j++)
+            {
 				Vector2 position = new Vector2(i,j);
 				GameObject clone = new GameObject();
 				
@@ -39,52 +40,55 @@ public class Map : RPGElement{
         GameObject settings = new GameObject("Settings");
         settings.AddComponent<Map>();
         Map x = settings.GetComponent<Map>();
-        x.Name = this.Name;
-        x.Width = this.Width;
-        x.Heigth = this.Heigth;
+        x.Name = x.Data.Name = this.Data.Name;
+        x.Data.Width = this.Data.Width;
+        x.Data.Heigth = this.Data.Heigth;
         x.Icon = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/TurnBaseRPG-Creator/RPG-Sprites/MapIcon.png");
-        string returnPath = "Assets/Maps/" + Guid.NewGuid() + ".unity";
-		EditorApplication.SaveScene("Assets/Maps/"+Guid.NewGuid()+".unity");// Guarda la scene.
+        x.Data.mapid = Guid.NewGuid().ToString();
+        string returnPath = "Assets/Resources/Maps/" + Guid.NewGuid() + ".unity";
+        x.Data.MapPath = Directory.GetCurrentDirectory() + '\\' + returnPath.Replace('/', '\\');
+        PrefabUtility.CreatePrefab("Assets/Resources/Maps/" + x.Data.mapid + ".prefab", x.gameObject);
+        DestroyImmediate(settings);
+        EditorApplication.SaveScene(returnPath);// Guarda la scene.
         return Directory.GetCurrentDirectory() + '\\' + returnPath.Replace('/', '\\');
 	}
     /// <summary>
     /// Actualiza un mapa dado su path
     /// </summary>
     /// <param name="Path">Path del mapa (scene)</param>
-    public void updateMap(string Path)
+    public void updateMap(Map aux)
     {
-        GameObject obj = GameObject.Find("Settings");
-        Map aux = obj.GetComponent<Map>();
 
         GameObject [] List1 = GameObject.FindGameObjectsWithTag("RPG-MAPOBJECT");
         GameObject[] List2 = GameObject.FindGameObjectsWithTag("RPG-CORE");
-        if (this.Width < aux.Width || this.Heigth < aux.Heigth)
+
+        if (this.Data.Width < aux.Data.Width || this.Data.Heigth < aux.Data.Heigth)
         {
-            if (this.Width < aux.Width)
-                aux.Width = this.Width;
-            if (this.Heigth < aux.Heigth)
-                aux.Heigth = this.Heigth;
+            if (this.Data.Width < aux.Data.Width)
+                aux.Data.Width = this.Data.Width;
+            if (this.Data.Heigth < aux.Data.Heigth)
+                aux.Data.Heigth = this.Data.Heigth;
             foreach (var i in List1)
             {
                 Transform position = i.GetComponent<Transform>();
-                if ((position.localPosition.x > this.Width - 1) || position.localPosition.y > this.Heigth - 1)
+                if ((position.localPosition.x > this.Data.Width - 1) || position.localPosition.y > this.Data.Heigth - 1)
                     DestroyImmediate(i);
             }
             foreach (var i in List2)
             {
                 Transform position = i.GetComponent<Transform>();
-                if (position.localPosition.x > this.Width - 1 || position.localPosition.y > this.Heigth - 1)
+                if (position.localPosition.x > this.Data.Width - 1 || position.localPosition.y > this.Data.Heigth - 1)
                     DestroyImmediate(i);
             }
         }
 
-        if (this.Width > aux.Width)
+        if (this.Data.Width > aux.Data.Width)
         {
             UnityEngine.Object prefab = AssetDatabase.LoadAssetAtPath(@"Assets/Resources/Tile/DefaultTile1.prefab", typeof(GameObject)); // Carga el prefab que esta por defecto para crear el mapa
             UnityEngine.Object prefab2 = AssetDatabase.LoadAssetAtPath(@"Assets/Resources/Tile/DefaultTile2.prefab", typeof(GameObject)); // Carga el prefab que esta por defecto para crear el mapa
-            int x = aux.Width;
-            for (int i = x; i < this.Width; i++)
-                for (int j = 0; j < aux.Heigth; j++)
+            int x = aux.Data.Width;
+            for (int i = x; i < this.Data.Width; i++)
+                for (int j = 0; j < aux.Data.Heigth; j++)
                 {
                     Vector2 position = new Vector2(i, j);
                     GameObject clone = new GameObject();
@@ -96,15 +100,15 @@ public class Map : RPGElement{
                     clone.tag = "RPG-CORE";
                     EditorWindow.DestroyImmediate(GameObject.Find("New Game Object"));
                 }
-            aux.Width = this.Width;
+            aux.Data.Width = this.Data.Width;
         }
-        if (this.Heigth > aux.Heigth)
+        if (this.Data.Heigth > aux.Data.Heigth)
         {
             UnityEngine.Object prefab = AssetDatabase.LoadAssetAtPath(@"Assets/Resources/Tile/DefaultTile1.prefab", typeof(GameObject)); // Carga el prefab que esta por defecto para crear el mapa
             UnityEngine.Object prefab2 = AssetDatabase.LoadAssetAtPath(@"Assets/Resources/Tile/DefaultTile2.prefab", typeof(GameObject)); // Carga el prefab que esta por defecto para crear el mapa
-            int y = aux.Heigth;
-            for (int i = 0; i < aux.Width; i++)
-                for (int j = y; j < this.Heigth; j++)
+            int y = aux.Data.Heigth;
+            for (int i = 0; i < aux.Data.Width; i++)
+                for (int j = y; j < this.Data.Heigth; j++)
                 {
                     Vector2 position = new Vector2(i, j);
                     GameObject clone = new GameObject();
@@ -117,15 +121,15 @@ public class Map : RPGElement{
                     EditorWindow.DestroyImmediate(GameObject.Find("New Game Object"));
                 }
         }
-        if (this.Heigth > aux.Heigth && this.Width > aux.Width)
+        if (this.Data.Heigth > aux.Data.Heigth && this.Data.Width > aux.Data.Width)
         {
 
             UnityEngine.Object prefab = AssetDatabase.LoadAssetAtPath(@"Assets/Resources/Tile/DefaultTile1.prefab", typeof(GameObject)); // Carga el prefab que esta por defecto para crear el mapa
             UnityEngine.Object prefab2 = AssetDatabase.LoadAssetAtPath(@"Assets/Resources/Tile/DefaultTile2.prefab", typeof(GameObject)); // Carga el prefab que esta por defecto para crear el mapa
-            Vector2 position = new Vector2(this.Heigth - 1, this.Width - 1);
+            Vector2 position = new Vector2(this.Data.Heigth - 1, this.Data.Width - 1);
             GameObject clone = new GameObject();
 
-            if ((this.Width - 1 + this.Heigth - 1) % 2 == 0)
+            if ((this.Data.Width - 1 + this.Data.Heigth - 1) % 2 == 0)
                 clone = EditorWindow.Instantiate(prefab, position, Quaternion.identity) as GameObject; // Agrega un objeto nuevo a la scene.
             else
                 clone = EditorWindow.Instantiate(prefab2, position, Quaternion.identity) as GameObject;
@@ -133,11 +137,34 @@ public class Map : RPGElement{
             EditorWindow.DestroyImmediate(GameObject.Find("New Game Object"));
         }
         EditorWindow.DestroyImmediate(GameObject.Find("New Game Object"));
-        aux.Name = this.Name;
-        aux.Width = this.Width;
-        aux.Heigth = this.Heigth;
+        Camera.main.orthographicSize = 5; // Ajusta el tamaño de la camara ( la cantidad de espacio que va enfocar)
+        Camera.main.transform.localPosition = new Vector3((float)(this.Data.Width - 1) / 2, (float)(this.Data.Heigth - 1) / 2, -10); // Posiciona la camara en el centro del mapa
+        aux.Name = aux.Data.Name = this.Data.Name;
+        aux.Data.Width = this.Data.Width;
+        aux.Data.Heigth = this.Data.Heigth;
         EditorApplication.SaveScene();
 
 
     }
+}
+[Serializable]
+public class AbstractMap
+{
+    public string mapid = string.Empty;
+    /// <summary>
+    /// Almacena el path de la scene.
+    /// </summary>
+    public string MapPath = string.Empty;
+    /// <summary>
+    /// Almacena la altura del mapa
+    /// </summary>
+    public int Heigth;
+    /// <summary>
+    /// Almacena el ancho del mapa.
+    /// </summary>
+    public int Width;
+    /// <summary>
+    /// Nombre del mapa.
+    /// </summary>
+    public string Name = string.Empty;
 }
