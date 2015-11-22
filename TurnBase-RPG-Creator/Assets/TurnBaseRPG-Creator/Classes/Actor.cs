@@ -19,7 +19,7 @@ public class Actor : RPGElement
     /// <summary>
     /// Listado de las animaciones para caminar hacia la derecha
     /// </summary>
-    public List<Sprite> rightSprites;
+    public List<Sprite> rightSprites;   
 
     /// <summary>
     /// El componente físico 
@@ -118,6 +118,10 @@ public class AbstractActor
     /// Clase del actor
     /// </summary>
     public AbstractJob Job;
+    /// <summary>
+    /// Nombre del actor
+    /// </summary>
+    public string ActorName = string.Empty;
 
     public AbstractActor()
     {

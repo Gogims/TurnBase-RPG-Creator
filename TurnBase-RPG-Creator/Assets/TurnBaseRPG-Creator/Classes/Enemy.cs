@@ -21,7 +21,7 @@ public class AbstractEnemy : AbstractActor
 {
     public int RewardExperience;
     public int RewardCurrency;
-    public List<Rate> Items;
+    public List<Rate> Items;    
 
     public AbstractEnemy()
     {

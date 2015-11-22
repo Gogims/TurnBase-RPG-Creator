@@ -16,7 +16,7 @@ public class PlayerUI : CRUD<Player>
         GUILayout.BeginArea(new Rect(300, 0, 600, 290), "Basic Settings", EditorStyles.helpBox);
         GUILayout.Space(10);
 
-        element.Name = EditorGUILayout.TextField("Name", element.Name);
+        element.Data.ActorName = element.Name = EditorGUILayout.TextField("Name", element.Name);
         element.Data.Description = EditorGUILayout.TextField("Description", element.Data.Description);
         element.Data.Level = EditorGUILayout.IntSlider(new GUIContent("Level:"), element.Data.Level, 1, 100);
 

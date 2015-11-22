@@ -31,7 +31,7 @@ public class EnemyUI : CRUD<Enemy>
         GUILayout.BeginArea(new Rect(300, 0, 600, 330), "Basic Settings", EditorStyles.helpBox);
         GUILayout.Space(10);
 
-        element.Name = EditorGUILayout.TextField("Name", element.Name);
+        element.Data.ActorName = element.Name = EditorGUILayout.TextField("Name", element.Name);
         element.Data.Description = EditorGUILayout.TextField("Description", element.Data.Description);
         element.Data.Level = EditorGUILayout.IntSlider(new GUIContent("Level:"), element.Data.Level, 1, 100);
         element.Data.RewardExperience = EditorGUILayout.IntField("Experience Earned: ", element.Data.RewardExperience);
@@ -39,7 +39,7 @@ public class EnemyUI : CRUD<Enemy>
 
         GUILayout.Label("Class:", EditorStyles.boldLabel);
         GUILayout.BeginHorizontal();
-        GUILayout.TextField("");
+        GUILayout.TextField(element.Data.Job.JobName);
         if (GUILayout.Button("Select Class"))
         {
             var window = EditorWindow.GetWindow<JobUI>();
@@ -163,6 +163,7 @@ public class EnemyUI : CRUD<Enemy>
 
     protected override void AssignElement()
     {
+        EnemySelected.ActorName = element.Data.ActorName;
         EnemySelected.Description = element.Data.Description;
         EnemySelected.HP = element.Data.HP;
         EnemySelected.Image = element.Data.Image;
@@ -171,7 +172,8 @@ public class EnemyUI : CRUD<Enemy>
         EnemySelected.MP = element.Data.MP;
         EnemySelected.RewardCurrency = element.Data.RewardCurrency;
         EnemySelected.RewardExperience = element.Data.RewardExperience;
-        EnemySelected.Stats = element.Data.Stats;        
+        EnemySelected.Stats = element.Data.Stats;
+        EnemySelected.Image = element.Icon;    
     }    
 
     private void NewEnemy()
@@ -237,6 +239,11 @@ public class EnemyUI : CRUD<Enemy>
     {
         ActorAnimation animation = new ActorAnimation("Enemy");
         List<Sprite> sprites;
+
+        if (animations == null)
+        {
+            animations = elementObject.GetComponent<Animator>();
+        }
 
         if (element.downSprites.Count > 0)
         {
