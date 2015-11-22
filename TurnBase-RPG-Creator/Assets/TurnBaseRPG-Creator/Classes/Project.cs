@@ -2,11 +2,13 @@
 using System.Diagnostics;
 using System.Collections;
 using System.IO;
+using UnityEditor;
 
 /// <summary>
 /// Clase que se encarga de manejar los proyectos de RPG
 /// </summary>
-public class Project:RPGElement  {
+public class Project  {
+    public string Name { get; set; }
     public string UnityPath { get; set; }
     public string Description { get; set; }
     public string Path { get; set; }
@@ -28,6 +30,7 @@ public class Project:RPGElement  {
         string projectPath = @""""+Path + @"\" + Name+@"""";
         string projectAssets = Path + @"\" + Name + "\\Assets" ;
         string projectSettings = @""""+Path + @"\" + Name+"\\ProjectSettings"+@"""";
+ 
         using (StreamWriter sw = p.StandardInput)
         {
             if (sw.BaseStream.CanWrite)
@@ -58,8 +61,6 @@ public class Project:RPGElement  {
                 //Copia de la carpeta de rpg-animationController a animationController
                 sw.WriteLine("ROBOCOPY " + @"""" + projectAssets + "\\TurnBaseRPG-Creator\\RPG-AnimationController" + @"""" +
                            @" """ + projectAssets + "\\AnimationController" + @"""" + " *.* /E");
-                sw.WriteLine("echo "+UnityPath.Replace('\\','/')+">"+@""""+projectAssets+"\\Settings.txt"+@"""");
-                UnityEngine.Debug.Log(ProjectSettings.UnityPath);
                 sw.WriteLine(ProjectSettings.UnityPath.Replace('/','\\')+" -createProject "+projectPath);
             }
         }
@@ -71,23 +72,7 @@ public class Project:RPGElement  {
     /// <param name="path">path del proyecto</param>
     public static void Open(string path)
     {
-        Process p = new Process();
-        ProcessStartInfo info = new ProcessStartInfo();
-        info.FileName = "cmd.exe";
-        info.RedirectStandardInput = true;
-        info.UseShellExecute = false;
-        p.StartInfo = info;
-        p.Start();
-        path = @""""+path.Replace('/', '\\')+@"""";
-        UnityEngine.Debug.Log(path);
-        using (StreamWriter sw = p.StandardInput)
-        {
-            if (sw.BaseStream.CanWrite)
-            {
-                sw.WriteLine("");
-                sw.WriteLine(ProjectSettings.UnityPath.Replace('/', '\\') + " -projectPath  " + path);
-            }
-        }   
+        EditorApplication.OpenProject(path);
     }
 
 

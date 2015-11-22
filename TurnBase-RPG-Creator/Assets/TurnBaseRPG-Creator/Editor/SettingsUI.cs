@@ -1,53 +1,39 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEditor;
+using System;
 
 public class SettingsUI : EditorWindow {
 
-    bool browse = false;
-    bool save = false;
-    bool error = false;
-
-    ErrorHandler err;
+    //bool browse = false;
+    //bool save = false;
+    //int scale;
+    //ErrorHandler err;
 	public void Init() {
-        err = new ErrorHandler();
-        err.InsertPropertyError("Path", ProjectSettings.UnityPath.Length, "*You have to select unity path",new Rect(0,0,100,20));
-        err.InsertCondition("Path", 0, ErrorCondition.Greater, LogicalOperators.None);
+     
 	}
     void OnGUI() {
-        if (err == null)
-            Init();
-
-        GUI.Label(new Rect(0, 30, 150, 20), "Unity Path");
-        ProjectSettings.UnityPath = GUI.TextField(new Rect(100, 30, 300, 20), ProjectSettings.UnityPath);
-        browse = GUI.Button(new Rect(100, 60, 150, 20), "Browse");
-        save = GUI.Button(new Rect(0, 90, 100, 20), "Save") ;
-        UpdateValidationVal();        
-        error = err.CheckErrors();
-        err.ShowErrors();
-        if (save && ProjectSettings.SaveSettings() && !error)
-        {
-           this.Close();
-        }
-        else if (save && !ProjectSettings.SaveSettings())
-        {
-           
-            ProjectSettings.UnityPath = "";    
-
-        }
+        //if (err == null)
+        //    Init();
+        GUILayout.Label("", GUILayout.Height(30));
+        GUI.Label(new Rect(0, 10, 100, 20), "Scale");
+        // scale = EditorGUI.Popup(new Rect(110, 10, this.position.width - 115, 10), scale, Scales);
+        //save = GUILayout.Button("Save",GUILayout.Width(100)) ;
+        //ProjectSettings.Scale = Int32.Parse(Scales[scale]);     
+        //if (save && ProjectSettings.SaveSettings())
+        //{
+        //   this.Close();
+        //}
+        //else if (save && !ProjectSettings.SaveSettings())
+        //{
+        //    //...
+        //}
         
         
        
     }
-    void Update()
-    {
-        if (browse)
-        {
-            ProjectSettings.UnityPath = EditorUtility.OpenFilePanel("Select Unity.exe", "", "");
-        }
-    }
     void UpdateValidationVal()
     {
-        err.UpdateValue("Path", ProjectSettings.UnityPath.Length);
+        //err.UpdateValue("Path", ProjectSettings.UnityPath.Length);
     }
 }

@@ -4,22 +4,30 @@ using System.Collections;
 /// Constantes de TurnBase-RPG-Creator.
 /// </summary>
 public class Constant{
-	/// <summary>
+    /// <summary>
+    /// Layers que utiliza RPG-Creator para ordenar los objetos en la scene.
+    /// </summary>
+    #region Layers
+    public const string LAYER_ITEM = "Items";
+    public const string LAYER_TILE = "Tile";
+    public const string LAYER_ACTOR = "Actor";
+    #endregion
+    /// <summary>
 	/// La altura maxima del mapa
 	/// </summary>
-	public const int MAX_MAP_HEIGTH = 10;
+	public const int MAX_MAP_HEIGTH = 100;
 	/// <summary>
 	/// Ancho maximo del mapa
 	/// </summary>
-	public const int MAX_MAP_WIDTH = 17;
+	public const int MAX_MAP_WIDTH = 100;
 	/// <summary>
 	/// Altura Minima del mapa
 	/// </summary>
-	public const int MIN_MAP_HEIGTH = 5;
+	public const int MIN_MAP_HEIGTH = 13;
 	/// <summary>
 	/// Ancho Minimo del mapa.
 	/// </summary>
-	public const int MIN_MAP_WIDTH = 5;
+	public const int MIN_MAP_WIDTH = 17;
 	/// <summary>
 	/// Altura de la imagen del RPGInspector
 	/// </summary>
@@ -36,7 +44,6 @@ public class Constant{
     /// Alto de los sprites de los elementos del juego
     /// </summary>
     public const int SpriteHeight = 64;
-
     /// <summary>
     /// Crea el marco de la imagen del equipamiento
     /// </summary>
@@ -54,7 +61,6 @@ public class Constant{
         MagicAttack,
         NormalAttack
     }
-
     public enum AOE
     {
         OneEnemy,

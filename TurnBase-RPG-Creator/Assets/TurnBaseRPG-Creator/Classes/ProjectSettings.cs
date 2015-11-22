@@ -2,6 +2,8 @@
 using System.IO;
 using UnityEngine;
 using System.Diagnostics;
+using System;
+using UnityEditor;
 
 /// <summary>
 /// Clase que se encarga de las configuraciones del proyecto.
@@ -10,7 +12,11 @@ public class ProjectSettings  {
     /// <summary>
     /// Path de unity.exe
     /// </summary>
-    static public string UnityPath { get; set; }
+    public static string UnityPath = EditorApplication.applicationPath;
+    /// <summary>
+    /// Scala con la que se va trabajar el proyecto.
+    /// </summary>
+    static public int pixelPerUnit = 1;
     /// <summary>
     /// Archivo de configuracion
     /// </summary>
@@ -29,52 +35,29 @@ public class ProjectSettings  {
     static private void LoadSettings()
     {
 
-        if (File.Exists(path))
-        {
-            string text = File.ReadAllText(path);
-            var settings = text.Split('|');
-            UnityPath = settings[0].Replace(System.Environment.NewLine, "");
-        }
-        else
-        {
-            var file = File.Create(path);
-            file.Close();
-        }
-    }
-    /// <summary>
-    /// Guarda las configuraciones del proyecto.
-    /// </summary>
-    static public bool SaveSettings(string pathSave,string unitypath)
-    {
-
-        if (CheckPath(unitypath))
-        {
-            UnityEngine.Debug.Log(pathSave);
-            string content = unitypath;
-            File.WriteAllText(pathSave, content);
-            return true;
-        }
-        else
-            return false;
+        //if (File.Exists(path))
+        //{
+        //    try {
+        //    string text = File.ReadAllText(path);
+        //    var settings = text.Split('|');
+        //    }
+        //    catch{
+        //    }
+        //}
+        //else
+        //{
+        //    var file = File.Create(path);
+        //    file.Close();
+        //}
     }
     /// <summary>
     /// Guarda las configuraciones del proyecto.
     /// </summary>
     static public bool SaveSettings()
     {
-        return SaveSettings(path,UnityPath);
-    }
-    /// <summary>
-    /// Revisa si el path que se suministro es correcto.
-    /// </summary>
-    /// <returns></returns>
-    static private bool CheckPath(string unitypath)
-    {
-        string[] unity = UnityPath.Split('/');
-        string unityexe = (string)unity.GetValue(unity.Length - 1);
-        if (unityexe == "Unity.exe" && File.Exists(UnityPath))
-            return true;
-        else
-            return false;
+            //string content = "";
+            //File.WriteAllText(path, content);
+            //return true;
+        return true;
     }
 }

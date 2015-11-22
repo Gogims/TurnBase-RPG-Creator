@@ -15,9 +15,9 @@ public class Map : RPGElement{
 	/// <summary>
 	/// Crea un mapa dado su ancho, alto y nombre.
 	/// </summary>
-	public string CreateMap(){
+	public void CreateMap(){
 		EditorApplication.NewScene(); // Crea una scene nueva.
-		Camera.main.orthographicSize = 5; // Ajusta el tamaño de la camara ( la cantidad de espacio que va enfocar)
+		Camera.main.orthographicSize = 3; // Ajusta el tamaño de la camara ( la cantidad de espacio que va enfocar)
         Camera.main.transform.localPosition = new Vector3((float)(Data.Width - 1) / 2, (float)(Data.Heigth - 1) / 2, -10); // Posiciona la camara en el centro del mapa
 		Camera.main.backgroundColor = Color.black;
         UnityEngine.Object prefab = AssetDatabase.LoadAssetAtPath(@"Assets/Resources/Tile/DefaultTile1.prefab", typeof(GameObject)); // Carga el prefab que esta por defecto para crear el mapa
@@ -50,7 +50,6 @@ public class Map : RPGElement{
         PrefabUtility.CreatePrefab("Assets/Resources/Maps/" + x.Data.mapid + ".prefab", x.gameObject);
         DestroyImmediate(settings);
         EditorApplication.SaveScene(returnPath);// Guarda la scene.
-        return Directory.GetCurrentDirectory() + '\\' + returnPath.Replace('/', '\\');
 	}
     /// <summary>
     /// Actualiza un mapa dado su path
@@ -139,9 +138,7 @@ public class Map : RPGElement{
         EditorWindow.DestroyImmediate(GameObject.Find("New Game Object"));
         Camera.main.orthographicSize = 5; // Ajusta el tamaño de la camara ( la cantidad de espacio que va enfocar)
         Camera.main.transform.localPosition = new Vector3((float)(this.Data.Width - 1) / 2, (float)(this.Data.Heigth - 1) / 2, -10); // Posiciona la camara en el centro del mapa
-        aux.Name = aux.Data.Name = this.Data.Name;
-        aux.Data.Width = this.Data.Width;
-        aux.Data.Heigth = this.Data.Heigth;
+
         EditorApplication.SaveScene();
 
 

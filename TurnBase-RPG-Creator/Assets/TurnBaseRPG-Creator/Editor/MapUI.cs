@@ -17,10 +17,6 @@ public class MapUI : EditorWindow {
     /// </summary>
     ErrorHandler err = new ErrorHandler();
     /// <summary>
-    /// 
-    /// </summary>
-    bool create = false;
-    /// <summary>
     /// Estilo de la letra.
     /// </summary>
     GUIStyle fontStyle = new GUIStyle();
@@ -75,14 +71,14 @@ public class MapUI : EditorWindow {
             scene = EditorApplication.currentScene;
 	}
     private void InitErr(){
-        err.InsertPropertyError("Heigth", map.Data.Heigth, "The Heigth has to be greater than 5 and less than 10");
-        err.InsertPropertyError("Width", map.Data.Width, "The Width has to be greater than 5 and less than 17");
-            err.InsertPropertyError("Name", map.Data.Name.Length, "The length of the name has to be grater than 5");
+        err.InsertPropertyError("Heigth", map.Data.Heigth, "The Heigth has to be greater than 13 and less than 100");
+        err.InsertPropertyError("Width", map.Data.Width, "The Width has to be greater than 17 and less than 100");
+            err.InsertPropertyError("Name", map.Data.Name.Length, "The length of the name has to be grater than 1");
             err.InsertCondition("Heigth", Constant.MIN_MAP_HEIGTH, ErrorCondition.GreaterOrEqual, LogicalOperators.AND);
             err.InsertCondition("Heigth", Constant.MAX_MAP_HEIGTH, ErrorCondition.LessOrEqual, LogicalOperators.None);
             err.InsertCondition("Width", Constant.MIN_MAP_WIDTH, ErrorCondition.GreaterOrEqual, LogicalOperators.AND);
             err.InsertCondition("Width", Constant.MAX_MAP_WIDTH, ErrorCondition.LessOrEqual, LogicalOperators.None);
-            err.InsertCondition("Name", 5, ErrorCondition.GreaterOrEqual, LogicalOperators.None);
+            err.InsertCondition("Name", 1, ErrorCondition.GreaterOrEqual, LogicalOperators.None);
     }
 
     /// <summary>
@@ -179,7 +175,7 @@ public class MapUI : EditorWindow {
     /// </summary>
     private void CreateNew()
     {
-        string newpath = map.CreateMap();
+        map.CreateMap();
         Maps = null;
         DestroyImmediate(temp);
         temp = new GameObject();
@@ -207,6 +203,10 @@ public class MapUI : EditorWindow {
     {
         var aux = Selected.GetComponent<Map>();
         map.updateMap(aux);
+        aux.Data.Heigth = map.Data.Heigth;
+        aux.Data.Width= map.Data.Width;
+        aux.Name = aux.Data.Name = map.Data.Name;
+        
     }
     /// <summary>
     /// Limpia todos los campos de la ventana

@@ -122,5 +122,5 @@ public class AbstractState
     /// <summary>
     /// Deja de aplicar el estado al actor (se remueve)
     /// </summary>
-    private bool _removed;  
+    private bool _removed = false;  
 }

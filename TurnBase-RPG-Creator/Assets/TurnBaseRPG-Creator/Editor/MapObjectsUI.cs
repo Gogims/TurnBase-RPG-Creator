@@ -229,6 +229,7 @@ public class MapObjectsUI : EditorWindow {
             case 1:
                 wall.gameObject.tag = tag;
                 SpriteRenderer image1 =  wall.gameObject.AddComponent<SpriteRenderer>();
+                image1.sortingLayerName = Constant.LAYER_ITEM;
                 wall.gameObject.AddComponent<BoxCollider2D>();
                 image1.sprite = wall.Icon;
                 wall.Image = wall.Icon;
@@ -240,6 +241,7 @@ public class MapObjectsUI : EditorWindow {
             case 2:
                 pickup.gameObject.tag = tag;
                 SpriteRenderer image2 = pickup.gameObject.AddComponent<SpriteRenderer>();
+                image2.sortingLayerName = Constant.LAYER_ITEM;
                 pickup.gameObject.AddComponent<BoxCollider2D>();
                 image2.sprite = pickup.Icon;
                 pickup.Image = pickup.Icon;
@@ -252,6 +254,7 @@ public class MapObjectsUI : EditorWindow {
             case 3:
                 SpriteRenderer image3 = obstacle.gameObject.AddComponent<SpriteRenderer>();
                 obstacle.gameObject.AddComponent<BoxCollider2D>();
+                image3.sortingLayerName = Constant.LAYER_ITEM;
                 image3.sprite = obstacle.Icon;
                 obstacle.Image = obstacle.Icon;
                 obstacle.gameObject.tag = tag;
@@ -263,6 +266,7 @@ public class MapObjectsUI : EditorWindow {
             case 4:
                 Door temp = GameObject.Find("New Game Object").GetComponent<Door>();
                 SpriteRenderer image4 = temp.gameObject.AddComponent<SpriteRenderer>();
+                image4.sortingLayerName = Constant.LAYER_ITEM;
                 image4.sprite = door.Icon;
                 temp.InMap = door.InMap;
                 temp.OutMap = door.OutMap;
@@ -278,6 +282,7 @@ public class MapObjectsUI : EditorWindow {
                 break;
             case 5:
                 SpriteRenderer image5 = house.gameObject.AddComponent<SpriteRenderer>();
+                image5.sortingLayerName = Constant.LAYER_ITEM;
                 house.gameObject.AddComponent<BoxCollider2D>();
                 image5.sprite = house.Icon;
                 house.Image = house.Icon;
@@ -289,6 +294,7 @@ public class MapObjectsUI : EditorWindow {
                 break;
             default:
                 SpriteRenderer image = tile.gameObject.AddComponent<SpriteRenderer>();
+                image.sortingLayerName = Constant.LAYER_TILE;
                  image.sprite = tile.Icon;
                  tile.Image = tile.Icon;
                  tile.gameObject.tag = tag;
@@ -352,12 +358,9 @@ public class MapObjectsUI : EditorWindow {
         if (Event.current.commandName == "ObjectSelectorUpdated") 
         {
             texture = (Sprite)EditorGUIUtility.GetObjectPickerObject();
-
             if (texture != null)
             {
                 textureName = texture.name;
-              
-
             }
             Repaint();
         }

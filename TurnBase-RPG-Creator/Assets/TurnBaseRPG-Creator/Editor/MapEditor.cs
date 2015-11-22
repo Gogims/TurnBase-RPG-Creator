@@ -46,7 +46,8 @@ public class MapEditor {
 	/// <param name="Selected">Selected.</param>
 	static void DeleteSelectedObject(GameObject Selected)
 	{
-		MapUI.DestroyImmediate (Selected,true);
+        if (Selected.tag == "MainCamera") return;
+		    MapUI.DestroyImmediate (Selected,true);
 	}
 	/// <summary>
 	/// Borra los objeto seleccionados.
@@ -54,15 +55,17 @@ public class MapEditor {
 	static void DeleteObject()
 	{
 		foreach (GameObject i in Selection.gameObjects) {
+            if (i.tag == "MainCamera") continue;
 			GameObject temp = new GameObject();
 			if ( (i.transform.position.x+i.transform.position.y)%2 == 0) 
 				 temp = (GameObject)DarkFloor ;
 			else 
 				temp = (GameObject)LightFloor;
+            Sprite aux = temp.GetComponent<SpriteRenderer>().sprite;
 			temp.transform.position = i.transform.position;
+            temp.transform.localScale = new Vector3(ProjectSettings.pixelPerUnit / aux.rect.width, ProjectSettings.pixelPerUnit / aux.rect.height);
 			MapUI.DestroyImmediate (i,true);
 			MapUI.Instantiate (temp, temp.transform.position, Quaternion.identity);
-			
 			MapUI.DestroyImmediate (GameObject.Find("New Game Object"),true);
 		}
 	}
@@ -83,14 +86,16 @@ public class MapEditor {
 	/// </summary>
 	static void DropObject()
 	{
-
+        GameObject temp = selectedObject;
+        SpriteRenderer selectSprite = temp.GetComponent<SpriteRenderer>();
 		foreach (GameObject i in Selection.gameObjects) {
-            if (i.name == selectedObject.name) continue;
-			GameObject temp = selectedObject;
+            SpriteRenderer iSprite = i.GetComponent<SpriteRenderer>();
+            if (i.name == selectedObject.name || i.name == "Main Camera") continue;
 			temp.transform.position = i.transform.position;
-			MapUI.DestroyImmediate (i,true);
+            temp.transform.localScale = new Vector3(ProjectSettings.pixelPerUnit / selectSprite.sprite.rect.width, ProjectSettings.pixelPerUnit / selectSprite.sprite.rect.height);
+            if (selectSprite.sortingLayerName == Constant.LAYER_TILE || (iSprite.sortingLayerName != Constant.LAYER_TILE) )
+			    MapUI.DestroyImmediate (i,true);
 			MapUI.Instantiate (temp, temp.transform.position, Quaternion.identity);
-			
 			MapUI.DestroyImmediate (GameObject.Find("New Game Object"),true);
 
 		}
