@@ -4,11 +4,17 @@ using UnityEditor;
 
 public class ArmorUI : CRUD<Armor>
 {
+    AbstractArmor SelectedArmor;
+    AbstractArmor.ArmorType ArmorType;
+    bool filter;
+
     public ArmorUI(): base("Armor", new Rect(0, 0, 300, 400)) {    }
 
-    public void Initialize(ref Armor a, Armor.ArmorType type)
+    public void Initialize(ref AbstractArmor armor, AbstractArmor.ArmorType type)
     {
-        AssignedElement = a;
+        SelectedArmor = armor;
+        ArmorType = type;
+        filter = true;
         base.Init();
     }
 
@@ -21,19 +27,19 @@ public class ArmorUI : CRUD<Armor>
         GUILayout.Space(15);
 
         GUI.enabled = !Selected;
-        element.Name = EditorGUILayout.TextField("Name: ", element.Name);
-        element.Description = EditorGUILayout.TextField("Description: ", element.Description);
-        element.Type = (Armor.ArmorType) EditorGUILayout.EnumPopup("Armor Type: ", element.Type);
-        element.Price = EditorGUILayout.IntField("Price: ", element.Price);
+        element.Data.ArmorName = element.Name = EditorGUILayout.TextField("Name: ", element.Name);
+        element.Data.Description = EditorGUILayout.TextField("Description: ", element.Data.Description);
+        element.Data.Type = (AbstractArmor.ArmorType) EditorGUILayout.EnumPopup("Armor Type: ", element.Data.Type);
+        element.Data.Price = EditorGUILayout.IntField("Price: ", element.Data.Price);
 
         if (GUI.Button(new Rect(0, 100, 400, 20), "Select Sprite"))
         {
             EditorGUIUtility.ShowObjectPicker<Sprite>(null, false, null, 1);
         }
 
-        if (element.Image != null)
+        if (element.Icon != null)
         {
-            GUI.DrawTextureWithTexCoords(new Rect(400, 100, Constant.SpriteWidth, Constant.SpriteHeight), element.Image.texture, Constant.GetTextureCoordinate(element.Image));
+            GUI.DrawTextureWithTexCoords(new Rect(400, 100, Constant.SpriteWidth, Constant.SpriteHeight), element.Icon.texture, Constant.GetTextureCoordinate(element.Icon));
         }
 
         AddObject();
@@ -44,13 +50,13 @@ public class ArmorUI : CRUD<Armor>
         GUILayout.BeginArea(new Rect(300, 180, 600, 160), "Attributes", EditorStyles.helpBox);
         GUILayout.Space(15);
 
-        element.Stats.Agility = EditorGUILayout.IntField("Agility: ", element.Stats.Agility);
-        element.Stats.Defense = EditorGUILayout.IntField("Defense: ", element.Stats.Defense);
-        element.Stats.Luck = EditorGUILayout.IntField("Luck: ", element.Stats.Luck);
-        element.Stats.Magic = EditorGUILayout.IntField("Magic: ", element.Stats.Magic);
-        element.Stats.MagicDefense = EditorGUILayout.IntField("MagicDefense: ", element.Stats.MagicDefense);
-        element.Stats.MaxHP = EditorGUILayout.IntField("MaxHP: ", element.Stats.MaxHP);
-        element.Stats.MaxMP = EditorGUILayout.IntField("MaxMP: ", element.Stats.MaxMP);
+        element.Data.Stats.Agility = EditorGUILayout.IntField("Agility: ", element.Data.Stats.Agility);
+        element.Data.Stats.Defense = EditorGUILayout.IntField("Defense: ", element.Data.Stats.Defense);
+        element.Data.Stats.Luck = EditorGUILayout.IntField("Luck: ", element.Data.Stats.Luck);
+        element.Data.Stats.Magic = EditorGUILayout.IntField("Magic: ", element.Data.Stats.Magic);
+        element.Data.Stats.MagicDefense = EditorGUILayout.IntField("MagicDefense: ", element.Data.Stats.MagicDefense);
+        element.Data.Stats.MaxHP = EditorGUILayout.IntField("MaxHP: ", element.Data.Stats.MaxHP);
+        element.Data.Stats.MaxMP = EditorGUILayout.IntField("MaxMP: ", element.Data.Stats.MaxMP);
 
         GUILayout.EndArea();
 
@@ -59,13 +65,13 @@ public class ArmorUI : CRUD<Armor>
         GUILayout.Space(15);
 
         GUILayout.BeginHorizontal();
-        element.PercentageState = EditorGUILayout.Slider("Apply State(%)", element.PercentageState, 0, 100);
-        GUILayout.TextField(element.State.State);
+        element.Data.PercentageState = EditorGUILayout.Slider("Apply State(%)", element.Data.PercentageState, 0, 100);
+        GUILayout.TextField(element.Data.State.State);
         if (GUILayout.Button("Select State"))
         {
             var window = EditorWindow.GetWindow<StateUI>();
             window.Selected = true;
-            window.Initialize(ref element.State);
+            window.Initialize(ref element.Data.State);
             window.Show();
         }        
         GUILayout.EndHorizontal();
@@ -86,15 +92,31 @@ public class ArmorUI : CRUD<Armor>
             DeleteButton = GUI.Button(new Rect(400, 380, 100, 20), "Delete");
             GUI.enabled = true;
         }
-    }    
+    }
+
+    protected override void Create()
+    {
+        element.Data.Image = element.Icon;
+        base.Create();
+    }
 
     override protected void AssignElement()
     {
-        AssignedElement.Name = element.Name;
-        AssignedElement.Description = element.Description;
-        AssignedElement.Type = element.Type;
-        AssignedElement.Stats = element.Stats;
-        AssignedElement.Id = element.Id;
-        AssignedElement.Image = element.Image;        
+        SelectedArmor.ArmorName = element.Name;
+        SelectedArmor.Description = element.Data.Description;
+        SelectedArmor.Image = element.Data.Image;
+        SelectedArmor.MinLevel = element.Data.MinLevel;
+        SelectedArmor.PercentageState = element.Data.PercentageState;
+        SelectedArmor.Price = element.Data.Price;
+        SelectedArmor.State = element.Data.State;
+        SelectedArmor.Stats = element.Data.Stats;
+        SelectedArmor.Type = element.Data.Type;
+    }
+
+    protected override bool FilterList(Armor component)
+    {
+        if (!filter) return true;
+
+        return ArmorType == component.Data.Type;
     }
 }

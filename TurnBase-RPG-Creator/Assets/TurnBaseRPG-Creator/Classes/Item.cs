@@ -4,7 +4,8 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-public abstract class Item : RPGElement
+[Serializable]
+public abstract class Item
 {
     /// <summary>
     /// Descripción del equipamiento

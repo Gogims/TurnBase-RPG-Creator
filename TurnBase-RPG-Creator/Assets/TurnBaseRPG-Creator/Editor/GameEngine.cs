@@ -52,6 +52,19 @@ public class GameEngine : EditorWindow {
     /// <summary>
     /// Presenta el mantenimiento de enemigos
     /// </summary>
+    [MenuItem("RPG-Creator/Troop")]
+    public static void ShowTroop()
+    {
+        var window = EditorWindow.GetWindow<TroopUI>();
+        //window.maxSize = new Vector2(900, 930);
+        //window.minSize = new Vector2(900, 930);
+        window.Init();
+        window.Show();
+    }
+
+    /// <summary>
+    /// Presenta el mantenimiento de enemigos
+    /// </summary>
     [MenuItem("RPG-Creator/State")]
     public static void ShowState()
     {

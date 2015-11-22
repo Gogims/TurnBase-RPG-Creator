@@ -1,14 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public abstract class Equipppable : Item
+public abstract class Equippable : Item
 {
     /// <summary>
     /// Nivel mínimo que se necesita para equipar
     /// </summary>
-    public int MinLevel;     
+    public int MinLevel;
 
     /// <summary>
     /// Str, DEX, Int, etc.
@@ -30,11 +29,9 @@ public abstract class Equipppable : Item
     /// </summary>
     public Sprite Image;
 
-    public Equipppable()
+    public Equippable()
     {
         Stats = new Attribute();
         State = new AbstractState();
-    }    
-
-    
+    }
 }

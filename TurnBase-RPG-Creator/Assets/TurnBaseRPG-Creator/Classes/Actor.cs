@@ -3,6 +3,64 @@ using UnityEngine;
 using System.Collections.Generic;
 
 public class Actor : RPGElement
+{    
+    /// <summary>
+    /// Listado de las animaciones para caminar hacia abajo
+    /// </summary>
+    public List<Sprite> downSprites;
+    /// <summary>
+    /// Listado de las animaciones para caminar hacia la izquierda
+    /// </summary>
+    public List<Sprite> leftSprites;
+    /// <summary>
+    /// Listado de las animaciones para caminar hacia arriba
+    /// </summary>
+    public List<Sprite> upSprites;
+    /// <summary>
+    /// Listado de las animaciones para caminar hacia la derecha
+    /// </summary>
+    public List<Sprite> rightSprites;   
+
+    /// <summary>
+    /// El componente físico 
+    /// </summary>
+    private Rigidbody2D rb2D;
+
+    //Protected, virtual functions can be overridden by inheriting classes.
+    protected virtual void Start()
+    {
+        //Get a component reference to this object's Rigidbody2D
+        rb2D = GetComponent<Rigidbody2D>();
+
+        if (rb2D == null)
+        {
+            rb2D = gameObject.AddComponent<Rigidbody2D>();
+        }
+
+        rb2D.isKinematic = true;
+    }      
+
+    //Move returns true if it is able to move and false if not. 
+    //Move takes parameters for x direction, y direction and a RaycastHit2D to check collision.
+    protected bool Move(int xDir, int yDir)
+    {
+        //Store start position to move from, based on objects current transform position.
+        Vector2 start = transform.position;
+
+        // Calculate end position based on the direction parameters passed in when calling Move.
+        Vector2 end = new Vector2(xDir, yDir);
+
+        //If nothing was hit, start Movement
+        rb2D.velocity = end;
+
+
+        //Return true to say that Move was successful
+        return true;
+    }
+}
+
+[Serializable]
+public class AbstractActor
 {
     /// <summary>
     /// Atributos actuales del actor
@@ -29,61 +87,52 @@ public class Actor : RPGElement
     /// </summary>
     public Sprite Image;
     /// <summary>
-    /// Listado de las animaciones para caminar hacia abajo
+    /// Arma del actor
     /// </summary>
-    public List<Sprite> downSprites;
+    public AbstractWeapon MainHand;
     /// <summary>
-    /// Listado de las animaciones para caminar hacia la izquierda
+    /// Cabeza del actor
     /// </summary>
-    public List<Sprite> leftSprites;
+    public AbstractArmor Helmet;
     /// <summary>
-    /// Listado de las animaciones para caminar hacia arriba
+    /// Pecho del actor
     /// </summary>
-    public List<Sprite> upSprites;
+    public AbstractArmor UpperBody;
     /// <summary>
-    /// Listado de las animaciones para caminar hacia la derecha
+    /// Piernas del actor
     /// </summary>
-    public List<Sprite> rightSprites;
+    public AbstractArmor LowerBody;
+    /// <summary>
+    /// Zapatos del actor
+    /// </summary>
+    public AbstractArmor Feet;
+    /// <summary>
+    /// Anillo del actor
+    /// </summary>
+    public AbstractArmor Ring;
+    /// <summary>
+    /// Collar del actor
+    /// </summary>
+    public AbstractArmor Necklace;
+    /// <summary>
+    /// Clase del actor
+    /// </summary>
+    public AbstractJob Job;
+    /// <summary>
+    /// Nombre del actor
+    /// </summary>
+    public string ActorName = string.Empty;
 
-    /// <summary>
-    /// El componente físico 
-    /// </summary>
-    private Rigidbody2D rb2D;
-
-    //Protected, virtual functions can be overridden by inheriting classes.
-    protected virtual void Start()
+    public AbstractActor()
     {
-        //Get a component reference to this object's Rigidbody2D
-        rb2D = GetComponent<Rigidbody2D>();
-
-        if (rb2D == null)
-        {
-            rb2D = gameObject.AddComponent<Rigidbody2D>();
-        }
-
-        rb2D.isKinematic = true;
-    }
-
-    public Actor ()
-	{
-        Stats = new Attribute();        
-    }    
-
-    //Move returns true if it is able to move and false if not. 
-    //Move takes parameters for x direction, y direction and a RaycastHit2D to check collision.
-    protected bool Move(int xDir, int yDir)
-    {
-        //Store start position to move from, based on objects current transform position.
-        Vector2 start = transform.position;
-
-        // Calculate end position based on the direction parameters passed in when calling Move.
-        Vector2 end = new Vector2(xDir, yDir);
-
-        //If nothing was hit, start Movement
-        rb2D.velocity = end;
-
-
-        //Return true to say that Move was successful
-        return true;
+        Stats = new Attribute();
+        MainHand = new AbstractWeapon();
+        Helmet = new AbstractArmor();
+        UpperBody = new AbstractArmor();
+        LowerBody = new AbstractArmor();
+        Feet = new AbstractArmor();
+        Ring = new AbstractArmor();
+        Necklace = new AbstractArmor();
+        Job = new AbstractJob();
     }
 }

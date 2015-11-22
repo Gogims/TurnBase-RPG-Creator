@@ -196,46 +196,48 @@ public abstract class CRUD<T> : EditorWindow
         int y = 26;
         foreach (var obj in ListObjects)
         {
-            GameObject temp = (GameObject)obj;
-            
+            GameObject temp = (GameObject)obj;            
             T comp = temp.GetComponent<T>();
             Rect position = new Rect(x, y, 64, 64);
 
-            if (comp.Icon != null)
+            if (FilterList(comp))
             {
-                GUI.DrawTexture(position, comp.Icon.texture);
-                GUI.DrawTextureWithTexCoords(position, comp.Icon.texture, Constant.GetTextureCoordinate(comp.Icon));
-            }
-
-            if (comp.name.Length > 8)
-                GUI.Label(new Rect(x, y + 74, 64, 20), comp.Name.Substring(0, 6) + "...");
-            else
-                GUI.Label(new Rect(x, y + 74, 64, 20), comp.Name);
-
-            if (GUI.Button(position, "", new GUIStyle()))
-            {
-                if (elementObject != null)
+                if (comp.Icon != null)
                 {
-                    DestroyImmediate(elementObject);
+                    GUI.DrawTexture(position, comp.Icon.texture);
+                    GUI.DrawTextureWithTexCoords(position, comp.Icon.texture, Constant.GetTextureCoordinate(comp.Icon));
                 }
 
-                elementObject = Instantiate(temp);
-                element = elementObject.GetComponent<T>();
-                Creating = false;
+                if (comp.name.Length > 8)
+                    GUI.Label(new Rect(x, y + 74, 64, 20), comp.Name.Substring(0, 6) + "...");
+                else
+                    GUI.Label(new Rect(x, y + 74, 64, 20), comp.Name);
 
-                //if (element.Icon != null)
-                //{
-                //    SpriteName = element.Icon.name;
-                //}
-            }
+                if (GUI.Button(position, "", new GUIStyle()))
+                {
+                    if (elementObject != null)
+                    {
+                        DestroyImmediate(elementObject);
+                    }
 
-            if (x + 84 + 64 < LeftSide.width)
-                x += 84;
-            else
-            {
-                GUILayout.Label("", GUILayout.Height(64 + 25), GUILayout.Width(x + 60));
-                y += 94;
-                x = 10;
+                    elementObject = Instantiate(temp);
+                    element = elementObject.GetComponent<T>();
+                    Creating = false;
+
+                    //if (element.Icon != null)
+                    //{
+                    //    SpriteName = element.Icon.name;
+                    //}
+                }
+
+                if (x + 84 + 64 < LeftSide.width)
+                    x += 84;
+                else
+                {
+                    GUILayout.Label("", GUILayout.Height(64 + 25), GUILayout.Width(x + 60));
+                    y += 94;
+                    x = 10;
+                } 
             }
         }
     }
@@ -307,7 +309,7 @@ public abstract class CRUD<T> : EditorWindow
     {
         if (Event.current.commandName == "ObjectSelectorUpdated")
         {
-            element.Icon = (Sprite)EditorGUIUtility.GetObjectPickerObject();
+            element.Icon = (Sprite)EditorGUIUtility.GetObjectPickerObject();            
             Repaint();
         }
     }
@@ -317,4 +319,5 @@ public abstract class CRUD<T> : EditorWindow
     protected virtual void UpdateForm() { }
     protected virtual void InitErrors() { }
     protected virtual void UpdateValidations() { }
+    protected virtual bool FilterList(T component) { return true; }
 }

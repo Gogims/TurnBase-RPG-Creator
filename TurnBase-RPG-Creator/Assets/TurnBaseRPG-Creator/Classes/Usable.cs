@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using UnityEngine;
 
-public class Usable : Item
+public class Usable : RPGElement
 {
     public AbstractUsable Data;
 
@@ -14,7 +13,7 @@ public class Usable : Item
 }
 
 [Serializable]
-public class AbstractUsable
+public class AbstractUsable : Item
 {
     /// <summary>
     /// Nombre del item
@@ -48,6 +47,10 @@ public class AbstractUsable
     /// Listado de efectos que remueve/agrega al objetivo
     /// </summary>
     public List<AbstractState> States;
+    /// <summary>
+    /// Imagen que se presentará en el juego
+    /// </summary>
+    public Sprite Image;
 
     public AbstractUsable()
     {

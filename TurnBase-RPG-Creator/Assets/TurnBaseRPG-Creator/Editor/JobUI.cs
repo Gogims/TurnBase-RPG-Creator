@@ -5,12 +5,13 @@ using Rotorz.ReorderableList;
 public class JobUI : CRUD<Job>
 {
     private Vector2 ScrollPosition;
+    private AbstractJob SelectedJob;
 
     public JobUI() : base("Job", new Rect(0, 0, 300, 600)) { }
 
-    public void Initialize(ref Job a)
+    public void Initialize(ref AbstractJob job)
     {
-        AssignedElement = a;
+        SelectedJob = job;
         Init();
     }
 
@@ -43,15 +44,15 @@ public class JobUI : CRUD<Job>
         GUILayout.BeginArea(new Rect(300, 200, 600, 200), "Curves", EditorStyles.helpBox);
         GUILayout.Space(10);
 
-        CurveUI(ref element.XP, Color.white);
-        CurveUI(ref element.MaxHP, Color.red);
-        CurveUI(ref element.MaxMP, Color.blue);
-        CurveUI(ref element.Attack, Color.magenta);
-        CurveUI(ref element.Defense, Color.grey);
-        CurveUI(ref element.MagicAttack, Color.cyan);
-        CurveUI(ref element.MagicDefense, Color.grey);
-        CurveUI(ref element.Agility, Color.green);
-        CurveUI(ref element.Luck, Color.yellow);
+        CurveUI(ref element.Data.XP, Color.white);
+        CurveUI(ref element.Data.MaxHP, Color.red);
+        CurveUI(ref element.Data.MaxMP, Color.blue);
+        CurveUI(ref element.Data.Attack, Color.magenta);
+        CurveUI(ref element.Data.Defense, Color.grey);
+        CurveUI(ref element.Data.MagicAttack, Color.cyan);
+        CurveUI(ref element.Data.MagicDefense, Color.grey);
+        CurveUI(ref element.Data.Agility, Color.green);
+        CurveUI(ref element.Data.Luck, Color.yellow);
 
         GUILayout.EndArea();
 
@@ -60,7 +61,7 @@ public class JobUI : CRUD<Job>
         GUILayout.Space(10);
 
         ScrollPosition = GUILayout.BeginScrollView(ScrollPosition);
-        ReorderableListGUI.ListField(element.Abilities, DrawAbilityUI, ReorderableListFlags.DisableReordering);
+        ReorderableListGUI.ListField(element.Data.Abilities, DrawAbilityUI, ReorderableListFlags.DisableReordering);
         GUILayout.EndScrollView();  
         GUILayout.EndArea();
 
@@ -125,32 +126,31 @@ public class JobUI : CRUD<Job>
 
     protected override void AssignElement()
     {
-        AssignedElement.Agility = element.Agility;
-        AssignedElement.Attack = element.Attack;
-        AssignedElement.Defense = element.Defense;
-        AssignedElement.Id = element.Id;
-        AssignedElement.Luck = element.Luck;
-        AssignedElement.MagicAttack = element.MagicAttack;
-        AssignedElement.MagicDefense = element.MagicDefense;
-        AssignedElement.MaxHP = element.MaxHP;
-        AssignedElement.MaxMP = element.MaxMP;
-        AssignedElement.Name = element.Name;
-        AssignedElement.XP = element.XP;
+        SelectedJob.Agility = element.Data.Agility;
+        SelectedJob.Attack = element.Data.Attack;
+        SelectedJob.Defense = element.Data.Defense;        
+        SelectedJob.Luck = element.Data.Luck;
+        SelectedJob.MagicAttack = element.Data.MagicAttack;
+        SelectedJob.MagicDefense = element.Data.MagicDefense;
+        SelectedJob.MaxHP = element.Data.MaxHP;
+        SelectedJob.MaxMP = element.Data.MaxMP;
+        SelectedJob.JobName = element.Name;
+        SelectedJob.XP = element.Data.XP;
     }
 
     protected override GameObject NewGameObject()
     {
         elementObject = base.NewGameObject();
 
-        element.XP = new Formula();
-        element.MaxHP = new Formula(Formula.FormulaType.MaxHP);
-        element.MaxMP = new Formula(Formula.FormulaType.MaxMP);
-        element.Attack = new Formula(Formula.FormulaType.Attack);
-        element.Defense = new Formula(Formula.FormulaType.Defense);
-        element.MagicAttack = new Formula(Formula.FormulaType.MagicAttack);
-        element.MagicDefense = new Formula(Formula.FormulaType.MagicDefense);
-        element.Agility = new Formula(Formula.FormulaType.Agility);
-        element.Luck = new Formula(Formula.FormulaType.Luck);
+        element.Data.XP = new Formula();
+        element.Data.MaxHP = new Formula(Formula.FormulaType.MaxHP);
+        element.Data.MaxMP = new Formula(Formula.FormulaType.MaxMP);
+        element.Data.Attack = new Formula(Formula.FormulaType.Attack);
+        element.Data.Defense = new Formula(Formula.FormulaType.Defense);
+        element.Data.MagicAttack = new Formula(Formula.FormulaType.MagicAttack);
+        element.Data.MagicDefense = new Formula(Formula.FormulaType.MagicDefense);
+        element.Data.Agility = new Formula(Formula.FormulaType.Agility);
+        element.Data.Luck = new Formula(Formula.FormulaType.Luck);
 
         return elementObject;
     }

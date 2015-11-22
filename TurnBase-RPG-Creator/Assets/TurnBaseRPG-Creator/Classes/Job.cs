@@ -4,6 +4,19 @@ using UnityEngine;
 
 public class Job : RPGElement
 {
+    public AbstractJob Data;
+
+    public Job()
+    {
+        Data = new AbstractJob();
+    }
+}
+
+[Serializable]
+public class AbstractJob
+{
+    public string JobName = string.Empty;
+
     public Formula MaxHP;
 
     public Formula MaxMP;
@@ -24,7 +37,7 @@ public class Job : RPGElement
 
     public List<AbstractAbility> Abilities;
 
-    public Job()
+    public AbstractJob()
     {
         Abilities = new List<AbstractAbility>();
     }

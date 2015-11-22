@@ -2,8 +2,27 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Weapon : Equipppable
+public class Weapon : RPGElement
 {
+    /// <summary>
+    /// Informacion del arma
+    /// </summary>
+    public AbstractWeapon Data;
+
+    public Weapon()
+    {
+        Data = new AbstractWeapon();
+    }
+}
+
+[Serializable]
+public class AbstractWeapon : Equippable
+{
+    /// <summary>
+    /// Nombre del arma
+    /// </summary>
+    public string WeaponName = string.Empty;
+    
     /// <summary>
     /// Porcentaje que el arma tiene para realizar su ataque
     /// </summary>
@@ -17,7 +36,7 @@ public class Weapon : Equipppable
     /// <summary>
     /// Tipo de arma: Espada, Lanza, Hacha, etc.
     /// </summary>
-    public WeaponType Type;    
+    public WeaponType Type;
 
     public enum WeaponType
     {

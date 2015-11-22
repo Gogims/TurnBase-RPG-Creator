@@ -83,7 +83,6 @@
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Wall.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Weapon.cs" />
      <None Include="Assets\TurnBaseRPG-Creator\RPG-Resources\Armor\id.txt" />
-     <None Include="Assets\settings.txt" />
      <None Include="Assets\TurnBaseRPG-Creator\RPG-Resources\Weapon\id.txt" />
      <None Include="Assets\TurnBaseRPG-Creator\RPG-Resources\Job\id.txt" />
      <None Include="Assets\TurnBaseRPG-Creator\Rotorz\Reorderable List Field\README.txt" />
