@@ -23,11 +23,11 @@ public class TroopUI : CRUD<Troop>
         GUILayout.Label("Background: ", EditorStyles.boldLabel);
         if (GUILayout.Button("Top Background"))
         {
-            EditorGUIUtility.ShowObjectPicker<Texture>(null, false, "Background", 1);
+            EditorGUIUtility.ShowObjectPicker<Sprite>(null, false, "Background", 1);
         }
         if (GUILayout.Button("Bottom Background"))
         {
-            EditorGUIUtility.ShowObjectPicker<Texture>(null, false, "Background", 2);
+            EditorGUIUtility.ShowObjectPicker<Sprite>(null, false, "Background", 2);
         }
 
         GUILayout.EndArea();
@@ -49,11 +49,11 @@ public class TroopUI : CRUD<Troop>
 
         if (element.BackgroundBottom != null)
         {
-            GUI.DrawTexture(new Rect(previewX, previewY, Constant.BackgroundWidth, Constant.BackgroundHeight), element.BackgroundBottom); 
+            GUI.DrawTexture(new Rect(previewX, previewY, Constant.BackgroundWidth, Constant.BackgroundHeight), element.BackgroundBottom.texture); 
         }
         if (element.BackgroundTop != null)
         {
-            GUI.DrawTexture(new Rect(previewX, previewY, Constant.BackgroundWidth, Constant.BackgroundHeight), element.BackgroundTop); 
+            GUI.DrawTexture(new Rect(previewX, previewY, Constant.BackgroundWidth, Constant.BackgroundHeight), element.BackgroundTop.texture); 
         }
         
         foreach (var item in element.Enemies)
@@ -77,6 +77,7 @@ public class TroopUI : CRUD<Troop>
     protected override void Edit()
     {
         SetIcon();
+        element.CreateTroopScene();
         base.Edit();
     }
 
@@ -118,12 +119,12 @@ public class TroopUI : CRUD<Troop>
         {
             if (EditorGUIUtility.GetObjectPickerControlID() == 1)
             {
-                element.BackgroundTop = (Texture)EditorGUIUtility.GetObjectPickerObject();
+                element.BackgroundTop = (Sprite)EditorGUIUtility.GetObjectPickerObject();
             }
 
             if (EditorGUIUtility.GetObjectPickerControlID() == 2)
             {
-                element.BackgroundBottom = (Texture)EditorGUIUtility.GetObjectPickerObject();
+                element.BackgroundBottom = (Sprite)EditorGUIUtility.GetObjectPickerObject();
             } 
         }
 
