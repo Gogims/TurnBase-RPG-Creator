@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: f57ed84a7eaf9cd4e8240a3c029c1966
-timeCreated: 1448003890
+timeCreated: 1448310120
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -89,7 +89,7 @@ TextureImporter:
         width: 64
         height: 95
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Tiles_Outside_1
       rect:
@@ -99,7 +99,7 @@ TextureImporter:
         width: 64
         height: 95
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Tiles_Outside_2
       rect:
@@ -109,7 +109,7 @@ TextureImporter:
         width: 64
         height: 95
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Tiles_Outside_3
       rect:
@@ -119,7 +119,7 @@ TextureImporter:
         width: 64
         height: 95
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Tiles_Outside_4
       rect:
@@ -129,7 +129,7 @@ TextureImporter:
         width: 64
         height: 95
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Tiles_Outside_5
       rect:
@@ -139,7 +139,7 @@ TextureImporter:
         width: 64
         height: 95
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Tiles_Outside_6
       rect:
@@ -149,7 +149,7 @@ TextureImporter:
         width: 64
         height: 95
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Tiles_Outside_7
       rect:
@@ -159,7 +159,7 @@ TextureImporter:
         width: 64
         height: 95
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Tiles_Outside_8
       rect:
@@ -169,7 +169,7 @@ TextureImporter:
         width: 64
         height: 95
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Tiles_Outside_9
       rect:
@@ -179,7 +179,7 @@ TextureImporter:
         width: 64
         height: 95
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Tiles_Outside_10
       rect:
@@ -189,7 +189,7 @@ TextureImporter:
         width: 64
         height: 95
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Tiles_Outside_11
       rect:
@@ -199,7 +199,7 @@ TextureImporter:
         width: 64
         height: 95
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Tiles_Outside_12
       rect:
@@ -209,7 +209,7 @@ TextureImporter:
         width: 64
         height: 95
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Tiles_Outside_13
       rect:
@@ -219,7 +219,7 @@ TextureImporter:
         width: 64
         height: 95
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Tiles_Outside_14
       rect:
@@ -229,7 +229,7 @@ TextureImporter:
         width: 64
         height: 95
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Tiles_Outside_15
       rect:
@@ -239,17 +239,17 @@ TextureImporter:
         width: 64
         height: 95
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Tiles_Outside_16
       rect:
         serializedVersion: 2
         x: 0
-        y: 99
+        y: 96
         width: 64
-        height: 95
+        height: 96
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Tiles_Outside_17
       rect:
@@ -259,7 +259,7 @@ TextureImporter:
         width: 64
         height: 95
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Tiles_Outside_18
       rect:
@@ -269,7 +269,7 @@ TextureImporter:
         width: 64
         height: 95
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Tiles_Outside_19
       rect:
@@ -279,7 +279,7 @@ TextureImporter:
         width: 64
         height: 95
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Tiles_Outside_20
       rect:
@@ -289,7 +289,7 @@ TextureImporter:
         width: 64
         height: 95
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Tiles_Outside_21
       rect:
@@ -299,7 +299,7 @@ TextureImporter:
         width: 64
         height: 95
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Tiles_Outside_22
       rect:
@@ -309,7 +309,7 @@ TextureImporter:
         width: 64
         height: 95
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Tiles_Outside_23
       rect:
@@ -319,7 +319,7 @@ TextureImporter:
         width: 64
         height: 95
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Tiles_Outside_24
       rect:
@@ -329,7 +329,7 @@ TextureImporter:
         width: 64
         height: 95
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Tiles_Outside_25
       rect:
@@ -339,7 +339,7 @@ TextureImporter:
         width: 64
         height: 95
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Tiles_Outside_26
       rect:
@@ -349,7 +349,7 @@ TextureImporter:
         width: 64
         height: 95
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Tiles_Outside_27
       rect:
@@ -359,7 +359,7 @@ TextureImporter:
         width: 64
         height: 95
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Tiles_Outside_28
       rect:
@@ -369,7 +369,7 @@ TextureImporter:
         width: 64
         height: 95
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Tiles_Outside_29
       rect:
@@ -379,7 +379,7 @@ TextureImporter:
         width: 64
         height: 95
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Tiles_Outside_30
       rect:
@@ -389,7 +389,7 @@ TextureImporter:
         width: 64
         height: 95
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Tiles_Outside_31
       rect:
@@ -399,7 +399,7 @@ TextureImporter:
         width: 64
         height: 95
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 

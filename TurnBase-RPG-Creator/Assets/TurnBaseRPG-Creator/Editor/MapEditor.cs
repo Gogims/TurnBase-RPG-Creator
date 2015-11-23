@@ -30,11 +30,11 @@ public class MapEditor {
 		if (Selection.activeGameObject != null) {
 			//ChangeSelectedObject (Selection.activeGameObject);
 		}// si el click izquierdo es precionado y el objeto seleccionado es diferente de nulo inserta un objeto al mapa. 
-		if (EventType.MouseDown == e.type && e.button == 0 && selectedObject != null && selectedObject.tag == "RPG-MAPOBJECT") {
+		if (EventType.MouseUp == e.type && e.button == 0 && selectedObject != null && selectedObject.tag == "RPG-MAPOBJECT") {
             
 			DropObject ();
 		} // Si la tecla del  es precionada borra los objetos seleccionados. 
-        if (EventType.KeyDown == e.type && !deleting)
+        if (EventType.KeyDown == e.type && !deleting &&  e.keyCode == KeyCode.Delete)
         {
             deleting = true;
             DeleteObject();
@@ -43,6 +43,13 @@ public class MapEditor {
 		if (EventType.DragExited == e.type) {
 			DeleteSelectedObject(Selection.activeGameObject);
 		}
+        if (EventType.MouseDown == e.type && e.button == 1 )
+        {
+            Selection.activeGameObject = null;
+            selectedObject = null;
+            GameEngine.inspectorRpg.Focus();
+        }
+
 
 	}
 	/// <summary>
@@ -61,12 +68,12 @@ public class MapEditor {
 	{
 		foreach (GameObject i in Selection.gameObjects) {
             if (i == null) continue;
-
-            //if (i.GetComponent<SpriteRenderer>().sortingLayerName != Constant.LAYER_TILE && i.GetComponent<SpriteRenderer>().sortingLayerName != "Default")
-            //{
-            //    MapUI.DestroyImmediate(i, true);
-            //    continue;
-            //}
+            if (i.name.Contains("Main Camera") )
+            {
+                var camera = i;
+                GameObject.Instantiate(camera);
+                continue;
+            }
             GameObject temp = new GameObject();
 			if ( (i.transform.position.x+i.transform.position.y)%2 == 0) 
 				 temp = (GameObject)DarkFloor ;
@@ -100,17 +107,24 @@ public class MapEditor {
         GameObject temp = selectedObject;
         SpriteRenderer selectSprite = temp.GetComponent<SpriteRenderer>();
 		foreach (GameObject i in Selection.gameObjects) {
+            if (i == null) continue;
             SpriteRenderer iSprite = i.GetComponent<SpriteRenderer>();
             if (i.name == "Main Camera" || iSprite.sprite.name == selectSprite.sprite.name) continue;
 
             if (selectSprite.sortingLayerName == Constant.LAYER_TILE)
             {
                 if (i.transform.parent == null)
+                {
                     temp.transform.position = i.transform.position;
+                    MapUI.DestroyImmediate(i, true);
+                }
                 else
+                {
                     temp.transform.position = i.transform.parent.gameObject.transform.position;
+                    MapUI.DestroyImmediate(i.transform.parent.gameObject, true);
+                }
                 temp.transform.localScale = new Vector3(ProjectSettings.pixelPerUnit / selectSprite.sprite.rect.width, ProjectSettings.pixelPerUnit / selectSprite.sprite.rect.height);
-                MapUI.DestroyImmediate(i, true);
+                
                 MapUI.Instantiate(temp, temp.transform.position, Quaternion.identity);
                 
             }
@@ -142,11 +156,13 @@ public class MapEditor {
                 var sprite = aux.GetComponent<SpriteRenderer>().sprite;
                 var sprite2 = temp.GetComponent<SpriteRenderer>().sprite;
                 temp.transform.localScale = new Vector3(sprite.rect.width / sprite2.rect.width, sprite.rect.height / sprite2.rect.height);
+             
             }
 			
 			MapUI.DestroyImmediate (GameObject.Find("New Game Object"),true);
 
 		}
+        Selection.activeGameObject = null;
 		                          
 	}
 }
