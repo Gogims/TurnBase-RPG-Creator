@@ -7,7 +7,7 @@ public abstract class RPGElement : MonoBehaviour
     /// <summary>
     /// Identificador que no se repite
     /// </summary>
-    public int Id;
+    public string Id;
     /// <summary>
     /// Nombre del elemento
     /// </summary>

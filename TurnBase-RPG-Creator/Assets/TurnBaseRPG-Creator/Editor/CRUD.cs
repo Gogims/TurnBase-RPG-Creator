@@ -113,7 +113,7 @@ public abstract class CRUD<T> : EditorWindow
     /// </summary>
     protected virtual void Create()
     {
-        element.Id = element.GetInstanceID();
+        element.Id = System.Guid.NewGuid().ToString();
         CreatePrefab(element);
     }
 
@@ -208,7 +208,7 @@ public abstract class CRUD<T> : EditorWindow
                     GUI.DrawTextureWithTexCoords(position, comp.Icon.texture, Constant.GetTextureCoordinate(comp.Icon));
                 }
 
-                if (comp.name.Length > 8)
+                if (comp.Name.Length > 8)
                     GUI.Label(new Rect(x, y + 74, 64, 20), comp.Name.Substring(0, 6) + "...");
                 else
                     GUI.Label(new Rect(x, y + 74, 64, 20), comp.Name);

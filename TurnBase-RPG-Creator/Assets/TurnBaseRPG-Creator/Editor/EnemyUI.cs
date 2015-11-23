@@ -140,7 +140,7 @@ public class EnemyUI : CRUD<Enemy>
 
     protected override void Create()
     {
-        element.Id = element.GetInstanceID();
+        element.Id = System.Guid.NewGuid().ToString();
         element.Data.Image = element.Icon;
 
         CreateAnimation();

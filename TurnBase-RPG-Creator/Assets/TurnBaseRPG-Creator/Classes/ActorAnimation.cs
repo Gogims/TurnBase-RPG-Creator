@@ -89,7 +89,7 @@ public class ActorAnimation
     /// <param name="fps">Cantidad de frames por segundo</param>
     /// <param name="loop">Si se desea que se repita indefinidamente la animación</param>
     /// <returns>Animación</returns>
-    public AnimationClip ConstructAnimation(List<Sprite> sprites, int id, string animationName, int fps, bool loop)
+    public AnimationClip ConstructAnimation(List<Sprite> sprites, string id, string animationName, int fps, bool loop)
     {
         AnimationClip animClip = new AnimationClip();
         EditorCurveBinding spriteBinding = new EditorCurveBinding();
@@ -138,7 +138,7 @@ public class ActorAnimation
     /// <param name="fps">Cantidad de frames por segundo</param>
     /// <param name="loop">Si se desea que se repita indefinidamente la animación</param>
     /// <returns>Animación</returns>
-    public AnimationClip ConstructAnimation(Sprite s, int id, string animationName, int fps, bool loop)
+    public AnimationClip ConstructAnimation(Sprite s, string id, string animationName, int fps, bool loop)
     {
         List<Sprite> sprites = new List<Sprite>();
         sprites.Add(s);
@@ -150,10 +150,10 @@ public class ActorAnimation
     /// Construye el controlador de animación a partir de todos las animaciones obtenidas
     /// </summary>
     /// <param name="name">Nombre del controlador de animación</param>
-    public AnimatorController ConstructAnimationControl(int id)
+    public AnimatorController ConstructAnimationControl(string id)
     {
         BlendTree idle = new BlendTree();
-        string path = "Assets/AnimationController/" + type + "/" + id.ToString() + ".controller";
+        string path = "Assets/AnimationController/" + type + "/" + id + ".controller";
 
         // Creates the controller
 
