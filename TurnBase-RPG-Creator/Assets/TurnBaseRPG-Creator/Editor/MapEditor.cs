@@ -30,9 +30,9 @@ public class MapEditor {
 		if (Selection.activeGameObject != null) {
 			//ChangeSelectedObject (Selection.activeGameObject);
 		}// si el click izquierdo es precionado y el objeto seleccionado es diferente de nulo inserta un objeto al mapa. 
-		if (EventType.MouseUp == e.type && e.button == 0 && selectedObject != null && selectedObject.tag == "RPG-MAPOBJECT") {
-            
-			DropObject ();
+        if (EventType.MouseUp == e.type && e.button == 0 && selectedObject != null && (selectedObject.tag == "RPG-MAPOBJECT" || selectedObject.tag == "RPG-PLAYER" || selectedObject.tag == "RPG-ENEMY"))
+        {
+             DropObject ();
 		} // Si la tecla del  es precionada borra los objetos seleccionados. 
         if (EventType.KeyDown == e.type && !deleting &&  e.keyCode == KeyCode.Delete)
         {
@@ -110,34 +110,49 @@ public class MapEditor {
             if (i == null) continue;
             SpriteRenderer iSprite = i.GetComponent<SpriteRenderer>();
             if (i.name == "Main Camera" || iSprite.sprite.name == selectSprite.sprite.name) continue;
-
+            //temp.name = i.name;
             if (selectSprite.sortingLayerName == Constant.LAYER_TILE)
             {
-                if (i.transform.parent == null)
+                if (i.transform.parent == null && i.tag != "RPG-PLAYER")
                 {
                     temp.transform.position = i.transform.position;
                     MapUI.DestroyImmediate(i, true);
                 }
-                else
+                else if (i.tag != "RPG-PLAYER")
                 {
                     temp.transform.position = i.transform.parent.gameObject.transform.position;
                     MapUI.DestroyImmediate(i.transform.parent.gameObject, true);
                 }
                 temp.transform.localScale = new Vector3(ProjectSettings.pixelPerUnit / selectSprite.sprite.rect.width, ProjectSettings.pixelPerUnit / selectSprite.sprite.rect.height);
-                
                 MapUI.Instantiate(temp, temp.transform.position, Quaternion.identity);
                 
+            }
+            else if (selectSprite.sortingLayerName == Constant.LAYER_ACTOR)
+            {
+                if (GameObject.Find("PLAYER(Clone)") != null)
+                {
+                    continue;
+                }
+                
+                if (temp.tag == "RPG-PLAYER")
+                {
+                    temp.name = "PLAYER";
+                }
+                temp.transform.position = i.transform.position;
+                temp.transform.localScale = new Vector3(ProjectSettings.pixelPerUnit / selectSprite.sprite.rect.width, ProjectSettings.pixelPerUnit / selectSprite.sprite.rect.height);
+                MapUI.Instantiate(temp, temp.transform.position, Quaternion.identity);
             }
             else
             {
                 GameObject aux = null;
-                
-                if (i.transform.parent == null && i.transform.childCount != 0 ) {
+                if (i.tag == "RPG-PLAYER") continue;
+                if (i.transform.parent == null && i.transform.childCount != 0)
+                {
                     if (i.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite.name == selectSprite.sprite.name)
                     {
                         continue;
                     }
-                    
+
                     aux = i;
                     MapUI.DestroyImmediate(i.transform.GetChild(0).gameObject);
                 }
@@ -146,17 +161,18 @@ public class MapEditor {
                     aux = i.transform.parent.gameObject;
                     MapUI.DestroyImmediate(i);
                 }
-                else {
+                else
+                {
                     aux = i;
                 }
-                var inst = MapUI.Instantiate(temp, new Vector3(0,0), Quaternion.identity);
+                var inst = MapUI.Instantiate(temp, new Vector3(0, 0), Quaternion.identity);
                 temp = inst as GameObject;
                 temp.transform.parent = aux.transform;
                 temp.transform.localPosition = new Vector3(0, 0);
                 var sprite = aux.GetComponent<SpriteRenderer>().sprite;
                 var sprite2 = temp.GetComponent<SpriteRenderer>().sprite;
                 temp.transform.localScale = new Vector3(sprite.rect.width / sprite2.rect.width, sprite.rect.height / sprite2.rect.height);
-             
+
             }
 			
 			MapUI.DestroyImmediate (GameObject.Find("New Game Object"),true);

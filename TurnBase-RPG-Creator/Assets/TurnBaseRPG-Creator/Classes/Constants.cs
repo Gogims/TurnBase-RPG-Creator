@@ -10,7 +10,7 @@ public class Constant{
     #region Layers
     public const string LAYER_ITEM = "Items";
     public const string LAYER_TILE = "Tile";
-    public const string LAYER_ACTOR = "Actor";
+    public const string LAYER_ACTOR = "Actors";
     #endregion
     /// <summary>
 	/// La altura maxima del mapa
