@@ -101,7 +101,10 @@ public class ObjectBrowserUI : EditorWindow
             if (temp.tag == "RPG-CORE") continue;
             RPGElement ob = temp.GetComponent<RPGElement>();
             Rect position = new Rect(x, y, 44, 44);
-            GUI.DrawTextureWithTexCoords(position, ob.Icon.texture,GetTextureCoordinate(ob.Icon));
+            if (ob.Icon != null)
+            {
+                GUI.DrawTextureWithTexCoords(position, ob.Icon.texture, GetTextureCoordinate(ob.Icon)); 
+            }
             if (ob.Name.Length > 6)
                 GUI.Label(new Rect(x, y + 54, 44, 20), ob.Name.Substring(0, 4) + "...");
             else
