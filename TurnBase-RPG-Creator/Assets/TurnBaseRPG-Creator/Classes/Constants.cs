@@ -64,6 +64,15 @@ public class Constant{
                         Image.textureRect.width / Image.texture.width,
                         Image.textureRect.height / Image.texture.height);
     }
+    /// <summary>
+    /// Tipos de items.
+    /// </summary>
+    public enum ItemType
+    { 
+        Armor,
+        Usable,
+        Weapon
+    };
 
     public enum AttackType
     {

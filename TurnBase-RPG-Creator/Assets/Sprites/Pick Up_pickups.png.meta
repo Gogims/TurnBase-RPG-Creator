@@ -1,0 +1,275 @@
+fileFormatVersion: 2
+guid: a7e1c48963b2d6642ac05cae56f69c76
+timeCreated: 1448292652
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Pick Up_pickups_0
+    21300002: Pick Up_pickups_1
+    21300004: Pick Up_pickups_2
+    21300006: Pick Up_pickups_3
+    21300008: Pick Up_pickups_4
+    21300010: Pick Up_pickups_5
+    21300012: Pick Up_pickups_6
+    21300014: Pick Up_pickups_7
+    21300016: Pick Up_pickups_8
+    21300018: Pick Up_pickups_9
+    21300020: Pick Up_pickups_10
+    21300022: Pick Up_pickups_11
+    21300024: Pick Up_pickups_12
+    21300026: Pick Up_pickups_13
+    21300028: Pick Up_pickups_14
+    21300030: Pick Up_pickups_15
+    21300032: Pick Up_pickups_16
+    21300034: Pick Up_pickups_17
+    21300036: Pick Up_pickups_18
+    21300038: Pick Up_pickups_19
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 1
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 8
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: 5
+  maxTextureSize: 1024
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 1
+  alphaIsTransparency: 1
+  textureType: 5
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: Pick Up_pickups_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 378
+        width: 132
+        height: 116
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Pick Up_pickups_1
+      rect:
+        serializedVersion: 2
+        x: 132
+        y: 378
+        width: 153
+        height: 116
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Pick Up_pickups_2
+      rect:
+        serializedVersion: 2
+        x: 290
+        y: 378
+        width: 132
+        height: 116
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Pick Up_pickups_3
+      rect:
+        serializedVersion: 2
+        x: 396
+        y: 378
+        width: 132
+        height: 116
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Pick Up_pickups_4
+      rect:
+        serializedVersion: 2
+        x: 528
+        y: 378
+        width: 132
+        height: 116
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Pick Up_pickups_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 262
+        width: 132
+        height: 116
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Pick Up_pickups_6
+      rect:
+        serializedVersion: 2
+        x: 132
+        y: 262
+        width: 132
+        height: 116
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Pick Up_pickups_7
+      rect:
+        serializedVersion: 2
+        x: 264
+        y: 262
+        width: 132
+        height: 116
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Pick Up_pickups_8
+      rect:
+        serializedVersion: 2
+        x: 396
+        y: 262
+        width: 132
+        height: 116
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Pick Up_pickups_9
+      rect:
+        serializedVersion: 2
+        x: 528
+        y: 262
+        width: 132
+        height: 116
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Pick Up_pickups_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 146
+        width: 132
+        height: 116
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Pick Up_pickups_11
+      rect:
+        serializedVersion: 2
+        x: 132
+        y: 146
+        width: 132
+        height: 116
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Pick Up_pickups_12
+      rect:
+        serializedVersion: 2
+        x: 264
+        y: 146
+        width: 132
+        height: 116
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Pick Up_pickups_13
+      rect:
+        serializedVersion: 2
+        x: 396
+        y: 146
+        width: 132
+        height: 116
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Pick Up_pickups_14
+      rect:
+        serializedVersion: 2
+        x: 528
+        y: 146
+        width: 132
+        height: 116
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Pick Up_pickups_15
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 30
+        width: 132
+        height: 116
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Pick Up_pickups_16
+      rect:
+        serializedVersion: 2
+        x: 132
+        y: 30
+        width: 132
+        height: 116
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Pick Up_pickups_17
+      rect:
+        serializedVersion: 2
+        x: 264
+        y: 30
+        width: 132
+        height: 116
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Pick Up_pickups_18
+      rect:
+        serializedVersion: 2
+        x: 396
+        y: 30
+        width: 132
+        height: 116
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Pick Up_pickups_19
+      rect:
+        serializedVersion: 2
+        x: 528
+        y: 30
+        width: 132
+        height: 116
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

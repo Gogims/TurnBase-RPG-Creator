@@ -122,23 +122,12 @@ public class ImportImageUI : EditorWindow
 	void CreateRpgObject(){
 		SaveSprites ();
 		TextureImporter x = TextureImporter.GetAtPath(GetPath()) as TextureImporter;
-        if (!spritesheet)
-        {
-            x.spritePixelsPerUnit = 32;
-            x.textureType = TextureImporterType.Advanced;
-            x.isReadable = true;
-            x.textureFormat = TextureImporterFormat.ARGB32;
-            x.spriteImportMode = spritesheet ? SpriteImportMode.Multiple : SpriteImportMode.Single;
-            AssetDatabase.ImportAsset(GetPath(), ImportAssetOptions.ForceUpdate);
-        }
-        else
-        {
-            x.textureType = TextureImporterType.Sprite;
-            x.spriteImportMode = SpriteImportMode.Multiple;
-            x.spritePixelsPerUnit = 32;
-            x.filterMode = FilterMode.Bilinear;
-
-        }
+        x.spritePixelsPerUnit = 1;
+        x.textureType = TextureImporterType.Advanced;
+        x.isReadable = true;
+        x.textureFormat = TextureImporterFormat.ARGB32;
+        x.spriteImportMode = spritesheet ? SpriteImportMode.Multiple : SpriteImportMode.Single;
+        AssetDatabase.ImportAsset(GetPath(), ImportAssetOptions.ForceUpdate);
 
 
 

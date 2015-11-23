@@ -84,6 +84,8 @@ public class MapObjectsUI : EditorWindow {
         if (name == null)
             name = string.Empty;
     }
+    Constant.ItemType itemType;
+    private string pickupName;
     /// <summary>
     /// Metodo que se llama cuando la ventana esta abierta.
     /// </summary>
@@ -123,15 +125,57 @@ public class MapObjectsUI : EditorWindow {
             pickup.Name = name;
             pickup.Icon = texture;
             GUILayout.BeginHorizontal();
-            if (GUILayout.Button("Select Item", GUILayout.Width(labelWidth))) 
+            itemType = (Constant.ItemType)EditorGUILayout.EnumPopup("Select Item Type", itemType);
+            GUILayout.EndHorizontal();
+            if (itemType == Constant.ItemType.Armor)
             {
-
-                var window = EditorWindow.GetWindow<ItemUI>();
-                window.Initialize(ref pickup.ItemUsable);
-                window.Show();
+                pickup.ItemArmor.Type = (AbstractArmor.ArmorType)EditorGUILayout.EnumPopup("Armor Type: ", pickup.ItemArmor.Type);
 
             }
-            GUILayout.TextField(pickup.ItemUsable.ItemName);
+            GUILayout.BeginHorizontal();
+            if (GUILayout.Button("Select Item", GUILayout.Width(labelWidth))) 
+            {
+                pickup.ItemArmor = new AbstractArmor();
+                pickup.ItemUsable = new AbstractUsable();
+                pickup.ItemWeapon = new AbstractWeapon();
+                switch (itemType) 
+                { 
+                    case Constant.ItemType.Armor:
+                        var window = EditorWindow.GetWindow<ArmorUI>();
+                        window.Selected = true;
+                        window.Initialize(ref pickup.ItemArmor, pickup.ItemArmor.Type);
+                        window.Show();
+                        break;
+                    case Constant.ItemType.Usable:
+                        var window2 = EditorWindow.GetWindow<ItemUI>();
+                        window2.Selected = true;
+                        window2.Initialize(ref pickup.ItemUsable);
+                        window2.Show();
+                        break;
+                    case Constant.ItemType.Weapon:
+                        var window3 = EditorWindow.GetWindow<WeaponUI>();
+                        window3.Selected = true;
+                        window3.Initialize(ref pickup.ItemWeapon);
+                        window3.Show();
+                        break;
+                }
+            }
+            switch (itemType)
+            {
+                case Constant.ItemType.Armor:
+                    pickupName = pickup.ItemArmor.ArmorName;
+                    break;
+                case Constant.ItemType.Usable:
+                    pickupName = pickup.ItemUsable.ItemName;
+                    break;
+                case Constant.ItemType.Weapon:
+                    pickupName = pickup.ItemWeapon.WeaponName;
+                    break;
+            }
+
+            GUI.enabled = false;
+            GUILayout.TextField(pickupName);
+            GUI.enabled = true;
             GUILayout.EndHorizontal();
 
         }
@@ -213,7 +257,7 @@ public class MapObjectsUI : EditorWindow {
             
         if (texture != null)
         {
-            GUI.DrawTextureWithTexCoords(new Rect((float)(this.position.width * 0.5), 0, 96, 96), texture.texture, GetTextureCoordinate(texture));
+            GUI.DrawTextureWithTexCoords(new Rect((float)(this.position.width * 0.5), 0, 96, 96), texture.texture, Constant.GetTextureCoordinate(texture));
         }
     }
      void DeleteSelected()
@@ -323,7 +367,9 @@ public class MapObjectsUI : EditorWindow {
             case 2:
                 var temp6 = obj as Pickup;
                 Image.sprite = temp6.Image = pickup.Icon;
-                //pickup.Item= temp.Item; Falta el crud de items
+                temp6.ItemArmor =  pickup.ItemArmor ;
+                temp6.ItemUsable =  pickup.ItemUsable;
+                temp6.ItemWeapon = pickup.ItemWeapon;
                 break;
             case 3:
                 var temp1 = obj as Obstacle;
@@ -364,13 +410,6 @@ public class MapObjectsUI : EditorWindow {
             }
             Repaint();
         }
-    }
-    public Rect GetTextureCoordinate(Sprite T )
-    {
-        return new Rect(T.textureRect.x / T.texture.width,
-                        T.textureRect.y / T.texture.height,
-                        T.textureRect.width / T.texture.width,
-                        T.textureRect.height / T.texture.height);
     }
     /// <summary>
     /// Renderisa la parte izquierda de la ventana.
@@ -464,6 +503,8 @@ public class MapObjectsUI : EditorWindow {
         textureName = string.Empty;
         texture = new Sprite();
         name = string.Empty;
+        pickupName = string.Empty;
+        itemType = Constant.ItemType.Armor;
         if ( tab == 3)
             obstacle.hp = 0;
         if (tab == 4)
@@ -497,7 +538,7 @@ public class MapObjectsUI : EditorWindow {
             RPGElement comp = temp.GetComponent<RPGElement>();
             Sprite sprite = comp.Icon;
             Rect position = new Rect(x, y, 64, 64);
-            GUI.DrawTextureWithTexCoords(position, sprite.texture,GetTextureCoordinate(sprite));
+            GUI.DrawTextureWithTexCoords(position, sprite.texture,Constant.GetTextureCoordinate(sprite));
             if (comp.name.Length > 8)
                 GUI.Label(new Rect(x, y + 74, 64, 20), comp.Name.Substring(0, 6) + "...");
             else
@@ -530,8 +571,25 @@ public class MapObjectsUI : EditorWindow {
                 break;
             case 2:
                var temp = obj as Pickup;
-               pickup.Image = temp.Image;
-                //pickup.Item= temp.Item; Falta el crud de items
+               if (temp.ItemArmor.ArmorName != "")
+               {
+                   pickupName = temp.ItemArmor.ArmorName;
+                   itemType = Constant.ItemType.Armor;
+
+               }
+               if (temp.ItemUsable.ItemName != "")
+               {
+                   pickupName = temp.ItemUsable.ItemName;
+                   itemType = Constant.ItemType.Usable;
+               }
+               if (temp.ItemWeapon.WeaponName != "")
+               {
+                   pickupName = temp.ItemWeapon.WeaponName;
+                   itemType = Constant.ItemType.Weapon;
+               }
+               pickup.ItemArmor = temp.ItemArmor;
+               pickup.ItemUsable = temp.ItemUsable;
+               pickup.ItemWeapon = temp.ItemWeapon;
                 break;
             case 3:
                 var temp1 = obj as Obstacle;
@@ -557,6 +615,9 @@ public class MapObjectsUI : EditorWindow {
                 break;
         }
 
-    }    
+    }
+
+     
+
 }
 
