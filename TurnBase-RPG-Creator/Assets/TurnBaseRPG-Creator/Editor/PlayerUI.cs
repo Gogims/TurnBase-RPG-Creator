@@ -61,8 +61,7 @@ public class PlayerUI : CRUD<Player>
         GUILayout.EndHorizontal();
 
         AddArmor("Helmet", ref element.Data.Helmet, AbstractArmor.ArmorType.Helmet);
-        AddArmor("Upper Body", ref element.Data.UpperBody, AbstractArmor.ArmorType.Chest);
-        AddArmor("Lower Body", ref element.Data.LowerBody, AbstractArmor.ArmorType.Leg);
+        AddArmor("Body", ref element.Data.Body, AbstractArmor.ArmorType.Body);
         AddArmor("Feet", ref element.Data.Feet, AbstractArmor.ArmorType.Feet);
         AddArmor("Necklace", ref element.Data.Necklace, AbstractArmor.ArmorType.Necklace);
         AddArmor("Ring", ref element.Data.Ring, AbstractArmor.ArmorType.Ring);
@@ -79,7 +78,7 @@ public class PlayerUI : CRUD<Player>
         // Button to upload image
         if (GUI.Button(new Rect(0, 40, 400, 20), "Select Picture"))
         {
-            EditorGUIUtility.ShowObjectPicker<Sprite>(null, false, null, 1);
+            EditorGUIUtility.ShowObjectPicker<Sprite>(null, false, "Character", 1);
         }
 
         AddObject();

@@ -204,7 +204,6 @@ public abstract class CRUD<T> : EditorWindow
             {
                 if (comp.Icon != null)
                 {
-                    GUI.DrawTexture(position, comp.Icon.texture);
                     GUI.DrawTextureWithTexCoords(position, comp.Icon.texture, Constant.GetTextureCoordinate(comp.Icon));
                 }
 

@@ -5,7 +5,7 @@ using System.IO;
 
 public class ImportImageUI : EditorWindow
 {	
-	FileBrowser image = new FileBrowser ("Assets/Sprites/96x96.jpg");
+	FileBrowser image = new FileBrowser ("Assets/TurnBaseRPG-Creator/RPG-Sprites/96x96.jpg");
     int Type;
     Texture2D Texture;
     string Name;
@@ -128,8 +128,5 @@ public class ImportImageUI : EditorWindow
         x.textureFormat = TextureImporterFormat.ARGB32;
         x.spriteImportMode = spritesheet ? SpriteImportMode.Multiple : SpriteImportMode.Single;
         AssetDatabase.ImportAsset(GetPath(), ImportAssetOptions.ForceUpdate);
-
-
-
 	}
 }

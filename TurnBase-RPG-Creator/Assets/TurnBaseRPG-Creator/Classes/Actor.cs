@@ -95,13 +95,9 @@ public class AbstractActor
     /// </summary>
     public AbstractArmor Helmet;
     /// <summary>
-    /// Pecho del actor
+    /// Pecho y piernas del actor
     /// </summary>
-    public AbstractArmor UpperBody;
-    /// <summary>
-    /// Piernas del actor
-    /// </summary>
-    public AbstractArmor LowerBody;
+    public AbstractArmor Body;
     /// <summary>
     /// Zapatos del actor
     /// </summary>
@@ -128,8 +124,7 @@ public class AbstractActor
         Stats = new Attribute();
         MainHand = new AbstractWeapon();
         Helmet = new AbstractArmor();
-        UpperBody = new AbstractArmor();
-        LowerBody = new AbstractArmor();
+        Body = new AbstractArmor();
         Feet = new AbstractArmor();
         Ring = new AbstractArmor();
         Necklace = new AbstractArmor();

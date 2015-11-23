@@ -30,8 +30,7 @@ public class AbstractArmor : Equippable
 
     public enum ArmorType
     {
-        Chest,
-        Leg,
+        Body,
         Feet,
         Necklace,
         Ring,

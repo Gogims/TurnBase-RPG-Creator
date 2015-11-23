@@ -71,7 +71,7 @@ public class WeaponUI : CRUD<Weapon>
 
         if (GUI.Button(new Rect(0, 100, 400, 20), "Select Sprite"))
         {
-            EditorGUIUtility.ShowObjectPicker<Sprite>(null, false, null, 1);
+            EditorGUIUtility.ShowObjectPicker<Sprite>(null, false, "Weapon", 1);
         }
 
         if (element.Icon != null)

@@ -29,7 +29,7 @@ public class ItemUI : CRUD<Usable>
         element.Data.Price = EditorGUILayout.IntField("Price: ", element.Data.Price);
         if (GUI.Button(new Rect(0, 80, 400, 20), "Select Picture"))
         {
-            EditorGUIUtility.ShowObjectPicker<Sprite>(null, false, null, 1);
+            EditorGUIUtility.ShowObjectPicker<Sprite>(null, false, "Item", 1);
         }
 
         AddObject();
@@ -62,7 +62,7 @@ public class ItemUI : CRUD<Usable>
 
         GUILayout.BeginHorizontal();
         element.Data.StateType = (Constant.OffenseDefense)EditorGUILayout.EnumPopup("Type: ", element.Data.StateType);
-        element.Data.HitRate = EditorGUILayout.Slider("Hit Rate: ", element.Data.HitRate, 0, 100);        
+        element.Data.HitRate = EditorGUILayout.Slider("Apply Rate: ", element.Data.HitRate, 0, 100);        
         GUILayout.EndHorizontal();
 
         ScrollPosition = GUILayout.BeginScrollView(ScrollPosition);

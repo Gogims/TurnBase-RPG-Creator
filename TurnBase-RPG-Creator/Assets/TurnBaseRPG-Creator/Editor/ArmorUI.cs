@@ -34,7 +34,7 @@ public class ArmorUI : CRUD<Armor>
 
         if (GUI.Button(new Rect(0, 100, 400, 20), "Select Sprite"))
         {
-            EditorGUIUtility.ShowObjectPicker<Sprite>(null, false, null, 1);
+            EditorGUIUtility.ShowObjectPicker<Sprite>(null, false, "Armor", 1);
         }
 
         if (element.Icon != null)

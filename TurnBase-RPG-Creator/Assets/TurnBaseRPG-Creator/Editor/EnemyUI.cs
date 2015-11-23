@@ -78,8 +78,7 @@ public class EnemyUI : CRUD<Enemy>
         GUILayout.EndHorizontal();
 
         AddArmor("Helmet", ref element.Data.Helmet, AbstractArmor.ArmorType.Helmet);
-        AddArmor("Upper Body", ref element.Data.UpperBody, AbstractArmor.ArmorType.Chest);
-        AddArmor("Lower Body", ref element.Data.LowerBody, AbstractArmor.ArmorType.Leg);
+        AddArmor("Body", ref element.Data.Body, AbstractArmor.ArmorType.Body);
         AddArmor("Feet", ref element.Data.Feet, AbstractArmor.ArmorType.Feet);
         AddArmor("Necklace", ref element.Data.Necklace, AbstractArmor.ArmorType.Necklace);
         AddArmor("Ring", ref element.Data.Ring, AbstractArmor.ArmorType.Ring);

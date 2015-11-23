@@ -43,7 +43,7 @@ public class Troop : RPGElement
         CreateBackground("Bottom", BackgroundBottom, 0);
         CreateBackground("Top", BackgroundTop, 1);
 
-        string returnPath = "Assets/Resources/Maps/" + Guid.NewGuid() + ".unity";
+        string returnPath = "Assets/Resources/BattleMaps/" + Id + ".unity";
         TroopPath = Directory.GetCurrentDirectory() + '\\' + returnPath.Replace('/', '\\');
         EditorApplication.SaveScene(returnPath);// Guarda la scene.
     }
