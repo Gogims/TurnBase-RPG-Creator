@@ -5,7 +5,6 @@ using Rotorz.ReorderableList;
 
 public class EnemyUI : CRUD<Enemy>
 {    
-    Animator animations;
     Vector2 ScrollPosition;
     AbstractEnemy EnemySelected;
 
@@ -20,7 +19,6 @@ public class EnemyUI : CRUD<Enemy>
     public override void Init()
     {
         base.Init();
-        NewEnemy();
     }
 
     void OnGUI()
@@ -105,11 +103,7 @@ public class EnemyUI : CRUD<Enemy>
             GUI.DrawTextureWithTexCoords(new Rect(400, 40, element.Icon.textureRect.width, element.Icon.textureRect.height), element.Icon.texture, Constant.GetTextureCoordinate(element.Icon));
         }        
 
-        GUI.Label(new Rect(0, 60, 100, 20), "Animation", EditorStyles.boldLabel);
-        AddAnimation("Down", ref element.downSprites, new Rect(0, 80, 75, 20));
-        AddAnimation("Left", ref element.leftSprites, new Rect(100, 80, 75, 20));
-        AddAnimation("Up", ref element.upSprites, new Rect(200, 80, 75, 20));
-        AddAnimation("Right", ref element.rightSprites, new Rect(300, 80, 75, 20));
+        
         GUILayout.EndArea();
 
         // Items
@@ -141,23 +135,13 @@ public class EnemyUI : CRUD<Enemy>
     {
         element.Id = System.Guid.NewGuid().ToString();
         element.Data.Image = element.Icon;
-
-        CreateAnimation();
+        
         CreatePrefab(element);   
     }
 
     protected override void Edit()
     {
-        CreateAnimation();
         base.Edit();
-    }
-
-    protected override GameObject NewGameObject()
-    {
-        elementObject = base.NewGameObject();
-        NewEnemy();
-
-        return elementObject;
     }
 
     protected override void AssignElement()
@@ -173,16 +157,6 @@ public class EnemyUI : CRUD<Enemy>
         EnemySelected.RewardExperience = element.Data.RewardExperience;
         EnemySelected.Stats = element.Data.Stats;
         EnemySelected.Image = element.Icon;    
-    }    
-
-    private void NewEnemy()
-    {
-        animations = elementObject.AddComponent<Animator>();
-
-        element.downSprites = new List<Sprite>();
-        element.leftSprites = new List<Sprite>();
-        element.upSprites = new List<Sprite>();
-        element.rightSprites = new List<Sprite>();        
     }
 
     private Rate DrawItem(Rect position, Rate item)
@@ -207,17 +181,7 @@ public class EnemyUI : CRUD<Enemy>
         item.ApplyRate = EditorGUI.Slider(new Rect(position.width - 300, position.y, 300, position.height), "Drop Rate(%): ", item.ApplyRate, 0, 100);
 
         return item;
-    }
-
-    private void AddAnimation(string name, ref List<Sprite> animation, Rect position)
-    {
-        if (GUI.Button(position, name + " (" + animation.Count.ToString() + ")"))
-        {
-            var window = EditorWindow.GetWindow<AnimationUI>();
-            window.Init(ref animation, name + " Sprites");
-            window.Show();
-        }
-    }
+    }    
 
     private void AddArmor(string name, ref AbstractArmor current, AbstractArmor.ArmorType armortype)
     {
@@ -232,50 +196,5 @@ public class EnemyUI : CRUD<Enemy>
             window.Show();
         }
         GUILayout.EndHorizontal();
-    }
-
-    private void CreateAnimation()
-    {
-        ActorAnimation animation = new ActorAnimation("Enemy");
-        List<Sprite> sprites;
-
-        if (animations == null)
-        {
-            animations = elementObject.GetComponent<Animator>();
-        }
-
-        if (element.downSprites.Count > 0)
-        {
-            sprites = new List<Sprite>(element.downSprites);
-            sprites.Add(element.downSprites[0]);
-            animation.down = animation.ConstructAnimation(sprites, element.Id, "down", 30, true);
-            animation.downIdle = animation.ConstructAnimation(element.downSprites[0], element.Id, "downIdle", 30, true);
-        }
-
-        if (element.leftSprites.Count > 0)
-        {
-            sprites = new List<Sprite>(element.leftSprites);
-            sprites.Add(element.leftSprites[0]);
-            animation.left = animation.ConstructAnimation(sprites, element.Id, "left", 30, true);
-            animation.leftIdle = animation.ConstructAnimation(element.leftSprites[0], element.Id, "leftIdle", 30, true);
-        }
-
-        if (element.upSprites.Count > 0)
-        {
-            sprites = new List<Sprite>(element.upSprites);
-            sprites.Add(element.upSprites[0]);
-            animation.up = animation.ConstructAnimation(sprites, element.Id, "up", 30, true);
-            animation.upIdle = animation.ConstructAnimation(element.upSprites[0], element.Id, "upIdle", 30, true);
-        }
-
-        if (element.rightSprites.Count > 0)
-        {
-            sprites = new List<Sprite>(element.rightSprites);
-            sprites.Add(element.rightSprites[0]);
-            animation.right = animation.ConstructAnimation(sprites, element.Id, "right", 30, true);
-            animation.rightIdle = animation.ConstructAnimation(element.rightSprites[0], element.Id, "rightIdle", 30, true);
-        }
-
-        animations.runtimeAnimatorController = animation.ConstructAnimationControl(element.Id);
     }
 }

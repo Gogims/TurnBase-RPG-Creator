@@ -73,7 +73,7 @@ public class ActorAnimation
     /// <summary>
     /// Tipo de animacion (enemigo o player)
     /// </summary>
-    public string type;
+    private string type;
 
     public ActorAnimation(string _type)
     {
