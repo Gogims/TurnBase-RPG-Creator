@@ -56,10 +56,7 @@ public class Troop : RPGElement
         rightSprites = new List<Sprite>();
     }
 
-    public void Start()
-    {
-        Enemies = Enemies.OrderByDescending(x => x.Enemy.Stats.Agility).ToList();
-    }
+    
 
     /// <summary>
     /// Crea la escena del battlemap

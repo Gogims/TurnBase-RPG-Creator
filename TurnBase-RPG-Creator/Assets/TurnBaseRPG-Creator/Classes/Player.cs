@@ -78,8 +78,5 @@ public class Player : Actor
 [Serializable]
 public class AbstractPlayer : AbstractActor
 {
-    /// <summary>
-    /// Listado de estados que posee el actor actualmente
-    /// </summary>
-    public List<AbstractState> States;
+    
 }
