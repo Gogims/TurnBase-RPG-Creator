@@ -64,7 +64,10 @@
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Job.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\ListBox.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\LoigcalCondition.cs" />
+     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\MainMenu.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Map.cs" />
+     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\MenuOption.cs" />
+     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Menus.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\ObjectTypes.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Obstacle.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\PcInput.cs" />
@@ -82,11 +85,7 @@
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Usable.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Wall.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Weapon.cs" />
-     <None Include="Assets\TurnBaseRPG-Creator\RPG-Resources\Armor\id.txt" />
-     <None Include="Assets\TurnBaseRPG-Creator\RPG-Resources\Weapon\id.txt" />
-     <None Include="Assets\TurnBaseRPG-Creator\RPG-Resources\Job\id.txt" />
      <None Include="Assets\TurnBaseRPG-Creator\Rotorz\Reorderable List Field\README.txt" />
-     <None Include="Assets\TurnBaseRPG-Creator\RPG-Resources\Player\id.txt" />
      <None Include="Assets\TurnBaseRPG-Creator\Rotorz\Reorderable List Field\LICENSE.txt" />
      <None Include="Assets\TurnBaseRPG-Creator\Rotorz\Reorderable List Field\Editor\Editor.ReorderableList.xml" />
  <Reference Include="UnityEngine.UI">

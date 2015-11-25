@@ -161,7 +161,7 @@ public class MapUI : EditorWindow {
                         EditorApplication.OpenScene((Objs[1] as GameObject).GetComponent<Map>().Data.MapPath);
                 }
                 file.Delete();
-                AssetDatabase.DeleteAsset("Assets/Resources/Maps/" + aux.Data.mapid + ".prefab");
+                AssetDatabase.DeleteAsset("Assets/Resources/Maps/" + aux.Id + ".prefab");
                 Objs = Resources.LoadAll("Maps", typeof(GameObject));
                 temp = new GameObject();
                 map = temp.AddComponent<Map>();
@@ -188,7 +188,6 @@ public class MapUI : EditorWindow {
         {
              var selectData = Selected.GetComponent<Map>().Data;
              SelectMap1.Heigth = selectData.Heigth;
-             SelectMap1.mapid = selectData.mapid;
              SelectMap1.MapPath= selectData.MapPath;
              SelectMap1.Width = selectData.Width;
              SelectMap1.Name = selectData.Name;

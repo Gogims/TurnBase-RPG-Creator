@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEditor;
+using System;
 
 public class MapObjectsUI : EditorWindow {
     /// <summary>
@@ -10,7 +11,7 @@ public class MapObjectsUI : EditorWindow {
     /// <summary>
     /// Objetos que se van a mostrar en la ventana.
     /// </summary>
-    Object[] Objects;
+    UnityEngine.Object[] Objects;
     /// <summary>
     /// Estilo de la letra.
     /// </summary>
@@ -262,7 +263,7 @@ public class MapObjectsUI : EditorWindow {
     }
      void DeleteSelected()
     {
-        AssetDatabase.DeleteAsset("Assets/Resources/" + type + "/" + Selected.name + ".prefab");
+        AssetDatabase.DeleteAsset("Assets/Resources/" + type + "/" + Selected.GetComponent<RPGElement>().Id + ".prefab");
     }
 
      void CreateNew()
@@ -277,7 +278,8 @@ public class MapObjectsUI : EditorWindow {
                 wall.gameObject.AddComponent<BoxCollider2D>();
                 image1.sprite = wall.Icon;
                 wall.Image = wall.Icon;
-                PrefabUtility.CreatePrefab("Assets/Resources/" + type + "/"+name+".prefab",wall.gameObject);
+                wall.Id = Guid.NewGuid().ToString();
+                PrefabUtility.CreatePrefab("Assets/Resources/" + type + "/"+wall.Id+".prefab",wall.gameObject);
                 DestroyImmediate(wall.gameObject);
                 CreateObj = new GameObject();
                 wall = CreateObj.AddComponent<Wall>();
@@ -289,7 +291,8 @@ public class MapObjectsUI : EditorWindow {
                 pickup.gameObject.AddComponent<BoxCollider2D>();
                 image2.sprite = pickup.Icon;
                 pickup.Image = pickup.Icon;
-                PrefabUtility.CreatePrefab("Assets/Resources/" + type + "/"+name+".prefab",pickup.gameObject);
+                pickup.Id = Guid.NewGuid().ToString();
+                PrefabUtility.CreatePrefab("Assets/Resources/" + type + "/" + pickup.Id + ".prefab", pickup.gameObject);
                 DestroyImmediate(pickup.gameObject);
                 CreateObj = new GameObject();
                 pickup = CreateObj.AddComponent<Pickup>();
@@ -302,10 +305,11 @@ public class MapObjectsUI : EditorWindow {
                 image3.sprite = obstacle.Icon;
                 obstacle.Image = obstacle.Icon;
                 obstacle.gameObject.tag = tag;
-                PrefabUtility.CreatePrefab("Assets/Resources/" + type + "/"+name+".prefab",obstacle.gameObject);
-                 DestroyImmediate(obstacle.gameObject);
-                 CreateObj = new GameObject();
-                 obstacle = CreateObj.AddComponent<Obstacle>();
+                obstacle.Id = Guid.NewGuid().ToString();
+                PrefabUtility.CreatePrefab("Assets/Resources/" + type + "/" + obstacle.Id + ".prefab", obstacle.gameObject);
+                DestroyImmediate(obstacle.gameObject);
+                CreateObj = new GameObject();
+                obstacle = CreateObj.AddComponent<Obstacle>();
                 break;
             case 4:
                 Door temp = GameObject.Find("New Game Object").GetComponent<Door>();
@@ -319,10 +323,11 @@ public class MapObjectsUI : EditorWindow {
                 temp.Image = door.Icon;
                 temp.gameObject.tag = tag;
                 temp.gameObject.AddComponent<BoxCollider2D>();
-                PrefabUtility.CreatePrefab("Assets/Resources/" + type + "/"+name+".prefab",temp.gameObject);
-                 DestroyImmediate(temp.gameObject);
-                 CreateObj = new GameObject();
-                 door = CreateObj.AddComponent<Door>();
+                temp.Id = Guid.NewGuid().ToString();
+                PrefabUtility.CreatePrefab("Assets/Resources/" + type + "/" + temp.Id + ".prefab", temp.gameObject);
+                DestroyImmediate(temp.gameObject);
+                CreateObj = new GameObject();
+                door = CreateObj.AddComponent<Door>();
                 break;
             case 5:
                 SpriteRenderer image5 = house.gameObject.AddComponent<SpriteRenderer>();
@@ -331,10 +336,11 @@ public class MapObjectsUI : EditorWindow {
                 image5.sprite = house.Icon;
                 house.Image = house.Icon;
                 house.gameObject.tag = tag;
-                PrefabUtility.CreatePrefab("Assets/Resources/" + type + "/"+name+".prefab",house.gameObject);
-                 DestroyImmediate(house.gameObject);
-                 CreateObj = new GameObject();
-                 house = CreateObj.AddComponent<House>();
+                house.Id = Guid.NewGuid().ToString();
+                PrefabUtility.CreatePrefab("Assets/Resources/" + type + "/" + house.Id + ".prefab", house.gameObject);
+                DestroyImmediate(house.gameObject);
+                CreateObj = new GameObject();
+                house = CreateObj.AddComponent<House>();
                 break;
             default:
                 SpriteRenderer image = tile.gameObject.AddComponent<SpriteRenderer>();
@@ -342,7 +348,8 @@ public class MapObjectsUI : EditorWindow {
                  image.sprite = tile.Icon;
                  tile.Image = tile.Icon;
                  tile.gameObject.tag = tag;
-                 PrefabUtility.CreatePrefab("Assets/Resources/" + type + "/"+name+".prefab",tile.gameObject);
+                 tile.Id = Guid.NewGuid().ToString();
+                 PrefabUtility.CreatePrefab("Assets/Resources/" + type + "/" + tile.Id + ".prefab", tile.gameObject);
                  DestroyImmediate(tile.gameObject);
                  CreateObj = new GameObject();
                  tile = CreateObj.AddComponent<Tile>();
@@ -539,7 +546,7 @@ public class MapObjectsUI : EditorWindow {
             Sprite sprite = comp.Icon;
             Rect position = new Rect(x, y, 64, 64);
             GUI.DrawTextureWithTexCoords(position, sprite.texture,Constant.GetTextureCoordinate(sprite));
-            if (comp.name.Length > 8)
+            if (comp.Name.Length > 8)
                 GUI.Label(new Rect(x, y + 74, 64, 20), comp.Name.Substring(0, 6) + "...");
             else
                 GUI.Label(new Rect(x, y + 74, 64, 20), comp.Name);

@@ -111,6 +111,7 @@ public class ObjectBrowserUI : EditorWindow
                 GUI.Label(new Rect(x, y + 54, 44, 20), ob.Name);
             if (GUI.Button(position, "", new GUIStyle()))
             {
+                Selection.activeGameObject = temp;
                 MapEditor.selectedObject = temp;
                 GameEngine.inspectorRpg.Focus();
                 if (optionSelected == "Maps")
@@ -182,6 +183,12 @@ public class ObjectBrowserUI : EditorWindow
             optionSelected = "Maps";
             mapObjects = false;
             Objects = Resources.LoadAll("Maps", typeof(GameObject));
+        }
+        GUILayout.Space(10);
+        if (GUILayout.Button("Images")){
+            optionSelected = "Image";
+            mapObjects = false;
+            Objects = Resources.LoadAll("Sprites", typeof(GameObject));
         }
         GUILayout.EndArea();
     }

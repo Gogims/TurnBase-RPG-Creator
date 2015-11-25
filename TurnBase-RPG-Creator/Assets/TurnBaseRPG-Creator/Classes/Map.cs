@@ -44,10 +44,10 @@ public class Map : RPGElement{
         x.Data.Width = this.Data.Width;
         x.Data.Heigth = this.Data.Heigth;
         x.Icon = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/TurnBaseRPG-Creator/RPG-Sprites/MapIcon.png");
-        x.Data.mapid = Guid.NewGuid().ToString();
+        x.Id = Guid.NewGuid().ToString();
         string returnPath = "Assets/Resources/Maps/" + Guid.NewGuid() + ".unity";
         x.Data.MapPath = Directory.GetCurrentDirectory() + '\\' + returnPath.Replace('/', '\\');
-        PrefabUtility.CreatePrefab("Assets/Resources/Maps/" + x.Data.mapid + ".prefab", x.gameObject);
+        PrefabUtility.CreatePrefab("Assets/Resources/Maps/" + x.Id + ".prefab", x.gameObject);
         DestroyImmediate(settings);
         EditorApplication.SaveScene(returnPath);// Guarda la scene.
 	}
@@ -147,7 +147,6 @@ public class Map : RPGElement{
 [Serializable]
 public class AbstractMap
 {
-    public string mapid = string.Empty;
     /// <summary>
     /// Almacena el path de la scene.
     /// </summary>

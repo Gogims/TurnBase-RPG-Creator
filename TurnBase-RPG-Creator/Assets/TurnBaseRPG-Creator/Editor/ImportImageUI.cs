@@ -126,6 +126,7 @@ public class ImportImageUI : EditorWindow
         x.textureType = TextureImporterType.Advanced;
         x.isReadable = true;
         x.textureFormat = TextureImporterFormat.ARGB32;
+        x.maxTextureSize = 1024;
         x.spriteImportMode = spritesheet ? SpriteImportMode.Multiple : SpriteImportMode.Single;
         AssetDatabase.ImportAsset(GetPath(), ImportAssetOptions.ForceUpdate);
 	}
