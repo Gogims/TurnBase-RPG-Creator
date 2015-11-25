@@ -4,17 +4,14 @@ using System.Collections.Generic;
 /// <summary>
 /// Representa un item en el mapa.
 /// </summary>
-public class Pickup : RPGElement {
+public class Pickup : MapObject
+{
     
     public Pickup() {
         ItemUsable = new AbstractUsable();
         ItemArmor = new AbstractArmor();
         ItemWeapon = new AbstractWeapon();
     }
-    /// <summary>
-    /// Imagen que representa el item.
-    /// </summary>
-    public Sprite Image;
     /// <summary>
     /// items que da el objeto.
     /// </summary>

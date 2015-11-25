@@ -20,7 +20,8 @@ public class Actor : RPGElement
             rb2D = gameObject.AddComponent<Rigidbody2D>();
         }
 
-        rb2D.isKinematic = true;
+        rb2D.gravityScale = 0;
+        rb2D.angularDrag = 0;
     }      
 
     //Move returns true if it is able to move and false if not. 

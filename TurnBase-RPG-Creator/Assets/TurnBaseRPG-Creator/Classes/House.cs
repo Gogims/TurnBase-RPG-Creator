@@ -3,11 +3,8 @@ using System.Collections;
 /// <summary>
 /// Representa una casa en el juego.
 /// </summary>
-public class House:RPGElement {
-    /// <summary>
-    /// Lista de Imagenes 
-    /// </summary>
-    public Sprite Image;
+public class House : MapObject
+{
     /// <summary>
     /// Representa el ancho de la casa con respecto a las unidades del mapa.
     /// </summary>

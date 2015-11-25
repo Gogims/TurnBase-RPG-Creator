@@ -149,4 +149,14 @@ public class Constant{
         MaxHP,
         MaxMP
     };
+
+    public enum MapObjectType
+    {
+        Door=9,
+        House,
+        Pickup,
+        Obstacle,
+        Tile,
+        Wall
+    };
 }

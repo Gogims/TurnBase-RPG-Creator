@@ -5,15 +5,13 @@ using System.Collections.Generic;
 /// <summary>
 /// Clase que represetan un obstaculo
 /// </summary>
-public class Obstacle:RPGElement  {
+public class Obstacle: MapObject
+{
     /// <summary>
     /// Hp del obstaculo
     /// </summary>
     public int hp;
-    /// <summary>
-    /// Imagenes del obstaculo
-    /// </summary>
-    public Sprite Image;
+
     //DamageWall is called when the player attacks a wall.
     public void DamageWall(int loss)
     {

@@ -3,14 +3,10 @@ using System.Collections;
 /// <summary>
 /// Representa una pared en el juego
 /// </summary>
-public class Wall:RPGElement  {
+public class Wall: MapObject
+{
     /// <summary>
-    /// Propiedad para especificar de que es un obejto fisico
+    /// Propiedad para especificar de que es un objeto fisico
     /// </summary>
     public Rigidbody2D Body;
-    /// <summary>
-    /// Imagen de la pared
-    /// </summary>
-    public Sprite Image;
-
 }

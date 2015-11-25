@@ -86,6 +86,7 @@ public class MapObjectsUI : EditorWindow {
             name = string.Empty;
     }
     Constant.ItemType itemType;
+    Constant.MapObjectType MapObjectType;
     private string pickupName;
     /// <summary>
     /// Metodo que se llama cuando la ventana esta abierta.
@@ -105,7 +106,6 @@ public class MapObjectsUI : EditorWindow {
         if (GUILayout.Button("Select Image", GUILayout.Width(labelWidth))) 
         {
             EditorGUIUtility.ShowObjectPicker<Sprite>(null, false,type, 1);
-
         }
         GUI.enabled = false;
         GUILayout.TextField(textureName);
@@ -116,15 +116,17 @@ public class MapObjectsUI : EditorWindow {
         if ( tab == 0 ){
             tile.Name = name;
             tile.Icon = texture;
+            MapObjectType = Constant.MapObjectType.Tile;
         }
         else if (tab == 1) { 
             wall.Name = name;
             wall.Icon = texture;
-            
+            MapObjectType = Constant.MapObjectType.Wall;
         }
         else if (tab == 2 ){
             pickup.Name = name;
             pickup.Icon = texture;
+            MapObjectType = Constant.MapObjectType.Pickup;
             GUILayout.BeginHorizontal();
             itemType = (Constant.ItemType)EditorGUILayout.EnumPopup("Select Item Type", itemType);
             GUILayout.EndHorizontal();
@@ -187,10 +189,12 @@ public class MapObjectsUI : EditorWindow {
             GUILayout.EndHorizontal();
             obstacle.Name = name;
             obstacle.Icon = texture;
+            MapObjectType = Constant.MapObjectType.Obstacle;
         }
         else if (tab == 4 ){
             door.Name = name;
             door.Icon = texture;
+            MapObjectType = Constant.MapObjectType.Door;
             GUILayout.Space(15);
             GUILayout.BeginHorizontal();
 
@@ -216,8 +220,6 @@ public class MapObjectsUI : EditorWindow {
             GUILayout.TextField(door.OutMap.Name);
             GUI.enabled = true;
             GUILayout.EndHorizontal();
-            
-
         }
         else if (tab == 5) {
             GUILayout.BeginHorizontal();
@@ -231,6 +233,7 @@ public class MapObjectsUI : EditorWindow {
             GUILayout.EndHorizontal();
             house.Name = name;
             house.Icon = texture;
+            MapObjectType = Constant.MapObjectType.House;
         }
 
         GUILayout.EndArea();
@@ -361,19 +364,21 @@ public class MapObjectsUI : EditorWindow {
 
      void SaveSelected()
     {
-        var obj = Selected.GetComponent<RPGElement>();
+        var obj = Selected.GetComponent<MapObject>();
         obj.Name = name;
         obj.Icon = texture;
+        obj.gameObject.layer = (int)MapObjectType;
+
         SpriteRenderer Image = Selected.gameObject.GetComponent<SpriteRenderer>();
+        Image.sprite = obj.Image = obj.Icon;
+
         switch (tab)
         {
             case 1:
                 var temp = obj as Wall;
-                Image.sprite = temp.Image = wall.Icon;
                 break;
             case 2:
                 var temp6 = obj as Pickup;
-                Image.sprite = temp6.Image = pickup.Icon;
                 temp6.ItemArmor =  pickup.ItemArmor ;
                 temp6.ItemUsable =  pickup.ItemUsable;
                 temp6.ItemWeapon = pickup.ItemWeapon;
@@ -385,7 +390,6 @@ public class MapObjectsUI : EditorWindow {
             case 4:
                 Door aux = GameObject.Find("New Game Object").GetComponent<Door>();
                 var temp2 = obj as Door;
-                Image.sprite = temp2.Image = door.Icon;
                 temp2.OutMap = door.OutMap;
                 temp2.InMap = door.InMap;
                  DestroyImmediate(aux.gameObject);
@@ -395,13 +399,11 @@ public class MapObjectsUI : EditorWindow {
                 break;
             case 5:
                 var temp3 = obj as House;
-                Image.sprite = temp3.Image = house.Icon;
                 temp3.Width = house.Width;
                 temp3.Heigth = house.Heigth;
                 break;
             default:
                 var temp4 = obj as Tile;
-                Image.sprite = temp4.Image = tile.Icon;
                 break;
         }
         ClearFields();
@@ -621,10 +623,6 @@ public class MapObjectsUI : EditorWindow {
                 tile.Image = temp5.Image;
                 break;
         }
-
     }
-
-     
-
 }
 

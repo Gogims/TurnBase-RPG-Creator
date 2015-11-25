@@ -38,7 +38,16 @@ public class Player : Actor
         MoveDirection(ProxyInput.GetInstance().Left(), "left", 0.34f);
         MoveDirection(ProxyInput.GetInstance().Up(), "up", 0.67f);
         MoveDirection(ProxyInput.GetInstance().Right(), "right", 1);
-    }    
+    }
+
+    void OnCollisionEnter2D(Collision2D coll)
+    {
+        if (coll.gameObject.layer == (int) Constant.MapObjectType.Tile)
+        {
+            Debug.Log("Tile");
+        }
+            
+    }
 
     private void MoveDirection(bool input, string direction, float idle)
     {

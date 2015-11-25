@@ -14,7 +14,7 @@ public class MapEditor {
     static bool deleting = false;
 	static MapEditor () {
 	
-		//SceneView.onSceneGUIDelegate += OnSceneEvents;
+		SceneView.onSceneGUIDelegate += OnSceneEvents;
 		DarkFloor =  AssetDatabase.LoadAssetAtPath(@"Assets/Resources/Tile/DefaultTile1.prefab", typeof(GameObject));
         LightFloor = AssetDatabase.LoadAssetAtPath(@"Assets/Resources/Tile/DefaultTile2.prefab", typeof(GameObject));
 	}
@@ -28,7 +28,6 @@ public class MapEditor {
 		Event e = Event.current;
 		//Revisa si el objeto seleccionado es nulo.
 		if (Selection.activeGameObject != null) {
-            Debug.Log(Selection.activeGameObject);
 			//ChangeSelectedObject (Selection.activeGameObject);
 		}// si el click izquierdo es precionado y el objeto seleccionado es diferente de nulo inserta un objeto al mapa. 
         if (EventType.MouseUp == e.type && e.button == 0 && selectedObject != null && (selectedObject.tag == "RPG-MAPOBJECT" || selectedObject.tag == "RPG-PLAYER" || selectedObject.tag == "RPG-ENEMY"))
