@@ -51,6 +51,7 @@
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\ActorAnimation.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Armor.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Attribute.cs" />
+     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\BattleManager.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Condition.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Constants.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\DemoBehaviour.cs" />

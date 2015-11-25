@@ -113,6 +113,7 @@ public class ObjectBrowserUI : EditorWindow
             {
                 Selection.activeGameObject = temp;
                 MapEditor.selectedObject = temp;
+                Selection.activeObject = temp;
                 GameEngine.inspectorRpg.Focus();
                 if (optionSelected == "Maps")
                 {

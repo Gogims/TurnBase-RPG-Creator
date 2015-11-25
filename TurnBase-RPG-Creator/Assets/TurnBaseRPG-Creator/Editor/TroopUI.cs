@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using Rotorz.ReorderableList;
+using System.Collections.Generic;
 
 public class TroopUI : CRUD<Troop>
 {
     Vector2 ScrollPosition;
+    Animator animations;
     const int previewX = 10;
     const int previewY = 20;
 
@@ -15,7 +17,7 @@ public class TroopUI : CRUD<Troop>
         RenderLeftSide();
 
         // Basic Settings
-        GUILayout.BeginArea(new Rect(300, 0, 600, 100), "Basic Settings", EditorStyles.helpBox);
+        GUILayout.BeginArea(new Rect(300, 0, 600, 160), "Basic Settings", EditorStyles.helpBox);
         GUILayout.Space(15);
 
         element.Name = EditorGUILayout.TextField("Name: ", element.Name);        
@@ -30,17 +32,25 @@ public class TroopUI : CRUD<Troop>
             EditorGUIUtility.ShowObjectPicker<Sprite>(null, false, "Background", 2);
         }
 
+        GUILayout.Label("Animation", EditorStyles.boldLabel);
+        GUILayout.BeginHorizontal();
+        AddAnimation("Down", ref element.downSprites);
+        AddAnimation("Left", ref element.leftSprites);
+        AddAnimation("Up", ref element.upSprites);
+        AddAnimation("Right", ref element.rightSprites);
+        GUILayout.EndHorizontal();
+
         GUILayout.EndArea();
 
         // Enemies
-        GUILayout.BeginArea(new Rect(300, 100, 600, 200), "Enemies", EditorStyles.helpBox);
+        GUILayout.BeginArea(new Rect(300, 160, 600, 140), "Enemies", EditorStyles.helpBox);
         GUILayout.Space(15);
 
         ScrollPosition = GUILayout.BeginScrollView(ScrollPosition);
         ReorderableListGUI.ListField(element.Enemies, DrawBattleEnemy, ReorderableListFlags.DisableReordering);
         GUILayout.EndScrollView();
 
-        GUILayout.EndArea();
+        GUILayout.EndArea();        
 
         // Preview
         GUILayout.BeginArea(new Rect(300, 300, 600, 620), "Preview", EditorStyles.helpBox);
@@ -68,17 +78,90 @@ public class TroopUI : CRUD<Troop>
         GUI.enabled = true;
     }
 
+    protected override GameObject NewGameObject()
+    {
+        elementObject = base.NewGameObject();
+        animations = elementObject.AddComponent<Animator>();        
+
+        return elementObject;
+    }
+
     protected override void Create()
     {
         SetIcon();
+        CreateAnimation();
+
+        if (element.downSprites.Count > 0)
+        {
+            SpriteRenderer character = elementObject.AddComponent<SpriteRenderer>();
+            character.sprite = element.downSprites[0];
+        }
+
+        element.CreateTroopScene();
         base.Create();
+    }
+
+    private void CreateAnimation()
+    {
+        ActorAnimation animation = new ActorAnimation("Troop");
+        List<Sprite> sprites;
+
+        if (animations == null)
+        {
+            animations = elementObject.GetComponent<Animator>();
+        }
+
+        if (element.downSprites.Count > 0)
+        {
+            sprites = new List<Sprite>(element.downSprites);
+            sprites.Add(element.downSprites[0]);
+            animation.down = animation.ConstructAnimation(sprites, element.Id, "down", 30, true);
+            animation.downIdle = animation.ConstructAnimation(element.downSprites[0], element.Id, "downIdle", 30, true);
+        }
+
+        if (element.leftSprites.Count > 0)
+        {
+            sprites = new List<Sprite>(element.leftSprites);
+            sprites.Add(element.leftSprites[0]);
+            animation.left = animation.ConstructAnimation(sprites, element.Id, "left", 30, true);
+            animation.leftIdle = animation.ConstructAnimation(element.leftSprites[0], element.Id, "leftIdle", 30, true);
+        }
+
+        if (element.upSprites.Count > 0)
+        {
+            sprites = new List<Sprite>(element.upSprites);
+            sprites.Add(element.upSprites[0]);
+            animation.up = animation.ConstructAnimation(sprites, element.Id, "up", 30, true);
+            animation.upIdle = animation.ConstructAnimation(element.upSprites[0], element.Id, "upIdle", 30, true);
+        }
+
+        if (element.rightSprites.Count > 0)
+        {
+            sprites = new List<Sprite>(element.rightSprites);
+            sprites.Add(element.rightSprites[0]);
+            animation.right = animation.ConstructAnimation(sprites, element.Id, "right", 30, true);
+            animation.rightIdle = animation.ConstructAnimation(element.rightSprites[0], element.Id, "rightIdle", 30, true);
+        }
+
+        animations.runtimeAnimatorController = animation.ConstructAnimationControl(element.Id);
     }
 
     protected override void Edit()
     {
         SetIcon();
+        CreateAnimation();
         element.CreateTroopScene();
         base.Edit();
+    }
+
+    private void AddAnimation(string name, ref List<Sprite> animation)
+    {
+        if (GUILayout.Button(name + " (" + animation.Count.ToString() + ")"))
+        {
+            var window = EditorWindow.GetWindow<AnimationUI>();
+            window.Init(ref animation, name + " Sprites");
+            window.Show();
+        }
     }
 
     private void SetIcon()

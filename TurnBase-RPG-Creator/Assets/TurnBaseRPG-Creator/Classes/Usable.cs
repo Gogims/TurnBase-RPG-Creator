@@ -51,6 +51,14 @@ public class AbstractUsable : Item
     /// Imagen que se presentará en el juego
     /// </summary>
     public Sprite Image;
+    /// <summary>
+    /// Cual atributo se mejora/empeora al utilizar el item
+    /// </summary>
+    public Constant.Attribute Attribute;
+    /// <summary>
+    /// Cuanto aumentará de un atributo específico
+    /// </summary>
+    public int Power;
 
     public AbstractUsable()
     {

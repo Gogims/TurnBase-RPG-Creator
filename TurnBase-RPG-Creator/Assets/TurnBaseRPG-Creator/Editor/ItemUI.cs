@@ -27,7 +27,21 @@ public class ItemUI : CRUD<Usable>
         element.Data.ItemName = element.Name = EditorGUILayout.TextField("Name: ", element.Name);
         element.Data.Description = EditorGUILayout.TextField("Description: ", element.Data.Description);
         element.Data.Price = EditorGUILayout.IntField("Price: ", element.Data.Price);
-        if (GUI.Button(new Rect(0, 80, 400, 20), "Select Picture"))
+
+        GUILayout.BeginHorizontal();
+        element.Data.Attribute = (Constant.Attribute)EditorGUILayout.EnumPopup("Enhance/Dimish: ", element.Data.Attribute);
+
+        GUI.enabled = element.Data.Attribute != Constant.Attribute.None;
+
+        if (element.Data.Attribute == Constant.Attribute.None)
+            element.Data.Power = 0;
+
+        element.Data.Power = EditorGUILayout.IntField(element.Data.Power);
+        GUI.enabled = true;
+
+        GUILayout.EndHorizontal();
+
+        if (GUI.Button(new Rect(0, 100, 400, 20), "Select Picture"))
         {
             EditorGUIUtility.ShowObjectPicker<Sprite>(null, false, "Item", 1);
         }
@@ -36,7 +50,7 @@ public class ItemUI : CRUD<Usable>
 
         if (element.Icon != null)
         {
-            GUI.DrawTextureWithTexCoords(new Rect(400, 80, element.Icon.textureRect.width, element.Icon.textureRect.height), element.Icon.texture, Constant.GetTextureCoordinate(element.Icon));
+            GUI.DrawTextureWithTexCoords(new Rect(400, 100, element.Icon.textureRect.width, element.Icon.textureRect.height), element.Icon.texture, Constant.GetTextureCoordinate(element.Icon));
         }
 
         GUILayout.EndArea();

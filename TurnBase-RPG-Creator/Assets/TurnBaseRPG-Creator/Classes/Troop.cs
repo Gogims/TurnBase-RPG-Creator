@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using System.IO;
+using System.Linq;
 
 public class Troop : RPGElement
 {
@@ -20,6 +21,27 @@ public class Troop : RPGElement
     /// Lista de enemigos de la batalla
     /// </summary>
     public List<EnemyBattle> Enemies;
+
+    /// <summary>
+    /// Listado de las animaciones para caminar hacia abajo
+    /// </summary>
+    public List<Sprite> downSprites;
+
+    /// <summary>
+    /// Listado de las animaciones para caminar hacia la izquierda
+    /// </summary>
+    public List<Sprite> leftSprites;
+
+    /// <summary>
+    /// Listado de las animaciones para caminar hacia arriba
+    /// </summary>
+    public List<Sprite> upSprites;
+
+    /// <summary>
+    /// Listado de las animaciones para caminar hacia la derecha
+    /// </summary>
+    public List<Sprite> rightSprites;
+
     /// <summary>
     /// La dirección de la escena
     /// </summary>
@@ -27,8 +49,14 @@ public class Troop : RPGElement
 
     public Troop()
     {
-        Enemies = new List<EnemyBattle>();        
+        Enemies = new List<EnemyBattle>();
+        downSprites = new List<Sprite>();
+        leftSprites = new List<Sprite>();
+        upSprites = new List<Sprite>();
+        rightSprites = new List<Sprite>();
     }
+
+    
 
     /// <summary>
     /// Crea la escena del battlemap

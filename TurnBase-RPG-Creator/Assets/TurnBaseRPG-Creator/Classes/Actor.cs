@@ -3,24 +3,7 @@ using UnityEngine;
 using System.Collections.Generic;
 
 public class Actor : RPGElement
-{    
-    /// <summary>
-    /// Listado de las animaciones para caminar hacia abajo
-    /// </summary>
-    public List<Sprite> downSprites;
-    /// <summary>
-    /// Listado de las animaciones para caminar hacia la izquierda
-    /// </summary>
-    public List<Sprite> leftSprites;
-    /// <summary>
-    /// Listado de las animaciones para caminar hacia arriba
-    /// </summary>
-    public List<Sprite> upSprites;
-    /// <summary>
-    /// Listado de las animaciones para caminar hacia la derecha
-    /// </summary>
-    public List<Sprite> rightSprites;   
-
+{
     /// <summary>
     /// El componente físico 
     /// </summary>
@@ -118,6 +101,10 @@ public class AbstractActor
     /// Nombre del actor
     /// </summary>
     public string ActorName = string.Empty;
+    /// <summary>
+    /// Listado de estados que posee el actor actualmente
+    /// </summary>
+    public List<AbstractState> States;
 
     public AbstractActor()
     {
@@ -129,5 +116,6 @@ public class AbstractActor
         Ring = new AbstractArmor();
         Necklace = new AbstractArmor();
         Job = new AbstractJob();
+        States = new List<AbstractState>();
     }
 }

@@ -133,5 +133,20 @@ public class Constant{
         OnlyBattle,
         OnlyMenu,
         Never
-    }
+    };
+
+    public enum Attribute
+    {
+        None,
+        HP,
+        MP,
+        Attack,
+        Defense,
+        Magic,
+        MagicDefense,
+        Agility,
+        Luck,
+        MaxHP,
+        MaxMP
+    };
 }

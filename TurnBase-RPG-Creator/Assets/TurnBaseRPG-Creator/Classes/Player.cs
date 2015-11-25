@@ -6,6 +6,23 @@ using UnityEngine;
 public class Player : Actor
 {
     /// <summary>
+    /// Listado de las animaciones para caminar hacia abajo
+    /// </summary>
+    public List<Sprite> downSprites;
+    /// <summary>
+    /// Listado de las animaciones para caminar hacia la izquierda
+    /// </summary>
+    public List<Sprite> leftSprites;
+    /// <summary>
+    /// Listado de las animaciones para caminar hacia arriba
+    /// </summary>
+    public List<Sprite> upSprites;
+    /// <summary>
+    /// Listado de las animaciones para caminar hacia la derecha
+    /// </summary>
+    public List<Sprite> rightSprites;
+
+    /// <summary>
     /// Información del jugador
     /// </summary>
     public AbstractPlayer Data;
@@ -61,8 +78,5 @@ public class Player : Actor
 [Serializable]
 public class AbstractPlayer : AbstractActor
 {
-    /// <summary>
-    /// Listado de estados que posee el actor actualmente
-    /// </summary>
-    public List<AbstractState> States;
+    
 }
