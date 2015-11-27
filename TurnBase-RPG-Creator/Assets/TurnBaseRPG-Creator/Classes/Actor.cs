@@ -106,6 +106,10 @@ public class AbstractActor
     /// Listado de estados que posee el actor actualmente
     /// </summary>
     public List<AbstractState> States;
+    /// <summary>
+    /// Si su turno en el modo combate terminó
+    /// </summary>
+    public bool TurnEnded;
 
     public AbstractActor()
     {
@@ -117,6 +121,69 @@ public class AbstractActor
         Ring = new AbstractArmor();
         Necklace = new AbstractArmor();
         Job = new AbstractJob();
-        States = new List<AbstractState>();
+        States = new List<AbstractState>();        
+    }
+
+    public int TotalDamage()
+    {
+        int AttackDamage = Stats.Attack;
+
+        AttackDamage += MainHand.Stats.Attack;
+        AttackDamage += CheckArmor(Helmet).Attack;
+        AttackDamage += CheckArmor(Body).Attack;
+        AttackDamage += CheckArmor(Feet).Attack;
+        AttackDamage += CheckArmor(Ring).Attack;
+        AttackDamage += CheckArmor(Necklace).Attack;
+
+        return AttackDamage;
+    }
+
+    public int TotalDefense()
+    {
+        int Defense = Stats.Defense;
+
+        Defense += MainHand.Stats.Defense;
+        Defense += CheckArmor(Helmet).Defense;
+        Defense += CheckArmor(Body).Defense;
+        Defense += CheckArmor(Feet).Defense;
+        Defense += CheckArmor(Ring).Defense;
+        Defense += CheckArmor(Necklace).Defense;
+
+        return Defense;
+    }
+
+    public int TotalMagicDefense()
+    {
+        int MagicDefense = Stats.MagicDefense;
+
+        MagicDefense += MainHand.Stats.MagicDefense;
+        MagicDefense += CheckArmor(Helmet).MagicDefense;
+        MagicDefense += CheckArmor(Body).MagicDefense;
+        MagicDefense += CheckArmor(Feet).MagicDefense;
+        MagicDefense += CheckArmor(Ring).MagicDefense;
+        MagicDefense += CheckArmor(Necklace).MagicDefense;
+
+        return MagicDefense;
+    }
+
+    public int TotalMagicDamage()
+    {
+        int MagicDamage = Stats.Magic;
+
+        MagicDamage += MainHand.Stats.Magic;
+        MagicDamage += CheckArmor(Helmet).Magic;
+        MagicDamage += CheckArmor(Body).Magic;
+        MagicDamage += CheckArmor(Feet).Magic;
+        MagicDamage += CheckArmor(Ring).Magic;
+        MagicDamage += CheckArmor(Necklace).Magic;
+
+        return MagicDamage;
+    }
+
+    private Attribute CheckArmor(AbstractArmor armorPiece)
+    {
+        if (armorPiece == null) return new Attribute();
+
+        return armorPiece.Stats;
     }
 }

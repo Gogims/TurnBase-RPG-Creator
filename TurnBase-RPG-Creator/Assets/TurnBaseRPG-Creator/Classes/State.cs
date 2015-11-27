@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine.Events;
 
 public class State: RPGElement
 {
@@ -31,7 +32,7 @@ public class AbstractState
     /// <summary>
     /// Valor fijo que realizará el estado
     /// </summary>
-    public int Constant;
+    public int FixedValue;
     /// <summary>
     /// Tipo de ataque que realizará el estado
     /// </summary>
@@ -120,7 +121,27 @@ public class AbstractState
     public Constant.DamageHeal Type;
 
     /// <summary>
+    /// Referencia a la función Apply
+    /// </summary>
+    public UnityAction func;
+
+    /// <summary>
     /// Deja de aplicar el estado al actor (se remueve)
     /// </summary>
     private bool _removed = false;  
+
+    public void Apply(ref AbstractActor actor)
+    {
+        int HealDamage = Type == Constant.DamageHeal.Damage ? -1 : 1;
+
+        actor.HP += FixedValue * HealDamage;
+
+        if (ActionRate != 0)
+        {
+            if (AttackType == Constant.AttackType.MagicAttack)
+            {
+
+            }
+        }
+    }
 }

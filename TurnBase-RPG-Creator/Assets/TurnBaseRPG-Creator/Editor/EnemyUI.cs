@@ -16,11 +16,6 @@ public class EnemyUI : CRUD<Enemy>
         Init();
     }
 
-    public override void Init()
-    {
-        base.Init();
-    }
-
     void OnGUI()
     {
         RenderLeftSide();

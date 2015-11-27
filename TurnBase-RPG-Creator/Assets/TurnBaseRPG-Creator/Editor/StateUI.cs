@@ -55,7 +55,7 @@ public class StateUI : CRUD<State>
 
         element.Data.Type = (Constant.DamageHeal)EditorGUILayout.EnumPopup("Type: ", element.Data.Type);
         GUI.enabled = element.Data.ActionRestriction != Constant.ActionType.DoNothing & !Selected;
-        element.Data.Constant = EditorGUILayout.IntField("Constant " + element.Data.Type.ToString() + ":", element.Data.Constant);
+        element.Data.FixedValue = EditorGUILayout.IntField("Constant " + element.Data.Type.ToString() + ":", element.Data.FixedValue);
 
         EditorGUILayout.BeginHorizontal();
         element.Data.AttackType = (Constant.AttackType)EditorGUILayout.EnumPopup("Attack Type: ", element.Data.AttackType);
@@ -127,7 +127,7 @@ public class StateUI : CRUD<State>
         StateSelected.ActionRestriction = element.Data.ActionRestriction;
         StateSelected.ActiveOnSteps = element.Data.ActiveOnSteps;
         StateSelected.AutoRemovalTiming = element.Data.AutoRemovalTiming;
-        StateSelected.Constant = element.Data.Constant;
+        StateSelected.FixedValue = element.Data.FixedValue;
         StateSelected.DurationEndTurn = element.Data.DurationEndTurn;
         StateSelected.DurationStartTurn = element.Data.DurationStartTurn;
         StateSelected.MessageActor = element.Data.MessageActor;

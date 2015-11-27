@@ -5,11 +5,16 @@ using System.Linq;
 
 public class BattleManager : RPGElement
 {
-    Dictionary<Enemy, Rect> Enemies;
-    Player Player;
+    List<EnemyBattle> Enemies;
+    AbstractPlayer Player;
+    /// <summary>
+    /// Actor, True = player
+    /// </summary>
+    List<Tuple<AbstractActor, bool>> ActorsOrdered;
+
     enum BattleStateMachine
     {
-        START,
+        NEWTURN,
         PLAYERTURN,
         ENEMYTURN,
         WIN,
@@ -20,37 +25,25 @@ public class BattleManager : RPGElement
 
     public BattleManager(List<EnemyBattle> enemies, AbstractPlayer player)
     {
-        foreach (var enemy in enemies)
-        {
-            Enemy e = new Enemy();
-            e.Data = enemy.Enemy;
-            Enemies.Add(e, enemy.EnemyPosition);
-        }
-
-        Player = new Player();
-        Player.Data = player;
+        Enemies = enemies;
+        Player = player;
     }
 
     public void Start()
     {
-        // orden de ataque de los enemigos
-        Enemies = Enemies.OrderByDescending(x => x.Key.Data.Stats.Agility).ToDictionary(x => x.Key, x => x.Value);
-
-        if (Player.Data.Stats.Agility >= Enemies.First().Key.Data.Stats.Agility)
+        foreach (var state in Player.States)
         {
-            BattleState = BattleStateMachine.PLAYERTURN;
-        }
-        else
-        {
-            BattleState = BattleStateMachine.ENEMYTURN;
+            
         }
     }
 
     public void Update()
     {
+        
         switch (BattleState)
         {
-            case BattleStateMachine.START:
+            case BattleStateMachine.NEWTURN:
+                ActorsOrdered = OrderActors(Player, Enemies);
                 break;
             case BattleStateMachine.PLAYERTURN:
                 break;
@@ -62,6 +55,25 @@ public class BattleManager : RPGElement
                 break;
         }
     }
+
+    private List<Tuple<AbstractActor, bool>> OrderActors(AbstractPlayer p, List<EnemyBattle> enemies)
+    {
+        List<Tuple<AbstractActor, bool>> actors = new List<Tuple<AbstractActor, bool>>();
+        enemies = enemies.OrderByDescending(x => x.Enemy.Stats.Agility).ToList();
+
+        foreach (var enemy in enemies)
+        {
+            if (p.Stats.Agility >= enemy.Enemy.Stats.Agility)
+            {
+                actors.Add(new Tuple<AbstractActor, bool>(p, true));                
+            }
+
+            actors.Add(new Tuple<AbstractActor, bool>(enemy.Enemy, false));
+        }    
+
+        return actors;
+    }
+
 
     private void AbilityFight(ref AbstractActor Attacker, ref AbstractActor Defender, AbstractAbility ability)
     {
@@ -90,20 +102,10 @@ public class BattleManager : RPGElement
     private void MagicFight(ref AbstractActor Attacker, ref AbstractActor Defender, int boost)
     {
         // Calculando el Ataque
-        int MagicDamage = Attacker.Stats.Magic + boost;
-        MagicDamage += CheckArmor(Attacker.Helmet).Magic;
-        MagicDamage += CheckArmor(Attacker.Body).Magic;
-        MagicDamage += CheckArmor(Attacker.Feet).Magic;
-        MagicDamage += CheckArmor(Attacker.Ring).Magic;
-        MagicDamage += CheckArmor(Attacker.Necklace).Magic;
+        int MagicDamage = Attacker.TotalMagicDamage() + boost;
 
         // Calculando la defensa
-        int MagicDefense = Defender.Stats.MagicDefense;
-        MagicDefense += CheckArmor(Defender.Helmet).MagicDefense;
-        MagicDefense += CheckArmor(Defender.Body).MagicDefense;
-        MagicDefense += CheckArmor(Defender.Feet).MagicDefense;
-        MagicDefense += CheckArmor(Defender.Ring).MagicDefense;
-        MagicDefense += CheckArmor(Defender.Necklace).MagicDefense;
+        int MagicDefense = Defender.TotalMagicDefense();
 
         int damage = MagicDamage - MagicDefense;
 
@@ -127,12 +129,7 @@ public class BattleManager : RPGElement
 
         // Calculando el ataque
 
-        int AttackDamage = Attacker.Stats.Attack + boost;
-        AttackDamage += CheckArmor(Attacker.Helmet).Attack;
-        AttackDamage += CheckArmor(Attacker.Body).Attack;
-        AttackDamage += CheckArmor(Attacker.Feet).Attack;
-        AttackDamage += CheckArmor(Attacker.Ring).Attack;
-        AttackDamage += CheckArmor(Attacker.Necklace).Attack;
+        int AttackDamage = Attacker.TotalDamage();
 
         if (Attacker.MainHand != null)
         {
@@ -143,11 +140,11 @@ public class BattleManager : RPGElement
 
         // Calculando la defensa
         int defense = Defender.Stats.Defense;
-        defense += CheckArmor(Defender.Helmet, ref Attacker).Defense;
-        defense += CheckArmor(Defender.Body, ref Attacker).Defense;
-        defense += CheckArmor(Defender.Feet, ref Attacker).Defense;
-        defense += CheckArmor(Defender.Ring, ref Attacker).Defense;
-        defense += CheckArmor(Defender.Necklace, ref Attacker).Defense;
+        ApplyState(Defender.Helmet.State, Defender.Helmet.PercentageState, ref Attacker);
+        ApplyState(Defender.Body.State, Defender.Body.PercentageState, ref Attacker);
+        ApplyState(Defender.Feet.State, Defender.Feet.PercentageState, ref Attacker);
+        ApplyState(Defender.Ring.State, Defender.Ring.PercentageState, ref Attacker);
+        ApplyState(Defender.Necklace.State, Defender.Necklace.PercentageState, ref Attacker);
 
         // Calculando el daño total
         int damage = AttackDamage - defense;
@@ -159,20 +156,7 @@ public class BattleManager : RPGElement
             //Check if dead (todo)
         }
     }
-
-    private Attribute CheckArmor(AbstractArmor armorPiece)
-    {
-        if (armorPiece == null) return new Attribute();
-
-        return armorPiece.Stats;
-    }
-
-    private Attribute CheckArmor(AbstractArmor armorPiece, ref AbstractActor Attacker)
-    {
-        ApplyState(armorPiece.State, armorPiece.PercentageState, ref Attacker);
-
-        return CheckArmor(armorPiece);
-    }    
+     
 
     private void ApplyState(AbstractState state, float? ApplyRate, ref AbstractActor inflicted)
     {
