@@ -1,26 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
-using UnityEngine.UI;
 
-public class MenuOption : MonoBehaviour {
-    public MenuOption()
-    {
-        Data = new AbstractMenuOption();
+
+public abstract class MenuOption: MonoBehaviour{
+    public virtual void OnSelect(){
     }
-    public AbstractMenuOption Data;
-    public GameObject Item;
-    public void Awake() {
-        Item.GetComponent<Text>().text = Data.Text;
+    public virtual void UnSelect() { 
     }
-    public void OnSelect()
-    {
-        Application.LoadLevel(Data.SceneName);
+    public virtual void On(string name) { 
     }
-}
-[Serializable]
-public class AbstractMenuOption
-{
-    public string SceneName;
-    public string Text;
+    public virtual void Off(string name) { 
+    }
+
 }

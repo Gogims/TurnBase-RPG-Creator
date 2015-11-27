@@ -23,12 +23,6 @@ public abstract class Equippable : Item
     /// Probabilidad de aplicar el estado
     /// </summary>
     public float PercentageState;
-
-    /// <summary>
-    /// Icono del equipamiento
-    /// </summary>
-    public Sprite Image;
-
     public Equippable()
     {
         Stats = new Attribute();

@@ -8,7 +8,15 @@ using UnityEditor;
 /// <summary>
 /// Clase que se encarga de las configuraciones del proyecto.
 /// </summary>
-public class ProjectSettings  {
+public class ProjectSettings:MonoBehaviour  {
+    /// <summary>
+    /// Imagen que se va usar en los menus para seleccionar las opciones
+    /// </summary>
+    public static Sprite SelectImage; 
+    /// <summary>
+    /// El nombre del proyecto.
+    /// </summary>
+    public static string ProjectName = "Second Game";
     /// <summary>
     /// Path de unity.exe
     /// </summary>

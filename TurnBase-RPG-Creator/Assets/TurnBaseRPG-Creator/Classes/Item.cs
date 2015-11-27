@@ -8,6 +8,14 @@ using UnityEngine;
 public abstract class Item
 {
     /// <summary>
+    /// Imagen que se presentará en el juego
+    /// </summary>
+    public Sprite Image;
+    /// <summary>
+    /// Nombre del item
+    /// </summary>
+    public string ItemName = string.Empty;
+    /// <summary>
     /// Descripción del equipamiento
     /// </summary>
     public string Description = string.Empty;

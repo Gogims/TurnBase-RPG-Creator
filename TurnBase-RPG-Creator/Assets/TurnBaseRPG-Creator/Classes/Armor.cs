@@ -22,12 +22,6 @@ public class AbstractArmor : Equippable
     /// Tipo de armadura: pecho, pantalones, aretes, etc.
     /// </summary>
     public ArmorType Type;
-
-    /// <summary>
-    /// Nombre de la armadura
-    /// </summary>
-    public string ArmorName = string.Empty;
-
     public enum ArmorType
     {
         Body,

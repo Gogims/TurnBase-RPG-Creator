@@ -3,19 +3,47 @@ using System.Collections;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System;
-
-public class Menus : MonoBehaviour {
-    public Menus() {
-        Data = new AbstractMenu();
-    }
-    public AbstractMenu Data;
+/// <summary>
+/// Clase abstracta de menu.
+/// </summary>
+public abstract class  Menus : MonoBehaviour {
+    /// <summary>
+    /// Nombre del menu
+    /// </summary>
     public GameObject MenuName;
+    /// <summary>
+    /// Imagen que se va mostrar en el background del menu
+    /// </summary>
     public GameObject BackgroundImage;
-    private List<GameObject> Options;
-    private int delay;
+    /// <summary>
+    /// Imagen que se va mostrar como selector del menu.
+    /// </summary>
+    public GameObject Arrow;
+    /// <summary>
+    /// Estilo de las letras del menu.
+    /// </summary>
+    public GUIStyle Style;
+    /// <summary>
+    /// Indice de la opcion seleccionada.
+    /// </summary>
+    protected int selected = 0;
+    /// <summary>
+    /// Lista de todas las opciones.
+    /// </summary>
+    protected List<GameObject> Options;
+    /// <summary>
+    /// Delay para el cambio de una opcion a otra.
+    /// </summary>
+    protected int delay;
+    /// <summary>
+    /// Indica que no se mueva el cursor de seleccion.
+    /// </summary>
+    protected  bool select = true;
+    /// <summary>
+    /// Funcion que se llama cuando se inicia la scene.
+    /// </summary>
     public void Awake() {
-        MenuName.GetComponent<Text>().text = Data.Name;
-      //BackgroundImage.GetComponent<Image>().sprite = Data.Image;
+        //Arrow.GetComponent<Image>().sprite = ProjectSettings.SelectImage;
         GameObject menusObj = GameObject.Find("Canvas");
         Options = new List<GameObject>();
         for (int i = 0; i < menusObj.transform.childCount; i++)
@@ -27,40 +55,59 @@ public class Menus : MonoBehaviour {
             }
         }
     }
+    /// <summary>
+    /// Funcion que se llama cada frame.
+    /// </summary>
     void OnGUI() {
+
         if (delay < 15){
             delay++;
             return;
         }
+        if (ProxyInput.GetInstance().B())
+        {
+            Options[selected].GetComponent<MenuOption>().UnSelect();
+            return;
+        }
+        if (!select)
+            return;
         if (ProxyInput.GetInstance().Down())
         {
-            if (Data.selected == Options.Count -1)
-                Data.selected = 0 ;
+            if (selected == Options.Count - 1)
+            {
+                //Options[selected].GetComponent<MenuOption>().Off(Options[selected].GetComponent<Text>().text);
+                selected = 0;
+                Options[selected].GetComponent<MenuOption>().On(Options[selected].GetComponent<Text>().text);
+            }
             else
-                Data.selected++;
-            Data.Arrow.transform.position = new Vector3(Data.Arrow.transform.position.x, Options[Data.selected].gameObject.transform.position.y);
+            {
+                //Options[selected].GetComponent<MenuOption>().Off(Options[selected].GetComponent<Text>().text);
+                selected++;
+                Options[selected].GetComponent<MenuOption>().On(Options[selected].GetComponent<Text>().text);
+            }
+            Arrow.transform.position = new Vector3(Arrow.transform.position.x, Options[selected].gameObject.transform.position.y);
         }
         else if (ProxyInput.GetInstance().Up()) 
         {
-            if (Data.selected == 0)
-                Data.selected = Options.Count - 1;
+            if (selected == 0)
+            {
+                //Options[selected].GetComponent<MenuOption>().Off(Options[selected].GetComponent<Text>().text);
+                selected = Options.Count-1;
+                Options[selected].GetComponent<MenuOption>().On(Options[selected].GetComponent<Text>().text);
+            }
             else
-                Data.selected--;
-            Data.Arrow.transform.position = new Vector3(Data.Arrow.transform.position.x, Options[Data.selected].gameObject.transform.position.y);
+            {
+                //Options[selected].GetComponent<MenuOption>().Off(Options[selected].GetComponent<Text>().text);
+                selected--;
+                Options[selected].GetComponent<MenuOption>().On(Options[selected].GetComponent<Text>().text);
+            }
+            Arrow.transform.position = new Vector3(Arrow.transform.position.x, Options[selected].gameObject.transform.position.y);
         }
         else if (ProxyInput.GetInstance().A())
         {
-            Options[Data.selected].GetComponent<MenuOption>().OnSelect();
+            Options[selected].GetComponent<MenuOption>().OnSelect();
         }
+
         delay = 0;
     }
-}
-
-[Serializable]
-public class AbstractMenu {
-    
-    public int selected = 0;
-    public GameObject Arrow;
-    //public Sprite Image;
-    public string Name = "Age Of Empire";
 }

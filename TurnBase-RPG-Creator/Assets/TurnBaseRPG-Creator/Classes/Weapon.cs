@@ -18,10 +18,7 @@ public class Weapon : RPGElement
 [Serializable]
 public class AbstractWeapon : Equippable
 {
-    /// <summary>
-    /// Nombre del arma
-    /// </summary>
-    public string WeaponName = string.Empty;
+
     
     /// <summary>
     /// Porcentaje que el arma tiene para realizar su ataque

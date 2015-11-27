@@ -172,7 +172,7 @@ public class MapObjectsUI : EditorWindow {
                     pickupName = pickup.ItemUsable.ItemName;
                     break;
                 case Constant.ItemType.Weapon:
-                    pickupName = pickup.ItemWeapon.WeaponName;
+                    pickupName = pickup.ItemWeapon.ItemName;
                     break;
             }
 
@@ -374,7 +374,7 @@ public class MapObjectsUI : EditorWindow {
 
         switch (tab)
         {
-            case 1:
+            case 1: 
                 var temp = obj as Wall;
                 break;
             case 2:
@@ -591,9 +591,9 @@ public class MapObjectsUI : EditorWindow {
                    pickupName = temp.ItemUsable.ItemName;
                    itemType = Constant.ItemType.Usable;
                }
-               if (temp.ItemWeapon.WeaponName != "")
+               if (temp.ItemWeapon.ItemName != "")
                {
-                   pickupName = temp.ItemWeapon.WeaponName;
+                   pickupName = temp.ItemWeapon.ItemName;
                    itemType = Constant.ItemType.Weapon;
                }
                pickup.ItemArmor = temp.ItemArmor;

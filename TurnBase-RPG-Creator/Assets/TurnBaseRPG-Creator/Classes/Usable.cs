@@ -16,10 +16,6 @@ public class Usable : RPGElement
 public class AbstractUsable : Item
 {
     /// <summary>
-    /// Nombre del item
-    /// </summary>
-    public string ItemName = string.Empty;
-    /// <summary>
     /// Si se gasta el item luego de utilizar
     /// </summary>
     public bool Consumeable;
@@ -47,10 +43,6 @@ public class AbstractUsable : Item
     /// Listado de efectos que remueve/agrega al objetivo
     /// </summary>
     public List<AbstractState> States;
-    /// <summary>
-    /// Imagen que se presentará en el juego
-    /// </summary>
-    public Sprite Image;
     /// <summary>
     /// Cual atributo se mejora/empeora al utilizar el item
     /// </summary>
