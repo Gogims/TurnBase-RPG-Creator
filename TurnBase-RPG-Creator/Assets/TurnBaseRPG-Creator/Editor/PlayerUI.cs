@@ -50,7 +50,7 @@ public class PlayerUI : CRUD<Player>
 
         GUILayout.Label("Weapon", EditorStyles.boldLabel);
         GUILayout.BeginHorizontal();
-        GUILayout.TextField(element.Data.MainHand.WeaponName);
+        GUILayout.TextField(element.Data.MainHand.ItemName);
         if (GUILayout.Button("Select Weapon"))
         {
             var window = EditorWindow.GetWindow<WeaponUI>();
@@ -115,7 +115,7 @@ public class PlayerUI : CRUD<Player>
     {
         GUILayout.Label(name, EditorStyles.boldLabel);
         GUILayout.BeginHorizontal();
-        GUILayout.TextField(current.ArmorName);
+        GUILayout.TextField(current.ItemName);
         if (GUILayout.Button("Select Armor"))
         {
             var window = EditorWindow.GetWindow<ArmorUI>();
@@ -175,6 +175,7 @@ public class PlayerUI : CRUD<Player>
     {
         element.Id = System.Guid.NewGuid().ToString();
         element.Data.Image = element.Icon;
+        element.tag = "RPG-PLAYER";
 
         CreateAnimation();
 
@@ -182,7 +183,16 @@ public class PlayerUI : CRUD<Player>
         {
             SpriteRenderer character = elementObject.AddComponent<SpriteRenderer>();
             character.sprite = element.downSprites[0];
+            character.sortingLayerName = "Actors";
         }
+
+        var rb2D = elementObject.AddComponent<Rigidbody2D>();
+        rb2D.gravityScale = 0;
+        rb2D.angularDrag = 0;
+        rb2D.freezeRotation = true;
+
+        var collider = elementObject.AddComponent<BoxCollider2D>();
+        collider.size = new Vector2(element.downSprites[0].textureRect.width, element.downSprites[0].textureRect.height);
 
         CreatePrefab(element);
     }

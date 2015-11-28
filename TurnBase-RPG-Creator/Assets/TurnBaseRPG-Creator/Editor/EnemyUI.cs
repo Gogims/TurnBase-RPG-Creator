@@ -60,7 +60,7 @@ public class EnemyUI : CRUD<Enemy>
 
         GUILayout.Label("Weapon", EditorStyles.boldLabel);
         GUILayout.BeginHorizontal();
-        GUILayout.TextField(element.Data.MainHand.WeaponName);
+        GUILayout.TextField(element.Data.MainHand.ItemName);
         if (GUILayout.Button("Select Weapon"))
         {
             var window = EditorWindow.GetWindow<WeaponUI>();
@@ -128,14 +128,13 @@ public class EnemyUI : CRUD<Enemy>
 
     protected override void Create()
     {
-        element.Id = System.Guid.NewGuid().ToString();
         element.Data.Image = element.Icon;
-        
-        CreatePrefab(element);   
+        base.Create();
     }
 
     protected override void Edit()
     {
+        element.Data.Image = element.Icon;
         base.Edit();
     }
 
@@ -182,7 +181,7 @@ public class EnemyUI : CRUD<Enemy>
     {
         GUILayout.Label(name, EditorStyles.boldLabel);
         GUILayout.BeginHorizontal();
-        GUILayout.TextField(current.ArmorName);
+        GUILayout.TextField(current.ItemName);
         if (GUILayout.Button("Select Armor"))
         {
             var window = EditorWindow.GetWindow<ArmorUI>();

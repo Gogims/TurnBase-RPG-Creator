@@ -88,6 +88,8 @@ public class TroopUI : CRUD<Troop>
 
     protected override void Create()
     {
+        element.tag = "RPG-PLAYER";        
+
         SetIcon();
         CreateAnimation();
 
@@ -96,6 +98,14 @@ public class TroopUI : CRUD<Troop>
             SpriteRenderer character = elementObject.AddComponent<SpriteRenderer>();
             character.sprite = element.downSprites[0];
         }
+
+        var rb2D = elementObject.AddComponent<Rigidbody2D>();
+        rb2D.gravityScale = 0;
+        rb2D.angularDrag = 0;
+        rb2D.freezeRotation = true;
+
+        var collider = elementObject.AddComponent<BoxCollider2D>();
+        collider.size = new Vector2(element.downSprites[0].textureRect.width, element.downSprites[0].textureRect.height);
 
         element.CreateTroopScene();
         base.Create();

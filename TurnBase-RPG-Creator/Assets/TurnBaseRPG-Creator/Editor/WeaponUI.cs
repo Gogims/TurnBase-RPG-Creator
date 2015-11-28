@@ -64,7 +64,7 @@ public class WeaponUI : CRUD<Weapon>
         err.ShowErrorsLayout();
 
         GUI.enabled = !Selected;
-        element.Data.WeaponName = element.Name = EditorGUILayout.TextField("Name: ", element.Name);
+        element.Data.ItemName = element.Name = EditorGUILayout.TextField("Name: ", element.Name);
         element.Data.Description = EditorGUILayout.TextField("Description: ", element.Data.Description);
         element.Data.Type = (AbstractWeapon.WeaponType)EditorGUILayout.EnumPopup("Weapon Type: ", element.Data.Type);
         element.Data.Price = EditorGUILayout.IntField("Price: ", element.Data.Price);
@@ -139,7 +139,7 @@ public class WeaponUI : CRUD<Weapon>
 
     override protected void AssignElement()
     {
-        SelectedWeapon.WeaponName = element.Name;
+        SelectedWeapon.ItemName = element.Name;
         SelectedWeapon.Description = element.Data.Description;
         SelectedWeapon.HitRate = element.Data.HitRate;
         SelectedWeapon.Image = element.Data.Image;

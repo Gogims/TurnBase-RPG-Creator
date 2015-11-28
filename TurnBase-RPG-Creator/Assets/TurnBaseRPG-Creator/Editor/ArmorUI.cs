@@ -27,7 +27,7 @@ public class ArmorUI : CRUD<Armor>
         GUILayout.Space(15);
 
         GUI.enabled = !Selected;
-        element.Data.ArmorName = element.Name = EditorGUILayout.TextField("Name: ", element.Name);
+        element.Data.ItemName = element.Name = EditorGUILayout.TextField("Name: ", element.Name);
         element.Data.Description = EditorGUILayout.TextField("Description: ", element.Data.Description);
         element.Data.Type = (AbstractArmor.ArmorType) EditorGUILayout.EnumPopup("Armor Type: ", element.Data.Type);
         element.Data.Price = EditorGUILayout.IntField("Price: ", element.Data.Price);
@@ -102,7 +102,7 @@ public class ArmorUI : CRUD<Armor>
 
     override protected void AssignElement()
     {
-        SelectedArmor.ArmorName = element.Name;
+        SelectedArmor.ItemName = element.Name;
         SelectedArmor.Description = element.Data.Description;
         SelectedArmor.Image = element.Data.Image;
         SelectedArmor.MinLevel = element.Data.MinLevel;

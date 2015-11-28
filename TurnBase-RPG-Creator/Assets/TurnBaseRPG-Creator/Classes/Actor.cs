@@ -4,30 +4,18 @@ using System.Collections.Generic;
 
 public class Actor : RPGElement
 {
-    /// <summary>
-    /// El componente físico 
-    /// </summary>
-    private Rigidbody2D rb2D;
-
     //Protected, virtual functions can be overridden by inheriting classes.
     protected virtual void Start()
     {
-        //Get a component reference to this object's Rigidbody2D
-        rb2D = GetComponent<Rigidbody2D>();
 
-        if (rb2D == null)
-        {
-            rb2D = gameObject.AddComponent<Rigidbody2D>();
-        }
-
-        rb2D.gravityScale = 0;
-        rb2D.angularDrag = 0;
     }      
 
     //Move returns true if it is able to move and false if not. 
     //Move takes parameters for x direction, y direction and a RaycastHit2D to check collision.
     protected bool Move(int xDir, int yDir)
     {
+        var rb2D = GetComponent<Rigidbody2D>();
+        
         //Store start position to move from, based on objects current transform position.
         Vector2 start = transform.position;
 
