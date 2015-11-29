@@ -21,7 +21,7 @@ public class ScrollMenu<T>  : MonoBehaviour
     /// <summary>
     /// Lista de item que va ir mostrando
     /// </summary>
-    public List<GameObject> Items;
+    public List<T> Items;
     /// <summary>
     /// La posicion siguiente del texto que se va mostrar en el menu.
     /// </summary>
@@ -88,13 +88,13 @@ public class ScrollMenu<T>  : MonoBehaviour
     /// <param name="nextArrow">imagen que se muestra cuando hay mas elementos hacia abajo</param>
     /// <param name="prevArrow">Imagen que se muestra cuando hay mas elementos hacia arriba</param>
     /// <param name="panel">Panel padre de la lista</param>
-    public void Init(Vector3 position, Vector3 positionImage, int difY, int difX, List<GameObject> items,int maxItem, GameObject arrow, GameObject nextArrow, GameObject prevArrow,GameObject panel)
+    public void Init(Vector3 position, Vector3 positionImage, int difY, int difX, int maxItem, GameObject arrow, GameObject nextArrow, GameObject prevArrow,GameObject panel)
     {
+        Options = new List<KeyValuePair<GameObject, GameObject>>();
         PositionImage = positionImage;
         Position = position;
         DifY = difY;
         Panel = panel;
-        Items =items;
         MaxItem = maxItem;
         Arrow = arrow;
         NextArrow = nextArrow;
@@ -108,24 +108,45 @@ public class ScrollMenu<T>  : MonoBehaviour
         ImagePosX = (int)positionImage.x;
         ImagePosY = (int)positionImage.y;
         ImagePosition = positionImage;
+
+        
+    }
+    public void ChangeList(List<T> newItems) {
+        Items = newItems;
+        DestroyOption();
+        DisplayList();
+    }
+
+    private void DestroyOption()
+    {
+        foreach (KeyValuePair<GameObject,GameObject> i in Options) {
+            Destroy(i.Key);
+            Destroy(i.Value);
+        }
+        Options.Clear();
+
+    }
+    private void DisplayList() {
         int cant = 0;
-        foreach (GameObject i in  items)
+        foreach (T i in Items)
         {
             if (cant < MaxItem)
             {
                 Options.Add(NewItem(cant));
-
+                cant++;
             }
-            else {
+            else
+            {
                 break;
             }
         }
-        if (Options.Count > MaxItem)
+        if (Items.Count > MaxItem)
             NextArrow.SetActive(true);
-        
+        Reorder();
     }
     public void update()
     {
+
         if (ProxyInput.GetInstance().B())
         {
             Options[selected].Key.GetComponent<MenuOption>().UnSelect();
@@ -143,13 +164,13 @@ public class ScrollMenu<T>  : MonoBehaviour
                 ScrollCant++;
                 NewListNext();
          
-                Options[selected].Key.GetComponent<MenuOption>().On(Options[selected].Key.GetComponent<Text>().text);
+               // Options[selected].Key.GetComponent<MenuOption>().On(Options[selected].Key.GetComponent<Text>().text);
             }
             else if (selected < Options.Count-1)
             {
                 //Options[selected].GetComponent<MenuOption>().Off(Options[selected].GetComponent<Text>().text);
                 selected++;
-                Options[selected].Key.GetComponent<MenuOption>().On(Options[selected].Key.GetComponent<Text>().text);
+               // Options[selected].Key.GetComponent<MenuOption>().On(Options[selected].Key.GetComponent<Text>().text);
             }
             Arrow.transform.position = new Vector3(Arrow.transform.position.x, Options[selected].Key.gameObject.transform.position.y);
         }
@@ -162,13 +183,13 @@ public class ScrollMenu<T>  : MonoBehaviour
                 //Options[selected].GetComponent<MenuOption>().Off(Options[selected].GetComponent<Text>().text);
                 ScrollCant--;
                 NewListPrev();
-                Options[selected].Key.GetComponent<MenuOption>().On(Options[selected].Key.GetComponent<Text>().text);
+                //Options[selected].Key.GetComponent<MenuOption>().On(Options[selected].Key.GetComponent<Text>().text);
             }
             else if (selected > 0)
             {
                 //Options[selected].GetComponent<MenuOption>().Off(Options[selected].GetComponent<Text>().text);
                 selected--;
-                Options[selected].Key.GetComponent<MenuOption>().On(Options[selected].Key.GetComponent<Text>().text);
+                //Options[selected].Key.GetComponent<MenuOption>().On(Options[selected].Key.GetComponent<Text>().text);
             }
             Arrow.transform.position = new Vector3(Arrow.transform.position.x, Options[selected].Key.gameObject.transform.position.y);
         }
@@ -176,15 +197,18 @@ public class ScrollMenu<T>  : MonoBehaviour
         {
             Options[selected].Key.GetComponent<MenuOption>().OnSelect();
         }
+
     }
     private KeyValuePair<GameObject,GameObject> NewItem(int i){
-        Item.GetComponent<Text>().text = Items[i].GetComponent<T>().ItemName;
-        ItemImage.GetComponent<Image>().sprite = Items[i].GetComponent<T>().Image;
-        Item.transform.parent = Panel.transform;
-        ItemImage.transform.parent = Panel.transform;
-        Item.transform.localPosition = Position;
-        ItemImage.transform.localPosition = ImagePosition;
-        KeyValuePair<GameObject, GameObject> aux = new KeyValuePair<GameObject, GameObject>(Instantiate(Item), Instantiate(ItemImage));
+        Item.GetComponent<Text>().text = Items[i].ItemName;
+        ItemImage.GetComponent<Image>().sprite = Items[i].Image;
+        GameObject ax = Instantiate(Item);
+        GameObject ay = Instantiate(ItemImage);
+        ax.transform.parent = Panel.transform;
+        ay.transform.parent = Panel.transform;
+        ax.transform.localPosition = Position;
+        ay.transform.localPosition = ImagePosition;
+        KeyValuePair<GameObject, GameObject> aux = new KeyValuePair<GameObject, GameObject>(ax,ay);
         return aux;
     }
     private void NewListNext()

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Player : Actor
 {
-    public  Inventory Items = new Inventory();
+    public Inventory Items = new Inventory();
     /// <summary>
     /// Listado de las animaciones para caminar hacia abajo
     /// </summary>

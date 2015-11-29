@@ -75,15 +75,15 @@ public class EquipmentMenu : Menus {
     /// <summary>
     /// La posicion en x de la imagen del item
     /// </summary>
-    private int xImage = 53;
+    private int xImage = 66;
     /// <summary>
     /// Posicion en x del texto del item
     /// </summary>
-    private int xItem = -30;
+    private int xItem = -17;
     /// <summary>
     /// Diferencia en y entre cada item;
     /// </summary>
-    private int diffy = 39;
+    private int diffy = -39;
     /// <summary>
     /// Seleccion del menu
     /// </summary>
@@ -91,7 +91,10 @@ public class EquipmentMenu : Menus {
     /// <summary>
     /// Lista de items visibles
     /// </summary>
-    private List<KeyValuePair<GameObject, GameObject>> ActiveItems;
+    private List<Item> ActiveItems;
+    public GameObject Arrow2;
+    public GameObject NextArrow;
+    public GameObject PrevArrow;
     private int startY = 97;
     ScrollMenu<Item> MenuScroll;
     /// <summary>
@@ -106,96 +109,73 @@ public class EquipmentMenu : Menus {
     public GameObject MagicDefense;
     public GameObject Agility;
     public GameObject Luck;
+    private bool select2 = false;
     #endregion
     public void Start() {
-        Feet.GetComponent<Text>().text = GameObject.Find("PLAYER").GetComponent<Player>().Data.Feet.ItemName;
-        Ring.GetComponent<Text>().text = GameObject.Find("PLAYER").GetComponent<Player>().Data.Ring.ItemName;
-        Weapon.GetComponent<Text>().text = GameObject.Find("PLAYER").GetComponent<Player>().Data.MainHand.ItemName;
-        Body.GetComponent<Text>().text = GameObject.Find("PLAYER").GetComponent<Player>().Data.Body.ItemName;
-        Necklace.GetComponent<Text>().text = GameObject.Find("PLAYER").GetComponent<Player>().Data.Necklace.ItemName;
-        Head.GetComponent<Text>().text = GameObject.Find("PLAYER").GetComponent<Player>().Data.Helmet.ItemName;
-        MaxHP.GetComponent<Text>().text = GameObject.Find("PLAYER").GetComponent<Player>().Data.Stats.MaxHP.ToString();
-        MaxMP.GetComponent<Text>().text = GameObject.Find("PLAYER").GetComponent<Player>().Data.Stats.MaxMP.ToString();
-        Attack.GetComponent<Text>().text = GameObject.Find("PLAYER").GetComponent<Player>().Data.Stats.Attack.ToString();
-        Magic.GetComponent<Text>().text = GameObject.Find("PLAYER").GetComponent<Player>().Data.Stats.Magic.ToString();
-        MagicDefense.GetComponent<Text>().text = GameObject.Find("PLAYER").GetComponent<Player>().Data.Stats.MagicDefense.ToString();
-        Agility.GetComponent<Text>().text = GameObject.Find("PLAYER").GetComponent<Player>().Data.Stats.Agility.ToString();
-        Luck.GetComponent<Text>().text = GameObject.Find("PLAYER").GetComponent<Player>().Data.Stats.Luck.ToString();
+        Feet.GetComponent<Text>().text = GameObject.FindWithTag("RPG-PLAYER").GetComponent<Player>().Data.Feet.ItemName;
+        Ring.GetComponent<Text>().text = GameObject.FindWithTag("RPG-PLAYER").GetComponent<Player>().Data.Ring.ItemName;
+        Weapon.GetComponent<Text>().text = GameObject.FindWithTag("RPG-PLAYER").GetComponent<Player>().Data.MainHand.ItemName;
+        Body.GetComponent<Text>().text = GameObject.FindWithTag("RPG-PLAYER").GetComponent<Player>().Data.Body.ItemName;
+        Necklace.GetComponent<Text>().text = GameObject.FindWithTag("RPG-PLAYER").GetComponent<Player>().Data.Necklace.ItemName;
+        Head.GetComponent<Text>().text = GameObject.FindWithTag("RPG-PLAYER").GetComponent<Player>().Data.Helmet.ItemName;
+        MaxHP.GetComponent<Text>().text = GameObject.FindWithTag("RPG-PLAYER").GetComponent<Player>().Data.Stats.MaxHP.ToString();
+        MaxMP.GetComponent<Text>().text = GameObject.FindWithTag("RPG-PLAYER").GetComponent<Player>().Data.Stats.MaxMP.ToString();
+        Attack.GetComponent<Text>().text = GameObject.FindWithTag("RPG-PLAYER").GetComponent<Player>().Data.Stats.Attack.ToString();
+        Magic.GetComponent<Text>().text = GameObject.FindWithTag("RPG-PLAYER").GetComponent<Player>().Data.Stats.Magic.ToString();
+        MagicDefense.GetComponent<Text>().text = GameObject.FindWithTag("RPG-PLAYER").GetComponent<Player>().Data.Stats.MagicDefense.ToString();
+        Agility.GetComponent<Text>().text = GameObject.FindWithTag("RPG-PLAYER").GetComponent<Player>().Data.Stats.Agility.ToString();
+        Luck.GetComponent<Text>().text = GameObject.FindWithTag("RPG-PLAYER").GetComponent<Player>().Data.Stats.Luck.ToString();
         ListBody = new List<AbstractArmor>();
         ListFeet = new List<AbstractArmor>();
         ListHelmet = new List<AbstractArmor>();
         ListNecklace = new List<AbstractArmor>();
         ListRing = new List<AbstractArmor>();
         ListWeapon = new List<AbstractWeapon>();
-        ActiveItems = new List<KeyValuePair<GameObject, GameObject>>();
-        ListBody = GameObject.Find("PLAYER").GetComponent<Player>().Items.TypeArmor(AbstractArmor.ArmorType.Body);
-        ListFeet = GameObject.Find("PLAYER").GetComponent<Player>().Items.TypeArmor(AbstractArmor.ArmorType.Feet);
-        ListHelmet = GameObject.Find("PLAYER").GetComponent<Player>().Items.TypeArmor(AbstractArmor.ArmorType.Helmet);
-        ListNecklace = GameObject.Find("PLAYER").GetComponent<Player>().Items.TypeArmor(AbstractArmor.ArmorType.Necklace);
-        ListRing = GameObject.Find("PLAYER").GetComponent<Player>().Items.TypeArmor(AbstractArmor.ArmorType.Ring);
-        ListWeapon = GameObject.Find("PLAYER").GetComponent<Player>().Items.Weapons;
+        ActiveItems = new List<Item>();
+        ListBody = GameObject.FindWithTag("RPG-PLAYER").GetComponent<Player>().Items.TypeArmor(AbstractArmor.ArmorType.Body);
+        ListFeet = GameObject.FindWithTag("RPG-PLAYER").GetComponent<Player>().Items.TypeArmor(AbstractArmor.ArmorType.Feet);
+        ListHelmet = GameObject.FindWithTag("RPG-PLAYER").GetComponent<Player>().Items.TypeArmor(AbstractArmor.ArmorType.Helmet);
+        ListNecklace = GameObject.FindWithTag("RPG-PLAYER").GetComponent<Player>().Items.TypeArmor(AbstractArmor.ArmorType.Necklace);
+        ListRing = GameObject.FindWithTag("RPG-PLAYER").GetComponent<Player>().Items.TypeArmor(AbstractArmor.ArmorType.Ring);
+        ListWeapon = GameObject.FindWithTag("RPG-PLAYER").GetComponent<Player>().Items.Weapons;
         Item = Resources.Load("Menus/MenuItems") as GameObject;
         ItemImage = Resources.Load("Menus/MenuItemsImage") as GameObject;
+        MenuScroll = new ScrollMenu<Item>();
+        MenuScroll.Init(new Vector3(xItem, lastY), new Vector3(xImage, lastY), diffy, 0, 6, Arrow2, NextArrow, PrevArrow, ItemPanel);
         fillWeapon();
+        
     }
     public void Select() {
         select = false;
+        select2 = true;
     }
     public void unSelect() {
         select = true;
+        select2 = false;
     }
     public void Update() {
+        if (!select2)
+            return;
+        if (delay < 15)
+        {
+            delay++;
+            return;
+        }
+
+            MenuScroll.update();
+        delay = 0;
     }
     private void DestroyAll()
     {
-        foreach (KeyValuePair<GameObject, GameObject> i in ActiveItems) {
-            Destroy(i.Key);
-            Destroy(i.Value);
-        }
         ActiveItems.Clear();
     }
-    private void DestroyIndex(int i) { 
-        Destroy(ActiveItems[i].Key);
-        Destroy(ActiveItems[i].Value);
-        ActiveItems.RemoveAt(i);
-    }
     private void fillWeapon(){
-        lastY = startY;
-        if (ListWeapon.Count > 0)
-        {
-            Item.GetComponent<Text>().text = ListWeapon[0].ItemName;
-            ItemImage.GetComponent<Image>().sprite = ListWeapon[0].Image;
-            GameObject x = GameObject.Instantiate(Item);
-            GameObject y = GameObject.Instantiate(ItemImage);
-            x.transform.parent = ItemPanel.transform;
-            x.transform.localPosition = new Vector3(xItem, lastY);
-            y.transform.parent = ItemPanel.transform;
-            y.transform.localPosition = new Vector3(xImage, lastY);
-            KeyValuePair<GameObject, GameObject> newObj = new KeyValuePair<GameObject, GameObject>(x, y);
-           ActiveItems.Add(newObj);
-            lastY -= diffy;
-        }
-        if (ListWeapon.Count > 1)
-        {
-            int cant = 1;
-            foreach (AbstractWeapon i in ListWeapon.GetRange(1, ListWeapon.Count-1))
+            foreach (AbstractWeapon i in ListWeapon)
             {
-                if (cant == 6)
-                    break;
-                Item.GetComponent<Text>().text = i.ItemName;
-                ItemImage.GetComponent<Image>().sprite = i.Image;
-                GameObject ax = GameObject.Instantiate(Item);
-                GameObject ay = GameObject.Instantiate(ItemImage);
-                ax.transform.parent = ItemPanel.transform;
-                ax.transform.localPosition = new Vector3(xItem, lastY);
-                ay.transform.parent = ItemPanel.transform;
-                ay.transform.localPosition = new Vector3(xImage, lastY);
-                KeyValuePair<GameObject, GameObject> newObj = new KeyValuePair<GameObject, GameObject>(ax, ay);
-                ActiveItems.Add(newObj);
-                lastY -= diffy;
-                cant++;
+                    ActiveItems.Add(i);
             }
-        }
+            MenuScroll.ChangeList(ActiveItems);
+        
     }
     private void fillArmor(AbstractArmor.ArmorType type){
         List<AbstractArmor> list = new List<AbstractArmor>();
@@ -219,42 +199,12 @@ public class EquipmentMenu : Menus {
             default:
                 break;
         }
-        lastY = startY;
-        if (list.Count > 0)
-        {
-            Item.GetComponent<Text>().text = list[0].ItemName;
-            ItemImage.GetComponent<Image>().sprite = list[0].Image;
-            GameObject x = GameObject.Instantiate(Item);
-            GameObject y = GameObject.Instantiate(ItemImage);
-            x.transform.parent = ItemPanel.transform;
-            x.transform.localPosition = new Vector3(xItem, lastY);
-            y.transform.parent = ItemPanel.transform;
-            y.transform.localPosition = new Vector3(xImage, lastY);
-            KeyValuePair<GameObject, GameObject> newObj = new KeyValuePair<GameObject, GameObject>(x, y);
-            ActiveItems.Add(newObj);
-            lastY -= diffy;
-        }
-        if (list.Count > 1)
-        {
-            int cant = 1;
-            foreach (AbstractArmor i in list.GetRange(1,list.Count-1))
+        
+            foreach (AbstractArmor i in list)
             {
-                if (cant == 6)
-                    break;
-                Item.GetComponent<Text>().text = i.ItemName;
-                ItemImage.GetComponent<Image>().sprite = i.Image;
-                GameObject ax = GameObject.Instantiate(Item);
-                GameObject ay = GameObject.Instantiate(ItemImage);
-                ax.transform.parent = ItemPanel.transform;
-                ax.transform.localPosition = new Vector3(xItem, lastY);
-                ay.transform.parent = ItemPanel.transform;
-                ay.transform.localPosition = new Vector3(xImage, lastY);
-                KeyValuePair<GameObject, GameObject> newObj = new KeyValuePair<GameObject, GameObject>(ax, ay);
-                ActiveItems.Add(newObj);
-                lastY -= diffy;
-                cant++;
+                ActiveItems.Add(i);
             }
-        }
+            MenuScroll.ChangeList(ActiveItems);
     }
     public void Load(string name)
     {
@@ -278,7 +228,7 @@ public class EquipmentMenu : Menus {
                 selection = "Body";
                 break;
             case "Feet":
-                DestroyAll();
+               DestroyAll();
                 fillArmor(AbstractArmor.ArmorType.Feet);
                 selection = "Feet";
                 break;
