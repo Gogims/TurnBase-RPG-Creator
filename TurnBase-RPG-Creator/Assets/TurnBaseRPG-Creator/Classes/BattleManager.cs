@@ -164,7 +164,7 @@ public class BattleManager : RPGElement
         {
             if (!ApplyRate.HasValue || ApplyRate.Value >= UnityEngine.Random.Range(1, 100))
             {
-                inflicted.States.Add(state);
+                //inflicted.States.Add(state);
             }
         }
     }
@@ -178,11 +178,11 @@ public class BattleManager : RPGElement
                 foreach (var item in inflicted.States)
                 {
                     // Deberia ser por el ID
-                    if (item.State == state.State)
-                    {
-                        inflicted.States.Remove(item);
-                        break;
-                    }
+                    //if (item.State == state.State)
+                    //{
+                    //    inflicted.States.Remove(item);
+                    //    break;
+                    //}
                 }
             }
         }

@@ -18,7 +18,7 @@ public class State: RPGElement
 public class AbstractState
 {
     /// <summary>
-    /// Prioridad del estado (1 = más alto)
+    /// Prioridad del estado (100 = más alto)
     /// </summary>
     public int Priority;
     /// <summary>
@@ -62,22 +62,6 @@ public class AbstractState
     /// </summary>
     public string MessageEnemy = string.Empty;
     /// <summary>
-    /// Se elimina el estado al caminar?
-    /// </summary>
-    public bool RemoveByWalking;
-    /// <summary>
-    /// Cuantos pasos necesita realizar para que se elimine el estado
-    /// </summary>
-    public int NumberOfSteps;
-    /// <summary>
-    /// Cuantos pasos se necesita para que se active el estado
-    /// </summary>
-    public int ActiveOnSteps;
-    /// <summary>
-    /// Contador de pasos
-    /// </summary>
-    public int Steps;
-    /// <summary>
     /// Se elimina el estado al recibir daño?
     /// </summary>
     public bool RemoveByDamage;
@@ -88,23 +72,19 @@ public class AbstractState
     /// <summary>
     /// 0=none, 1=Inicio del Turno, 2= Al final del turno
     /// </summary>
-    public Constant.TurnTiming AutoRemovalTiming;
+    public bool AutoRemovalTiming;
     /// <summary>
-    /// Rango de turnos que tomará para remover el estado (rango inferior)
+    /// Total de turnos para ser eliminado el estado
     /// </summary>
-    public int DurationStartTurn;
-    /// <summary>
-    /// Rango de turnos que tomará para remover el estado (rango superior)
-    /// </summary>
-    public int DurationEndTurn;
+    public int TurnTotal;
     /// <summary>
     /// Contador de turnos pasados con el estado
     /// </summary>
     public int Turn;
     /// <summary>
-    /// Probabilidad de atacar a tu aliado
+    /// Probabilidad de aplicar la restricción del estado
     /// </summary>
-    public float PercentageAttackAlly;
+    public float RestrictionRate;
     /// <summary>
     /// El estado se ha eliminado? Read-only
     /// </summary>
@@ -112,36 +92,12 @@ public class AbstractState
         get { return _removed; }
     }
     /// <summary>
-    /// Momento en el que el estado se activa
-    /// </summary>
-    public Constant.TriggerTurnType TriggerTurn;
-    /// <summary>
     /// Tipo de estado
     /// </summary>
-    public Constant.DamageHeal Type;
-
-    /// <summary>
-    /// Referencia a la función Apply
-    /// </summary>
-    public UnityAction func;
+    public Constant.DamageHeal Type;    
 
     /// <summary>
     /// Deja de aplicar el estado al actor (se remueve)
     /// </summary>
-    private bool _removed = false;  
-
-    public void Apply(ref AbstractActor actor)
-    {
-        int HealDamage = Type == Constant.DamageHeal.Damage ? -1 : 1;
-
-        actor.HP += FixedValue * HealDamage;
-
-        if (ActionRate != 0)
-        {
-            if (AttackType == Constant.AttackType.MagicAttack)
-            {
-
-            }
-        }
-    }
+    private bool _removed = false;    
 }
