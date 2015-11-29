@@ -45,8 +45,8 @@ public class Map : RPGElement{
         x.Data.Heigth = this.Data.Heigth;
         x.Icon = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/TurnBaseRPG-Creator/RPG-Sprites/MapIcon.png");
         x.Id = Guid.NewGuid().ToString();
-        string returnPath = "Assets/Resources/Maps/" + Guid.NewGuid() + ".unity";
-        x.Data.MapPath = Directory.GetCurrentDirectory() + '\\' + returnPath.Replace('/', '\\');
+        string returnPath = "Assets/Resources/Maps/" + x.Id + ".unity";
+        x.Data.MapPath = returnPath;
         PrefabUtility.CreatePrefab("Assets/Resources/Maps/" + x.Id + ".prefab", x.gameObject);
         DestroyImmediate(settings);
         EditorApplication.SaveScene(returnPath);// Guarda la scene.

@@ -1,9 +1,18 @@
 fileFormatVersion: 2
 guid: ff79079943fd5bd46a87abbedd87ade4
-timeCreated: 1448337226
+timeCreated: 1448765726
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: Door_doors_0
+    21300002: Door_doors_1
+    21300004: Door_doors_2
+    21300006: Door_doors_3
+    21300008: Door_doors_4
+    21300010: Door_doors_5
+    21300012: Door_doors_6
+    21300014: Door_doors_7
+    21300016: Door_doors_8
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -48,7 +57,97 @@ TextureImporter:
   textureType: 5
   buildTargetSettings: []
   spriteSheet:
-    sprites: []
+    sprites:
+    - name: Door_doors_0
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 191
+        width: 77
+        height: 65
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Door_doors_1
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 191
+        width: 77
+        height: 65
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Door_doors_2
+      rect:
+        serializedVersion: 2
+        x: 204
+        y: 190
+        width: 77
+        height: 65
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Door_doors_3
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 126
+        width: 77
+        height: 65
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Door_doors_4
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 127
+        width: 74
+        height: 65
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Door_doors_5
+      rect:
+        serializedVersion: 2
+        x: 205
+        y: 125
+        width: 77
+        height: 65
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Door_doors_6
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 64
+        width: 77
+        height: 62
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Door_doors_7
+      rect:
+        serializedVersion: 2
+        x: 107
+        y: 61
+        width: 77
+        height: 65
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Door_doors_8
+      rect:
+        serializedVersion: 2
+        x: 202
+        y: 61
+        width: 77
+        height: 65
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 
   assetBundleName: 

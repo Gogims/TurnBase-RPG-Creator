@@ -20,7 +20,7 @@ a wall in the map, it will collide with other
 objects.");
 		types.Add ("Tiles", @"An object of this type will be use to represent tiles 
 of a map, it won't collide with other objects.");
-		types.Add ("Pick Up", @"An object of this type will be use to represent 
+		types.Add ("PickUp", @"An object of this type will be use to represent 
 a pick up item on the map, it will collide with 
 other objects and it will be destroy on collision.");
 		types.Add ("Obstacle", @"An object of this type will be use to represent 

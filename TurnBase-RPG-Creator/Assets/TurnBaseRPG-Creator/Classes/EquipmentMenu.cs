@@ -137,9 +137,6 @@ public class EquipmentMenu : Menus {
         Item = Resources.Load("Menus/MenuItems") as GameObject;
         ItemImage = Resources.Load("Menus/MenuItemsImage") as GameObject;
         fillWeapon();
-        //MenuScroll.Init(new Vector3())
-        
-
     }
     public void Select() {
         select = false;
@@ -175,7 +172,7 @@ public class EquipmentMenu : Menus {
             y.transform.parent = ItemPanel.transform;
             y.transform.localPosition = new Vector3(xImage, lastY);
             KeyValuePair<GameObject, GameObject> newObj = new KeyValuePair<GameObject, GameObject>(x, y);
-            ActiveItems.Add(newObj);
+           ActiveItems.Add(newObj);
             lastY -= diffy;
         }
         if (ListWeapon.Count > 1)

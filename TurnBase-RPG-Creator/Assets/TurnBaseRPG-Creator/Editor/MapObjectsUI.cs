@@ -77,6 +77,18 @@ public class MapObjectsUI : EditorWindow {
     /// </summary>
     GameObject CreateObj;
     /// <summary>
+    /// Tipo del item
+    /// </summary>
+    Constant.ItemType itemType;
+    /// <summary>
+    /// Tipo de objeto
+    /// </summary>
+    Constant.MapObjectType MapObjectType;
+    /// <summary>
+    /// Nombre del pickup
+    /// </summary>
+    private string pickupName;
+    /// <summary>
     /// Inicializa los valores de la ventana
     /// </summary>
     public void Init() {
@@ -85,9 +97,6 @@ public class MapObjectsUI : EditorWindow {
         if (name == null)
             name = string.Empty;
     }
-    Constant.ItemType itemType;
-    Constant.MapObjectType MapObjectType;
-    private string pickupName;
     /// <summary>
     /// Metodo que se llama cuando la ventana esta abierta.
     /// </summary>
@@ -163,19 +172,7 @@ public class MapObjectsUI : EditorWindow {
                         break;
                 }
             }
-            switch (itemType)
-            {
-                case Constant.ItemType.Armor:
-                    pickupName = pickup.ItemArmor.ItemName;
-                    break;
-                case Constant.ItemType.Usable:
-                    pickupName = pickup.ItemUsable.ItemName;
-                    break;
-                case Constant.ItemType.Weapon:
-                    pickupName = pickup.ItemWeapon.ItemName;
-                    break;
-            }
-
+            pickupName = pickup.ItemArmor.ItemName;
             GUI.enabled = false;
             GUILayout.TextField(pickupName);
             GUI.enabled = true;
@@ -279,9 +276,9 @@ public class MapObjectsUI : EditorWindow {
                 SpriteRenderer image1 =  wall.gameObject.AddComponent<SpriteRenderer>();
                 image1.sortingLayerName = Constant.LAYER_ITEM;
                 image1.sprite = wall.Icon;
+                BoxCollider2D collider = wall.gameObject.AddComponent<BoxCollider2D>();
+                collider.size = new Vector2(image1.sprite.rect.width, image1.sprite.rect.height);
                 wall.Image = wall.Icon;
-                var Collider1 = wall.gameObject.AddComponent<BoxCollider2D>();
-                Collider1.size = new Vector2(wall.Icon.textureRect.width, wall.Icon.textureRect.height);
                 wall.Id = Guid.NewGuid().ToString();
                 PrefabUtility.CreatePrefab("Assets/Resources/" + type + "/"+wall.Id+".prefab",wall.gameObject);
                 DestroyImmediate(wall.gameObject);
@@ -293,9 +290,9 @@ public class MapObjectsUI : EditorWindow {
                 SpriteRenderer image2 = pickup.gameObject.AddComponent<SpriteRenderer>();
                 image2.sortingLayerName = Constant.LAYER_ITEM;
                 image2.sprite = pickup.Icon;
+                BoxCollider2D collider2 = pickup.gameObject.AddComponent<BoxCollider2D>();
+                collider2.size = new Vector2(image2.sprite.rect.width, image2.sprite.rect.height);
                 pickup.Image = pickup.Icon;
-                var Collider2 = pickup.gameObject.AddComponent<BoxCollider2D>();
-                Collider2.size = new Vector2(pickup.Icon.textureRect.width, pickup.Icon.textureRect.height);
                 pickup.Id = Guid.NewGuid().ToString();
                 PrefabUtility.CreatePrefab("Assets/Resources/" + type + "/" + pickup.Id + ".prefab", pickup.gameObject);
                 DestroyImmediate(pickup.gameObject);
@@ -304,12 +301,12 @@ public class MapObjectsUI : EditorWindow {
                 
                 break;
             case 3:
-                SpriteRenderer image3 = obstacle.gameObject.AddComponent<SpriteRenderer>();                
+                SpriteRenderer image3 = obstacle.gameObject.AddComponent<SpriteRenderer>();
                 image3.sortingLayerName = Constant.LAYER_ITEM;
-                image3.sprite = obstacle.Icon;
+                image3.sprite = obstacle.Icon;          
+                BoxCollider2D collider3 = obstacle.gameObject.AddComponent<BoxCollider2D>();
+                collider3.size = new Vector2(image3.sprite.rect.width, image3.sprite.rect.height);
                 obstacle.Image = obstacle.Icon;
-                var Collider3 = obstacle.gameObject.AddComponent<BoxCollider2D>();
-                Collider3.size = new Vector2(obstacle.Icon.textureRect.width, obstacle.Icon.textureRect.height);
                 obstacle.gameObject.tag = tag;
                 obstacle.Id = Guid.NewGuid().ToString();
                 PrefabUtility.CreatePrefab("Assets/Resources/" + type + "/" + obstacle.Id + ".prefab", obstacle.gameObject);
@@ -328,8 +325,8 @@ public class MapObjectsUI : EditorWindow {
                 temp.Icon = door.Icon;
                 temp.Image = door.Icon;
                 temp.gameObject.tag = tag;
-                var Collider4 = temp.gameObject.AddComponent<BoxCollider2D>();
-                Collider4.size = new Vector2(temp.Icon.textureRect.width, temp.Icon.textureRect.height);
+                BoxCollider2D collider4 = temp.gameObject.AddComponent<BoxCollider2D>();
+                collider4.size = new Vector2(image4.sprite.rect.width, image4.sprite.rect.height);
                 temp.Id = Guid.NewGuid().ToString();
                 PrefabUtility.CreatePrefab("Assets/Resources/" + type + "/" + temp.Id + ".prefab", temp.gameObject);
                 DestroyImmediate(temp.gameObject);
@@ -340,9 +337,9 @@ public class MapObjectsUI : EditorWindow {
                 SpriteRenderer image5 = house.gameObject.AddComponent<SpriteRenderer>();
                 image5.sortingLayerName = Constant.LAYER_ITEM;
                 image5.sprite = house.Icon;
+                BoxCollider2D collider5 = house.gameObject.AddComponent<BoxCollider2D>();
+                collider5.size = new Vector2(image5.sprite.rect.width, image5.sprite.rect.height);
                 house.Image = house.Icon;
-                var Collider5 = house.gameObject.AddComponent<BoxCollider2D>();
-                Collider5.size = new Vector2(house.Icon.textureRect.width, house.Icon.textureRect.height);
                 house.gameObject.tag = tag;
                 house.Id = Guid.NewGuid().ToString();
                 PrefabUtility.CreatePrefab("Assets/Resources/" + type + "/" + house.Id + ".prefab", house.gameObject);
@@ -353,15 +350,15 @@ public class MapObjectsUI : EditorWindow {
             default:
                 SpriteRenderer image = tile.gameObject.AddComponent<SpriteRenderer>();
                 image.sortingLayerName = Constant.LAYER_TILE;
-                 image.sprite = tile.Icon;
-                 tile.Image = tile.Icon;
-                 tile.gameObject.tag = tag;
-                 tile.Id = Guid.NewGuid().ToString();
-                 PrefabUtility.CreatePrefab("Assets/Resources/" + type + "/" + tile.Id + ".prefab", tile.gameObject);
-                 DestroyImmediate(tile.gameObject);
-                 CreateObj = new GameObject();
-                 tile = CreateObj.AddComponent<Tile>();
-                 break;
+                image.sprite = tile.Icon;
+                tile.Image = tile.Icon;
+                tile.gameObject.tag = tag;
+                tile.Id = Guid.NewGuid().ToString();
+                PrefabUtility.CreatePrefab("Assets/Resources/" + type + "/" + tile.Id + ".prefab", tile.gameObject);
+                DestroyImmediate(tile.gameObject);
+                CreateObj = new GameObject();
+                tile = CreateObj.AddComponent<Tile>();
+                break;
         }
         ClearFields();
        

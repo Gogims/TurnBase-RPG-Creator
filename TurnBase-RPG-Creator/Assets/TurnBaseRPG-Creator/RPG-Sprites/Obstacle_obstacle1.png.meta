@@ -1,9 +1,180 @@
 fileFormatVersion: 2
 guid: 7e2d253ee4c10eb44bb141e873aef22e
-timeCreated: 1448337312
+timeCreated: 1448765573
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: Obstacle_obstacle1_0
+    21300002: Obstacle_obstacle1_1
+    21300004: Obstacle_obstacle1_2
+    21300006: Obstacle_obstacle1_3
+    21300008: Obstacle_obstacle1_4
+    21300010: Obstacle_obstacle1_5
+    21300012: Obstacle_obstacle1_6
+    21300014: Obstacle_obstacle1_7
+    21300016: Obstacle_obstacle1_8
+    21300018: Obstacle_obstacle1_9
+    21300020: Obstacle_obstacle1_10
+    21300022: Obstacle_obstacle1_11
+    21300024: Obstacle_obstacle1_12
+    21300026: Obstacle_obstacle1_13
+    21300028: Obstacle_obstacle1_14
+    21300030: Obstacle_obstacle1_15
+    21300032: Obstacle_obstacle1_16
+    21300034: Obstacle_obstacle1_17
+    21300036: Obstacle_obstacle1_18
+    21300038: Obstacle_obstacle1_19
+    21300040: Obstacle_obstacle1_20
+    21300042: Obstacle_obstacle1_21
+    21300044: Obstacle_obstacle1_22
+    21300046: Obstacle_obstacle1_23
+    21300048: Obstacle_obstacle1_24
+    21300050: Obstacle_obstacle1_25
+    21300052: Obstacle_obstacle1_26
+    21300054: Obstacle_obstacle1_27
+    21300056: Obstacle_obstacle1_28
+    21300058: Obstacle_obstacle1_29
+    21300060: Obstacle_obstacle1_30
+    21300062: Obstacle_obstacle1_31
+    21300064: Obstacle_obstacle1_32
+    21300066: Obstacle_obstacle1_33
+    21300068: Obstacle_obstacle1_34
+    21300070: Obstacle_obstacle1_35
+    21300072: Obstacle_obstacle1_36
+    21300074: Obstacle_obstacle1_37
+    21300076: Obstacle_obstacle1_38
+    21300078: Obstacle_obstacle1_39
+    21300080: Obstacle_obstacle1_40
+    21300082: Obstacle_obstacle1_41
+    21300084: Obstacle_obstacle1_42
+    21300086: Obstacle_obstacle1_43
+    21300088: Obstacle_obstacle1_44
+    21300090: Obstacle_obstacle1_45
+    21300092: Obstacle_obstacle1_46
+    21300094: Obstacle_obstacle1_47
+    21300096: Obstacle_obstacle1_48
+    21300098: Obstacle_obstacle1_49
+    21300100: Obstacle_obstacle1_50
+    21300102: Obstacle_obstacle1_51
+    21300104: Obstacle_obstacle1_52
+    21300106: Obstacle_obstacle1_53
+    21300108: Obstacle_obstacle1_54
+    21300110: Obstacle_obstacle1_55
+    21300112: Obstacle_obstacle1_56
+    21300114: Obstacle_obstacle1_57
+    21300116: Obstacle_obstacle1_58
+    21300118: Obstacle_obstacle1_59
+    21300120: Obstacle_obstacle1_60
+    21300122: Obstacle_obstacle1_61
+    21300124: Obstacle_obstacle1_62
+    21300126: Obstacle_obstacle1_63
+    21300128: Obstacle_obstacle1_64
+    21300130: Obstacle_obstacle1_65
+    21300132: Obstacle_obstacle1_66
+    21300134: Obstacle_obstacle1_67
+    21300136: Obstacle_obstacle1_68
+    21300138: Obstacle_obstacle1_69
+    21300140: Obstacle_obstacle1_70
+    21300142: Obstacle_obstacle1_71
+    21300144: Obstacle_obstacle1_72
+    21300146: Obstacle_obstacle1_73
+    21300148: Obstacle_obstacle1_74
+    21300150: Obstacle_obstacle1_75
+    21300152: Obstacle_obstacle1_76
+    21300154: Obstacle_obstacle1_77
+    21300156: Obstacle_obstacle1_78
+    21300158: Obstacle_obstacle1_79
+    21300160: Obstacle_obstacle1_80
+    21300162: Obstacle_obstacle1_81
+    21300164: Obstacle_obstacle1_82
+    21300166: Obstacle_obstacle1_83
+    21300168: Obstacle_obstacle1_84
+    21300170: Obstacle_obstacle1_85
+    21300172: Obstacle_obstacle1_86
+    21300174: Obstacle_obstacle1_87
+    21300176: Obstacle_obstacle1_88
+    21300178: Obstacle_obstacle1_89
+    21300180: Obstacle_obstacle1_90
+    21300182: Obstacle_obstacle1_91
+    21300184: Obstacle_obstacle1_92
+    21300186: Obstacle_obstacle1_93
+    21300188: Obstacle_obstacle1_94
+    21300190: Obstacle_obstacle1_95
+    21300192: Obstacle_obstacle1_96
+    21300194: Obstacle_obstacle1_97
+    21300196: Obstacle_obstacle1_98
+    21300198: Obstacle_obstacle1_99
+    21300200: Obstacle_obstacle1_100
+    21300202: Obstacle_obstacle1_101
+    21300204: Obstacle_obstacle1_102
+    21300206: Obstacle_obstacle1_103
+    21300208: Obstacle_obstacle1_104
+    21300210: Obstacle_obstacle1_105
+    21300212: Obstacle_obstacle1_106
+    21300214: Obstacle_obstacle1_107
+    21300216: Obstacle_obstacle1_108
+    21300218: Obstacle_obstacle1_109
+    21300220: Obstacle_obstacle1_110
+    21300222: Obstacle_obstacle1_111
+    21300224: Obstacle_obstacle1_112
+    21300226: Obstacle_obstacle1_113
+    21300228: Obstacle_obstacle1_114
+    21300230: Obstacle_obstacle1_115
+    21300232: Obstacle_obstacle1_116
+    21300234: Obstacle_obstacle1_117
+    21300236: Obstacle_obstacle1_118
+    21300238: Obstacle_obstacle1_119
+    21300240: Obstacle_obstacle1_120
+    21300242: Obstacle_obstacle1_121
+    21300244: Obstacle_obstacle1_122
+    21300246: Obstacle_obstacle1_123
+    21300248: Obstacle_obstacle1_124
+    21300250: Obstacle_obstacle1_125
+    21300252: Obstacle_obstacle1_126
+    21300254: Obstacle_obstacle1_127
+    21300256: Obstacle_obstacle1_128
+    21300258: Obstacle_obstacle1_129
+    21300260: Obstacle_obstacle1_130
+    21300262: Obstacle_obstacle1_131
+    21300264: Obstacle_obstacle1_132
+    21300266: Obstacle_obstacle1_133
+    21300268: Obstacle_obstacle1_134
+    21300270: Obstacle_obstacle1_135
+    21300272: Obstacle_obstacle1_136
+    21300274: Obstacle_obstacle1_137
+    21300276: Obstacle_obstacle1_138
+    21300278: Obstacle_obstacle1_139
+    21300280: Obstacle_obstacle1_140
+    21300282: Obstacle_obstacle1_141
+    21300284: Obstacle_obstacle1_142
+    21300286: Obstacle_obstacle1_143
+    21300288: Obstacle_obstacle1_144
+    21300290: Obstacle_obstacle1_145
+    21300292: Obstacle_obstacle1_146
+    21300294: Obstacle_obstacle1_147
+    21300296: Obstacle_obstacle1_148
+    21300298: Obstacle_obstacle1_149
+    21300300: Obstacle_obstacle1_150
+    21300302: Obstacle_obstacle1_151
+    21300304: Obstacle_obstacle1_152
+    21300306: Obstacle_obstacle1_153
+    21300308: Obstacle_obstacle1_154
+    21300310: Obstacle_obstacle1_155
+    21300312: Obstacle_obstacle1_156
+    21300314: Obstacle_obstacle1_157
+    21300316: Obstacle_obstacle1_158
+    21300318: Obstacle_obstacle1_159
+    21300320: Obstacle_obstacle1_160
+    21300322: Obstacle_obstacle1_161
+    21300324: Obstacle_obstacle1_162
+    21300326: Obstacle_obstacle1_163
+    21300328: Obstacle_obstacle1_164
+    21300330: Obstacle_obstacle1_165
+    21300332: Obstacle_obstacle1_166
+    21300334: Obstacle_obstacle1_167
+    21300336: Obstacle_obstacle1_168
+    21300338: Obstacle_obstacle1_169
+    21300340: Obstacle_obstacle1_170
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -48,7 +219,1717 @@ TextureImporter:
   textureType: 5
   buildTargetSettings: []
   spriteSheet:
-    sprites: []
+    sprites:
+    - name: Obstacle_obstacle1_0
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 224
+        width: 28
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_1
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 224
+        width: 29
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_2
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 224
+        width: 28
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_3
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 224
+        width: 28
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_4
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 224
+        width: 29
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_5
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 224
+        width: 28
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_6
+      rect:
+        serializedVersion: 2
+        x: 191
+        y: 160
+        width: 34
+        height: 95
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_7
+      rect:
+        serializedVersion: 2
+        x: 226
+        y: 192
+        width: 31
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_8
+      rect:
+        serializedVersion: 2
+        x: 258
+        y: 192
+        width: 31
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_9
+      rect:
+        serializedVersion: 2
+        x: 290
+        y: 224
+        width: 27
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_10
+      rect:
+        serializedVersion: 2
+        x: 322
+        y: 224
+        width: 27
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_11
+      rect:
+        serializedVersion: 2
+        x: 354
+        y: 224
+        width: 27
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_12
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 192
+        width: 28
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_13
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 192
+        width: 29
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_14
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 192
+        width: 28
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_15
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 192
+        width: 28
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_16
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 192
+        width: 29
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_17
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 192
+        width: 28
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_18
+      rect:
+        serializedVersion: 2
+        x: 290
+        y: 192
+        width: 27
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_19
+      rect:
+        serializedVersion: 2
+        x: 322
+        y: 192
+        width: 27
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_20
+      rect:
+        serializedVersion: 2
+        x: 354
+        y: 192
+        width: 27
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_21
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 160
+        width: 28
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_22
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 160
+        width: 29
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_23
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 160
+        width: 28
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_24
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 160
+        width: 28
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_25
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 160
+        width: 29
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_26
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 160
+        width: 28
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_27
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 160
+        width: 30
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_28
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 160
+        width: 29
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_29
+      rect:
+        serializedVersion: 2
+        x: 290
+        y: 160
+        width: 27
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_30
+      rect:
+        serializedVersion: 2
+        x: 322
+        y: 160
+        width: 27
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_31
+      rect:
+        serializedVersion: 2
+        x: 354
+        y: 160
+        width: 27
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_32
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 128
+        width: 28
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_33
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 128
+        width: 29
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_34
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 128
+        width: 28
+        height: 30
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_35
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 128
+        width: 28
+        height: 30
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_36
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 128
+        width: 29
+        height: 31
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_37
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 129
+        width: 28
+        height: 29
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_38
+      rect:
+        serializedVersion: 2
+        x: 195
+        y: 113
+        width: 26
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_39
+      rect:
+        serializedVersion: 2
+        x: 228
+        y: 129
+        width: 27
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_40
+      rect:
+        serializedVersion: 2
+        x: 260
+        y: 112
+        width: 27
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_41
+      rect:
+        serializedVersion: 2
+        x: 290
+        y: 128
+        width: 27
+        height: 30
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_42
+      rect:
+        serializedVersion: 2
+        x: 322
+        y: 128
+        width: 27
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_43
+      rect:
+        serializedVersion: 2
+        x: 354
+        y: 128
+        width: 27
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_44
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 116
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_45
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 116
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_46
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 116
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_47
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 116
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_48
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 116
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_49
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 116
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_50
+      rect:
+        serializedVersion: 2
+        x: 114
+        y: 112
+        width: 5
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_51
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 112
+        width: 5
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_52
+      rect:
+        serializedVersion: 2
+        x: 178
+        y: 112
+        width: 5
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_53
+      rect:
+        serializedVersion: 2
+        x: 230
+        y: 113
+        width: 17
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_54
+      rect:
+        serializedVersion: 2
+        x: 293
+        y: 96
+        width: 23
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_55
+      rect:
+        serializedVersion: 2
+        x: 325
+        y: 96
+        width: 23
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_56
+      rect:
+        serializedVersion: 2
+        x: 357
+        y: 96
+        width: 23
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_57
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 108
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_58
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 108
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_59
+      rect:
+        serializedVersion: 2
+        x: 76
+        y: 108
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_60
+      rect:
+        serializedVersion: 2
+        x: 105
+        y: 104
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_61
+      rect:
+        serializedVersion: 2
+        x: 137
+        y: 104
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_62
+      rect:
+        serializedVersion: 2
+        x: 169
+        y: 104
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_63
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 99
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_64
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 99
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_65
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 99
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_66
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 99
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_67
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 99
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_68
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 99
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_69
+      rect:
+        serializedVersion: 2
+        x: 115
+        y: 97
+        width: 5
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_70
+      rect:
+        serializedVersion: 2
+        x: 147
+        y: 97
+        width: 5
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_71
+      rect:
+        serializedVersion: 2
+        x: 179
+        y: 97
+        width: 5
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_72
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 79
+        width: 8
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_73
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 70
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_74
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 79
+        width: 8
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_75
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 79
+        width: 8
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_76
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 70
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_77
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 79
+        width: 8
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_78
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 79
+        width: 8
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_79
+      rect:
+        serializedVersion: 2
+        x: 76
+        y: 70
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_80
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 79
+        width: 8
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_81
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 81
+        width: 17
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_82
+      rect:
+        serializedVersion: 2
+        x: 230
+        y: 81
+        width: 17
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_83
+      rect:
+        serializedVersion: 2
+        x: 262
+        y: 80
+        width: 18
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_84
+      rect:
+        serializedVersion: 2
+        x: 293
+        y: 64
+        width: 23
+        height: 29
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_85
+      rect:
+        serializedVersion: 2
+        x: 325
+        y: 64
+        width: 23
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_86
+      rect:
+        serializedVersion: 2
+        x: 357
+        y: 64
+        width: 23
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_87
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 64
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_88
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 64
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_89
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 64
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_90
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 64
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_91
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 64
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_92
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 64
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_93
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 70
+        width: 10
+        height: 4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_94
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 70
+        width: 10
+        height: 4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_95
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 70
+        width: 10
+        height: 4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_96
+      rect:
+        serializedVersion: 2
+        x: 143
+        y: 70
+        width: 10
+        height: 4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_97
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 70
+        width: 10
+        height: 4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_98
+      rect:
+        serializedVersion: 2
+        x: 175
+        y: 70
+        width: 10
+        height: 4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_99
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 65
+        width: 9
+        height: 4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_100
+      rect:
+        serializedVersion: 2
+        x: 119
+        y: 65
+        width: 9
+        height: 4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_101
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 65
+        width: 9
+        height: 4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_102
+      rect:
+        serializedVersion: 2
+        x: 151
+        y: 65
+        width: 9
+        height: 4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_103
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 65
+        width: 9
+        height: 4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_104
+      rect:
+        serializedVersion: 2
+        x: 183
+        y: 65
+        width: 9
+        height: 4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_105
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 50
+        width: 8
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_106
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 41
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_107
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 49
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_108
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 50
+        width: 8
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_109
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 41
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_110
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 49
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_111
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 50
+        width: 8
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_112
+      rect:
+        serializedVersion: 2
+        x: 76
+        y: 41
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_113
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 49
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_114
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 49
+        width: 17
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_115
+      rect:
+        serializedVersion: 2
+        x: 230
+        y: 49
+        width: 17
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_116
+      rect:
+        serializedVersion: 2
+        x: 262
+        y: 48
+        width: 18
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_117
+      rect:
+        serializedVersion: 2
+        x: 293
+        y: 32
+        width: 23
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_118
+      rect:
+        serializedVersion: 2
+        x: 325
+        y: 32
+        width: 23
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_119
+      rect:
+        serializedVersion: 2
+        x: 357
+        y: 32
+        width: 23
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_120
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 35
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_121
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 35
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_122
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 35
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_123
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 35
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_124
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 35
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_125
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 35
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_126
+      rect:
+        serializedVersion: 2
+        x: 103
+        y: 38
+        width: 10
+        height: 4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_127
+      rect:
+        serializedVersion: 2
+        x: 118
+        y: 38
+        width: 10
+        height: 4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_128
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 38
+        width: 10
+        height: 4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_129
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 38
+        width: 10
+        height: 4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_130
+      rect:
+        serializedVersion: 2
+        x: 167
+        y: 38
+        width: 10
+        height: 4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_131
+      rect:
+        serializedVersion: 2
+        x: 182
+        y: 38
+        width: 10
+        height: 4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_132
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 33
+        width: 9
+        height: 4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_133
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 33
+        width: 9
+        height: 4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_134
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 33
+        width: 9
+        height: 4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_135
+      rect:
+        serializedVersion: 2
+        x: 143
+        y: 33
+        width: 9
+        height: 4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_136
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 33
+        width: 9
+        height: 4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_137
+      rect:
+        serializedVersion: 2
+        x: 175
+        y: 33
+        width: 9
+        height: 4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_138
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 20
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_139
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 12
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_140
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 20
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_141
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 20
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_142
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 12
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_143
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 20
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_144
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 20
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_145
+      rect:
+        serializedVersion: 2
+        x: 76
+        y: 12
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_146
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 20
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_147
+      rect:
+        serializedVersion: 2
+        x: 105
+        y: 23
+        width: 5
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_148
+      rect:
+        serializedVersion: 2
+        x: 114
+        y: 16
+        width: 5
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_149
+      rect:
+        serializedVersion: 2
+        x: 137
+        y: 23
+        width: 5
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_150
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 16
+        width: 5
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_151
+      rect:
+        serializedVersion: 2
+        x: 169
+        y: 23
+        width: 5
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_152
+      rect:
+        serializedVersion: 2
+        x: 178
+        y: 16
+        width: 5
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_153
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 17
+        width: 17
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_154
+      rect:
+        serializedVersion: 2
+        x: 230
+        y: 17
+        width: 17
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_155
+      rect:
+        serializedVersion: 2
+        x: 262
+        y: 16
+        width: 18
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_156
+      rect:
+        serializedVersion: 2
+        x: 293
+        y: 0
+        width: 23
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_157
+      rect:
+        serializedVersion: 2
+        x: 325
+        y: 0
+        width: 23
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_158
+      rect:
+        serializedVersion: 2
+        x: 357
+        y: 0
+        width: 23
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_159
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 3
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_160
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 3
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_161
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 3
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_162
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 3
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_163
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 3
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_164
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 3
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_165
+      rect:
+        serializedVersion: 2
+        x: 106
+        y: 7
+        width: 5
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_166
+      rect:
+        serializedVersion: 2
+        x: 115
+        y: 0
+        width: 5
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_167
+      rect:
+        serializedVersion: 2
+        x: 138
+        y: 7
+        width: 5
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_168
+      rect:
+        serializedVersion: 2
+        x: 147
+        y: 0
+        width: 5
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_169
+      rect:
+        serializedVersion: 2
+        x: 170
+        y: 7
+        width: 5
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Obstacle_obstacle1_170
+      rect:
+        serializedVersion: 2
+        x: 179
+        y: 0
+        width: 5
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 
   assetBundleName: 
