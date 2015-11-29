@@ -207,7 +207,7 @@ public class MapObjectsUI : EditorWindow {
             GUILayout.EndHorizontal();
             GUILayout.Space(15);
             GUILayout.BeginHorizontal();
-            if (GUILayout.Button("Select Inside Map", GUILayout.Width(labelWidth)))
+            if (GUILayout.Button("Select Outside Map", GUILayout.Width(labelWidth)))
             {
                 var window = EditorWindow.GetWindow<MapUI>();
                 window.Initialize(ref door.OutMap);
