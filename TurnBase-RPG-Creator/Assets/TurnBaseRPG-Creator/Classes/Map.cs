@@ -20,6 +20,7 @@ public class Map : RPGElement{
 		Camera.main.orthographicSize = 5; // Ajusta el tamaño de la camara ( la cantidad de espacio que va enfocar)
         Camera.main.transform.localPosition = new Vector3((float)(Data.Width - 1) / 2, (float)(Data.Heigth - 1) / 2, -10); // Posiciona la camara en el centro del mapa
 		Camera.main.backgroundColor = Color.black;
+        Camera.main.gameObject.AddComponent<MainCamera>();
         UnityEngine.Object prefab = AssetDatabase.LoadAssetAtPath(@"Assets/Resources/Tile/DefaultTile1.prefab", typeof(GameObject)); // Carga el prefab que esta por defecto para crear el mapa
         UnityEngine.Object prefab2 = AssetDatabase.LoadAssetAtPath(@"Assets/Resources/Tile/DefaultTile2.prefab", typeof(GameObject)); // Carga el prefab que esta por defecto para crear el mapa
         for (int i = 0; i < Data.Width; i++)

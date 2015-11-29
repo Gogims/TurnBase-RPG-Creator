@@ -74,17 +74,24 @@ public class MapEditor {
                 GameObject.Instantiate(camera);
                 continue;
             }
-            GameObject temp = new GameObject();
-			if ( (i.transform.position.x+i.transform.position.y)%2 == 0) 
-				 temp = (GameObject)DarkFloor ;
-			else 
-				temp = (GameObject)LightFloor;
-            Sprite aux = temp.GetComponent<SpriteRenderer>().sprite;
-			temp.transform.position = i.transform.position;
-            temp.transform.localScale = new Vector3(ProjectSettings.pixelPerUnit / aux.rect.width, ProjectSettings.pixelPerUnit / aux.rect.height);
+
+            SpriteRenderer si = i.GetComponent<SpriteRenderer>();
+            if (si.sortingLayerName == Constant.LAYER_TILE)
+            {
+
+                GameObject temp = new GameObject();
+                if ((i.transform.position.x + i.transform.position.y) % 2 == 0)
+                    temp = (GameObject)DarkFloor;
+                else
+                    temp = (GameObject)LightFloor;
+                Sprite aux = temp.GetComponent<SpriteRenderer>().sprite;
+                temp.transform.position = i.transform.position;
+                temp.transform.localScale = new Vector3(ProjectSettings.pixelPerUnit / aux.rect.width, ProjectSettings.pixelPerUnit / aux.rect.height);
+                MapUI.Instantiate(temp, temp.transform.position, Quaternion.identity);
+                MapUI.DestroyImmediate(GameObject.Find("New Game Object"), true);
+            }
 			MapUI.DestroyImmediate (i,true);
-			MapUI.Instantiate (temp, temp.transform.position, Quaternion.identity);
-			MapUI.DestroyImmediate (GameObject.Find("New Game Object"),true);
+			
 		}
 	}
 	/// <summary>

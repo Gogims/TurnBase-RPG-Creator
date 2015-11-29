@@ -148,10 +148,10 @@ public class MapUI : EditorWindow {
         var aux = Selected.GetComponent<Map>();
         foreach (FileInfo file in directory.GetFiles())
         {
-            if (file.FullName == aux.Data.MapPath && Objs.Length > 1)
+            if (ComparePath(file.FullName,aux.Data.MapPath) && Objs.Length > 1)
             {
 
-                if (ComparePath(aux.Data.MapPath, EditorApplication.currentScene))
+                if (aux.Data.MapPath == EditorApplication.currentScene)
                 {
                     DestroyImmediate(temp);
                     var newscene= (Objs[0] as GameObject).GetComponent<Map>();
