@@ -4,12 +4,6 @@ using System.Collections.Generic;
 
 public class Actor : RPGElement
 {
-    //Protected, virtual functions can be overridden by inheriting classes.
-    protected virtual void Start()
-    {
-
-    }      
-
     //Move returns true if it is able to move and false if not. 
     //Move takes parameters for x direction, y direction and a RaycastHit2D to check collision.
     protected bool Move(int xDir, int yDir)
@@ -93,7 +87,11 @@ public class AbstractActor
     /// <summary>
     /// Listado de estados que posee el actor actualmente
     /// </summary>
-    public List<AbstractState> States;
+    public Dictionary<string, List<AbstractState>> ApplyStates;
+    /// <summary>
+    /// Listado del momento en que el estado se elimina
+    /// </summary>
+    public Dictionary<string, List<AbstractState>> RemoveStates;
     /// <summary>
     /// Si su turno en el modo combate terminó
     /// </summary>
@@ -109,7 +107,19 @@ public class AbstractActor
         Ring = new AbstractArmor();
         Necklace = new AbstractArmor();
         Job = new AbstractJob();
-        States = new List<AbstractState>();        
+    }
+
+    public void ApplyState(string Action)
+    {
+        foreach (var state in ApplyStates[Action])
+        {
+            ApplyStateDamage(state);
+
+            if (state.ActionRestriction != Constant.ActionType.None)
+            {
+                TurnEnded = true;
+            }
+        }
     }
 
     public int TotalDamage()
@@ -173,5 +183,28 @@ public class AbstractActor
         if (armorPiece == null) return new Attribute();
 
         return armorPiece.Stats;
+    }
+
+
+    private int ApplyStateDamage(AbstractState state)
+    {
+        int HealDamage = state.Type == Constant.DamageHeal.Damage ? -1 : 1;
+        float value = 0f;
+
+        value += state.FixedValue;
+
+        if (state.ActionRate != 0)
+        {
+            if (state.AttackType == Constant.AttackType.MagicAttack)
+            {
+                value += TotalMagicDamage() * (state.ActionRate / 100);
+            }
+            else
+            {
+                value += TotalDamage() * (state.ActionRate / 100);
+            }
+        }
+
+        return (int)value * HealDamage;
     }
 }

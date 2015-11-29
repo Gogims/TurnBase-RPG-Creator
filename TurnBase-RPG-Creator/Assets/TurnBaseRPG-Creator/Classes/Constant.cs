@@ -96,20 +96,12 @@ public class Constant{
         Defensive
     };
 
-    public enum TurnTiming
-    {
-        None,
-        BeginTurn,
-        EndTurn
-    };
-
     public enum ActionType
     {
         None,
-        AttackEnemy,
-        AttackEnemyOrAlly,
-        AttackAlly,
-        SelfDamage,
+        TargetOnlyEnemy,
+        TargetOnlyAlly,
+        TargetMyself,
         DoNothing
     };
 
@@ -117,14 +109,6 @@ public class Constant{
     {
         Damage,
         Heal
-    };
-
-    public enum TriggerTurnType
-    {
-        None,
-        BeginTurn,
-        DuringAction,
-        EndTurn
     };
 
     public enum ItemAvailable

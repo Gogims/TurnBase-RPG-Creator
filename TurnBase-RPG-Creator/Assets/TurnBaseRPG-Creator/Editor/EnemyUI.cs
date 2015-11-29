@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEditor;
-using System.Collections.Generic;
 using Rotorz.ReorderableList;
 
 public class EnemyUI : CRUD<Enemy>
@@ -12,7 +11,7 @@ public class EnemyUI : CRUD<Enemy>
 
     public void Initialize(ref AbstractEnemy enemy)
     {
-        EnemySelected = enemy;
+        EnemySelected = enemy;        
         Init();
     }
 

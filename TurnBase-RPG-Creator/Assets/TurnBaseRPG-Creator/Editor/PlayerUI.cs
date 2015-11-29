@@ -192,7 +192,7 @@ public class PlayerUI : CRUD<Player>
         rb2D.freezeRotation = true;
 
         var collider = elementObject.AddComponent<BoxCollider2D>();
-        collider.size = new Vector2(element.downSprites[0].textureRect.width, element.downSprites[0].textureRect.height);
+        collider.size = new Vector2(element.downSprites[0].textureRect.width-2, element.downSprites[0].textureRect.height-2);
 
         CreatePrefab(element);
     }

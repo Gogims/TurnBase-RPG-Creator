@@ -33,6 +33,18 @@ public class Player : Actor
         Data = new AbstractPlayer();
     }
 
+    void Start()
+    {
+        Data.ApplyStates = new Dictionary<string, List<AbstractState>>();
+        Data.ApplyStates.Add("OnStart", new List<AbstractState>());
+        Data.ApplyStates.Add("OnAction", new List<AbstractState>());
+        Data.ApplyStates.Add("OnEnd", new List<AbstractState>());
+        Data.RemoveStates = new Dictionary<string, List<AbstractState>>();
+        Data.RemoveStates.Add("OnDamage", new List<AbstractState>());
+        Data.RemoveStates.Add("OnBattleEnd", new List<AbstractState>());
+        Data.RemoveStates.Add("OnTurn", new List<AbstractState>());
+    }
+
     void Update()
     {
         MoveDirection(ProxyInput.GetInstance().Down(), "down", 0);

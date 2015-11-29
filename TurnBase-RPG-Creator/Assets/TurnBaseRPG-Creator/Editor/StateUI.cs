@@ -19,23 +19,24 @@ public class StateUI : CRUD<State>
         RenderLeftSide();
 
         // Configuraciones básicas
-        GUILayout.BeginArea(new Rect(300, 0, 600, 180), "Basic Settings", EditorStyles.helpBox);
+        GUILayout.BeginArea(new Rect(300, 0, 600, 200), "Basic Settings", EditorStyles.helpBox);
         GUILayout.Space(15);
         GUI.enabled = !Selected;
 
-        GUILayout.BeginHorizontal();
-        element.Data.State = element.Name = EditorGUILayout.TextField("Name: ", element.Name);
+        element.Data.State = element.Name = EditorGUILayout.TextField("Name:", element.Name);
         element.Data.Priority = EditorGUILayout.IntSlider(new GUIContent("Priority:"), element.Data.Priority, 1, 100);
-        GUILayout.EndHorizontal();        
-        
-        EditorGUILayout.BeginHorizontal();
-        element.Data.ActionRestriction = (Constant.ActionType)EditorGUILayout.EnumPopup("Restriction: ", element.Data.ActionRestriction);
-        element.Data.TriggerTurn = (Constant.TriggerTurnType)EditorGUILayout.EnumPopup("Trigger: ", element.Data.TriggerTurn);
-        EditorGUILayout.EndHorizontal();
+        element.Data.ActionRestriction = (Constant.ActionType)EditorGUILayout.EnumPopup("Behavior:", element.Data.ActionRestriction);
+        GUI.enabled = GUI.enabled & element.Data.ActionRestriction != Constant.ActionType.None;
 
-        element.Data.ActiveOnSteps = EditorGUI.IntField(new Rect(0, 60, 200, 20), "Steps to Activate: ", element.Data.ActiveOnSteps);
-        
-        if (GUI.Button(new Rect(300, 60, 100, 20), "Select Picture"))
+        if (!GUI.enabled)
+        {
+            element.Data.RestrictionRate = 0;
+        }
+
+        element.Data.RestrictionRate = EditorGUILayout.Slider("Apply Behavior(%):", element.Data.RestrictionRate, 0, 100);
+        GUI.enabled = !Selected;
+
+        if (GUI.Button(new Rect(0, 100, 100, 20), "Select Picture"))
         {
             EditorGUIUtility.ShowObjectPicker<Sprite>(null, false, null, 1);
         }
@@ -44,54 +45,49 @@ public class StateUI : CRUD<State>
 
         if (element.Icon != null)
         {
-            GUI.DrawTextureWithTexCoords(new Rect(400, 60, element.Icon.textureRect.width, element.Icon.textureRect.height), element.Icon.texture, Constant.GetTextureCoordinate(element.Icon));
+            GUI.DrawTextureWithTexCoords(new Rect(100, 100, element.Icon.textureRect.width, element.Icon.textureRect.height), element.Icon.texture, Constant.GetTextureCoordinate(element.Icon));
         }
 
         GUILayout.EndArea();
 
         // Daño
-        GUILayout.BeginArea(new Rect(300, 180, 600, 100), "Action", EditorStyles.helpBox);
+        GUILayout.BeginArea(new Rect(300, 200, 600, 100), "Action", EditorStyles.helpBox);
         GUILayout.Space(15);
 
-        element.Data.Type = (Constant.DamageHeal)EditorGUILayout.EnumPopup("Type: ", element.Data.Type);
         GUI.enabled = element.Data.ActionRestriction != Constant.ActionType.DoNothing & !Selected;
+
+        if (!GUI.enabled)
+        {
+            element.Data.ActionRate = element.Data.FixedValue = 0;
+        }
+
+        element.Data.Type = (Constant.DamageHeal)EditorGUILayout.EnumPopup("Type: ", element.Data.Type);        
         element.Data.FixedValue = EditorGUILayout.IntField("Constant " + element.Data.Type.ToString() + ":", element.Data.FixedValue);
 
         EditorGUILayout.BeginHorizontal();
         element.Data.AttackType = (Constant.AttackType)EditorGUILayout.EnumPopup("Attack Type: ", element.Data.AttackType);
         element.Data.ActionRate = EditorGUILayout.Slider(element.Data.Type.ToString() +" Rate(%)", element.Data.ActionRate, 0, 100);
-        EditorGUILayout.EndHorizontal();
+        EditorGUILayout.EndHorizontal();       
         
-        GUI.enabled = GUI.enabled & element.Data.ActionRestriction == Constant.ActionType.AttackEnemyOrAlly;
-        element.Data.PercentageAttackAlly = EditorGUILayout.Slider("Chance " + element.Data.Type.ToString() +" Ally(%): ", element.Data.PercentageAttackAlly, 0, 100);
         GUI.enabled = !Selected;
         GUILayout.EndArea();
 
         // Recuperación
-        GUILayout.BeginArea(new Rect(300, 280, 600, 120), "Recovery Conditions", EditorStyles.helpBox);
+        GUILayout.BeginArea(new Rect(300, 300, 600, 100), "Recovery Conditions (Remove State)", EditorStyles.helpBox);
         GUILayout.Space(15);
-        element.Data.RemoveBattleEnd = EditorGUILayout.Toggle("Remove End of Battle", element.Data.RemoveBattleEnd);
-
+        element.Data.RemoveBattleEnd = EditorGUILayout.Toggle("End of Battle", element.Data.RemoveBattleEnd);
+        
         EditorGUILayout.BeginHorizontal();
-        element.Data.RemoveByWalking = EditorGUILayout.Toggle("Remove by Steps Taken: ", element.Data.RemoveByWalking);
-        GUI.enabled = element.Data.RemoveByWalking;
-        element.Data.NumberOfSteps = EditorGUILayout.IntField(element.Data.NumberOfSteps);
-        GUI.enabled = !Selected;
-        EditorGUILayout.EndHorizontal();
-
-        EditorGUILayout.BeginHorizontal();
-        element.Data.RemoveByDamage = EditorGUILayout.Toggle("Inflicted Damage: ", element.Data.RemoveByDamage);
+        element.Data.RemoveByDamage = EditorGUILayout.Toggle("By Taking Damage(%)", element.Data.RemoveByDamage);
         GUI.enabled = element.Data.RemoveByDamage & !Selected;
         element.Data.PercentRemoveByDamage = EditorGUILayout.Slider(element.Data.PercentRemoveByDamage, 0, 100);
         GUI.enabled = !Selected;
         EditorGUILayout.EndHorizontal();
-
-        element.Data.AutoRemovalTiming = (Constant.TurnTiming)EditorGUILayout.EnumPopup("Automatic Timed Release: ", element.Data.AutoRemovalTiming);
+                
         EditorGUILayout.BeginHorizontal();
-        GUI.enabled = element.Data.AutoRemovalTiming != Constant.TurnTiming.None & !Selected;
-        EditorGUILayout.LabelField("Number of Turns Taken (Range): ");
-        element.Data.DurationStartTurn = EditorGUILayout.IntField(element.Data.DurationStartTurn);        
-        element.Data.DurationEndTurn = EditorGUILayout.IntField(element.Data.DurationEndTurn);        
+        element.Data.AutoRemovalTiming = EditorGUILayout.Toggle("On Turn", element.Data.AutoRemovalTiming);
+        GUI.enabled = element.Data.AutoRemovalTiming;        
+        element.Data.TurnTotal = EditorGUILayout.IntSlider(element.Data.TurnTotal, 0, 100);
         GUI.enabled = !Selected;
         EditorGUILayout.EndHorizontal();        
 
@@ -125,26 +121,20 @@ public class StateUI : CRUD<State>
     override protected void AssignElement()
     {
         StateSelected.ActionRestriction = element.Data.ActionRestriction;
-        StateSelected.ActiveOnSteps = element.Data.ActiveOnSteps;
         StateSelected.AutoRemovalTiming = element.Data.AutoRemovalTiming;
         StateSelected.FixedValue = element.Data.FixedValue;
-        StateSelected.DurationEndTurn = element.Data.DurationEndTurn;
-        StateSelected.DurationStartTurn = element.Data.DurationStartTurn;
+        StateSelected.TurnTotal = element.Data.TurnTotal;
         StateSelected.MessageActor = element.Data.MessageActor;
         StateSelected.MessageEnemy = element.Data.MessageEnemy;
         StateSelected.MessageRecovery = element.Data.MessageRecovery;
         StateSelected.MessageRemains = element.Data.MessageRemains;
-        StateSelected.NumberOfSteps = element.Data.NumberOfSteps;
-        StateSelected.PercentageAttackAlly = element.Data.PercentageAttackAlly;
+        StateSelected.RestrictionRate = element.Data.RestrictionRate;
         StateSelected.ActionRate = element.Data.ActionRate;
         StateSelected.PercentRemoveByDamage = element.Data.PercentRemoveByDamage;
         StateSelected.Priority = element.Data.Priority;
         StateSelected.RemoveBattleEnd = element.Data.RemoveBattleEnd;
         StateSelected.RemoveByDamage = element.Data.RemoveByDamage;
-        StateSelected.RemoveByWalking = element.Data.RemoveByWalking;
         StateSelected.State = element.Data.State;
-        StateSelected.Steps = element.Data.Steps;
-        StateSelected.TriggerTurn = element.Data.TriggerTurn;
         StateSelected.AttackType = element.Data.AttackType;
     }    
 }
