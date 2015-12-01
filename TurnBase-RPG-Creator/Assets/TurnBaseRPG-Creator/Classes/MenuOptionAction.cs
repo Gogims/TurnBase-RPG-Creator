@@ -1,17 +1,28 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class MenuOptionAction : MenuOption {
     public override void OnSelect()
     {
-        GameObject.Find("Canvas").GetComponent<EquipmentMenu>().Select();
+        GameObject.Find("Canvas").GetComponent<Menus>().Select();
     }
     public override void UnSelect() {
-        GameObject.Find("Canvas").GetComponent<EquipmentMenu>().unSelect();
+        GameObject.Find("Canvas").GetComponent<Menus>().unSelect();
     }
     public override void On(string name)
     {
-        GameObject.Find("Canvas").GetComponent<EquipmentMenu>().Load(name);
+        GameObject.Find("Canvas").GetComponent<Menus>().On(name);
+    }
+    public override void On(Item selected)
+    {
+        GameObject.Find("Canvas").GetComponent<Menus>().On(selected);
+        
+    }
+    public override void On(Equippable selected)
+    {
+        GameObject.Find("Canvas").GetComponent<Menus>().On(selected);
+
     }
 
 }

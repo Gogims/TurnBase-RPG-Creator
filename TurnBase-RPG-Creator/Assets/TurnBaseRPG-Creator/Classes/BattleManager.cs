@@ -31,10 +31,10 @@ public class BattleManager : RPGElement
 
     public void Start()
     {
-        foreach (var state in Player.States)
-        {
+        //foreach (var state in Player.States)
+        //{
             
-        }
+        //}
     }
 
     public void Update()
@@ -175,15 +175,15 @@ public class BattleManager : RPGElement
         {
             if (ApplyRate >= UnityEngine.Random.Range(1, 100))
             {
-                foreach (var item in inflicted.States)
-                {
-                    // Deberia ser por el ID
-                    //if (item.State == state.State)
-                    //{
-                    //    inflicted.States.Remove(item);
-                    //    break;
-                    //}
-                }
+                //foreach (var item in inflicted.States)
+                //{
+                //    // Deberia ser por el ID
+                //    //if (item.State == state.State)
+                //    //{
+                //    //    inflicted.States.Remove(item);
+                //    //    break;
+                //    //}
+                //}
             }
         }
     }

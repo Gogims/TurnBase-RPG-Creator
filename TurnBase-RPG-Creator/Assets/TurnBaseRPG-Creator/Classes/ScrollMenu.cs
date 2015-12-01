@@ -76,6 +76,10 @@ public class ScrollMenu<T>  : MonoBehaviour
     /// </summary>
     private GameObject Panel;
     /// <summary>
+    /// Posicion en x en donde inicia el selector.
+    /// </summary>
+    private int ArrowX;
+    /// <summary>
     /// Incializa los valores de la clase
     /// </summary>
     /// <param name="position">posicion donde va iniciar el texto</param>
@@ -103,11 +107,13 @@ public class ScrollMenu<T>  : MonoBehaviour
         PrevArrow.SetActive(false);
         Item = Resources.Load("Menus/MenuItems") as GameObject;
         ItemImage = Resources.Load("Menus/MenuItemsImage") as GameObject;
+        Item.AddComponent<MenuOptionAction>();
         PosX = (int)position.x;
         PosY = (int)position.y;
         ImagePosX = (int)positionImage.x;
         ImagePosY = (int)positionImage.y;
         ImagePosition = positionImage;
+        ArrowX = (int)Arrow.transform.localPosition.x;
 
         
     }
@@ -127,6 +133,13 @@ public class ScrollMenu<T>  : MonoBehaviour
 
     }
     private void DisplayList() {
+        if (Items.Count == 0)
+        {
+            Arrow.SetActive(false);
+            NextArrow.SetActive(false);
+            return;
+        }
+        Arrow.SetActive(true);
         int cant = 0;
         foreach (T i in Items)
         {
@@ -140,13 +153,14 @@ public class ScrollMenu<T>  : MonoBehaviour
                 break;
             }
         }
+
         if (Items.Count > MaxItem)
             NextArrow.SetActive(true);
         Reorder();
     }
     public void update()
     {
-
+        if (!Arrow.activeSelf) return;
         if (ProxyInput.GetInstance().B())
         {
             Options[selected].Key.GetComponent<MenuOption>().UnSelect();
@@ -163,14 +177,17 @@ public class ScrollMenu<T>  : MonoBehaviour
                 //Options[selected].GetComponent<MenuOption>().Off(Options[selected].GetComponent<Text>().text);
                 ScrollCant++;
                 NewListNext();
-         
-               // Options[selected].Key.GetComponent<MenuOption>().On(Options[selected].Key.GetComponent<Text>().text);
+
+                Options[selected].Key.GetComponent<MenuOption>().On(Items[selected + ScrollCant] as Equippable);
             }
-            else if (selected < Options.Count-1)
+            else if (selected < Options.Count - 1)
             {
                 //Options[selected].GetComponent<MenuOption>().Off(Options[selected].GetComponent<Text>().text);
                 selected++;
-               // Options[selected].Key.GetComponent<MenuOption>().On(Options[selected].Key.GetComponent<Text>().text);
+                Options[selected].Key.GetComponent<MenuOption>().On(Items[selected + ScrollCant] as Equippable);
+            }
+            else {
+                NextArrow.SetActive(false);
             }
             Arrow.transform.position = new Vector3(Arrow.transform.position.x, Options[selected].Key.gameObject.transform.position.y);
         }
@@ -183,13 +200,13 @@ public class ScrollMenu<T>  : MonoBehaviour
                 //Options[selected].GetComponent<MenuOption>().Off(Options[selected].GetComponent<Text>().text);
                 ScrollCant--;
                 NewListPrev();
-                //Options[selected].Key.GetComponent<MenuOption>().On(Options[selected].Key.GetComponent<Text>().text);
+                Options[selected].Key.GetComponent<MenuOption>().On(Items[selected + ScrollCant] as Equippable);
             }
             else if (selected > 0)
             {
                 //Options[selected].GetComponent<MenuOption>().Off(Options[selected].GetComponent<Text>().text);
                 selected--;
-                //Options[selected].Key.GetComponent<MenuOption>().On(Options[selected].Key.GetComponent<Text>().text);
+                Options[selected].Key.GetComponent<MenuOption>().On(Items[selected + ScrollCant] as Equippable);
             }
             Arrow.transform.position = new Vector3(Arrow.transform.position.x, Options[selected].Key.gameObject.transform.position.y);
         }
@@ -204,21 +221,24 @@ public class ScrollMenu<T>  : MonoBehaviour
         ItemImage.GetComponent<Image>().sprite = Items[i].Image;
         GameObject ax = Instantiate(Item);
         GameObject ay = Instantiate(ItemImage);
-        ax.transform.parent = Panel.transform;
-        ay.transform.parent = Panel.transform;
+        ax.transform.SetParent(Panel.transform);
+        ay.transform.SetParent(Panel.transform);
         ax.transform.localPosition = Position;
         ay.transform.localPosition = ImagePosition;
+        Destroy(GameObject.Find("New Game Object"));
+        Destroy(GameObject.Find("New Game Object"));
         KeyValuePair<GameObject, GameObject> aux = new KeyValuePair<GameObject, GameObject>(ax,ay);
         return aux;
     }
     private void NewListNext()
     {
-        if (MaxItem + ScrollCant < Items.Count - 1)
+        if (selected + ScrollCant <= Items.Count - 1)
         {
             Destroy(Options[0].Key);
             Destroy(Options[0].Value);
             Options.RemoveAt(0);
-            Options.Add(NewItem(MaxItem + ScrollCant));
+            Options.Add(NewItem((MaxItem-1) + ScrollCant));
+            PrevArrow.SetActive(true);
         }
         else
         {
@@ -231,6 +251,7 @@ public class ScrollMenu<T>  : MonoBehaviour
         Destroy(Options[Options.Count - 1].Value);
         Options.RemoveAt(Options.Count - 1);
         Options.Insert(0,NewItem(ScrollCant));
+        NextArrow.SetActive(true);
         if (ScrollCant == 0)
             PrevArrow.SetActive(false);
         Reorder();
@@ -247,5 +268,22 @@ public class ScrollMenu<T>  : MonoBehaviour
             Position.y += DifY;
         }
             
+    }
+    /// <summary>
+    /// Restaura los valores de las propiedades a como fueron inicializadas
+    /// </summary>
+    public void Reset()
+    {
+        Position = new Vector3(PosX, PosY);
+        ImagePosition = new Vector3(ImagePosX, ImagePosY);
+        Arrow.transform.localPosition = new Vector3(ArrowX, PosY);
+        DestroyOption();
+        DisplayList();
+        PrevArrow.SetActive(false);
+    }
+
+    public void OnFirst()
+    {
+        Options[0].Key.GetComponent<MenuOption>().On(Items[selected + ScrollCant] as Equippable);
     }
 }

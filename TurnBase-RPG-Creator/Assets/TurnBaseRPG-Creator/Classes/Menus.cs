@@ -44,7 +44,7 @@ public abstract class  Menus : MonoBehaviour {
     /// </summary>
     public void Awake() {
         //Arrow.GetComponent<Image>().sprite = ProjectSettings.SelectImage;
-        GameObject menusObj = GameObject.Find("Canvas");
+        GameObject menusObj = GameObject.Find("Canvas").transform.FindChild("Menu Panel").gameObject;
         Options = new List<GameObject>();
         for (int i = 0; i < menusObj.transform.childCount; i++)
         {
@@ -109,5 +109,22 @@ public abstract class  Menus : MonoBehaviour {
         }
 
         delay = 0;
+    }
+    public virtual void Select()
+    {
+    }
+    public virtual void  unSelect(){
+    }
+
+    public virtual void On(Item selected)
+    {
+    }
+    public virtual void On(Equippable selected)
+    {
+    }
+
+    public virtual void On(string name)
+    {
+       
     }
 }

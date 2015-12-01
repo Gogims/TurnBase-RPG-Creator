@@ -92,11 +92,27 @@ public class EquipmentMenu : Menus {
     /// Lista de items visibles
     /// </summary>
     private List<Item> ActiveItems;
+    /// <summary>
+    /// Selector de items
+    /// </summary>
     public GameObject Arrow2;
+    /// <summary>
+    /// Flecha que indica que hay  mas elementos en el panel de los items
+    /// </summary>
     public GameObject NextArrow;
+    /// <summary>
+    /// Flecha que indica que hay mas elementos hacia arriba en el panel de los items
+    /// </summary>
     public GameObject PrevArrow;
+    /// <summary>
+    /// Coordenada y de inicio del texto de los items
+    /// </summary>
     private int startY = 97;
-    ScrollMenu<Item> MenuScroll;
+    /// <summary>
+    /// Menu de scroll de los items
+    /// </summary>
+    private ScrollMenu<Item> MenuScroll;
+    private Player player;
     /// <summary>
     /// Stats del player
     /// </summary>
@@ -112,19 +128,32 @@ public class EquipmentMenu : Menus {
     private bool select2 = false;
     #endregion
     public void Start() {
-        Feet.GetComponent<Text>().text = GameObject.FindWithTag("RPG-PLAYER").GetComponent<Player>().Data.Feet.ItemName;
-        Ring.GetComponent<Text>().text = GameObject.FindWithTag("RPG-PLAYER").GetComponent<Player>().Data.Ring.ItemName;
-        Weapon.GetComponent<Text>().text = GameObject.FindWithTag("RPG-PLAYER").GetComponent<Player>().Data.MainHand.ItemName;
-        Body.GetComponent<Text>().text = GameObject.FindWithTag("RPG-PLAYER").GetComponent<Player>().Data.Body.ItemName;
-        Necklace.GetComponent<Text>().text = GameObject.FindWithTag("RPG-PLAYER").GetComponent<Player>().Data.Necklace.ItemName;
-        Head.GetComponent<Text>().text = GameObject.FindWithTag("RPG-PLAYER").GetComponent<Player>().Data.Helmet.ItemName;
-        MaxHP.GetComponent<Text>().text = GameObject.FindWithTag("RPG-PLAYER").GetComponent<Player>().Data.Stats.MaxHP.ToString();
-        MaxMP.GetComponent<Text>().text = GameObject.FindWithTag("RPG-PLAYER").GetComponent<Player>().Data.Stats.MaxMP.ToString();
-        Attack.GetComponent<Text>().text = GameObject.FindWithTag("RPG-PLAYER").GetComponent<Player>().Data.Stats.Attack.ToString();
-        Magic.GetComponent<Text>().text = GameObject.FindWithTag("RPG-PLAYER").GetComponent<Player>().Data.Stats.Magic.ToString();
-        MagicDefense.GetComponent<Text>().text = GameObject.FindWithTag("RPG-PLAYER").GetComponent<Player>().Data.Stats.MagicDefense.ToString();
-        Agility.GetComponent<Text>().text = GameObject.FindWithTag("RPG-PLAYER").GetComponent<Player>().Data.Stats.Agility.ToString();
-        Luck.GetComponent<Text>().text = GameObject.FindWithTag("RPG-PLAYER").GetComponent<Player>().Data.Stats.Luck.ToString();
+        ClearDiffText();
+        player = GameObject.FindWithTag("RPG-PLAYER").GetComponent<Player>();
+        Feet.GetComponent<Text>().text = player.Data.Feet.ItemName;
+        Ring.GetComponent<Text>().text = player.Data.Ring.ItemName;
+        Weapon.GetComponent<Text>().text = player.Data.MainHand.ItemName;
+        Body.GetComponent<Text>().text = player.Data.Body.ItemName;
+        Necklace.GetComponent<Text>().text = player.Data.Necklace.ItemName;
+        Head.GetComponent<Text>().text = player.Data.Helmet.ItemName;
+        MaxHP.GetComponent<Text>().text = player.Data.Stats.MaxHP.ToString();
+        MaxMP.GetComponent<Text>().text = player.Data.Stats.MaxMP.ToString();
+        Attack.GetComponent<Text>().text = player.Data.Stats.Attack.ToString();
+        Magic.GetComponent<Text>().text = player.Data.Stats.Magic.ToString();
+        MagicDefense.GetComponent<Text>().text = player.Data.Stats.MagicDefense.ToString();
+        Agility.GetComponent<Text>().text = player.Data.Stats.Agility.ToString();
+        Luck.GetComponent<Text>().text = player.Data.Stats.Luck.ToString();
+        Feet.GetComponent<Armor>().Data.Stats = player.Data.Feet.Stats;
+        Ring.GetComponent<Armor>().Data.Stats = player.Data.Ring.Stats;
+        Weapon.GetComponent<Weapon>().Data.Stats = player.Data.MainHand.Stats;
+        Body.GetComponent<Armor>().Data.Stats = player.Data.Body.Stats;
+        Necklace.GetComponent<Armor>().Data.Stats = player.Data.Necklace.Stats;
+        GameObject.Find("HelmetImage").GetComponent<Image>().sprite = player.Data.Helmet.Image;
+        GameObject.Find("BodyImage").GetComponent<Image>().sprite = player.Data.Body.Image;
+        GameObject.Find("FeetImage").GetComponent<Image>().sprite = player.Data.Feet.Image;
+        GameObject.Find("WeaponImage").GetComponent<Image>().sprite = player.Data.MainHand.Image;
+        GameObject.Find("NecklaceImage").GetComponent<Image>().sprite = player.Data.Necklace.Image;
+        GameObject.Find("RingImage").GetComponent<Image>().sprite = player.Data.Ring.Image;
         ListBody = new List<AbstractArmor>();
         ListFeet = new List<AbstractArmor>();
         ListHelmet = new List<AbstractArmor>();
@@ -132,12 +161,12 @@ public class EquipmentMenu : Menus {
         ListRing = new List<AbstractArmor>();
         ListWeapon = new List<AbstractWeapon>();
         ActiveItems = new List<Item>();
-        ListBody = GameObject.FindWithTag("RPG-PLAYER").GetComponent<Player>().Items.TypeArmor(AbstractArmor.ArmorType.Body);
-        ListFeet = GameObject.FindWithTag("RPG-PLAYER").GetComponent<Player>().Items.TypeArmor(AbstractArmor.ArmorType.Feet);
-        ListHelmet = GameObject.FindWithTag("RPG-PLAYER").GetComponent<Player>().Items.TypeArmor(AbstractArmor.ArmorType.Helmet);
-        ListNecklace = GameObject.FindWithTag("RPG-PLAYER").GetComponent<Player>().Items.TypeArmor(AbstractArmor.ArmorType.Necklace);
-        ListRing = GameObject.FindWithTag("RPG-PLAYER").GetComponent<Player>().Items.TypeArmor(AbstractArmor.ArmorType.Ring);
-        ListWeapon = GameObject.FindWithTag("RPG-PLAYER").GetComponent<Player>().Items.Weapons;
+        ListBody = player.Items.TypeArmor(AbstractArmor.ArmorType.Body);
+        ListFeet = player.Items.TypeArmor(AbstractArmor.ArmorType.Feet);
+        ListHelmet = player.Items.TypeArmor(AbstractArmor.ArmorType.Helmet);
+        ListNecklace = player.Items.TypeArmor(AbstractArmor.ArmorType.Necklace);
+        ListRing = player.Items.TypeArmor(AbstractArmor.ArmorType.Ring);
+        ListWeapon = player.Items.Weapons;
         Item = Resources.Load("Menus/MenuItems") as GameObject;
         ItemImage = Resources.Load("Menus/MenuItemsImage") as GameObject;
         MenuScroll = new ScrollMenu<Item>();
@@ -145,13 +174,94 @@ public class EquipmentMenu : Menus {
         fillWeapon();
         
     }
-    public void Select() {
+    public override void Select()
+    {
         select = false;
         select2 = true;
+        MenuScroll.OnFirst();
     }
-    public void unSelect() {
+    public override void unSelect()
+    {
         select = true;
         select2 = false;
+        Description.GetComponent<Text>().text = "";
+        ClearDiffText();
+        MenuScroll.Reset();
+    }
+    /// <summary>
+    /// Asigna el valor del texto que contiene la diferencia entre los stats.
+    /// </summary>
+    /// <param name="name">Nombre de la propiedad</param>
+    /// <param name="val1">Valor del item equipado</param>
+    /// <param name="val2">Valor del item Seleccionado</param>
+    private void SetDiffVal(string name,int val1,int val2) {
+        GameObject TextStats = GameObject.Find(name);
+        TextStats.GetComponent<Text>().text = (val1-val2).ToString();
+        TextStats.GetComponent<Text>().fontSize = 20;
+        TextStats.GetComponent<Text>().horizontalOverflow = HorizontalWrapMode.Overflow;
+        TextStats.GetComponent<Text>().verticalOverflow = VerticalWrapMode.Overflow;
+        if (val1 >= val2)
+        {
+            TextStats.GetComponent<Text>().color = Color.blue;
+        }
+        else
+        {
+            TextStats.GetComponent<Text>().color = Color.red;
+        }
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="Selected"></param>
+    public override void On(Equippable Selected) {
+        Description.GetComponent<Text>().text = Selected.Description;
+      
+        switch (selection)
+        {
+            case "Weapon":
+                SetDiffText( player.Data.MainHand.Stats, Selected.Stats);
+                break;
+            case "Body":
+                SetDiffText(player.Data.Body.Stats, Selected.Stats);
+                break;
+            case "Helmet":
+                SetDiffText(player.Data.Helmet.Stats, Selected.Stats);
+                break;
+            case "Feet":
+                SetDiffText(player.Data.Feet.Stats, Selected.Stats);
+                break;
+            case "Necklace":
+                SetDiffText(player.Data.Necklace.Stats, Selected.Stats);
+                break;
+            case "Ring":
+                SetDiffText(player.Data.Ring.Stats, Selected.Stats);
+                break;
+            default:
+                break;
+        }
+    }
+    private void SetDiffText(Attribute stats, Attribute stats2) {
+        SetDiffVal("AgilityDiff", stats.Agility, stats2.Agility);
+        SetDiffVal("DefenseDiff", stats.Defense, stats2.Defense);
+        SetDiffVal("AttackDiff", stats.Attack, stats2.Attack);
+        SetDiffVal("LuckDiff", stats.Luck, stats2.Luck);
+        SetDiffVal("MagicDiff", stats.Magic, stats2.Magic);
+        SetDiffVal("MagicDefenseDiff", stats.MagicDefense, stats2.MagicDefense);
+        SetDiffVal("MaxHPDiff", stats.MaxHP, stats2.MaxHP);
+        SetDiffVal("MaxMPDiff", stats.MaxMP, stats2.MaxMP);
+    }
+    /// <summary>
+    /// Pone inactivo todos los text que muestran la diferencia de los stats.
+    /// </summary>
+    private void ClearDiffText(){
+        GameObject.Find("MaxHPDiff").GetComponent<Text>().text = "";
+        GameObject.Find("MaxMPDiff").GetComponent<Text>().text = "";
+        GameObject.Find("AttackDiff").GetComponent<Text>().text = "";
+        GameObject.Find("MagicDiff").GetComponent<Text>().text = "";
+        GameObject.Find("DefenseDiff").GetComponent<Text>().text = "";
+        GameObject.Find("MagicDefenseDiff").GetComponent<Text>().text = "";
+        GameObject.Find("AgilityDiff").GetComponent<Text>().text = "";
+        GameObject.Find("LuckDiff").GetComponent<Text>().text = "";
     }
     public void Update() {
         if (!select2)
@@ -206,7 +316,7 @@ public class EquipmentMenu : Menus {
             }
             MenuScroll.ChangeList(ActiveItems);
     }
-    public void Load(string name)
+    public override void On(string name)
     {
         if (name == selection)
             return;
