@@ -1,9 +1,16 @@
 using System;
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 
 public class Actor : RPGElement
 {
+
+    protected virtual void Start()
+    {
+        
+    }
+
     //Move returns true if it is able to move and false if not. 
     //Move takes parameters for x direction, y direction and a RaycastHit2D to check collision.
     protected bool Move(int xDir, int yDir)
@@ -23,6 +30,8 @@ public class Actor : RPGElement
         //Return true to say that Move was successful
         return true;
     }
+
+    
 }
 
 [Serializable]
@@ -85,17 +94,19 @@ public class AbstractActor
     /// </summary>
     public string ActorName = string.Empty;
     /// <summary>
-    /// Listado de estados que posee el actor actualmente
-    /// </summary>
-    public Dictionary<string, List<AbstractState>> ApplyStates;
-    /// <summary>
-    /// Listado del momento en que el estado se elimina
-    /// </summary>
-    public Dictionary<string, List<AbstractState>> RemoveStates;
-    /// <summary>
     /// Si su turno en el modo combate terminó
     /// </summary>
     public bool TurnEnded;
+
+
+    /// <summary>
+    /// Listado de estados que posee el actor actualmente
+    /// </summary>
+    private Dictionary<string, Dictionary<string, AbstractState>> ApplyStates;
+    /// <summary>
+    /// Listado del momento en que el estado se elimina
+    /// </summary>
+    private Dictionary<string, Dictionary<string, AbstractState>> RemoveStates;
 
     public AbstractActor()
     {
@@ -107,20 +118,7 @@ public class AbstractActor
         Ring = new AbstractArmor();
         Necklace = new AbstractArmor();
         Job = new AbstractJob();
-    }
-
-    public void ApplyState(string Action)
-    {
-        foreach (var state in ApplyStates[Action])
-        {
-            ApplyStateDamage(state);
-
-            if (state.ActionRestriction != Constant.ActionType.None)
-            {
-                TurnEnded = true;
-            }
-        }
-    }
+    }    
 
     public int TotalDamage()
     {
@@ -178,13 +176,153 @@ public class AbstractActor
         return MagicDamage;
     }
 
+    /// <summary>
+    /// Instancia los hash de estados en caso de que no hayan sido instanceados
+    /// </summary>
+    public void InstanceStates()
+    {
+        if (ApplyStates == null)
+        {
+            ApplyStates = new Dictionary<string, Dictionary<string, AbstractState>>();
+            ApplyStates.Add("OnStart", new Dictionary<string, AbstractState>());
+            ApplyStates.Add("OnAction", new Dictionary<string, AbstractState>()); 
+        }
+
+        if (RemoveStates == null)
+        {
+            RemoveStates = new Dictionary<string, Dictionary<string, AbstractState>>();
+            RemoveStates.Add("OnDamage", new Dictionary<string, AbstractState>());
+            RemoveStates.Add("OnBattleEnd", new Dictionary<string, AbstractState>());
+            RemoveStates.Add("OnTurn", new Dictionary<string, AbstractState>()); 
+        }
+    }
+
+    /// <summary>
+    /// Agrega un estado en la estructura de aplicar estado
+    /// </summary>
+    /// <param name="state">Estado a agregar</param>
+    public void AddState(AbstractState state)
+    {
+        if (state.Behavior == Constant.ActionType.None && !ApplyStates["OnStart"].ContainsKey(state.id))
+        {
+            ApplyStates["OnStart"].Add(state.id, state);
+            ApplyStates["OnStart"] = OrderDictionary(ApplyStates["OnStart"]);
+        }
+        else if (state.Behavior != Constant.ActionType.None && !ApplyStates["OnAction"].ContainsKey(state.id))
+        {
+            ApplyStates["OnAction"].Add(state.id, state);
+            ApplyStates["OnAction"] = OrderDictionary(ApplyStates["OnAction"]);
+        }
+
+        if (state.RemoveBattleEnd && !RemoveStates["OnBattleEnd"].ContainsKey(state.id))
+        {
+            RemoveStates["OnBattleEnd"].Add(state.id, state);
+            RemoveStates["OnBattleEnd"] = OrderDictionary(RemoveStates["OnBattleEnd"]);
+        }
+        if (state.RemoveByDamage && !RemoveStates["OnDamage"].ContainsKey(state.id))
+        {
+            RemoveStates["OnDamage"].Add(state.id, state);
+            RemoveStates["OnDamage"] = OrderDictionary(RemoveStates["OnDamage"]);
+        }
+        if (state.RemoveByTurn && !RemoveStates["OnTurn"].ContainsKey(state.id))
+        {
+            RemoveStates["OnTurn"].Add(state.id, state);
+            RemoveStates["OnTurn"] = OrderDictionary(RemoveStates["OnTurn"]);
+        }
+    }
+
+    /// <summary>
+    /// Remueve el estado de la estructura a aplicar
+    /// </summary>
+    /// <param name="state">Estado a remover</param>
+    public void RemoveState(AbstractState state)
+    {
+        if (state.Behavior == Constant.ActionType.None && ApplyStates["OnStart"].ContainsKey(state.id))
+        {
+            ApplyStates["OnStart"].Remove(state.id);
+        }
+        else if (state.Behavior != Constant.ActionType.None && !ApplyStates["OnAction"].ContainsKey(state.id))
+        {
+            ApplyStates["OnAction"].Remove(state.id);
+        }
+
+        if (state.RemoveBattleEnd && !RemoveStates["OnBattleEnd"].ContainsKey(state.id))
+        {
+            RemoveStates["OnBattleEnd"].Remove(state.id);
+        }
+        if (state.RemoveByDamage && !RemoveStates["OnDamage"].ContainsKey(state.id))
+        {
+            RemoveStates["OnDamage"].Remove(state.id);
+        }
+        if (state.RemoveByTurn && !RemoveStates["OnTurn"].ContainsKey(state.id))
+        {
+            RemoveStates["OnTurn"].Remove(state.id);
+        }
+    }
+
+    /// <summary>
+    /// Busca todos los estados que se disparan al recibir daño e intenta de removerlos si pasan la condicional
+    /// </summary>
+    public void RemoveOnDamageState()
+    {
+        if (RemoveStates["OnDamage"].Count == 0) return;
+
+        foreach (var state in RemoveStates["OnDamage"].Values)
+        {
+            if (state.PercentRemoveByDamage >= UnityEngine.Random.Range(0, 100))
+            {
+                RemoveState(state);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Busca todos los estados que se disparan al iniciar un turno e intenta de removerlos si pasan la condicional
+    /// </summary>
+    public void RemoveOnTurnState()
+    {
+        if (RemoveStates["OnTurn"].Count == 0) return;
+
+        foreach (var state in RemoveStates["OnTurn"].Values)
+        {
+            state.Turn++;
+
+            if (state.Turn >= state.TurnTotal)
+            {
+                RemoveState(state);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Busca todos los estados que se disparan al final del combate y los remueve
+    /// </summary>
+    public void RemoveOnBattleEnd()
+    {
+        if (RemoveStates["OnBattleEnd"].Count == 0) return;
+
+        foreach (var state in RemoveStates["OnBattleEnd"].Values)
+        {
+            RemoveState(state);
+        }
+    }
+
+    /// <summary>
+    /// Ordena el diccionary a partir de la prioridad
+    /// </summary>
+    /// <param name="states">Hash de estados</param>
+    /// <returns>Hash de estado ordenado</returns>
+    private Dictionary<string, AbstractState> OrderDictionary(Dictionary<string, AbstractState> states)
+    {
+        return states.OrderByDescending(x => x.Value.Priority).ToDictionary(x => x.Key, x => x.Value);
+    }
+
     private Attribute CheckArmor(AbstractArmor armorPiece)
     {
         if (armorPiece == null) return new Attribute();
 
         return armorPiece.Stats;
     }
-
 
     private int ApplyStateDamage(AbstractState state)
     {
