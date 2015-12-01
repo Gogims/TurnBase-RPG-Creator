@@ -18,6 +18,10 @@ public class State: RPGElement
 public class AbstractState
 {
     /// <summary>
+    /// ID del estado
+    /// </summary>
+    public string id;    
+    /// <summary>
     /// Prioridad del estado (100 = más alto)
     /// </summary>
     public int Priority;
@@ -28,7 +32,7 @@ public class AbstractState
     /// <summary>
     /// Acción que realiza el estado
     /// </summary>
-    public Constant.ActionType ActionRestriction;
+    public Constant.ActionType Behavior;
     /// <summary>
     /// Valor fijo que realizará el estado
     /// </summary>
@@ -66,13 +70,13 @@ public class AbstractState
     /// </summary>
     public bool RemoveByDamage;
     /// <summary>
-    /// Cual es la probabilidad de que se elimine el estado al recibir el daño (0-1)
+    /// Cual es la probabilidad de que se elimine el estado al recibir el daño (0-100)
     /// </summary>
     public float PercentRemoveByDamage;
     /// <summary>
-    /// 0=none, 1=Inicio del Turno, 2= Al final del turno
+    /// true = se remueve por una cantidad de turnos
     /// </summary>
-    public bool AutoRemovalTiming;
+    public bool RemoveByTurn;
     /// <summary>
     /// Total de turnos para ser eliminado el estado
     /// </summary>

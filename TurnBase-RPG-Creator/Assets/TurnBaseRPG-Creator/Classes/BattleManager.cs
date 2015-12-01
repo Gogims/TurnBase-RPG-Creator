@@ -14,7 +14,6 @@ public class BattleManager : RPGElement
 
     enum BattleStateMachine
     {
-        NEWTURN,
         PLAYERTURN,
         ENEMYTURN,
         WIN,
@@ -29,23 +28,24 @@ public class BattleManager : RPGElement
         Player = player;
     }
 
-    public void Start()
+    void Start()
     {
+<<<<<<< HEAD
         //foreach (var state in Player.States)
         //{
             
         //}
+=======
+        ActorsOrdered = OrderActors(Player, Enemies);
+>>>>>>> 3a1832d3c2f535711708dba7d9216fd8a23588cc
     }
 
-    public void Update()
+    void Update()
     {
-        
         switch (BattleState)
         {
-            case BattleStateMachine.NEWTURN:
-                ActorsOrdered = OrderActors(Player, Enemies);
-                break;
             case BattleStateMachine.PLAYERTURN:
+                Player.RemoveOnTurnState();
                 break;
             case BattleStateMachine.ENEMYTURN:
                 break;
@@ -109,6 +109,8 @@ public class BattleManager : RPGElement
 
         int damage = MagicDamage - MagicDefense;
 
+        Defender.RemoveOnDamageState();
+
         if (damage > 0)
         {
             Defender.HP -= damage;
@@ -146,6 +148,8 @@ public class BattleManager : RPGElement
         ApplyState(Defender.Ring.State, Defender.Ring.PercentageState, ref Attacker);
         ApplyState(Defender.Necklace.State, Defender.Necklace.PercentageState, ref Attacker);
 
+        Defender.RemoveOnDamageState();
+
         // Calculando el daño total
         int damage = AttackDamage - defense;
 
@@ -155,26 +159,38 @@ public class BattleManager : RPGElement
 
             //Check if dead (todo)
         }
-    }
-     
+    }     
 
+    /// <summary>
+    /// Intenta de aplicar un estado a partir de una probabilidad
+    /// </summary>
+    /// <param name="state">Estado ha aplicar</param>
+    /// <param name="ApplyRate">Probabilidad de aplicar</param>
+    /// <param name="inflicted">Actor que se intenta de aplicar el estado</param>
     private void ApplyState(AbstractState state, float? ApplyRate, ref AbstractActor inflicted)
     {
         if (state.State != string.Empty && inflicted != null)
         {
             if (!ApplyRate.HasValue || ApplyRate.Value >= UnityEngine.Random.Range(1, 100))
             {
-                //inflicted.States.Add(state);
+                inflicted.AddState(state);
             }
         }
     }
 
+    /// <summary>
+    /// Intenta de remover un estado a partir de una probabilidad
+    /// </summary>
+    /// <param name="state">Estado ha remover</param>
+    /// <param name="ApplyRate">Probabilidad de remover</param>
+    /// <param name="inflicted">Actor que se intenta de remover el estado</param>
     private void RemoveState(AbstractState state, float ApplyRate, ref AbstractActor inflicted)
     {
         if (state.State != string.Empty && inflicted != null)
         {
             if (ApplyRate >= UnityEngine.Random.Range(1, 100))
             {
+<<<<<<< HEAD
                 //foreach (var item in inflicted.States)
                 //{
                 //    // Deberia ser por el ID
@@ -184,6 +200,9 @@ public class BattleManager : RPGElement
                 //    //    break;
                 //    //}
                 //}
+=======
+                inflicted.RemoveState(state);
+>>>>>>> 3a1832d3c2f535711708dba7d9216fd8a23588cc
             }
         }
     }

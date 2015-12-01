@@ -25,8 +25,8 @@ public class StateUI : CRUD<State>
 
         element.Data.State = element.Name = EditorGUILayout.TextField("Name:", element.Name);
         element.Data.Priority = EditorGUILayout.IntSlider(new GUIContent("Priority:"), element.Data.Priority, 1, 100);
-        element.Data.ActionRestriction = (Constant.ActionType)EditorGUILayout.EnumPopup("Behavior:", element.Data.ActionRestriction);
-        GUI.enabled = GUI.enabled & element.Data.ActionRestriction != Constant.ActionType.None;
+        element.Data.Behavior = (Constant.ActionType)EditorGUILayout.EnumPopup("Behavior:", element.Data.Behavior);
+        GUI.enabled = GUI.enabled & element.Data.Behavior != Constant.ActionType.None;
 
         if (!GUI.enabled)
         {
@@ -54,7 +54,7 @@ public class StateUI : CRUD<State>
         GUILayout.BeginArea(new Rect(300, 200, 600, 100), "Action", EditorStyles.helpBox);
         GUILayout.Space(15);
 
-        GUI.enabled = element.Data.ActionRestriction != Constant.ActionType.DoNothing & !Selected;
+        GUI.enabled = element.Data.Behavior != Constant.ActionType.DoNothing & !Selected;
 
         if (!GUI.enabled)
         {
@@ -85,8 +85,8 @@ public class StateUI : CRUD<State>
         EditorGUILayout.EndHorizontal();
                 
         EditorGUILayout.BeginHorizontal();
-        element.Data.AutoRemovalTiming = EditorGUILayout.Toggle("On Turn", element.Data.AutoRemovalTiming);
-        GUI.enabled = element.Data.AutoRemovalTiming;        
+        element.Data.RemoveByTurn = EditorGUILayout.Toggle("On Turn", element.Data.RemoveByTurn);
+        GUI.enabled = element.Data.RemoveByTurn;        
         element.Data.TurnTotal = EditorGUILayout.IntSlider(element.Data.TurnTotal, 0, 100);
         GUI.enabled = !Selected;
         EditorGUILayout.EndHorizontal();        
@@ -116,12 +116,19 @@ public class StateUI : CRUD<State>
             DeleteButton = GUI.Button(new Rect(400, 510, 100, 20), "Delete");
             GUI.enabled = true;
         }
-    } 
+    }
+
+    // Se llama para agregar el campo de id del abstract state
+    protected override void Create()
+    {
+        element.Data.id = element.Id = System.Guid.NewGuid().ToString();
+        CreatePrefab(element);
+    }
 
     override protected void AssignElement()
     {
-        StateSelected.ActionRestriction = element.Data.ActionRestriction;
-        StateSelected.AutoRemovalTiming = element.Data.AutoRemovalTiming;
+        StateSelected.Behavior = element.Data.Behavior;
+        StateSelected.RemoveByTurn = element.Data.RemoveByTurn;
         StateSelected.FixedValue = element.Data.FixedValue;
         StateSelected.TurnTotal = element.Data.TurnTotal;
         StateSelected.MessageActor = element.Data.MessageActor;
