@@ -30,14 +30,11 @@ public class BattleManager : RPGElement
 
     void Start()
     {
-<<<<<<< HEAD
         //foreach (var state in Player.States)
         //{
             
         //}
-=======
         ActorsOrdered = OrderActors(Player, Enemies);
->>>>>>> 3a1832d3c2f535711708dba7d9216fd8a23588cc
     }
 
     void Update()
@@ -190,7 +187,6 @@ public class BattleManager : RPGElement
         {
             if (ApplyRate >= UnityEngine.Random.Range(1, 100))
             {
-<<<<<<< HEAD
                 //foreach (var item in inflicted.States)
                 //{
                 //    // Deberia ser por el ID
@@ -200,9 +196,7 @@ public class BattleManager : RPGElement
                 //    //    break;
                 //    //}
                 //}
-=======
                 inflicted.RemoveState(state);
->>>>>>> 3a1832d3c2f535711708dba7d9216fd8a23588cc
             }
         }
     }
