@@ -48,6 +48,7 @@
   <ItemGroup>
      <Compile Include="Assets\EventManager.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Ability.cs" />
+     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\AbstractNavigator.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Actor.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\ActorAnimation.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Armor.cs" />
@@ -75,8 +76,8 @@
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\MenuOption.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\MenuOptionAction.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\MenuOptionScen.cs" />
-     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\MenuSelect.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Menus.cs" />
+     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Navigator.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\ObjectTypes.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Obstacle.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\PcInput.cs" />
@@ -87,7 +88,7 @@
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\ProxyInput.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\RPGElement.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\RPGImage.cs" />
-     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\ScrollMenu.cs" />
+     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\SrollNavigator.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\StartMenu.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\State.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\TextureScale.cs" />

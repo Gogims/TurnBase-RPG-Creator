@@ -112,7 +112,7 @@ public class EquipmentMenu : Menus {
     /// <summary>
     /// Menu de scroll de los items
     /// </summary>
-    private ScrollMenu<Item> MenuScroll;
+    private ScrollNavigator<Item> MenuScroll;
     /// <summary>
     /// Jugador en la scene.
     /// </summary>
@@ -121,15 +121,21 @@ public class EquipmentMenu : Menus {
     /// Delay para mover el selector.
     /// </summary>
     private int delay = 0;
+    /// <summary>
+    /// Indica el menu seleccionado ( 0 main menu, 1 item menu , 2 select menu)
+    /// </summary>
     private int MenuSelected = 0;
     /// <summary>
     /// Menu para equipar.
     /// </summary>
-    private MenuSelect Menu2;
+    private Navigator Menu2;
     /// <summary>
     /// El selector del menu de equipaje
     /// </summary>
     public GameObject Arrow3;
+    /// <summary>
+    /// Item seleccionado
+    /// </summary>
     private Equippable EquipSelect;
     /// <summary>
     /// Stats del player
@@ -164,10 +170,10 @@ public class EquipmentMenu : Menus {
         ListWeapon = player.Items.Weapons;
         Item = Resources.Load("Menus/MenuItems") as GameObject;
         ItemImage = Resources.Load("Menus/MenuItemsImage") as GameObject;
-        MenuScroll = new ScrollMenu<Item>();
+        MenuScroll = new ScrollNavigator<Item>();
         MenuScroll.Init(new Vector3(xItem, lastY), new Vector3(xImage, lastY), diffy, 0, 6, Arrow2, NextArrow, PrevArrow, ItemPanel);
         fillWeapon();
-        Menu2 = new MenuSelect();
+        Menu2 = new Navigator();
         GameObject menusObj = GameObject.Find("Canvas").transform.FindChild("Select Panel").gameObject;
         List<GameObject> Options = new List<GameObject>();
         for (int i = 0; i < menusObj.transform.childCount; i++)
@@ -181,6 +187,9 @@ public class EquipmentMenu : Menus {
         Menu2.Init(Arrow3, Options);
         
     }
+    /// <summary>
+    /// Asigna los valores del player en el UI
+    /// </summary>
     public void SetPlayerLabels() {
         Feet.GetComponent<Text>().text = player.Data.Feet.ItemName;
         Ring.GetComponent<Text>().text = player.Data.Ring.ItemName;
@@ -207,6 +216,9 @@ public class EquipmentMenu : Menus {
         GameObject.Find("NecklaceImage").GetComponent<Image>().sprite = player.Data.Necklace.Image;
         GameObject.Find("RingImage").GetComponent<Image>().sprite = player.Data.Ring.Image;
     }
+    /// <summary>
+    /// 
+    /// </summary>
     public override void Select()
     {
         if (MenuSelected > 2)
@@ -224,7 +236,7 @@ public class EquipmentMenu : Menus {
                 MenuSelected++;
                 break;
             case 2:
-                if (selectionName == "Equip")
+                if (selectionName == "Equip" && player.Data.Level >= EquipSelect.MinLevel)
                 {
                     switch (Itemselection)
                     {
@@ -250,7 +262,6 @@ public class EquipmentMenu : Menus {
                             break;
                     }
                     SetPlayerLabels();
-                    
                 }
                 MenuSelected--;
                 break;
@@ -290,11 +301,11 @@ public class EquipmentMenu : Menus {
     /// <param name="val2">Valor del item Seleccionado</param>
     private void SetDiffVal(string name,int val1,int val2) {
         GameObject TextStats = GameObject.Find(name);
-        TextStats.GetComponent<Text>().text = (val1-val2).ToString();
+        TextStats.GetComponent<Text>().text = (val2-val1).ToString();
         TextStats.GetComponent<Text>().fontSize = 20;
         TextStats.GetComponent<Text>().horizontalOverflow = HorizontalWrapMode.Overflow;
         TextStats.GetComponent<Text>().verticalOverflow = VerticalWrapMode.Overflow;
-        if (val1 >= val2)
+        if (val2 >= val1)
         {
             TextStats.GetComponent<Text>().color = Color.blue;
         }
@@ -309,7 +320,11 @@ public class EquipmentMenu : Menus {
     /// <param name="Selected"></param>
     public override void On(Equippable Selected) {
         EquipSelect = Selected;
-        Description.GetComponent<Text>().text = Selected.Description;
+        string Desc = Selected.Description+".Level Require "+Selected.MinLevel;
+        if (Selected.State.State != ""){
+            Desc+= "Effect "+ Selected.State.State+", Prob.(%)"+Selected.State.RestrictionRate;
+        }
+        Description.GetComponent<Text>().text = Desc;
         switch (Itemselection)
         {
             case "Weapon":

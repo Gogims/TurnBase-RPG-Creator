@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
-public class ScrollMenu<T>  : MonoBehaviour
+public class ScrollNavigator<T> : AbstractNavigator
     where T: Item
 {
     /// <summary>
@@ -11,17 +11,13 @@ public class ScrollMenu<T>  : MonoBehaviour
     /// </summary>
     private int ScrollCant = 0;
     /// <summary>
-    /// La opcion seleccionada
-    /// </summary>
-    private int selected = 0;
-    /// <summary>
     /// Opciones que aparecen en el menu Con su imagen.
     /// </summary>
-    public List<KeyValuePair<GameObject,GameObject>> Options;
+    private List<KeyValuePair<GameObject,GameObject>> Options;
     /// <summary>
     /// Lista de item que va ir mostrando
     /// </summary>
-    public List<T> Items;
+    private List<T> Items;
     /// <summary>
     /// La posicion siguiente del texto que se va mostrar en el menu.
     /// </summary>
@@ -56,8 +52,13 @@ public class ScrollMenu<T>  : MonoBehaviour
     private int ImagePosX;
     private int ImagePosY;
     #endregion
-    private GameObject Arrow;
+    /// <summary>
+    /// Flecha que se muestra si hay mas elementos hacia abajo
+    /// </summary>
     private GameObject NextArrow;
+    /// <summary>
+    /// Flecha que se muestra si hay mas elementos hacia arriba 
+    /// </summary>
     private GameObject PrevArrow;
     /// <summary>
     /// Prefab del elemento que se coloca como item
@@ -79,7 +80,6 @@ public class ScrollMenu<T>  : MonoBehaviour
     /// Posicion en x en donde inicia el selector.
     /// </summary>
     private int ArrowX;
-    private int delay;
     /// <summary>
     /// Incializa los valores de la clase
     /// </summary>
@@ -93,7 +93,7 @@ public class ScrollMenu<T>  : MonoBehaviour
     /// <param name="nextArrow">imagen que se muestra cuando hay mas elementos hacia abajo</param>
     /// <param name="prevArrow">Imagen que se muestra cuando hay mas elementos hacia arriba</param>
     /// <param name="panel">Panel padre de la lista</param>
-    public void Init(Vector3 position, Vector3 positionImage, int difY, int difX, int maxItem, GameObject arrow, GameObject nextArrow, GameObject prevArrow,GameObject panel)
+    public override void Init(Vector3 position, Vector3 positionImage, int difY, int difX, int maxItem, GameObject arrow, GameObject nextArrow, GameObject prevArrow,GameObject panel)
     {
         Options = new List<KeyValuePair<GameObject, GameObject>>();
         PositionImage = positionImage;
@@ -123,7 +123,6 @@ public class ScrollMenu<T>  : MonoBehaviour
         DestroyOption();
         DisplayList();
     }
-
     private void DestroyOption()
     {
         foreach (KeyValuePair<GameObject,GameObject> i in Options) {
@@ -159,7 +158,7 @@ public class ScrollMenu<T>  : MonoBehaviour
             NextArrow.SetActive(true);
         Reorder();
     }
-    public void update()
+    public override void update()
     {
         if (delay < 15)
         {
@@ -288,7 +287,6 @@ public class ScrollMenu<T>  : MonoBehaviour
         DisplayList();
         PrevArrow.SetActive(false);
     }
-
     public void OnFirst()
     {
         Options[0].Key.GetComponent<MenuOption>().On(Items[selected + ScrollCant] as Equippable);

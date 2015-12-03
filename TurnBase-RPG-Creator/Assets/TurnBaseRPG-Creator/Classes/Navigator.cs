@@ -2,32 +2,29 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
-
-public class MenuSelect : MonoBehaviour {
-
-    /// <summary>
-    /// Indice de la opcion seleccionada.
-    /// </summary>
-    protected int selected = 0;
+/// <summary>
+/// Representa un navegador de menu (sin scroll)
+/// </summary>
+public class Navigator : AbstractNavigator{
     /// <summary>
     /// Lista de todas las opciones.
     /// </summary>
-    protected List<GameObject> Options;
+    private List<GameObject> Options;
     /// <summary>
-    /// Delay para el cambio de una opcion a otra.
+    /// Funcion para inicializar los valores del selector
     /// </summary>
-    protected int delay;
-    /// <summary>
-    /// Imagen que se va mostrar como selector del menu.
-    /// </summary>
-    public GameObject Arrow;
-    
-    public void Init(GameObject arrow, List<GameObject> options) {
+    /// <param name="arrow">Objeto que representa el selector</param>
+    /// <param name="options">Objetos que van a ser navegados por el selector</param>
+    public  override void Init(GameObject arrow, List<GameObject> options) {
         Options = new List<GameObject>();
         Arrow = arrow;
         Options = options;
     }
-    public void update() {
+    /// <summary>
+    /// Funcion para actualizar el estado del selector
+    /// </summary>
+    public override void update()
+    {
 
         if (delay < 15)
         {
