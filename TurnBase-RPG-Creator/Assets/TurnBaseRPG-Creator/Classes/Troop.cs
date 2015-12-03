@@ -5,7 +5,7 @@ using UnityEditor;
 using System.IO;
 using System.Linq;
 
-public class Troop : RPGElement
+public class Troop : Actor
 {
     /// <summary>
     /// El fondo de arriba del combate
@@ -57,6 +57,16 @@ public class Troop : RPGElement
     /// </summary>
     public string TroopPath;
 
+    /// <summary>
+    /// El comportamiento de movimiento que tendrá la tropa
+    /// </summary>
+    public Constant.EnemyType Type;
+
+    private float MinX;
+    private float MaxX;
+    private float MinY;
+    private float MaxY;
+
     public Troop()
     {
         Enemies = new List<EnemyBattle>();
@@ -66,7 +76,31 @@ public class Troop : RPGElement
         rightSprites = new List<Sprite>();
     }
 
-    
+    /// <summary>
+    /// Al iniciar el juego con tropas en la escena 
+    /// </summary>
+    protected override void Start()    
+    {
+        MinX = transform.position.x - AreaWidth;
+        MinY = transform.position.y - AreaHeight;
+        MaxX = transform.position.x + AreaWidth;
+        MaxY = transform.position.y + AreaHeight;
+    }
+
+    void Update()
+    {
+        switch (Type)
+        {
+            case Constant.EnemyType.Follower:
+
+                break;
+            case Constant.EnemyType.Random:
+
+                break;
+            case Constant.EnemyType.Stationary:
+                break;
+        }
+    }
 
     /// <summary>
     /// Crea la escena del battlemap

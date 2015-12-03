@@ -143,4 +143,11 @@ public class Constant{
         Tile,
         Wall
     };
+
+    public enum EnemyType
+    {
+        Follower,
+        Random,
+        Stationary
+    };
 }

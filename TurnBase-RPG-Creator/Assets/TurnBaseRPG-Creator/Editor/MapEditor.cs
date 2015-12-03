@@ -120,7 +120,7 @@ public class MapEditor {
                 selectedObject = Selected;
                 GameEngine.inspectorRpg.Focus();
             }
-            else if (Selected.tag == "RPG-PLAYER")
+            else if (Selected.tag == "RPG-ENEMY")
             {
                 if (Selected.gameObject.GetComponent<Troop>() != null)
                 {

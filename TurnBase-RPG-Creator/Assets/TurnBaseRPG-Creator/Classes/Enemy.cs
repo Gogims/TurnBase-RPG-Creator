@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-public class Enemy : Actor
+public class Enemy : RPGElement
 {
     /// <summary>
     /// Información del enemigo

@@ -20,7 +20,10 @@ public class TroopUI : CRUD<Troop>
         GUILayout.BeginArea(new Rect(300, 0, 600, 160), "Basic Settings", EditorStyles.helpBox);
         GUILayout.Space(15);
 
-        element.Name = EditorGUILayout.TextField("Name: ", element.Name);        
+        GUILayout.BeginHorizontal();
+        element.Name = EditorGUILayout.TextField("Name: ", element.Name);
+        element.Type = (Constant.EnemyType)EditorGUILayout.EnumPopup("Type:", element.Type);
+        GUILayout.EndHorizontal();
 
         GUILayout.Label("Background: ", EditorStyles.boldLabel);
         if (GUILayout.Button("Top Background"))
@@ -88,8 +91,12 @@ public class TroopUI : CRUD<Troop>
 
     protected override void Create()
     {
-        element.tag = "RPG-PLAYER";
-        element.Id = System.Guid.NewGuid().ToString();        
+        element.tag = "RPG-ENEMY";
+        element.Id = System.Guid.NewGuid().ToString();
+        var rb2D = elementObject.AddComponent<Rigidbody2D>();
+        rb2D.gravityScale = 0;
+        rb2D.angularDrag = 0;
+        rb2D.freezeRotation = true;
 
         SetIcon();
         CreateAnimation();
@@ -99,19 +106,14 @@ public class TroopUI : CRUD<Troop>
             SpriteRenderer character = elementObject.AddComponent<SpriteRenderer>();
             character.sprite = element.downSprites[0];
             character.sortingLayerName = "Actors";
-        }
-
-        var rb2D = elementObject.AddComponent<Rigidbody2D>();
-        rb2D.gravityScale = 0;
-        rb2D.angularDrag = 0;
-        rb2D.freezeRotation = true;
+        }        
 
         var collider = elementObject.AddComponent<BoxCollider2D>();
         collider.size = new Vector2(element.downSprites[0].textureRect.width, element.downSprites[0].textureRect.height);
 
         //element.CreateTroopScene();
         CreatePrefab(element);
-    }
+    }    
 
     private void CreateAnimation()
     {
@@ -162,7 +164,18 @@ public class TroopUI : CRUD<Troop>
     {
         SetIcon();
         CreateAnimation();
-        element.CreateTroopScene();
+
+        if (element.downSprites.Count > 0)
+        {
+            SpriteRenderer character = elementObject.GetComponent<SpriteRenderer>();
+            character.sprite = element.downSprites[0];
+            character.sortingLayerName = "Actors";
+        }
+
+        var collider = elementObject.GetComponent<BoxCollider2D>();
+        collider.size = new Vector2(element.downSprites[0].textureRect.width, element.downSprites[0].textureRect.height);
+
+        //element.CreateTroopScene();
         base.Edit();
     }
 
