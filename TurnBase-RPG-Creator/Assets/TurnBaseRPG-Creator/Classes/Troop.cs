@@ -43,6 +43,16 @@ public class Troop : RPGElement
     public List<Sprite> rightSprites;
 
     /// <summary>
+    /// Ancho que ocupará el área que podrá moverse
+    /// </summary>
+    public int AreaWidth;
+
+    /// <summary>
+    /// Alto que ocupará el área que podrá moverse
+    /// </summary>
+    public int AreaHeight;
+
+    /// <summary>
     /// La dirección de la escena
     /// </summary>
     public string TroopPath;
@@ -99,7 +109,7 @@ public class EnemyBattle
     /// <summary>
     /// Position donde se presenta el enemigo
     /// </summary>
-    public Rect EnemyPosition;
+    public Rect EnemyPosition;    
 
     public EnemyBattle()
     {
