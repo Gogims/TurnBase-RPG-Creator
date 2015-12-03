@@ -18,13 +18,12 @@ public class AnimationUI : EditorWindow
     }
 
     void OnGUI()
-    {
-        //Down Sprite        
+    {    
         GUILayout.BeginArea(new Rect(0, 0, this.position.width, this.position.height-20));
 
         if (GUILayout.Button("Add " + SpriteName))
         {
-            EditorGUIUtility.ShowObjectPicker<Sprite>(null, false, null, 1);
+            EditorGUIUtility.ShowObjectPicker<Sprite>(null, false, "Character", 1);
         }
 
         ScrollPosition = GUILayout.BeginScrollView(ScrollPosition);

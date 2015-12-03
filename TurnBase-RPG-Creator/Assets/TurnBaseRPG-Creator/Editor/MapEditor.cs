@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEditor;
 
 [InitializeOnLoad]
@@ -9,12 +8,13 @@ public class MapEditor {
 	/// Objeto seleccionado.
 	/// </summary>
 	public static GameObject selectedObject;
+    private static GameObject AreaTroopSelector;
 	static Object DarkFloor;
 	static Object LightFloor;
     static bool deleting = false;
 	static MapEditor () {
 	
-		//SceneView.onSceneGUIDelegate += OnSceneEvents;
+		SceneView.onSceneGUIDelegate += OnSceneEvents;
 		DarkFloor =  AssetDatabase.LoadAssetAtPath(@"Assets/Resources/Tile/DefaultTile1.prefab", typeof(GameObject));
         LightFloor = AssetDatabase.LoadAssetAtPath(@"Assets/Resources/Tile/DefaultTile2.prefab", typeof(GameObject));
 	}
@@ -24,22 +24,32 @@ public class MapEditor {
 	/// <param name="sceneview">Escena.</param>
 	static void OnSceneEvents(SceneView sceneview)
 	{
-
 		Event e = Event.current;
 		//Revisa si el objeto seleccionado es nulo.
 		if (Selection.activeGameObject != null) {
-			//ChangeSelectedObject (Selection.activeGameObject);
-		}// si el click izquierdo es precionado y el objeto seleccionado es diferente de nulo inserta un objeto al mapa. 
+            ChangeSelectedObject (Selection.activeGameObject);
+
+            if (Selection.activeGameObject.GetComponent<Troop>() != null)
+            {
+                selectedObject = Selection.activeGameObject;
+            }
+		}
+        
+        // si el click izquierdo es precionado y el objeto seleccionado es diferente de nulo inserta un objeto al mapa. 
         if (EventType.MouseUp == e.type && e.button == 0 && selectedObject != null && (selectedObject.tag == "RPG-MAPOBJECT" || selectedObject.tag == "RPG-PLAYER" || selectedObject.tag == "RPG-ENEMY"))
         {
              DropObject ();
-		} // Si la tecla del  es precionada borra los objetos seleccionados. 
+		} 
+        
+        // Si la tecla del es precionada borra los objetos seleccionados. 
         if (EventType.KeyDown == e.type && !deleting &&  e.keyCode == KeyCode.Delete)
         {
             deleting = true;
             DeleteObject();
             deleting = false;
-		}// En caso de que hagan drag and drop.
+		}
+        
+        // En caso de que hagan drag and drop.
 		if (EventType.DragExited == e.type) {
 			DeleteSelectedObject(Selection.activeGameObject);
 		}
@@ -49,9 +59,8 @@ public class MapEditor {
             selectedObject = null;
             GameEngine.inspectorRpg.Focus();
         }
-
-
 	}
+
 	/// <summary>
 	/// Borra el objeto que este seleccionado.
 	/// </summary>
@@ -95,17 +104,52 @@ public class MapEditor {
 		}
 	}
 	/// <summary>
-	///  Cambia la seleccion del objeto que se va pintar cuando se le de click a un objeto en la scene
+	///  Cambia la seleccion del objeto que se va pintar cuando se le de click a un objeto en la escena
 	/// </summary>
 	/// <param name="Selected">objeto seleccionado</param>
 	static void ChangeSelectedObject(GameObject Selected){
-        if (Selected.tag == "RPG-MAPOBJECT" && Selected != selectedObject && !Selected.activeInHierarchy)
+        if (Selected != selectedObject)
         {
-			selectedObject = Selected;
-			GameEngine.inspectorRpg.Focus();
-		}
+            if (AreaTroopSelector != null)
+            {
+                Object.DestroyImmediate(AreaTroopSelector);
+            }
 
-	}
+            if (Selected.tag == "RPG-MAPOBJECT") //&& !Selected.activeInHierarchy)
+            {
+                selectedObject = Selected;
+                GameEngine.inspectorRpg.Focus();
+            }
+            else if (Selected.tag == "RPG-PLAYER")
+            {
+                if (Selected.gameObject.GetComponent<Troop>() != null)
+                {
+                    Troop enemy = Selected.gameObject.GetComponent<Troop>();
+
+                    AreaTroopSelector = new GameObject("Selector");
+                    var sprite = AreaTroopSelector.AddComponent<SpriteRenderer>();
+                    sprite.sprite = Resources.Load<Sprite>("Selector");
+                    sprite.sortingLayerName = "Selector";
+                    AreaTroopSelector.transform.position = enemy.transform.position;
+
+                    selectedObject = Selected;
+                    GameEngine.inspectorRpg.Focus();
+                }
+            } 
+        }
+
+        if (AreaTroopSelector != null && Selected.gameObject.GetComponent<Troop>() != null)
+        {
+            Troop troop = Selected.GetComponent<Troop>();
+            var selector = AreaTroopSelector.GetComponent<SpriteRenderer>();
+            float EnemyAreaWidth = troop.AreaWidth < 0 ? 0 : 3.125f * troop.AreaWidth * 2;
+            float EnemyAreaHeight = troop.AreaHeight < 0 ? 0 : 3.125f * troop.AreaHeight * 2;
+
+            selector.transform.localScale = new Vector3(EnemyAreaWidth+3.125f, EnemyAreaHeight + 3.125f, 1);
+
+        }
+
+    }
 	/// <summary>
 	/// Pinta el objeto seleccionado en la scene.
 	/// </summary>
@@ -184,7 +228,6 @@ public class MapEditor {
 			MapUI.DestroyImmediate (GameObject.Find("New Game Object"),true);
 
 		}
-        Selection.activeGameObject = null;
-		                          
+        Selection.activeGameObject = null;		                          
 	}
 }
