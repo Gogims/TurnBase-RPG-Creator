@@ -87,7 +87,8 @@ public class EquipmentMenu : Menus {
     /// <summary>
     /// Seleccion del menu
     /// </summary>
-    private string selection = "Weapon";
+    private string Itemselection = "Weapon";
+    private string selectionName = "Weapon";
     /// <summary>
     /// Lista de items visibles
     /// </summary>
@@ -112,7 +113,24 @@ public class EquipmentMenu : Menus {
     /// Menu de scroll de los items
     /// </summary>
     private ScrollMenu<Item> MenuScroll;
+    /// <summary>
+    /// Jugador en la scene.
+    /// </summary>
     private Player player;
+    /// <summary>
+    /// Delay para mover el selector.
+    /// </summary>
+    private int delay = 0;
+    private int MenuSelected = 0;
+    /// <summary>
+    /// Menu para equipar.
+    /// </summary>
+    private MenuSelect Menu2;
+    /// <summary>
+    /// El selector del menu de equipaje
+    /// </summary>
+    public GameObject Arrow3;
+    private Equippable EquipSelect;
     /// <summary>
     /// Stats del player
     /// </summary>
@@ -130,6 +148,40 @@ public class EquipmentMenu : Menus {
     public void Start() {
         ClearDiffText();
         player = GameObject.FindWithTag("RPG-PLAYER").GetComponent<Player>();
+        SetPlayerLabels();
+        ListBody = new List<AbstractArmor>();
+        ListFeet = new List<AbstractArmor>();
+        ListHelmet = new List<AbstractArmor>();
+        ListNecklace = new List<AbstractArmor>();
+        ListRing = new List<AbstractArmor>();
+        ListWeapon = new List<AbstractWeapon>();
+        ActiveItems = new List<Item>();
+        ListBody = player.Items.TypeArmor(AbstractArmor.ArmorType.Body);
+        ListFeet = player.Items.TypeArmor(AbstractArmor.ArmorType.Feet);
+        ListHelmet = player.Items.TypeArmor(AbstractArmor.ArmorType.Helmet);
+        ListNecklace = player.Items.TypeArmor(AbstractArmor.ArmorType.Necklace);
+        ListRing = player.Items.TypeArmor(AbstractArmor.ArmorType.Ring);
+        ListWeapon = player.Items.Weapons;
+        Item = Resources.Load("Menus/MenuItems") as GameObject;
+        ItemImage = Resources.Load("Menus/MenuItemsImage") as GameObject;
+        MenuScroll = new ScrollMenu<Item>();
+        MenuScroll.Init(new Vector3(xItem, lastY), new Vector3(xImage, lastY), diffy, 0, 6, Arrow2, NextArrow, PrevArrow, ItemPanel);
+        fillWeapon();
+        Menu2 = new MenuSelect();
+        GameObject menusObj = GameObject.Find("Canvas").transform.FindChild("Select Panel").gameObject;
+        List<GameObject> Options = new List<GameObject>();
+        for (int i = 0; i < menusObj.transform.childCount; i++)
+        {
+            GameObject obj = menusObj.transform.GetChild(i).gameObject;
+            if (!obj.name.Contains("Arrow"))
+            {
+                Options.Add(obj);
+            }
+        }
+        Menu2.Init(Arrow3, Options);
+        
+    }
+    public void SetPlayerLabels() {
         Feet.GetComponent<Text>().text = player.Data.Feet.ItemName;
         Ring.GetComponent<Text>().text = player.Data.Ring.ItemName;
         Weapon.GetComponent<Text>().text = player.Data.MainHand.ItemName;
@@ -154,39 +206,81 @@ public class EquipmentMenu : Menus {
         GameObject.Find("WeaponImage").GetComponent<Image>().sprite = player.Data.MainHand.Image;
         GameObject.Find("NecklaceImage").GetComponent<Image>().sprite = player.Data.Necklace.Image;
         GameObject.Find("RingImage").GetComponent<Image>().sprite = player.Data.Ring.Image;
-        ListBody = new List<AbstractArmor>();
-        ListFeet = new List<AbstractArmor>();
-        ListHelmet = new List<AbstractArmor>();
-        ListNecklace = new List<AbstractArmor>();
-        ListRing = new List<AbstractArmor>();
-        ListWeapon = new List<AbstractWeapon>();
-        ActiveItems = new List<Item>();
-        ListBody = player.Items.TypeArmor(AbstractArmor.ArmorType.Body);
-        ListFeet = player.Items.TypeArmor(AbstractArmor.ArmorType.Feet);
-        ListHelmet = player.Items.TypeArmor(AbstractArmor.ArmorType.Helmet);
-        ListNecklace = player.Items.TypeArmor(AbstractArmor.ArmorType.Necklace);
-        ListRing = player.Items.TypeArmor(AbstractArmor.ArmorType.Ring);
-        ListWeapon = player.Items.Weapons;
-        Item = Resources.Load("Menus/MenuItems") as GameObject;
-        ItemImage = Resources.Load("Menus/MenuItemsImage") as GameObject;
-        MenuScroll = new ScrollMenu<Item>();
-        MenuScroll.Init(new Vector3(xItem, lastY), new Vector3(xImage, lastY), diffy, 0, 6, Arrow2, NextArrow, PrevArrow, ItemPanel);
-        fillWeapon();
-        
     }
     public override void Select()
     {
-        select = false;
-        select2 = true;
-        MenuScroll.OnFirst();
+        if (MenuSelected > 2)
+        {
+            MenuSelected = 2;
+            return;
+        }
+        switch (MenuSelected)
+        {
+            case 0:
+                MenuScroll.OnFirst();
+                MenuSelected++;
+                break;
+            case 1:
+                MenuSelected++;
+                break;
+            case 2:
+                if (selectionName == "Equip")
+                {
+                    switch (Itemselection)
+                    {
+                        case "Weapon":
+                            player.Data.MainHand = EquipSelect as AbstractWeapon;
+                            break;
+                        case "Body":
+                            player.Data.Body = EquipSelect as AbstractArmor;
+                            break;
+                        case "Helmet":
+                            player.Data.Helmet = EquipSelect as AbstractArmor;
+                            break;
+                        case "Feet":
+                            player.Data.Feet = EquipSelect as AbstractArmor;
+                            break;
+                        case "Necklace":
+                            player.Data.Necklace = EquipSelect as AbstractArmor;
+                            break;
+                        case "Ring":
+                            player.Data.Ring = EquipSelect as AbstractArmor;
+                            break;
+                        default:
+                            break;
+                    }
+                    SetPlayerLabels();
+                    
+                }
+                MenuSelected--;
+                break;
+            default:
+                break;
+        }
+
     }
     public override void unSelect()
     {
-        select = true;
-        select2 = false;
-        Description.GetComponent<Text>().text = "";
-        ClearDiffText();
-        MenuScroll.Reset();
+        switch (MenuSelected)
+        {
+            case 0 :
+                ///TODO
+                MenuSelected--;
+                break;
+            case 1:
+                ClearDiffText();
+                MenuScroll.Reset();
+                Description.GetComponent<Text>().text = "";
+                MenuSelected--;
+                break;
+            case 2:
+                MenuSelected--;
+                break;
+            default:
+                break;
+        }
+        if (MenuSelected < 0)
+            MenuSelected = 0;
     }
     /// <summary>
     /// Asigna el valor del texto que contiene la diferencia entre los stats.
@@ -214,9 +308,9 @@ public class EquipmentMenu : Menus {
     /// </summary>
     /// <param name="Selected"></param>
     public override void On(Equippable Selected) {
+        EquipSelect = Selected;
         Description.GetComponent<Text>().text = Selected.Description;
-      
-        switch (selection)
+        switch (Itemselection)
         {
             case "Weapon":
                 SetDiffText( player.Data.MainHand.Stats, Selected.Stats);
@@ -264,15 +358,22 @@ public class EquipmentMenu : Menus {
         GameObject.Find("LuckDiff").GetComponent<Text>().text = "";
     }
     public void Update() {
-        if (!select2)
-            return;
-        if (delay < 15)
+        switch (MenuSelected)
         {
-            delay++;
-            return;
+            case 0:
+                ///TODO
+                Menu.update();
+                break;
+            case 1:
+                MenuScroll.update();
+                break;
+            case 2:
+                Menu2.update();
+                break;
+            default:
+                break;
         }
-
-            MenuScroll.update();
+        
         delay = 0;
     }
     private void DestroyAll()
@@ -318,39 +419,40 @@ public class EquipmentMenu : Menus {
     }
     public override void On(string name)
     {
-        if (name == selection)
+        if (name == Itemselection)
             return;
+        selectionName = name;
         switch (name)
         {
             case "Weapon":
                 DestroyAll();
                 fillWeapon();
-                selection = "Weapon";
+                Itemselection = name;
                 break;
             case "Helmet":
                 DestroyAll();
                 fillArmor(AbstractArmor.ArmorType.Helmet);
-                selection = "Helmet";
+                Itemselection = name;
                 break;
             case "Body":
                 DestroyAll();
                 fillArmor(AbstractArmor.ArmorType.Body);
-                selection = "Body";
+                Itemselection = name;
                 break;
             case "Feet":
                DestroyAll();
                 fillArmor(AbstractArmor.ArmorType.Feet);
-                selection = "Feet";
+                Itemselection = name;
                 break;
             case "Necklace":
                 DestroyAll();
                 fillArmor(AbstractArmor.ArmorType.Necklace);
-                selection = "Necklace";
+                Itemselection = name;
                  break;
             case "Ring":
                  DestroyAll();
                  fillArmor(AbstractArmor.ArmorType.Ring);
-                 selection = "Ring";
+                 Itemselection = name;
                  break;
             default:
                 break;

@@ -1,15 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 /// <summary>
 /// Clase del menu principal.
 /// </summary>
 public class MainMenu : Menus {
-
-    public MainMenu() {
-         //base.MenuName.GetComponent<Text>().text = ProjectSettings.ProjectName;
-        //base.BackgroundImage.GetComponent<Image>().sprite = Imagen del background.
-    }
-  
+    public void Update() {
+        Menu.update();
+    } 
 }

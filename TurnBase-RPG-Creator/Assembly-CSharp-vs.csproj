@@ -75,6 +75,7 @@
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\MenuOption.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\MenuOptionAction.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\MenuOptionScen.cs" />
+     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\MenuSelect.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Menus.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\ObjectTypes.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Obstacle.cs" />

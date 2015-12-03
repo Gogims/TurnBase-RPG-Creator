@@ -79,6 +79,7 @@ public class ScrollMenu<T>  : MonoBehaviour
     /// Posicion en x en donde inicia el selector.
     /// </summary>
     private int ArrowX;
+    private int delay;
     /// <summary>
     /// Incializa los valores de la clase
     /// </summary>
@@ -160,6 +161,11 @@ public class ScrollMenu<T>  : MonoBehaviour
     }
     public void update()
     {
+        if (delay < 15)
+        {
+            delay++;
+            return;
+        }
         if (!Arrow.activeSelf) return;
         if (ProxyInput.GetInstance().B())
         {
@@ -214,6 +220,7 @@ public class ScrollMenu<T>  : MonoBehaviour
         {
             Options[selected].Key.GetComponent<MenuOption>().OnSelect();
         }
+        delay = 0;
 
     }
     private KeyValuePair<GameObject,GameObject> NewItem(int i){
