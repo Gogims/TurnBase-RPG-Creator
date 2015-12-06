@@ -106,10 +106,6 @@ public class EquipmentMenu : Menus {
     /// </summary>
     public GameObject PrevArrow;
     /// <summary>
-    /// Coordenada y de inicio del texto de los items
-    /// </summary>
-    private int startY = 97;
-    /// <summary>
     /// Menu de scroll de los items
     /// </summary>
     private ScrollNavigator<Item> MenuScroll;
@@ -117,10 +113,6 @@ public class EquipmentMenu : Menus {
     /// Jugador en la scene.
     /// </summary>
     private Player player;
-    /// <summary>
-    /// Delay para mover el selector.
-    /// </summary>
-    private int delay = 0;
     /// <summary>
     /// Indica el menu seleccionado ( 0 main menu, 1 item menu , 2 select menu)
     /// </summary>
@@ -318,32 +310,33 @@ public class EquipmentMenu : Menus {
     /// 
     /// </summary>
     /// <param name="Selected"></param>
-    public override void On(Equippable Selected) {
-        EquipSelect = Selected;
-        string Desc = Selected.Description+".Level Require "+Selected.MinLevel;
-        if (Selected.State.State != ""){
-            Desc+= "Effect "+ Selected.State.State+", Prob.(%)"+Selected.State.RestrictionRate;
+    public override void On(Item Selected) {
+        EquipSelect = Selected as Equippable;
+        string Desc = Selected.Description + ".Level Require " + EquipSelect.MinLevel;
+        if (EquipSelect.State.State != "")
+        {
+            Desc += "Effect " + EquipSelect.State.State + ", Prob.(%)" + EquipSelect.State.RestrictionRate;
         }
         Description.GetComponent<Text>().text = Desc;
         switch (Itemselection)
         {
             case "Weapon":
-                SetDiffText( player.Data.MainHand.Stats, Selected.Stats);
+                SetDiffText(player.Data.MainHand.Stats, EquipSelect.Stats);
                 break;
             case "Body":
-                SetDiffText(player.Data.Body.Stats, Selected.Stats);
+                SetDiffText(player.Data.Body.Stats, EquipSelect.Stats);
                 break;
             case "Helmet":
-                SetDiffText(player.Data.Helmet.Stats, Selected.Stats);
+                SetDiffText(player.Data.Helmet.Stats, EquipSelect.Stats);
                 break;
             case "Feet":
-                SetDiffText(player.Data.Feet.Stats, Selected.Stats);
+                SetDiffText(player.Data.Feet.Stats, EquipSelect.Stats);
                 break;
             case "Necklace":
-                SetDiffText(player.Data.Necklace.Stats, Selected.Stats);
+                SetDiffText(player.Data.Necklace.Stats, EquipSelect.Stats);
                 break;
             case "Ring":
-                SetDiffText(player.Data.Ring.Stats, Selected.Stats);
+                SetDiffText(player.Data.Ring.Stats, EquipSelect.Stats);
                 break;
             default:
                 break;

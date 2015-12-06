@@ -106,6 +106,7 @@ public class ScrollNavigator<T> : AbstractNavigator
         PrevArrow = prevArrow;
         NextArrow.SetActive(false);
         PrevArrow.SetActive(false);
+        Arrow.SetActive(false);
         Item = Resources.Load("Menus/MenuItems") as GameObject;
         ItemImage = Resources.Load("Menus/MenuItemsImage") as GameObject;
         Item.AddComponent<MenuOptionAction>();
@@ -118,11 +119,24 @@ public class ScrollNavigator<T> : AbstractNavigator
 
         
     }
+    /// <summary>
+    /// asigna la lista de elementos
+    /// </summary>
+    /// <param name="newItems">Lista de elementos</param>
+    public void setList(List<T> newItems) {
+        Items = newItems;
+    }
+    /// <summary>
+    /// Cambia la lista de elementos y la muestra
+    /// </summary>
+    /// <param name="newItems">Nueva lista de elementos</param>
     public void ChangeList(List<T> newItems) {
         Items = newItems;
-        DestroyOption();
         DisplayList();
     }
+    /// <summary>
+    /// Destruye la lista de elementos que se estan mostrando
+    /// </summary>
     private void DestroyOption()
     {
         foreach (KeyValuePair<GameObject,GameObject> i in Options) {
@@ -132,7 +146,20 @@ public class ScrollNavigator<T> : AbstractNavigator
         Options.Clear();
 
     }
-    private void DisplayList() {
+    /// <summary>
+    /// Oculta el menu.
+    /// </summary>
+    public void HideList() {
+        NextArrow.SetActive(false);
+        PrevArrow.SetActive(false);
+        Arrow.SetActive(false);
+        DestroyOption();
+    }
+    /// <summary>
+    /// Muestra el menu
+    /// </summary>
+    public void DisplayList() {
+        DestroyOption();
         if (Items.Count == 0)
         {
             Arrow.SetActive(false);
@@ -158,6 +185,9 @@ public class ScrollNavigator<T> : AbstractNavigator
             NextArrow.SetActive(true);
         Reorder();
     }
+    /// <summary>
+    /// Funciona para navegar el menu
+    /// </summary>
     public override void update()
     {
         if (delay < 15)
@@ -183,13 +213,13 @@ public class ScrollNavigator<T> : AbstractNavigator
                 ScrollCant++;
                 NewListNext();
 
-                Options[selected].Key.GetComponent<MenuOption>().On(Items[selected + ScrollCant] as Equippable);
+                Options[selected].Key.GetComponent<MenuOption>().On(Items[selected + ScrollCant]);
             }
             else if (selected < Options.Count - 1)
             {
                 //Options[selected].GetComponent<MenuOption>().Off(Options[selected].GetComponent<Text>().text);
                 selected++;
-                Options[selected].Key.GetComponent<MenuOption>().On(Items[selected + ScrollCant] as Equippable);
+                Options[selected].Key.GetComponent<MenuOption>().On(Items[selected + ScrollCant] );
             }
             else {
                 NextArrow.SetActive(false);
@@ -205,13 +235,13 @@ public class ScrollNavigator<T> : AbstractNavigator
                 //Options[selected].GetComponent<MenuOption>().Off(Options[selected].GetComponent<Text>().text);
                 ScrollCant--;
                 NewListPrev();
-                Options[selected].Key.GetComponent<MenuOption>().On(Items[selected + ScrollCant] as Equippable);
+                Options[selected].Key.GetComponent<MenuOption>().On(Items[selected + ScrollCant] );
             }
             else if (selected > 0)
             {
                 //Options[selected].GetComponent<MenuOption>().Off(Options[selected].GetComponent<Text>().text);
                 selected--;
-                Options[selected].Key.GetComponent<MenuOption>().On(Items[selected + ScrollCant] as Equippable);
+                Options[selected].Key.GetComponent<MenuOption>().On(Items[selected + ScrollCant] );
             }
             Arrow.transform.position = new Vector3(Arrow.transform.position.x, Options[selected].Key.gameObject.transform.position.y);
         }
@@ -222,6 +252,11 @@ public class ScrollNavigator<T> : AbstractNavigator
         delay = 0;
 
     }
+    /// <summary>
+    /// Agrega un elemento nuevo a la lista que se esta mostrando
+    /// </summary>
+    /// <param name="i">indice del elemento en la lista </param>
+    /// <returns> Retorna el elemento que se creo en la scene</returns>
     private KeyValuePair<GameObject,GameObject> NewItem(int i){
         Item.GetComponent<Text>().text = Items[i].ItemName;
         ItemImage.GetComponent<Image>().sprite = Items[i].Image;
@@ -236,6 +271,9 @@ public class ScrollNavigator<T> : AbstractNavigator
         KeyValuePair<GameObject, GameObject> aux = new KeyValuePair<GameObject, GameObject>(ax,ay);
         return aux;
     }
+    /// <summary>
+    /// Agrega el elemento siguiente a la lista que se esta mostrando y elimina el primer elemento que se esta mostrando
+    /// </summary>
     private void NewListNext()
     {
         if (selected + ScrollCant <= Items.Count - 1)
@@ -252,6 +290,9 @@ public class ScrollNavigator<T> : AbstractNavigator
         }
         Reorder();
     }
+    /// <summary>
+    /// Agrega un elemento en la primera posicion de la lista que se esta mostrando y elimina el ultimo elemento.
+    /// </summary>
     private void NewListPrev() {
         Destroy(Options[Options.Count - 1].Key);
         Destroy(Options[Options.Count - 1].Value);
@@ -262,6 +303,9 @@ public class ScrollNavigator<T> : AbstractNavigator
             PrevArrow.SetActive(false);
         Reorder();
     }
+    /// <summary>
+    /// Reordena la lista que se esta mostrando
+    /// </summary>
     private void Reorder(){
         Position = new Vector3(PosX, PosY);
         ImagePosition = new Vector3(ImagePosX, ImagePosY);
@@ -287,8 +331,12 @@ public class ScrollNavigator<T> : AbstractNavigator
         DisplayList();
         PrevArrow.SetActive(false);
     }
+    /// <summary>
+    /// Selecciona el primer elemento de la lista
+    /// </summary>
     public void OnFirst()
     {
         Options[0].Key.GetComponent<MenuOption>().On(Items[selected + ScrollCant] as Equippable);
     }
+
 }

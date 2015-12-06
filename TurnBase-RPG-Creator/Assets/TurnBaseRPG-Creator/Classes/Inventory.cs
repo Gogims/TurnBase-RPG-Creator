@@ -14,6 +14,7 @@ public class Inventory:MonoBehaviour {
         Weapons = new List<AbstractWeapon>();
         AbstractArmor aux = (Resources.Load("Armor/2fde446b-dd6e-459f-8ff8-47082c952525") as GameObject).GetComponent<Armor>().Data;
         AbstractWeapon aux2 = (Resources.Load("Weapon/dfaa859c-5ae4-44b4-9882-6ced915fd665") as GameObject).GetComponent<Weapon>().Data;
+        AbstractUsable aux3 = (Resources.Load("Item/52a2fc86-91e8-44e8-98c7-203be647b54b") as GameObject).GetComponent<Usable>().Data;
         Armors.Add(aux);
         Armors.Add(aux);
         Armors.Add(aux);
@@ -24,6 +25,17 @@ public class Inventory:MonoBehaviour {
         Armors.Add(aux);
         Armors.Add(aux);
         Armors.Add(aux);
+        this.Usables.Add(aux3);
+        this.Usables.Add(aux3);
+        this.Usables.Add(aux3);
+        this.Usables.Add(aux3);
+        this.Usables.Add(aux3);
+        this.Usables.Add(aux3);
+        this.Usables.Add(aux3);
+        this.Usables.Add(aux3);
+        this.Usables.Add(aux3);
+        this.Usables.Add(aux3);
+        this.Usables.Add(aux3);
         AbstractWeapon copy = new AbstractWeapon();
         copy.ItemName = "Weapon1";
         copy.Image = aux2.Image;

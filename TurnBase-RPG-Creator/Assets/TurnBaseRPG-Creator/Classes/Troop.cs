@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEditor;
 using System.IO;
 using System.Linq;
-
+[Serializable]
 public class Troop : Actor
 {
     /// <summary>

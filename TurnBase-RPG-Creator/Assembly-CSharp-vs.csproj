@@ -1,119 +1,119 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>10.0.20506</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{038FB830-0CEF-54A7-2C95-EFEF74F22B38}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>
-    </RootNamespace>
-    <AssemblyName>Assembly-CSharp</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <BaseDirectory>Assets</BaseDirectory>
+	<Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+	<ProductVersion>10.0.20506</ProductVersion>
+	<SchemaVersion>2.0</SchemaVersion>
+	<ProjectGuid>{038FB830-0CEF-54A7-2C95-EFEF74F22B38}</ProjectGuid>
+	<OutputType>Library</OutputType>
+	<AppDesignerFolder>Properties</AppDesignerFolder>
+	<RootNamespace></RootNamespace>
+	<AssemblyName>Assembly-CSharp</AssemblyName>
+	<TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+	<FileAlignment>512</FileAlignment>
+	<BaseDirectory>Assets</BaseDirectory>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>Temp\bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;UNITY_5_1_2;UNITY_5_1;UNITY_5;ENABLE_NEW_BUGREPORTER;ENABLE_2D_PHYSICS;ENABLE_4_6_FEATURES;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_FRAME_DEBUGGER;ENABLE_GENERICS;ENABLE_HOME_SCREEN;ENABLE_IMAGEEFFECTS;ENABLE_LIGHT_PROBES_LEGACY;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_PHYSICS_PHYSX3;ENABLE_PLUGIN_INSPECTOR;ENABLE_SHADOWS;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_UNET;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_LICENSE;ENABLE_AUDIOMIXER_SUSPEND;ENABLE_EDITOR_METRICS;INCLUDE_DYNAMIC_GI;INCLUDE_GI;INCLUDE_IL2CPP;INCLUDE_DIRECTX12;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;ENABLE_LOCALIZATION;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_TEXTUREID_MAP;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <NoWarn>0169</NoWarn>
+	<DebugSymbols>true</DebugSymbols>
+	<DebugType>full</DebugType>
+	<Optimize>false</Optimize>
+	<OutputPath>Temp\bin\Debug\</OutputPath>
+	<DefineConstants>DEBUG;TRACE;UNITY_5_1_2;UNITY_5_1;UNITY_5;ENABLE_NEW_BUGREPORTER;ENABLE_2D_PHYSICS;ENABLE_4_6_FEATURES;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_FRAME_DEBUGGER;ENABLE_GENERICS;ENABLE_HOME_SCREEN;ENABLE_IMAGEEFFECTS;ENABLE_LIGHT_PROBES_LEGACY;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_PHYSICS_PHYSX3;ENABLE_PLUGIN_INSPECTOR;ENABLE_SHADOWS;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_UNET;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_LICENSE;ENABLE_AUDIOMIXER_SUSPEND;ENABLE_EDITOR_METRICS;INCLUDE_DYNAMIC_GI;INCLUDE_GI;INCLUDE_IL2CPP;INCLUDE_DIRECTX12;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;ENABLE_LOCALIZATION;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_TEXTUREID_MAP;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN</DefineConstants>
+	<ErrorReport>prompt</ErrorReport>
+	<WarningLevel>4</WarningLevel>
+	<NoWarn>0169</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>Temp\bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <NoWarn>0169</NoWarn>
+	<DebugType>pdbonly</DebugType>
+	<Optimize>true</Optimize>
+	<OutputPath>Temp\bin\Release\</OutputPath>
+	<DefineConstants>TRACE</DefineConstants>
+	<ErrorReport>prompt</ErrorReport>
+	<WarningLevel>4</WarningLevel>
+	<NoWarn>0169</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
+	<Reference Include="System" />
     <Reference Include="System.XML" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="UnityEngine">
-      <HintPath>E:/Programs/Editor/Data/Managed/UnityEngine.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor">
-      <HintPath>E:/Programs/Editor/Data/Managed/UnityEditor.dll</HintPath>
-    </Reference>
+	<Reference Include="System.Core" />
+	<Reference Include="System.Xml.Linq" />
+	<Reference Include="UnityEngine">
+	  <HintPath>E:/Programs/Editor/Data/Managed/UnityEngine.dll</HintPath>
+	</Reference>
+	<Reference Include="UnityEditor">
+	  <HintPath>E:/Programs/Editor/Data/Managed/UnityEditor.dll</HintPath>
+	</Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\EventManager.cs" />
-    <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Ability.cs" />
-    <Compile Include="Assets\TurnBaseRPG-Creator\Classes\AbstractNavigator.cs" />
-    <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Actor.cs" />
-    <Compile Include="Assets\TurnBaseRPG-Creator\Classes\ActorAnimation.cs" />
-    <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Armor.cs" />
-    <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Attribute.cs" />
-    <Compile Include="Assets\TurnBaseRPG-Creator\Classes\BattleManager.cs" />
-    <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Condition.cs" />
-    <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Constant.cs" />
-    <Compile Include="Assets\TurnBaseRPG-Creator\Classes\DemoBehaviour.cs" />
-    <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Door.cs" />
-    <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Enemy.cs" />
-    <Compile Include="Assets\TurnBaseRPG-Creator\Classes\EquipmentMenu.cs" />
-    <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Equipppable.cs" />
-    <Compile Include="Assets\TurnBaseRPG-Creator\Classes\ErrorHandler.cs" />
-    <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Formula.cs" />
-    <Compile Include="Assets\TurnBaseRPG-Creator\Classes\House.cs" />
-    <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Inventory.cs" />
-    <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Item.cs" />
-    <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Job.cs" />
-    <Compile Include="Assets\TurnBaseRPG-Creator\Classes\ListBox.cs" />
-    <Compile Include="Assets\TurnBaseRPG-Creator\Classes\LoigcalCondition.cs" />
-    <Compile Include="Assets\TurnBaseRPG-Creator\Classes\MainCamera.cs" />
-    <Compile Include="Assets\TurnBaseRPG-Creator\Classes\MainMenu.cs" />
-    <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Map.cs" />
-    <Compile Include="Assets\TurnBaseRPG-Creator\Classes\MapObject.cs" />
-    <Compile Include="Assets\TurnBaseRPG-Creator\Classes\MenuOption.cs" />
-    <Compile Include="Assets\TurnBaseRPG-Creator\Classes\MenuOptionAction.cs" />
-    <Compile Include="Assets\TurnBaseRPG-Creator\Classes\MenuOptionScen.cs" />
-    <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Menus.cs" />
-    <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Navigator.cs" />
-    <Compile Include="Assets\TurnBaseRPG-Creator\Classes\ObjectTypes.cs" />
-    <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Obstacle.cs" />
-    <Compile Include="Assets\TurnBaseRPG-Creator\Classes\PcInput.cs" />
-    <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Pickup.cs" />
-    <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Player.cs" />
-    <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Project.cs" />
-    <Compile Include="Assets\TurnBaseRPG-Creator\Classes\ProjectSettings.cs" />
-    <Compile Include="Assets\TurnBaseRPG-Creator\Classes\ProxyInput.cs" />
-    <Compile Include="Assets\TurnBaseRPG-Creator\Classes\RPGElement.cs" />
-    <Compile Include="Assets\TurnBaseRPG-Creator\Classes\RPGImage.cs" />
-    <Compile Include="Assets\TurnBaseRPG-Creator\Classes\SrollNavigator.cs" />
-    <Compile Include="Assets\TurnBaseRPG-Creator\Classes\StartMenu.cs" />
-    <Compile Include="Assets\TurnBaseRPG-Creator\Classes\State.cs" />
-    <Compile Include="Assets\TurnBaseRPG-Creator\Classes\TextureScale.cs" />
-    <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Tile.cs" />
-    <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Troop.cs" />
-    <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Tuple.cs" />
-    <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Usable.cs" />
-    <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Wall.cs" />
-    <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Weapon.cs" />
-    <None Include="Assets\TurnBaseRPG-Creator\Rotorz\Reorderable List Field\README.txt" />
-    <None Include="Assets\TurnBaseRPG-Creator\Rotorz\Reorderable List Field\LICENSE.txt" />
-    <None Include="Assets\TurnBaseRPG-Creator\Rotorz\Reorderable List Field\Editor\Editor.ReorderableList.xml" />
-    <Reference Include="UnityEngine.UI">
-      <HintPath>E:/Programs/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.Networking">
-      <HintPath>E:/Programs/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.Analytics">
-      <HintPath>E:/Programs/Editor/Data/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
-      <HintPath>E:/Programs/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
-    </Reference>
+     <Compile Include="Assets\EventManager.cs" />
+     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Ability.cs" />
+     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\AbstractNavigator.cs" />
+     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Actor.cs" />
+     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\ActorAnimation.cs" />
+     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Armor.cs" />
+     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Attribute.cs" />
+     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\BattleManager.cs" />
+     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\BattleMenu.cs" />
+     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Condition.cs" />
+     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Constant.cs" />
+     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\DemoBehaviour.cs" />
+     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Door.cs" />
+     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Enemy.cs" />
+     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\EquipmentMenu.cs" />
+     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Equipppable.cs" />
+     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\ErrorHandler.cs" />
+     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Formula.cs" />
+     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\House.cs" />
+     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Inventory.cs" />
+     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Item.cs" />
+     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Job.cs" />
+     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\ListBox.cs" />
+     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\LoigcalCondition.cs" />
+     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\MainCamera.cs" />
+     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\MainMenu.cs" />
+     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Map.cs" />
+     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\MapObject.cs" />
+     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\MenuOption.cs" />
+     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\MenuOptionAction.cs" />
+     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\MenuOptionScen.cs" />
+     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Menus.cs" />
+     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Navigator.cs" />
+     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\ObjectTypes.cs" />
+     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Obstacle.cs" />
+     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\PcInput.cs" />
+     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Pickup.cs" />
+     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Player.cs" />
+     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Project.cs" />
+     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\ProjectSettings.cs" />
+     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\ProxyInput.cs" />
+     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\RPGElement.cs" />
+     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\RPGImage.cs" />
+     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\ScrollNavigator.cs" />
+     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\StartMenu.cs" />
+     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\State.cs" />
+     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\TextureScale.cs" />
+     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Tile.cs" />
+     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Troop.cs" />
+     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Tuple.cs" />
+     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Usable.cs" />
+     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Wall.cs" />
+     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Weapon.cs" />
+     <None Include="Assets\TurnBaseRPG-Creator\Rotorz\Reorderable List Field\README.txt" />
+     <None Include="Assets\TurnBaseRPG-Creator\Rotorz\Reorderable List Field\LICENSE.txt" />
+     <None Include="Assets\TurnBaseRPG-Creator\Rotorz\Reorderable List Field\Editor\Editor.ReorderableList.xml" />
+ <Reference Include="UnityEngine.UI">
+ <HintPath>E:/Programs/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.Networking">
+ <HintPath>E:/Programs/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.Analytics">
+ <HintPath>E:/Programs/Editor/Data/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.iOS.Extensions.Xcode">
+ <HintPath>E:/Programs/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
+ </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -123,4 +123,5 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  
 </Project>
