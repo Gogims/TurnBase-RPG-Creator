@@ -111,7 +111,7 @@ public class TroopUI : CRUD<Troop>
         var collider = elementObject.AddComponent<BoxCollider2D>();
         collider.size = new Vector2(element.downSprites[0].textureRect.width, element.downSprites[0].textureRect.height);
 
-        //element.CreateTroopScene();
+        BattleManager.CreateTroopScene(ref element);
         CreatePrefab(element);
     }    
 
@@ -175,7 +175,7 @@ public class TroopUI : CRUD<Troop>
         var collider = elementObject.GetComponent<BoxCollider2D>();
         collider.size = new Vector2(element.downSprites[0].textureRect.width, element.downSprites[0].textureRect.height);
 
-        //element.CreateTroopScene();
+        BattleManager.CreateTroopScene(ref element);
         base.Edit();
     }
 

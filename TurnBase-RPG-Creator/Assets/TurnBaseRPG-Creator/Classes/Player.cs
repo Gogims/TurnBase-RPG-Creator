@@ -44,42 +44,27 @@ public class Player : Actor
         MoveDirection(ProxyInput.GetInstance().Left(), "left", 0.34f);
         MoveDirection(ProxyInput.GetInstance().Up(), "up", 0.67f);
         MoveDirection(ProxyInput.GetInstance().Right(), "right", 1);
-    }
-
-    void OnCollisionEnter2D(Collision2D coll)
-    {
-        if (coll.gameObject.layer == (int) Constant.MapObjectType.Tile)
-        {
-            Debug.Log("Tile");
-        }
-            
-    }
-
-    private void MoveDirection(bool input, string direction, float idle)
-    {
-        var animations = GetComponent<Animator>();
-
-        if (input)
-        {
-            animations.SetBool(direction, true);
-            animations.SetFloat("Idle", idle);            
-        }
-        else
-        {
-            animations.SetBool(direction, false);
-        }
 
         PlayerMove();
     }
 
+    void OnCollisionEnter2D(Collision2D coll)
+    {
+        if (coll.gameObject.tag == "RPG-ENEMY")
+        {
+            Debug.Log("Change Scene");
+        }
+            
+    }
+
     private bool PlayerMove()
     {
-        int horizontal = 0;
-        int vertical = 0;
+        float horizontal = 0;
+        float vertical = 0;
         
         //Get input from the input manager, round it to an integer and store in horizontal to set x axis move direction
-        horizontal = (int)(Input.GetAxisRaw("Horizontal"));
-        vertical = (int)(Input.GetAxisRaw("Vertical"));
+        horizontal = (Input.GetAxisRaw("Horizontal"));
+        vertical = (Input.GetAxisRaw("Vertical"));
 
         if (Move(horizontal, vertical))
         {
