@@ -41,16 +41,46 @@ public class Troop : Actor
     /// Listado de las animaciones para caminar hacia la derecha
     /// </summary>
     public List<Sprite> rightSprites;
-
+    
     /// <summary>
     /// Ancho que ocupará el área que podrá moverse
     /// </summary>
-    public int AreaWidth;
+    public int AreaWidth
+    {
+        get
+        {
+            return _width;
+        }
+        set
+        {
+            if (value != _width)
+            {
+                Changed = true;
+            }
 
+            _width = value;
+        }
+    }
+    
     /// <summary>
     /// Alto que ocupará el área que podrá moverse
     /// </summary>
-    public int AreaHeight;
+    public int AreaHeight
+    {
+        get
+        {
+            return _height;
+        }
+        set
+        {
+            if (value != _height)
+            {
+                Changed = true;
+            }
+
+            _height = value;
+        }
+    }
 
     /// <summary>
     /// La dirección de la escena
@@ -62,13 +92,26 @@ public class Troop : Actor
     /// </summary>
     public Constant.EnemyType Type;
 
+    /// <summary>
+    /// Si el área cambió
+    /// </summary>
+    public bool Changed;
+
+    [SerializeField]
+    private int _width;
+    [SerializeField]
+    private int _height;
+
     private float MinX;
     private float MaxX;
     private float MinY;
     private float MaxY;
+    private bool axis;
+    private int count;
+    private float direction;    
 
     public Troop()
-    {
+    {        
         Enemies = new List<EnemyBattle>();
         downSprites = new List<Sprite>();
         leftSprites = new List<Sprite>();
@@ -89,46 +132,71 @@ public class Troop : Actor
 
     void Update()
     {
+        count++;
+        bool down = false;
+        bool left = false;
+        bool up = false;
+        bool right = false;
+
         switch (Type)
         {
             case Constant.EnemyType.Follower:
 
                 break;
             case Constant.EnemyType.Random:
+                if (count > 20)
+                {
+                    axis = UnityEngine.Random.Range(1, 3) % 2 == 0;
+                    direction = UnityEngine.Random.Range(1, 3) % 2 == 0 ? -1 : 1;
+                    count = 0; 
+                }
 
+                if (CanMove())
+                {
+                    if (axis)
+                    {
+                        if (direction == -1)
+                            left = true;
+                        else
+                            right = true;
+
+                        Move(direction, 0);
+                    }                        
+                    else
+                    {
+                        if (direction == -1)
+                            down = true;
+                        else
+                            up = true;
+
+                        Move(0, direction);
+                    }
+                        
+                }
+                
                 break;
             case Constant.EnemyType.Stationary:
                 break;
         }
-    }
 
-    /// <summary>
-    /// Crea la escena del battlemap
-    /// </summary>
-    public void CreateTroopScene()
+        MoveDirection(down, "down", 0);
+        MoveDirection(left, "left", 0.34f);
+        MoveDirection(up, "up", 0.67f);
+        MoveDirection(right, "right", 1);
+    }  
+
+    private bool CanMove()
     {
-        EditorApplication.NewScene(); // Crea una scene nueva.
-        Camera.main.orthographic = true;
-        Camera.main.orthographicSize = 6.95f; // Ajusta el tamaño de la camara ( la cantidad de espacio que va enfocar)        
-        Camera.main.rect = new Rect(0, 0, 1, 1.4f);
+        float futurePositionX = NextPosition(direction) + transform.position.x;
+        float futurePositionY = NextPosition(direction) + transform.position.y;
 
-        CreateBackground("Bottom", BackgroundBottom, 0);
-        CreateBackground("Top", BackgroundTop, 1);
+        if (futurePositionX <= MaxX && futurePositionX >= MinX &&
+            futurePositionY <= MaxY && futurePositionY >= MinY)
+        {
+            return true;
+        }
 
-        string returnPath = "Assets/Resources/BattleMaps/" + Id + ".unity";
-        TroopPath = Directory.GetCurrentDirectory() + '\\' + returnPath.Replace('/', '\\');
-        EditorApplication.SaveScene(returnPath);// Guarda la scene.
-    }
-
-    private GameObject CreateBackground(string name, Sprite background, int OrderLayer)
-    {
-        GameObject gobj = new GameObject(name);
-        SpriteRenderer renderer = gobj.AddComponent<SpriteRenderer>();
-        renderer.sprite = background;
-        renderer.sortingLayerName = "Background";
-        renderer.sortingOrder = OrderLayer;
-
-        return gobj;
+        return false;
     }
 }
 

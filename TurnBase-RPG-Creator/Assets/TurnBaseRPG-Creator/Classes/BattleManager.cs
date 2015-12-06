@@ -1,5 +1,5 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEditor;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -26,6 +26,27 @@ public class BattleManager : RPGElement
     {
         Enemies = enemies;
         Player = player;
+    }
+
+    /// <summary>
+    /// Crea la escena del battlemap
+    /// </summary>
+    /// <param name="troop">Tropa que contiene el battlemap</param>
+    public static void CreateTroopScene(ref Troop troop)
+    {
+        EditorApplication.NewScene(); // Crea una scene nueva.
+        Camera.main.orthographic = true;
+        Camera.main.backgroundColor = Color.black;
+        Camera.main.gameObject.AddComponent<MainCamera>();
+        Camera.main.orthographicSize = 6.95f; // Ajusta el tamaño de la camara ( la cantidad de espacio que va enfocar)        
+        Camera.main.rect = new Rect(0, 0, 1, 1.4f);
+
+        CreateBackground("Bottom", troop.BackgroundBottom, 0);
+        CreateBackground("Top", troop.BackgroundTop, 1);
+
+        string returnPath = "Assets/Resources/BattleMaps/" + troop.Id + ".unity";
+        troop.TroopPath = returnPath;
+        EditorApplication.SaveScene(returnPath, true);// Guarda la scene.
     }
 
     void Start()
@@ -199,5 +220,16 @@ public class BattleManager : RPGElement
                 inflicted.RemoveState(state);
             }
         }
+    }
+
+    private static GameObject CreateBackground(string name, Sprite background, int OrderLayer)
+    {
+        GameObject gobj = new GameObject(name);
+        SpriteRenderer renderer = gobj.AddComponent<SpriteRenderer>();
+        renderer.sprite = background;
+        renderer.sortingLayerName = "Background";
+        renderer.sortingOrder = OrderLayer;
+
+        return gobj;
     }
 }

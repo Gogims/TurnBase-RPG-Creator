@@ -115,32 +115,30 @@ public class MapEditor {
                 Object.DestroyImmediate(AreaTroopSelector);
             }
 
-            if (Selected.tag == "RPG-MAPOBJECT") //&& !Selected.activeInHierarchy)
+            if (Selected.tag == "RPG-MAPOBJECT" && !Selected.activeInHierarchy)
             {
                 selectedObject = Selected;
                 GameEngine.inspectorRpg.Focus();
-            }
-            else if (Selected.tag == "RPG-ENEMY")
-            {
-                if (Selected.gameObject.GetComponent<Troop>() != null)
-                {
-                    Troop enemy = Selected.gameObject.GetComponent<Troop>();
-
-                    AreaTroopSelector = new GameObject("Selector");
-                    var sprite = AreaTroopSelector.AddComponent<SpriteRenderer>();
-                    sprite.sprite = Resources.Load<Sprite>("Selector");
-                    sprite.sortingLayerName = "Selector";
-                    AreaTroopSelector.transform.position = enemy.transform.position;
-
-                    selectedObject = Selected;
-                    GameEngine.inspectorRpg.Focus();
-                }
             } 
         }
 
-        if (AreaTroopSelector != null && Selected.gameObject.GetComponent<Troop>() != null)
+        if (Selected.tag == "RPG-ENEMY" && AreaTroopSelector == null)
         {
-            Troop troop = Selected.GetComponent<Troop>();
+            Troop enemy = Selected.gameObject.GetComponent<Troop>();
+
+            AreaTroopSelector = new GameObject("Selector");
+            var sprite = AreaTroopSelector.AddComponent<SpriteRenderer>();
+            sprite.sprite = Resources.Load<Sprite>("Selector");
+            sprite.sortingLayerName = "Selector";
+            AreaTroopSelector.transform.position = enemy.transform.position;
+
+            selectedObject = Selected;
+            GameEngine.inspectorRpg.Focus();
+        }
+
+        if (AreaTroopSelector != null && selectedObject.gameObject.GetComponent<Troop>() != null)
+        {
+            Troop troop = selectedObject.GetComponent<Troop>();
             var selector = AreaTroopSelector.GetComponent<SpriteRenderer>();
             float EnemyAreaWidth = troop.AreaWidth < 0 ? 0 : 3.125f * troop.AreaWidth * 2;
             float EnemyAreaHeight = troop.AreaHeight < 0 ? 0 : 3.125f * troop.AreaHeight * 2;

@@ -5,33 +5,48 @@ using System.Linq;
 
 public class Actor : RPGElement
 {
+    private const float speed = 0.5f;
 
     protected virtual void Start()
     {
-        
+
     }
 
     //Move returns true if it is able to move and false if not. 
     //Move takes parameters for x direction, y direction and a RaycastHit2D to check collision.
-    protected bool Move(int xDir, int yDir)
+    protected bool Move(float xDir, float yDir)
     {
-        var rb2D = GetComponent<Rigidbody2D>();
-        
-        //Store start position to move from, based on objects current transform position.
-        Vector2 start = transform.position;
+        if (xDir == 0 && yDir == 0) return false;
 
-        // Calculate end position based on the direction parameters passed in when calling Move.
-        Vector2 end = new Vector2(xDir, yDir);
+        Vector2 movement = new Vector2();
 
-        //If nothing was hit, start Movement
-        rb2D.velocity = end;
+        movement.x = xDir * Time.deltaTime * speed;
+        movement.y = yDir * Time.deltaTime * speed;
 
+        transform.Translate(movement);
 
-        //Return true to say that Move was successful
         return true;
     }
 
-    
+    protected float NextPosition(float dir)
+    {
+        return dir * Time.deltaTime * speed;
+    }
+
+    protected void MoveDirection(bool input, string direction, float idle)
+    {
+        var animations = GetComponent<Animator>();
+
+        if (input)
+        {
+            animations.SetBool(direction, true);
+            animations.SetFloat("Idle", idle);
+        }
+        else
+        {
+            animations.SetBool(direction, false);
+        }
+    }
 }
 
 [Serializable]

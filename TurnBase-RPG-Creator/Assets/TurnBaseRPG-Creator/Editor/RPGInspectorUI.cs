@@ -4,12 +4,11 @@ using UnityEditor;
 /// <summary>
 /// Inspector que presenta cual objeto esta seleccionado.
 /// </summary>
-public class RPGInspectorUI : EditorWindow {
-    
+public class RPGInspectorUI : EditorWindow {    
     static Sprite texture;
     private Sprite defaultText;
 	const int width = Constant.INSPECTOR_IMAGE_WIDTH;
-	const int height = Constant.INSPECTOR_IMAGE_HEIGTH;        
+	const int height = Constant.INSPECTOR_IMAGE_HEIGTH;
 
     public void Init()
 	{
@@ -47,21 +46,29 @@ public class RPGInspectorUI : EditorWindow {
         // Area para dibujar si el gameobject no vino vacío
         if (MapEditor.selectedObject != null)
         {
-            if (MapEditor.selectedObject.GetComponent<Troop>() != null)
+            var troop = Selection.activeGameObject.GetComponent<Troop>();
+
+            if (troop != null)
             {
-                DrawTroopAreas();
+                GUILayout.Label("Area:", EditorStyles.boldLabel);
+                troop.AreaWidth = EditorGUILayout.IntField("Width:", troop.AreaWidth);
+                troop.AreaHeight = EditorGUILayout.IntField("Height:", troop.AreaHeight);
             }
-        }
+        }        
 
         GUILayout.EndArea();
     }
 
     void DrawTroopAreas()
     {
-        Troop enemy = MapEditor.selectedObject.GetComponent<Troop>();
+        
 
-        GUILayout.Label("Area:", EditorStyles.boldLabel);
-        enemy.AreaWidth = EditorGUILayout.IntField("Width:", enemy.AreaWidth);
-        enemy.AreaHeight = EditorGUILayout.IntField("Height:", enemy.AreaHeight);
+        //if (troop.Changed)
+        //{
+        //    troop.Changed = false;
+        //    GameObject obj = Instantiate(MapEditor.selectedObject);
+        //    DestroyImmediate(MapEditor.selectedObject);
+        //    MapEditor.selectedObject = obj;
+        //}        
     }
 }
