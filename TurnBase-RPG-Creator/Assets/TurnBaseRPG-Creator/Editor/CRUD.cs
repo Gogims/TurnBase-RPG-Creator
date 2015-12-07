@@ -195,7 +195,9 @@ public abstract class CRUD<T> : EditorWindow
         int y = 26;
         foreach (var obj in ListObjects)
         {
-            GameObject temp = (GameObject)obj;            
+            GameObject temp = (GameObject)obj;
+            if (temp == null) return;
+
             T comp = temp.GetComponent<T>();
             Rect position = new Rect(x, y, 64, 64);
 

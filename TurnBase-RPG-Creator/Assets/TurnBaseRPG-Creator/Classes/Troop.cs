@@ -17,7 +17,7 @@ public class Troop : Actor
     /// <summary>
     /// Lista de enemigos de la batalla
     /// </summary>
-    public List<EnemyBattle> Enemies;
+    public List<BattleEnemy> Enemies;
 
     /// <summary>
     /// Listado de las animaciones para caminar hacia abajo
@@ -80,11 +80,6 @@ public class Troop : Actor
     }
 
     /// <summary>
-    /// La dirección de la escena
-    /// </summary>
-    public string TroopPath;
-
-    /// <summary>
     /// El comportamiento de movimiento que tendrá la tropa
     /// </summary>
     public Constant.EnemyType Type;
@@ -109,7 +104,7 @@ public class Troop : Actor
 
     public Troop()
     {        
-        Enemies = new List<EnemyBattle>();
+        Enemies = new List<BattleEnemy>();
         downSprites = new List<Sprite>();
         leftSprites = new List<Sprite>();
         upSprites = new List<Sprite>();
@@ -194,25 +189,5 @@ public class Troop : Actor
         }
 
         return false;
-    }
-}
-
-[Serializable]
-public class EnemyBattle
-{
-    /// <summary>
-    /// Enemigo del battle map
-    /// </summary>
-    public AbstractEnemy Enemy;
-
-    /// <summary>
-    /// Position donde se presenta el enemigo
-    /// </summary>
-    public Rect EnemyPosition;    
-
-    public EnemyBattle()
-    {
-        Enemy = new AbstractEnemy();
-        EnemyPosition = new Rect();
     }
 }

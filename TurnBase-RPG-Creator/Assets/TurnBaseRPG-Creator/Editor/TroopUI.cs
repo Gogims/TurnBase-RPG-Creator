@@ -7,8 +7,8 @@ public class TroopUI : CRUD<Troop>
 {
     Vector2 ScrollPosition;
     Animator animations;
-    const int previewX = 10;
-    const int previewY = 20;
+    const int previewX = Constant.BackgroundWidth/2;
+    const int previewY = Constant.BackgroundHeight/2 + 20;
 
     TroopUI():base("Troop", new Rect(0, 0, 300, 940)) { }
 
@@ -17,7 +17,7 @@ public class TroopUI : CRUD<Troop>
         RenderLeftSide();
 
         // Basic Settings
-        GUILayout.BeginArea(new Rect(300, 0, 600, 160), "Basic Settings", EditorStyles.helpBox);
+        GUILayout.BeginArea(new Rect(300, 0, Constant.BackgroundWidth, 160), "Basic Settings", EditorStyles.helpBox);
         GUILayout.Space(15);
 
         GUILayout.BeginHorizontal();
@@ -46,7 +46,7 @@ public class TroopUI : CRUD<Troop>
         GUILayout.EndArea();
 
         // Enemies
-        GUILayout.BeginArea(new Rect(300, 160, 600, 140), "Enemies", EditorStyles.helpBox);
+        GUILayout.BeginArea(new Rect(300, 160, Constant.BackgroundWidth, 140), "Enemies", EditorStyles.helpBox);
         GUILayout.Space(15);
 
         ScrollPosition = GUILayout.BeginScrollView(ScrollPosition);
@@ -56,22 +56,32 @@ public class TroopUI : CRUD<Troop>
         GUILayout.EndArea();        
 
         // Preview
-        GUILayout.BeginArea(new Rect(300, 300, 600, 620), "Preview", EditorStyles.helpBox);
+        GUILayout.BeginArea(new Rect(300, 300, Constant.BackgroundWidth, Constant.BackgroundHeight + 40), "Preview", EditorStyles.helpBox);
         GUILayout.Space(15);
         AddBackground();
 
         if (element.BackgroundBottom != null)
         {
-            GUI.DrawTexture(new Rect(previewX, previewY, Constant.BackgroundWidth, Constant.BackgroundHeight), element.BackgroundBottom.texture); 
+            GUI.DrawTexture(new Rect(0, 20, Constant.BackgroundWidth, Constant.BackgroundHeight), element.BackgroundBottom.texture); 
         }
         if (element.BackgroundTop != null)
         {
-            GUI.DrawTexture(new Rect(previewX, previewY, Constant.BackgroundWidth, Constant.BackgroundHeight), element.BackgroundTop.texture); 
+            GUI.DrawTexture(new Rect(0, 20, Constant.BackgroundWidth, Constant.BackgroundHeight), element.BackgroundTop.texture); 
         }
         
-        foreach (var item in element.Enemies)
+        foreach (var enemy in element.Enemies)
         {
-            DrawEnemy(item);
+            if (enemy != null)
+            {
+                DrawEnemy(enemy);
+
+                if (enemy.Data.Image != null)
+                {
+
+                    enemy.RelativePosition = new Vector2(enemy.EnemyPosition.x / (Constant.BackgroundWidth / 2),
+                                                        enemy.EnemyPosition.y / (Constant.BackgroundHeight / 2));
+                } 
+            }
         }
         GUILayout.EndArea();
 
@@ -111,7 +121,9 @@ public class TroopUI : CRUD<Troop>
         var collider = elementObject.AddComponent<BoxCollider2D>();
         collider.size = new Vector2(element.downSprites[0].textureRect.width, element.downSprites[0].textureRect.height);
 
-        BattleManager.CreateTroopScene(ref element);
+        string scene = EditorApplication.currentScene;
+        BattleManager.CreateTroopScene(element);
+        EditorApplication.OpenScene(scene);
         CreatePrefab(element);
     }    
 
@@ -175,8 +187,10 @@ public class TroopUI : CRUD<Troop>
         var collider = elementObject.GetComponent<BoxCollider2D>();
         collider.size = new Vector2(element.downSprites[0].textureRect.width, element.downSprites[0].textureRect.height);
 
-        BattleManager.CreateTroopScene(ref element);
-        base.Edit();
+        CreatePrefab(element);
+        string scene = EditorApplication.currentScene;
+        BattleManager.CreateTroopScene(element);
+        EditorApplication.OpenScene(scene);
     }
 
     private void AddAnimation(string name, ref List<Sprite> animation)
@@ -193,30 +207,33 @@ public class TroopUI : CRUD<Troop>
     {
         if (element.Enemies.Count > 0)
         {
-            element.Icon = element.Enemies[0].Enemy.Image;
+            element.Icon = element.Enemies[0].Data.Image;
         }
     }
 
-    private EnemyBattle DrawBattleEnemy(Rect position, EnemyBattle current)
+    private BattleEnemy DrawBattleEnemy(Rect position, BattleEnemy current)
     {
         if (current == null)
         {
-            current = new EnemyBattle();
+            current = new BattleEnemy();
         }
 
-        EditorGUI.TextField(new Rect(position.x, position.y, 120, position.height), current.Enemy.ActorName);
-        if (GUI.Button(new Rect(position.x+120, position.y, 60, position.height), "Select"))
+        EditorGUI.TextField(new Rect(position.x, position.y, 200, position.height), current.Data.ActorName);
+        if (GUI.Button(new Rect(position.x+200, position.y, 60, position.height), "Select"))
         {
             var window = EditorWindow.GetWindow<EnemyUI>();
             window.Selected = true;
-            window.Initialize(ref current.Enemy);
+            window.Initialize(ref current.Data);
             window.Show();
         }
 
-        EditorGUI.LabelField(new Rect(position.x+180, position.y, 20, position.height), "X: ");
-        current.EnemyPosition.x = EditorGUI.Slider(new Rect(position.x+200, position.y, 150, position.height), current.EnemyPosition.x, 0, Constant.BackgroundWidth);
-        EditorGUI.LabelField(new Rect(position.x+350, position.y, 20, position.height), "Y: ");
-        current.EnemyPosition.y = EditorGUI.Slider(new Rect(position.x+370, position.y, 150, position.height), current.EnemyPosition.y, 0, Constant.BackgroundHeight);
+        float maxX = current.Data.Image != null ? (Constant.BackgroundWidth / 2) - current.Data.Image.textureRect.width : Constant.BackgroundWidth / 2;
+        float maxY = current.Data.Image != null ? (Constant.BackgroundHeight / 2) - current.Data.Image.textureRect.height : Constant.BackgroundHeight / 2;
+
+        EditorGUI.LabelField(new Rect(position.x+280, position.y, 20, position.height), "X: ");
+        current.EnemyPosition.x = EditorGUI.Slider(new Rect(position.x+300, position.y, 200, position.height), current.EnemyPosition.x, -Constant.BackgroundWidth / 2, maxX);
+        EditorGUI.LabelField(new Rect(position.x+520, position.y, 20, position.height), "Y: ");
+        current.EnemyPosition.y = EditorGUI.Slider(new Rect(position.x+540, position.y, 200, position.height), current.EnemyPosition.y, -maxY, (Constant.BackgroundHeight / 2));
 
         return current;
     }
@@ -239,15 +256,15 @@ public class TroopUI : CRUD<Troop>
         Repaint();
     }
 
-    private void DrawEnemy(EnemyBattle obj)
+    private void DrawEnemy(BattleEnemy obj)
     {
         if (obj != null)
         {
-            if (obj.Enemy.Image != null && obj.EnemyPosition != null)
+            if (obj.Data.Image != null)
             {
-                GUI.DrawTextureWithTexCoords(new Rect(obj.EnemyPosition.x + previewX, obj.EnemyPosition.y + previewY, obj.Enemy.Image.textureRect.width, obj.Enemy.Image.textureRect.height),
-                                                obj.Enemy.Image.texture,
-                                                Constant.GetTextureCoordinate(obj.Enemy.Image)
+                GUI.DrawTextureWithTexCoords(new Rect(obj.EnemyPosition.x + previewX, -obj.EnemyPosition.y + previewY, obj.Data.Image.textureRect.width, obj.Data.Image.textureRect.height),
+                                                obj.Data.Image.texture,
+                                                Constant.GetTextureCoordinate(obj.Data.Image)
                                             );
             } 
         }

@@ -47,7 +47,7 @@ public class Constant{
     /// <summary>
     /// Ancho del fondo de pantalla del combate
     /// </summary>
-    public const int BackgroundWidth = 580;
+    public const int BackgroundWidth = 1044;
     /// <summary>
     /// Alto del fondo de pantalla del combate
     /// </summary>

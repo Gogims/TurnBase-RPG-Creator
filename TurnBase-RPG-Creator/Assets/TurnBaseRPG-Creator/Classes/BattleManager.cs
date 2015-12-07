@@ -5,7 +5,7 @@ using System.Linq;
 
 public class BattleManager : RPGElement
 {
-    List<EnemyBattle> Enemies;
+    List<Enemy> Enemies;
     AbstractPlayer Player;
     /// <summary>
     /// Actor, True = player
@@ -22,17 +22,30 @@ public class BattleManager : RPGElement
 
     BattleStateMachine BattleState;
 
-    public BattleManager(List<EnemyBattle> enemies, AbstractPlayer player)
+    public BattleManager(List<Enemy> enemies, AbstractPlayer player)
     {
         Enemies = enemies;
         Player = player;
+    }
+
+    void Start()
+    {
+        //ActorsOrdered = OrderActors(Player, Enemies);
+        ResizeSpriteToScreen(GameObject.Find("Top"));
+        ResizeSpriteToScreen(GameObject.Find("Bottom"));
+
+        foreach (var enemy in GameObject.FindGameObjectsWithTag("RPG-ENEMY"))
+        {            
+
+        }
+
     }
 
     /// <summary>
     /// Crea la escena del battlemap
     /// </summary>
     /// <param name="troop">Tropa que contiene el battlemap</param>
-    public static void CreateTroopScene(ref Troop troop)
+    public static void CreateTroopScene(Troop troop)
     {
         EditorApplication.NewScene(); // Crea una scene nueva.
         Camera.main.orthographic = true;
@@ -40,53 +53,72 @@ public class BattleManager : RPGElement
         Camera.main.gameObject.AddComponent<MainCamera>();
         Camera.main.orthographicSize = 6.95f; // Ajusta el tamaño de la camara ( la cantidad de espacio que va enfocar)        
         Camera.main.rect = new Rect(0, 0, 1, 1.4f);
+        Camera.main.orthographicSize = 222.12f;
 
-        CreateBackground("Bottom", troop.BackgroundBottom, 0);
+        new GameObject("BattleManager").AddComponent<BattleManager>();
+
+        Vector2 backgroundSize = CreateBackground("Bottom", troop.BackgroundBottom, 0);
         CreateBackground("Top", troop.BackgroundTop, 1);
 
-        string returnPath = "Assets/Resources/BattleMaps/" + troop.Id + ".unity";
-        troop.TroopPath = returnPath;
-        EditorApplication.SaveScene(returnPath, true);// Guarda la scene.
-    }
+        foreach (var enemy in troop.Enemies)
+        {
+            GameObject gobj = new GameObject(enemy.Data.ActorName);
+            gobj.tag = "RPG-ENEMY";
+            var enemyScene = gobj.AddComponent<Enemy>();
+            enemyScene.BattleEnemy = enemy;
 
-    void Start()
-    {
-        //foreach (var state in Player.States)
-        //{
-            
-        //}
-        ActorsOrdered = OrderActors(Player, Enemies);
+            var sprite = gobj.AddComponent<SpriteRenderer>();
+            sprite.sprite = enemy.Data.Image;
+            sprite.sortingLayerName = "Actors";
+        }
+        
+        EditorApplication.SaveScene("Assets/Resources/BattleMap/" + troop.Id + ".unity", true);// Guarda la scene.
     }
 
     void Update()
     {
-        switch (BattleState)
-        {
-            case BattleStateMachine.PLAYERTURN:
-                Player.RemoveOnTurnState();
-                break;
-            case BattleStateMachine.ENEMYTURN:
-                break;
-            case BattleStateMachine.WIN:
-                break;
-            case BattleStateMachine.LOSE:
-                break;
-        }
+        //switch (BattleState)
+        //{
+        //    case BattleStateMachine.PLAYERTURN:
+        //        Player.RemoveOnTurnState();
+        //        break;
+        //    case BattleStateMachine.ENEMYTURN:
+        //        break;
+        //    case BattleStateMachine.WIN:
+        //        break;
+        //    case BattleStateMachine.LOSE:
+        //        break;
+        //}
     }
 
-    private List<Tuple<AbstractActor, bool>> OrderActors(AbstractPlayer p, List<EnemyBattle> enemies)
+    private void ResizeSpriteToScreen(GameObject background)
+    {
+        var sr = background.GetComponent<SpriteRenderer>();
+        if (sr == null) return;
+
+        transform.localScale = new Vector3(1, 1, 1);
+
+        var width = sr.sprite.bounds.size.x;
+        var height = sr.sprite.bounds.size.y;
+
+        Vector2 worldScreen = new Vector2(Camera.main.orthographicSize * 2 / Screen.height * Screen.width, Camera.main.orthographicSize * 2);
+
+        background.transform.localScale = new Vector3(worldScreen.x / width, worldScreen.y / height, 1);
+    }
+
+    private List<Tuple<AbstractActor, bool>> OrderActors(AbstractPlayer p, List<BattleEnemy> enemies)
     {
         List<Tuple<AbstractActor, bool>> actors = new List<Tuple<AbstractActor, bool>>();
-        enemies = enemies.OrderByDescending(x => x.Enemy.Stats.Agility).ToList();
+        enemies = enemies.OrderByDescending(x => x.Data.Stats.Agility).ToList();
 
         foreach (var enemy in enemies)
         {
-            if (p.Stats.Agility >= enemy.Enemy.Stats.Agility)
+            if (p.Stats.Agility >= enemy.Data.Stats.Agility)
             {
                 actors.Add(new Tuple<AbstractActor, bool>(p, true));                
             }
 
-            actors.Add(new Tuple<AbstractActor, bool>(enemy.Enemy, false));
+            actors.Add(new Tuple<AbstractActor, bool>(enemy.Data, false));
         }    
 
         return actors;
@@ -222,14 +254,15 @@ public class BattleManager : RPGElement
         }
     }
 
-    private static GameObject CreateBackground(string name, Sprite background, int OrderLayer)
+    private static Vector2 CreateBackground(string name, Sprite background, int OrderLayer)
     {
         GameObject gobj = new GameObject(name);
         SpriteRenderer renderer = gobj.AddComponent<SpriteRenderer>();
         renderer.sprite = background;
         renderer.sortingLayerName = "Background";
         renderer.sortingOrder = OrderLayer;
+        gobj.transform.localScale = new Vector2(1.5455f, 1);
 
-        return gobj;
+        return new Vector2(gobj.transform.localScale.x* renderer.sprite.textureRect.width, gobj.transform.localScale.y * renderer.sprite.textureRect.height);
     }
 }

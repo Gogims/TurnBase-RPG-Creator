@@ -23,34 +23,34 @@ public class EnemyUI : CRUD<Enemy>
         GUILayout.BeginArea(new Rect(300, 0, 600, 330), "Basic Settings", EditorStyles.helpBox);
         GUILayout.Space(10);
 
-        element.Data.ActorName = element.Name = EditorGUILayout.TextField("Name", element.Name);
-        element.Data.Description = EditorGUILayout.TextField("Description", element.Data.Description);
-        element.Data.Level = EditorGUILayout.IntSlider(new GUIContent("Level:"), element.Data.Level, 1, 100);
-        element.Data.RewardExperience = EditorGUILayout.IntField("Experience Earned: ", element.Data.RewardExperience);
-        element.Data.RewardCurrency = EditorGUILayout.IntField("Currency Earned: ", element.Data.RewardCurrency);
+        element.BattleEnemy.Data.ActorName = element.Name = EditorGUILayout.TextField("Name", element.Name);
+        element.BattleEnemy.Data.Description = EditorGUILayout.TextField("Description", element.BattleEnemy.Data.Description);
+        element.BattleEnemy.Data.Level = EditorGUILayout.IntSlider(new GUIContent("Level:"), element.BattleEnemy.Data.Level, 1, 100);
+        element.BattleEnemy.Data.RewardExperience = EditorGUILayout.IntField("Experience Earned: ", element.BattleEnemy.Data.RewardExperience);
+        element.BattleEnemy.Data.RewardCurrency = EditorGUILayout.IntField("Currency Earned: ", element.BattleEnemy.Data.RewardCurrency);
 
         GUILayout.Label("Class:", EditorStyles.boldLabel);
         GUILayout.BeginHorizontal();
-        GUILayout.TextField(element.Data.Job.JobName);
+        GUILayout.TextField(element.BattleEnemy.Data.Job.JobName);
         if (GUILayout.Button("Select Class"))
         {
             var window = EditorWindow.GetWindow<JobUI>();
             window.Selected = true;
-            window.Initialize(ref element.Data.Job);
+            window.Initialize(ref element.BattleEnemy.Data.Job);
             window.Show();
         }
         GUILayout.EndHorizontal();
 
         // Attributes section
         GUILayout.Label("Attributes", EditorStyles.boldLabel);
-        element.Data.Stats.MaxHP = EditorGUILayout.IntField("MaxHP: ", element.Data.Stats.MaxHP);
-        element.Data.Stats.MaxMP = EditorGUILayout.IntField("MaxMP: ", element.Data.Stats.MaxMP);
-        element.Data.Stats.Attack = EditorGUILayout.IntField("Attack: ", element.Data.Stats.Attack);
-        element.Data.Stats.Defense = EditorGUILayout.IntField("Defense: ", element.Data.Stats.Defense);
-        element.Data.Stats.Agility = EditorGUILayout.IntField("Agility: ", element.Data.Stats.Agility);
-        element.Data.Stats.Luck = EditorGUILayout.IntField("Luck: ", element.Data.Stats.Luck);
-        element.Data.Stats.Magic = EditorGUILayout.IntField("Magic: ", element.Data.Stats.Magic);
-        element.Data.Stats.MagicDefense = EditorGUILayout.IntField("MagicDefense: ", element.Data.Stats.MagicDefense);
+        element.BattleEnemy.Data.Stats.MaxHP = EditorGUILayout.IntField("MaxHP: ", element.BattleEnemy.Data.Stats.MaxHP);
+        element.BattleEnemy.Data.Stats.MaxMP = EditorGUILayout.IntField("MaxMP: ", element.BattleEnemy.Data.Stats.MaxMP);
+        element.BattleEnemy.Data.Stats.Attack = EditorGUILayout.IntField("Attack: ", element.BattleEnemy.Data.Stats.Attack);
+        element.BattleEnemy.Data.Stats.Defense = EditorGUILayout.IntField("Defense: ", element.BattleEnemy.Data.Stats.Defense);
+        element.BattleEnemy.Data.Stats.Agility = EditorGUILayout.IntField("Agility: ", element.BattleEnemy.Data.Stats.Agility);
+        element.BattleEnemy.Data.Stats.Luck = EditorGUILayout.IntField("Luck: ", element.BattleEnemy.Data.Stats.Luck);
+        element.BattleEnemy.Data.Stats.Magic = EditorGUILayout.IntField("Magic: ", element.BattleEnemy.Data.Stats.Magic);
+        element.BattleEnemy.Data.Stats.MagicDefense = EditorGUILayout.IntField("MagicDefense: ", element.BattleEnemy.Data.Stats.MagicDefense);
         GUILayout.EndArea();
 
         // Initial Equipment Area
@@ -59,21 +59,21 @@ public class EnemyUI : CRUD<Enemy>
 
         GUILayout.Label("Weapon", EditorStyles.boldLabel);
         GUILayout.BeginHorizontal();
-        GUILayout.TextField(element.Data.MainHand.ItemName);
+        GUILayout.TextField(element.BattleEnemy.Data.MainHand.ItemName);
         if (GUILayout.Button("Select Weapon"))
         {
             var window = EditorWindow.GetWindow<WeaponUI>();
             window.Selected = true;
-            window.Initialize(ref element.Data.MainHand);
+            window.Initialize(ref element.BattleEnemy.Data.MainHand);
             window.Show();
         }
         GUILayout.EndHorizontal();
 
-        AddArmor("Helmet", ref element.Data.Helmet, AbstractArmor.ArmorType.Helmet);
-        AddArmor("Body", ref element.Data.Body, AbstractArmor.ArmorType.Body);
-        AddArmor("Feet", ref element.Data.Feet, AbstractArmor.ArmorType.Feet);
-        AddArmor("Necklace", ref element.Data.Necklace, AbstractArmor.ArmorType.Necklace);
-        AddArmor("Ring", ref element.Data.Ring, AbstractArmor.ArmorType.Ring);
+        AddArmor("Helmet", ref element.BattleEnemy.Data.Helmet, AbstractArmor.ArmorType.Helmet);
+        AddArmor("Body", ref element.BattleEnemy.Data.Body, AbstractArmor.ArmorType.Body);
+        AddArmor("Feet", ref element.BattleEnemy.Data.Feet, AbstractArmor.ArmorType.Feet);
+        AddArmor("Necklace", ref element.BattleEnemy.Data.Necklace, AbstractArmor.ArmorType.Necklace);
+        AddArmor("Ring", ref element.BattleEnemy.Data.Ring, AbstractArmor.ArmorType.Ring);
 
         GUILayout.EndArea();
 
@@ -105,7 +105,7 @@ public class EnemyUI : CRUD<Enemy>
         GUILayout.Space(15);
 
         ScrollPosition = GUILayout.BeginScrollView(ScrollPosition);
-        ReorderableListGUI.ListField(element.Data.Items, DrawItem, ReorderableListFlags.DisableReordering);
+        ReorderableListGUI.ListField(element.BattleEnemy.Data.Items, DrawItem, ReorderableListFlags.DisableReordering);
         GUILayout.EndScrollView();
         GUILayout.EndArea();
 
@@ -127,28 +127,28 @@ public class EnemyUI : CRUD<Enemy>
 
     protected override void Create()
     {
-        element.Data.Image = element.Icon;
+        element.BattleEnemy.Data.Image = element.Icon;
         base.Create();
     }
 
     protected override void Edit()
     {
-        element.Data.Image = element.Icon;
+        element.BattleEnemy.Data.Image = element.Icon;
         base.Edit();
     }
 
     protected override void AssignElement()
     {
-        EnemySelected.ActorName = element.Data.ActorName;
-        EnemySelected.Description = element.Data.Description;
-        EnemySelected.HP = element.Data.HP;
-        EnemySelected.Image = element.Data.Image;
-        EnemySelected.Items = element.Data.Items;
-        EnemySelected.Level = element.Data.Level;
-        EnemySelected.MP = element.Data.MP;
-        EnemySelected.RewardCurrency = element.Data.RewardCurrency;
-        EnemySelected.RewardExperience = element.Data.RewardExperience;
-        EnemySelected.Stats = element.Data.Stats;
+        EnemySelected.ActorName = element.BattleEnemy.Data.ActorName;
+        EnemySelected.Description = element.BattleEnemy.Data.Description;
+        EnemySelected.HP = element.BattleEnemy.Data.HP;
+        EnemySelected.Image = element.BattleEnemy.Data.Image;
+        EnemySelected.Items = element.BattleEnemy.Data.Items;
+        EnemySelected.Level = element.BattleEnemy.Data.Level;
+        EnemySelected.MP = element.BattleEnemy.Data.MP;
+        EnemySelected.RewardCurrency = element.BattleEnemy.Data.RewardCurrency;
+        EnemySelected.RewardExperience = element.BattleEnemy.Data.RewardExperience;
+        EnemySelected.Stats = element.BattleEnemy.Data.Stats;
         EnemySelected.Image = element.Icon;    
     }
 
