@@ -6,93 +6,113 @@ using System;
 /// Inventorio del jugador
 /// </summary>
 [Serializable]
-public class Inventory:MonoBehaviour {
+public class Inventory {
+    /// <summary>
+    /// Constructor del inventorio
+    /// </summary>
+    public Inventory () {
+        Armors = new Dictionary<string,Tuple<AbstractArmor,int>>();
+        Usables = new Dictionary<string, Tuple<AbstractUsable, int>>();
+        Weapons = new Dictionary<string, Tuple<AbstractWeapon, int>>();
 
-    public void Awake () {
-        Armors = new List<AbstractArmor>();
-        Usables = new List<AbstractUsable>();
-        Weapons = new List<AbstractWeapon>();
-        AbstractArmor aux = (Resources.Load("Armor/2fde446b-dd6e-459f-8ff8-47082c952525") as GameObject).GetComponent<Armor>().Data;
-        AbstractWeapon aux2 = (Resources.Load("Weapon/dfaa859c-5ae4-44b4-9882-6ced915fd665") as GameObject).GetComponent<Weapon>().Data;
-        Armors.Add(aux);
-        Armors.Add(aux);
-        Armors.Add(aux);
-        Armors.Add(aux);
-        Armors.Add(aux);
-        Armors.Add(aux);
-        Armors.Add(aux);
-        Armors.Add(aux);
-        Armors.Add(aux);
-        Armors.Add(aux);
-        AbstractWeapon copy = new AbstractWeapon();
-        copy.ItemName = "Weapon1";
-        copy.Image = aux2.Image;
-        copy.Description = "Esta es la Primera arama."; 
-        Weapons.Add(copy);
-        copy = new AbstractWeapon();
-        copy.ItemName = "Weapon2";
-        copy.Image = aux2.Image;
-        copy.Description = "Esta es la Segunda arama."; 
-        Weapons.Add(copy);
-        copy = new AbstractWeapon();
-        copy.ItemName = "Weapon3";
-        copy.Image = aux2.Image;
-        copy.Description = "Esta es la Tercera arama."; 
-        Weapons.Add(copy);
-        copy = new AbstractWeapon();
-        copy.ItemName = "Weapon4";
-        copy.Image = aux2.Image;
-        copy.Description = "Esta es la Cuarta arama."; 
-        Weapons.Add(copy);
-        copy = new AbstractWeapon();
-        copy.ItemName = "Weapon5";
-        copy.Image = aux2.Image;
-        copy.Description = "Esta es la Quinta arama."; 
-        Weapons.Add(copy);
-        copy = new AbstractWeapon();
-        copy.ItemName = "Weapon6";
-        copy.Image = aux2.Image;
-        copy.Description = "Esta es la Sexta arama."; 
-        Weapons.Add(copy);
-        copy = new AbstractWeapon();
-        copy.ItemName = "Weapon7";
-        copy.Image = aux2.Image;
-        copy.Description = "Esta es la Septima arama."; 
-        Weapons.Add(copy);
-        copy = new AbstractWeapon();
-        copy.ItemName = "Weapon8";
-        copy.Image = aux2.Image;
-        copy.Description = "Esta es la Octava arama."; 
-        Weapons.Add(copy);
-        copy = new AbstractWeapon();
-        copy.ItemName = "Weapon9";
-        copy.Image = aux2.Image;
-        copy.Description = "Esta es la Novena arama."; 
-        Weapons.Add(copy);
     }
     /// <summary>
     /// Lista de armor
     /// </summary>
-    public List<AbstractArmor> Armors;
+    public Dictionary<string, Tuple<AbstractArmor, int>> Armors;
     /// <summary>
     /// Lista de Usables
     /// </summary>
-    public List<AbstractUsable> Usables;
+    public Dictionary<string,Tuple<AbstractUsable,int>> Usables;
     /// <summary>
     /// Lista de weapons
     /// </summary>
-    public List<AbstractWeapon> Weapons;
+    public Dictionary<string, Tuple<AbstractWeapon, int>> Weapons;
     /// <summary>
     /// Retorna una lista de armor dado un tipo
     /// </summary>
     /// <param name="type"> Tipo de armor</param>
     /// <returns>lista de armors</returns>
-    public List<AbstractArmor> TypeArmor(AbstractArmor.ArmorType type) {
-        List<AbstractArmor> returnList = new List<AbstractArmor>();
-        foreach (AbstractArmor i in Armors) {
+    public List<Tuple<AbstractArmor, int>> TypeArmor(AbstractArmor.ArmorType type)
+    {
+        List<Tuple<AbstractArmor, int>> returnList = new List<Tuple<AbstractArmor, int>>();
+        foreach (string key in Armors.Keys) {
+            AbstractArmor i = Armors[key].First;
+            int cant = Armors[key].Second;
             if (i.Type == type)
-                returnList.Add(i);
+                returnList.Add(new Tuple<AbstractArmor,int>(i,cant));
         }
         return returnList;
+    }
+    /// <summary>
+    /// Retorna el lista de armas y su cantidad en el inventorio
+    /// </summary>
+    /// <returns></returns>
+    public List<Tuple<AbstractWeapon, int>> GetWeapons() {
+        List<Tuple<AbstractWeapon, int>> returnList = new List<Tuple<AbstractWeapon, int>>();
+        foreach (string key in Weapons.Keys)
+        {
+            AbstractWeapon i = Weapons[key].First;
+            int cant = Weapons[key].Second;
+            returnList.Add(new Tuple<AbstractWeapon, int>(i, cant));
+        }
+        return returnList;
+    }
+    /// <summary>
+    /// Retorna la lista de usables y su cantidad
+    /// </summary>
+    /// <returns></returns>
+    public List<Tuple<AbstractUsable, int>> GetUsables()
+    {
+        List<Tuple<AbstractUsable, int>> returnList = new List<Tuple<AbstractUsable, int>>();
+        foreach (string key in Usables.Keys)
+        {
+            AbstractUsable i = Usables[key].First;
+            int cant = Usables[key].Second;
+            returnList.Add(new Tuple<AbstractUsable, int>(i, cant));
+        }
+        return returnList;
+    }
+    /// <summary>
+    /// Inserta un usable en el inventorio
+    /// </summary>
+    /// <param name="u">Usable a insertar</param>
+    public void InsertUsable(AbstractUsable u) {
+        if (Usables.ContainsKey(u.ItemName))
+        {
+            Usables[u.ItemName].Second++;
+        }
+        else
+        {
+            Usables[u.ItemName] = new Tuple<AbstractUsable, int>(u, 1);
+        }
+    }
+    /// <summary>
+    /// Inserta una armadura en el inventorio
+    /// </summary>
+    /// <param name="a">Armadura a insertar</param>
+    public void InsertArmor(AbstractArmor a ) {
+        if (Armors.ContainsKey(a.ItemName))
+        {
+            Armors[a.ItemName].Second++;
+        }
+        else
+        {
+            Armors[a.ItemName] = new Tuple<AbstractArmor, int>(a, 1);
+        }
+    }
+    /// <summary>
+    /// Inserta un arma al inventrio
+    /// </summary>
+    /// <param name="w">Arma a insertar</param>
+    public void InsertWeapon(AbstractWeapon w) {
+        if (Weapons.ContainsKey(w.ItemName))
+        {
+            Weapons[w.ItemName].Second++;
+        }
+        else
+        {
+            Weapons[w.ItemName] = new Tuple<AbstractWeapon, int>(w, 1);
+        }
     }
 }

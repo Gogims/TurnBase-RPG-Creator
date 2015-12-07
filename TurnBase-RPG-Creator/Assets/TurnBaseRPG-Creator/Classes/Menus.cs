@@ -49,10 +49,9 @@ public abstract class  Menus : MonoBehaviour {
     public virtual void On(Item selected)
     {
     }
-    public virtual void On(Equippable selected)
+    public virtual void On(AbstractAbility selected)
     {
     }
-
     public virtual void On(string name)
     {
        

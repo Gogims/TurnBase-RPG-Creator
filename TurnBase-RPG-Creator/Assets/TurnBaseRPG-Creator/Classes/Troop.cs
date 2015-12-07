@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEditor;
+using System.IO;
+using System.Linq;
+[Serializable]
 public class Troop : Actor
 {
     /// <summary>

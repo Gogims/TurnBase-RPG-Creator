@@ -28,4 +28,9 @@ public abstract class MenuOption: MonoBehaviour{
 
     }
 
+
+    public virtual void On(AbstractAbility p)
+    {
+       
+    }
 }

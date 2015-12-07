@@ -2,6 +2,7 @@
 using UnityEditor;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 public class BattleManager : RPGElement
 {
@@ -59,7 +60,6 @@ public class BattleManager : RPGElement
 
         Vector2 backgroundSize = CreateBackground("Bottom", troop.BackgroundBottom, 0);
         CreateBackground("Top", troop.BackgroundTop, 1);
-
         foreach (var enemy in troop.Enemies)
         {
             GameObject gobj = new GameObject(enemy.Data.ActorName);
@@ -71,7 +71,7 @@ public class BattleManager : RPGElement
             sprite.sprite = enemy.Data.Image;
             sprite.sortingLayerName = "Actors";
         }
-        
+
         EditorApplication.SaveScene("Assets/Resources/BattleMap/" + troop.Id + ".unity", true);// Guarda la scene.
     }
 
@@ -264,5 +264,25 @@ public class BattleManager : RPGElement
         gobj.transform.localScale = new Vector2(1.5455f, 1);
 
         return new Vector2(gobj.transform.localScale.x* renderer.sprite.textureRect.width, gobj.transform.localScale.y * renderer.sprite.textureRect.height);
+    }
+
+    internal void UseItem(AbstractUsable UsableSelected)
+    {
+        throw new NotImplementedException();
+    }
+
+    internal void Attack()
+    {
+        throw new NotImplementedException();
+    }
+
+    internal void Run()
+    {
+        throw new NotImplementedException();
+    }
+
+    internal void UseAbility(AbstractAbility AbilitySelected)
+    {
+        throw new NotImplementedException();
     }
 }

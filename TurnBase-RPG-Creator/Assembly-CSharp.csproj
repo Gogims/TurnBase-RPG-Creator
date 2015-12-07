@@ -54,6 +54,7 @@
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Armor.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Attribute.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\BattleManager.cs" />
+     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\BattleMenu.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Condition.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Constant.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\DemoBehaviour.cs" />
@@ -88,7 +89,7 @@
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\ProxyInput.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\RPGElement.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\RPGImage.cs" />
-     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\SrollNavigator.cs" />
+     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\ScrollNavigator.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\StartMenu.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\State.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\TextureScale.cs" />
