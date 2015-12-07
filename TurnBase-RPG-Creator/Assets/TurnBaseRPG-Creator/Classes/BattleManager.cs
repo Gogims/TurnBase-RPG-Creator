@@ -2,6 +2,7 @@
 using UnityEditor;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 public class BattleManager : RPGElement
 {
@@ -43,10 +44,9 @@ public class BattleManager : RPGElement
 
         CreateBackground("Bottom", troop.BackgroundBottom, 0);
         CreateBackground("Top", troop.BackgroundTop, 1);
-
-        string returnPath = "Assets/Resources/BattleMaps/" + troop.Id + ".unity";
+        string returnPath = "Assets/Resources/BattleMap/" + troop.Id + ".unity";
         troop.TroopPath = returnPath;
-        EditorApplication.SaveScene(returnPath, true);// Guarda la scene.
+        EditorApplication.SaveScene(returnPath);// Guarda la scene.
     }
 
     void Start()
@@ -231,5 +231,25 @@ public class BattleManager : RPGElement
         renderer.sortingOrder = OrderLayer;
 
         return gobj;
+    }
+
+    internal void UseItem(AbstractUsable UsableSelected)
+    {
+        throw new NotImplementedException();
+    }
+
+    internal void Attack()
+    {
+        throw new NotImplementedException();
+    }
+
+    internal void Run()
+    {
+        throw new NotImplementedException();
+    }
+
+    internal void UseAbility(AbstractAbility AbilitySelected)
+    {
+        throw new NotImplementedException();
     }
 }

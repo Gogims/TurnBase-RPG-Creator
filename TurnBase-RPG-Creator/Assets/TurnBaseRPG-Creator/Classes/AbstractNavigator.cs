@@ -19,5 +19,5 @@ public abstract class AbstractNavigator : MonoBehaviour {
     protected GameObject Arrow;
     public virtual void update() { }
     public virtual void Init(GameObject arrow, List<GameObject> options) { }
-    public virtual void Init(Vector3 position, Vector3 positionImage, int difY, int difX, int maxItem, GameObject arrow, GameObject nextArrow, GameObject prevArrow, GameObject panel) { }
+    public virtual void Init(Vector3 position, Vector3 positionImage,Vector3 positionCant, int difY, int difX, int maxItem, GameObject arrow, GameObject nextArrow, GameObject prevArrow, GameObject panel) { }
 }

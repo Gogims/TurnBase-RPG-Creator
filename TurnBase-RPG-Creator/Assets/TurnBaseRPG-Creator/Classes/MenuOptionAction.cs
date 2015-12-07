@@ -19,10 +19,9 @@ public class MenuOptionAction : MenuOption {
         GameObject.Find("Canvas").GetComponent<Menus>().On(selected);
         
     }
-    public override void On(Equippable selected)
+    public override void On(AbstractAbility p)
     {
-        GameObject.Find("Canvas").GetComponent<Menus>().On(selected);
-
+        GameObject.Find("Canvas").GetComponent<Menus>().On(p);
     }
 
 }

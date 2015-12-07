@@ -39,27 +39,27 @@ public class EquipmentMenu : Menus {
     /// <summary>
     /// Listado de armaduras.
     /// </summary>
-    private List<AbstractArmor> ListHelmet;
+    private List<Tuple<AbstractArmor, int>> ListHelmet;
     /// <summary>
     /// Listado de armaduras.
     /// </summary>
-    private List<AbstractArmor> ListBody;
+    private List<Tuple<AbstractArmor,int>> ListBody;
     /// <summary>
     /// Listado de armaduras.
     /// </summary>
-    private List<AbstractArmor> ListFeet;
+    private List<Tuple<AbstractArmor,int>> ListFeet;
     /// <summary>
     /// Listado de armaduras.
     /// </summary>
-    private List<AbstractArmor> ListNecklace;
+    private List<Tuple<AbstractArmor,int>> ListNecklace;
     /// <summary>
     /// Listado de armaduras.
     /// </summary>
-    private List<AbstractArmor> ListRing;
+    private List<Tuple<AbstractArmor,int>> ListRing;
     /// <summary>
     /// Listado de armas;
     /// </summary>
-    private List<AbstractWeapon> ListWeapon;
+    private List<Tuple<AbstractWeapon,int>> ListWeapon;
     /// <summary>
     /// Prefab del elemento que se coloca como item
     /// </summary>
@@ -71,11 +71,11 @@ public class EquipmentMenu : Menus {
     /// <summary>
     /// Posicion de y donde se coloco el ultimo item
     /// </summary>
-    private int lastY = 97;
+    private int lastY = 58;
     /// <summary>
     /// La posicion en x de la imagen del item
     /// </summary>
-    private int xImage = 66;
+    private int xImage = 32;
     /// <summary>
     /// Posicion en x del texto del item
     /// </summary>
@@ -92,7 +92,7 @@ public class EquipmentMenu : Menus {
     /// <summary>
     /// Lista de items visibles
     /// </summary>
-    private List<Item> ActiveItems;
+    private List<Tuple<Item,int>> ActiveItems;
     /// <summary>
     /// Selector de items
     /// </summary>
@@ -108,7 +108,7 @@ public class EquipmentMenu : Menus {
     /// <summary>
     /// Menu de scroll de los items
     /// </summary>
-    private ScrollNavigator<Item> MenuScroll;
+    private ScrollNavigator<Item, AbstractAbility> MenuScroll;
     /// <summary>
     /// Jugador en la scene.
     /// </summary>
@@ -145,25 +145,96 @@ public class EquipmentMenu : Menus {
     #endregion
     public void Start() {
         ClearDiffText();
-        player = GameObject.FindWithTag("RPG-PLAYER").GetComponent<Player>();
+        Player p = GameObject.FindWithTag("RPG-PLAYER").GetComponent<Player>();
+        p.Items = new Inventory();
+        AbstractArmor aux = (Resources.Load("Armor/2fde446b-dd6e-459f-8ff8-47082c952525") as GameObject).GetComponent<Armor>().Data;
+        AbstractWeapon aux2 = (Resources.Load("Weapon/dfaa859c-5ae4-44b4-9882-6ced915fd665") as GameObject).GetComponent<Weapon>().Data;
+        AbstractUsable aux3 = (Resources.Load("Item/52a2fc86-91e8-44e8-98c7-203be647b54b") as GameObject).GetComponent<Usable>().Data;
+        p.Items.InsertArmor(aux);
+        p.Items.InsertArmor(aux);
+        p.Items.InsertArmor(aux);
+        p.Items.InsertArmor(aux);
+        p.Items.InsertArmor(aux);
+        p.Items.InsertArmor(aux);
+        p.Items.InsertArmor(aux);
+        p.Items.InsertArmor(aux);
+        p.Items.InsertArmor(aux);
+        p.Items.InsertArmor(aux);
+        p.Items.InsertUsable(aux3);
+        p.Items.InsertUsable(aux3);
+        p.Items.InsertUsable(aux3);
+        p.Items.InsertUsable(aux3);
+        p.Items.InsertUsable(aux3);
+        p.Items.InsertUsable(aux3);
+        p.Items.InsertUsable(aux3);
+        p.Items.InsertUsable(aux3);
+        p.Items.InsertUsable(aux3);
+        p.Items.InsertUsable(aux3);
+        p.Items.InsertUsable(aux3);
+        AbstractWeapon copy = new AbstractWeapon();
+        copy.ItemName = "Weapon1";
+        copy.Image = aux2.Image;
+        copy.Description = "Esta es la Primera arama.";
+        p.Items.InsertWeapon(copy);
+        copy = new AbstractWeapon();
+        copy.ItemName = "Weapon2";
+        copy.Image = aux2.Image;
+        copy.Description = "Esta es la Segunda arama.";
+        p.Items.InsertWeapon(copy);
+        copy = new AbstractWeapon();
+        copy.ItemName = "Weapon3";
+        copy.Image = aux2.Image;
+        copy.Description = "Esta es la Tercera arama.";
+        p.Items.InsertWeapon(copy);
+        copy = new AbstractWeapon();
+        copy.ItemName = "Weapon4";
+        copy.Image = aux2.Image;
+        copy.Description = "Esta es la Cuarta arama.";
+        p.Items.InsertWeapon(copy);
+        copy = new AbstractWeapon();
+        copy.ItemName = "Weapon5";
+        copy.Image = aux2.Image;
+        copy.Description = "Esta es la Quinta arama.";
+        p.Items.InsertWeapon(copy);
+        copy = new AbstractWeapon();
+        copy.ItemName = "Weapon6";
+        copy.Image = aux2.Image;
+        copy.Description = "Esta es la Sexta arama.";
+        p.Items.InsertWeapon(copy);
+        copy = new AbstractWeapon();
+        copy.ItemName = "Weapon7";
+        copy.Image = aux2.Image;
+        copy.Description = "Esta es la Septima arama.";
+        p.Items.InsertWeapon(copy);
+        copy = new AbstractWeapon();
+        copy.ItemName = "Weapon8";
+        copy.Image = aux2.Image;
+        copy.Description = "Esta es la Octava arama.";
+        p.Items.InsertWeapon(copy);
+        copy = new AbstractWeapon();
+        copy.ItemName = "Weapon9";
+        copy.Image = aux2.Image;
+        copy.Description = "Esta es la Novena arama.";
+        p.Items.InsertWeapon(copy);
+        player = p;
         SetPlayerLabels();
-        ListBody = new List<AbstractArmor>();
-        ListFeet = new List<AbstractArmor>();
-        ListHelmet = new List<AbstractArmor>();
-        ListNecklace = new List<AbstractArmor>();
-        ListRing = new List<AbstractArmor>();
-        ListWeapon = new List<AbstractWeapon>();
-        ActiveItems = new List<Item>();
+        ListBody = new List<Tuple<AbstractArmor, int>>();
+        ListFeet = new List<Tuple<AbstractArmor,int>>();
+        ListHelmet = new List<Tuple<AbstractArmor,int>>();
+        ListNecklace = new List<Tuple<AbstractArmor,int>>();
+        ListRing = new List<Tuple<AbstractArmor,int>>();
+        ListWeapon = new List<Tuple<AbstractWeapon,int>>();
+        ActiveItems = new List<Tuple<Item,int>>();
         ListBody = player.Items.TypeArmor(AbstractArmor.ArmorType.Body);
         ListFeet = player.Items.TypeArmor(AbstractArmor.ArmorType.Feet);
         ListHelmet = player.Items.TypeArmor(AbstractArmor.ArmorType.Helmet);
         ListNecklace = player.Items.TypeArmor(AbstractArmor.ArmorType.Necklace);
         ListRing = player.Items.TypeArmor(AbstractArmor.ArmorType.Ring);
-        ListWeapon = player.Items.Weapons;
+        ListWeapon = player.Items.GetWeapons();
         Item = Resources.Load("Menus/MenuItems") as GameObject;
         ItemImage = Resources.Load("Menus/MenuItemsImage") as GameObject;
-        MenuScroll = new ScrollNavigator<Item>();
-        MenuScroll.Init(new Vector3(xItem, lastY), new Vector3(xImage, lastY), diffy, 0, 6, Arrow2, NextArrow, PrevArrow, ItemPanel);
+        MenuScroll = new ScrollNavigator<Item, AbstractAbility>();
+        MenuScroll.Init(new Vector3(-42, lastY), new Vector3(25, 97),new Vector3(111,lastY), diffy, 0, 6, Arrow2, NextArrow, PrevArrow, ItemPanel);
         fillWeapon();
         Menu2 = new Navigator();
         GameObject menusObj = GameObject.Find("Canvas").transform.FindChild("Select Panel").gameObject;
@@ -382,22 +453,22 @@ public class EquipmentMenu : Menus {
                 break;
         }
         
-        delay = 0;
     }
     private void DestroyAll()
     {
         ActiveItems.Clear();
     }
     private void fillWeapon(){
-            foreach (AbstractWeapon i in ListWeapon)
+            foreach (Tuple<AbstractWeapon,int> i in ListWeapon)
             {
-                    ActiveItems.Add(i);
+                Tuple<Item, int> ins = new Tuple<Item, int>(i.First as Item, i.Second);
+                    ActiveItems.Add(ins);
             }
             MenuScroll.ChangeList(ActiveItems);
         
     }
     private void fillArmor(AbstractArmor.ArmorType type){
-        List<AbstractArmor> list = new List<AbstractArmor>();
+        List<Tuple<AbstractArmor,int>> list = new List<Tuple<AbstractArmor,int>>();
         switch (type)
         {
             case AbstractArmor.ArmorType.Body:
@@ -418,11 +489,12 @@ public class EquipmentMenu : Menus {
             default:
                 break;
         }
-        
-            foreach (AbstractArmor i in list)
-            {
-                ActiveItems.Add(i);
-            }
+
+        foreach (Tuple<AbstractArmor, int> i in list)
+        {
+            Tuple<Item, int> ins = new Tuple<Item, int>(i.First as Item, i.Second);
+            ActiveItems.Add(ins);
+        }
             MenuScroll.ChangeList(ActiveItems);
     }
     public override void On(string name)

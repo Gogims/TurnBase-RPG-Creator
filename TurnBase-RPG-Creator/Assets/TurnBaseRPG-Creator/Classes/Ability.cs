@@ -15,6 +15,10 @@ public class Ability : RPGElement
 public class AbstractAbility
 {
     /// <summary>
+    /// Imagen que se presentará en el juego
+    /// </summary>
+    public Sprite Image;
+    /// <summary>
     /// Descripción de la habilidad
     /// </summary>
     public string Description = string.Empty;
