@@ -32,6 +32,8 @@ public class ObjectBrowserUI : EditorWindow
     /// Contiene el nombre de la opcion que se selecciono
     /// </summary>
     string optionSelected = "";
+
+
     /// <summary>
     /// Funcion para inicializar los valores de la ventana.
     /// </summary>
@@ -118,10 +120,11 @@ public class ObjectBrowserUI : EditorWindow
                 if (optionSelected == "Maps")
                 {
                     string OpenScene = temp.GetComponent<Map>().Data.MapPath;
+
                     if (OpenScene != Directory.GetCurrentDirectory() + "\\" + EditorApplication.currentScene.Replace('/', '\\'))
                     {
                         EditorApplication.SaveScene();
-                        EditorApplication.OpenScene(OpenScene);
+                        EditorApplication.OpenScene(OpenScene);                        
                     }
                 }
 
@@ -197,7 +200,10 @@ public class ObjectBrowserUI : EditorWindow
             optionSelected = "Image";
             mapObjects = false;
             Objects = Resources.LoadAll("Sprites", typeof(GameObject));
-        }        
+        }
+
+        GUILayout.Space(10);        
+
         GUILayout.EndArea();
     }
 }

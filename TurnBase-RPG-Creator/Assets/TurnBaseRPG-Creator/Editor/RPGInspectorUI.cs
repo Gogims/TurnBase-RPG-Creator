@@ -10,6 +10,11 @@ public class RPGInspectorUI : EditorWindow {
 	const int width = Constant.INSPECTOR_IMAGE_WIDTH;
 	const int height = Constant.INSPECTOR_IMAGE_HEIGTH;
 
+    /// <summary>
+    /// Si al elegir un enemigo se debe seleccionar el área donde se moverá
+    /// </summary>
+    public static bool SelectionMode;
+
     public void Init()
 	{
 		defaultText = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/TurnBaseRPG-Creator/RPG-Sprites/96x96.jpg");
@@ -46,29 +51,37 @@ public class RPGInspectorUI : EditorWindow {
         // Area para dibujar si el gameobject no vino vacío
         if (MapEditor.selectedObject != null)
         {
-            var troop = Selection.activeGameObject.GetComponent<Troop>();
+            var troop = MapEditor.selectedObject.GetComponent<Troop>();
 
             if (troop != null)
             {
+                SelectionMode = GUILayout.Toggle(SelectionMode, "Selection Mode");
+
                 GUILayout.Label("Area:", EditorStyles.boldLabel);
                 troop.AreaWidth = EditorGUILayout.IntField("Width:", troop.AreaWidth);
                 troop.AreaHeight = EditorGUILayout.IntField("Height:", troop.AreaHeight);
+
+                if (troop.Changed)
+                {
+                    troop.Changed = false;
+                    MapEditor.selectedObject.name = MapEditor.selectedObject.name.Replace("(Clone)", "");
+                    GameObject obj = Instantiate(MapEditor.selectedObject);
+                    var father = MapEditor.selectedObject.transform.parent.gameObject;
+
+                    obj.transform.parent = father.transform;
+                    obj.transform.localPosition = new Vector2(0, 0);
+
+                    var sprite = father.GetComponent<SpriteRenderer>().sprite;
+                    var sprite2 = obj.GetComponent<SpriteRenderer>().sprite;
+                    obj.transform.localScale = new Vector3(sprite.rect.width / sprite2.rect.width, sprite.rect.height / sprite2.rect.height);
+
+                    DestroyImmediate(MapEditor.selectedObject);
+                    MapEditor.selectedObject = obj;
+                    Selection.activeGameObject = obj;
+                }
             }
         }        
 
         GUILayout.EndArea();
-    }
-
-    void DrawTroopAreas()
-    {
-        
-
-        //if (troop.Changed)
-        //{
-        //    troop.Changed = false;
-        //    GameObject obj = Instantiate(MapEditor.selectedObject);
-        //    DestroyImmediate(MapEditor.selectedObject);
-        //    MapEditor.selectedObject = obj;
-        //}        
-    }
+    }    
 }
