@@ -14,7 +14,7 @@ public class MapEditor {
     static bool deleting = false;
 	static MapEditor () {
 	
-		//SceneView.onSceneGUIDelegate += OnSceneEvents;
+		SceneView.onSceneGUIDelegate += OnSceneEvents;
 		DarkFloor =  AssetDatabase.LoadAssetAtPath(@"Assets/Resources/Tile/DefaultTile1.prefab", typeof(GameObject));
         LightFloor = AssetDatabase.LoadAssetAtPath(@"Assets/Resources/Tile/DefaultTile2.prefab", typeof(GameObject));
 	}
@@ -122,8 +122,10 @@ public class MapEditor {
             } 
         }
 
-        if (Selected.tag == "RPG-ENEMY" && AreaTroopSelector == null)
+        if (Selected.tag == "RPG-ENEMY" && AreaTroopSelector == null && Selected.activeInHierarchy)
         {
+            selectedObject = Selected;
+
             Troop enemy = Selected.gameObject.GetComponent<Troop>();
 
             AreaTroopSelector = new GameObject("Selector");
@@ -131,8 +133,7 @@ public class MapEditor {
             sprite.sprite = Resources.Load<Sprite>("Selector");
             sprite.sortingLayerName = "Selector";
             AreaTroopSelector.transform.position = enemy.transform.position;
-
-            selectedObject = Selected;
+            
             GameEngine.inspectorRpg.Focus();
         }
 
@@ -176,14 +177,12 @@ public class MapEditor {
                 
             }
             else if (selectSprite.sortingLayerName == Constant.LAYER_ACTOR)
-            {
-                if (GameObject.Find("PLAYER(Clone)") != null)
-                {
-                    continue;
-                }
-                
+            {                
                 if (temp.tag == "RPG-PLAYER")
                 {
+                    if(GameObject.Find("PLAYER(Clone)") != null)
+                        continue;
+
                     temp.name = "PLAYER";
                 }
                 temp.transform.position = i.transform.position;
