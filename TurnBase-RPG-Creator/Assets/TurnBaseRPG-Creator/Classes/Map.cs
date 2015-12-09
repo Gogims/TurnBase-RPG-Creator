@@ -17,6 +17,8 @@ public class Map : RPGElement{
 	/// </summary>
 	public void CreateMap(){
 		EditorApplication.NewScene(); // Crea una scene nueva.
+        GameObject MapObj = new GameObject("Map");
+        Camera.main.transform.parent = MapObj.transform;
 		Camera.main.orthographicSize = 5; // Ajusta el tamaño de la camara ( la cantidad de espacio que va enfocar)
         Camera.main.transform.localPosition = new Vector3((float)(Data.Width - 1) / 2, (float)(Data.Heigth - 1) / 2, -10); // Posiciona la camara en el centro del mapa
 		Camera.main.backgroundColor = Color.black;
@@ -35,6 +37,7 @@ public class Map : RPGElement{
 				else 
 					clone = EditorWindow.Instantiate(prefab2, new Vector3(i,j,0f), Quaternion.identity) as GameObject;
 				clone.tag = "RPG-CORE";
+                clone.transform.parent = MapObj.transform;
 				EditorWindow.DestroyImmediate(GameObject.Find("New Game Object"));
 			}
 		}
@@ -59,7 +62,7 @@ public class Map : RPGElement{
     /// <param name="Path">Path del mapa (scene)</param>
     public void updateMap(Map aux)
     {
-
+        GameObject MapObj = GameObject.Find("Map");
         GameObject [] List1 = GameObject.FindGameObjectsWithTag("RPG-MAPOBJECT");
         GameObject[] List2 = GameObject.FindGameObjectsWithTag("RPG-CORE");
 
@@ -99,6 +102,7 @@ public class Map : RPGElement{
                     else
                         clone = EditorWindow.Instantiate(prefab2, new Vector3(i, j, 0f), Quaternion.identity) as GameObject;
                     clone.tag = "RPG-CORE";
+                    clone.transform.parent = MapObj.transform;
                     EditorWindow.DestroyImmediate(GameObject.Find("New Game Object"));
                 }
             aux.Data.Width = this.Data.Width;
@@ -119,6 +123,7 @@ public class Map : RPGElement{
                     else
                         clone = EditorWindow.Instantiate(prefab2, new Vector3(i, j, 0f), Quaternion.identity) as GameObject;
                     clone.tag = "RPG-CORE";
+                    clone.transform.parent = MapObj.transform;
                     EditorWindow.DestroyImmediate(GameObject.Find("New Game Object"));
                 }
         }
@@ -135,6 +140,7 @@ public class Map : RPGElement{
             else
                 clone = EditorWindow.Instantiate(prefab2, position, Quaternion.identity) as GameObject;
             clone.tag = "RPG-CORE";
+            clone.transform.parent = MapObj.transform;
             EditorWindow.DestroyImmediate(GameObject.Find("New Game Object"));
         }
         EditorWindow.DestroyImmediate(GameObject.Find("New Game Object"));

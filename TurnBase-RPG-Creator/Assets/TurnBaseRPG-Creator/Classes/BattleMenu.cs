@@ -36,6 +36,8 @@ public class BattleMenu : Menus {
     /// Codigo de prueba
     /// </summary>
     public void Start() {
+        Constant.LastSceneLoaded = "BattleMenu";
+        Camera Cam = GameObject.Find("BattleMenu").transform.FindChild("Canvas").GetComponent<Canvas>().worldCamera = GameObject.Find("Main Camera").GetComponent<Camera>();;
         Init(GameObject.FindWithTag("RPG-PLAYER").GetComponent<Player>());
     }
     /// <summary>
@@ -47,81 +49,11 @@ public class BattleMenu : Menus {
     /// </summary>
     /// <param name="p"></param>
     public void Init(Player p){
-        p.Items = new Inventory();
-        AbstractArmor aux = (Resources.Load("Armor/2fde446b-dd6e-459f-8ff8-47082c952525") as GameObject).GetComponent<Armor>().Data;
-        AbstractWeapon aux2 = (Resources.Load("Weapon/dfaa859c-5ae4-44b4-9882-6ced915fd665") as GameObject).GetComponent<Weapon>().Data;
-        AbstractUsable aux3 = (Resources.Load("Item/52a2fc86-91e8-44e8-98c7-203be647b54b") as GameObject).GetComponent<Usable>().Data;
-        p.Items.InsertArmor(aux);
-        p.Items.InsertArmor(aux);
-        p.Items.InsertArmor(aux);
-        p.Items.InsertArmor(aux);
-        p.Items.InsertArmor(aux);
-        p.Items.InsertArmor(aux);
-        p.Items.InsertArmor(aux);
-        p.Items.InsertArmor(aux);
-        p.Items.InsertArmor(aux);
-        p.Items.InsertArmor(aux);
-        p.Items.InsertUsable(aux3);
-        p.Items.InsertUsable(aux3);
-        p.Items.InsertUsable(aux3);
-        p.Items.InsertUsable(aux3);
-        p.Items.InsertUsable(aux3);
-        p.Items.InsertUsable(aux3);
-        p.Items.InsertUsable(aux3);
-        p.Items.InsertUsable(aux3);
-        p.Items.InsertUsable(aux3);
-        p.Items.InsertUsable(aux3);
-        p.Items.InsertUsable(aux3);
-        AbstractWeapon copy = new AbstractWeapon();
-        copy.ItemName = "Weapon1";
-        copy.Image = aux2.Image;
-        copy.Description = "Esta es la Primera arama.";
-        p.Items.InsertWeapon(copy);
-        copy = new AbstractWeapon();
-        copy.ItemName = "Weapon2";
-        copy.Image = aux2.Image;
-        copy.Description = "Esta es la Segunda arama.";
-        p.Items.InsertWeapon(copy);
-        copy = new AbstractWeapon();
-        copy.ItemName = "Weapon3";
-        copy.Image = aux2.Image;
-        copy.Description = "Esta es la Tercera arama.";
-        p.Items.InsertWeapon(copy);
-        copy = new AbstractWeapon();
-        copy.ItemName = "Weapon4";
-        copy.Image = aux2.Image;
-        copy.Description = "Esta es la Cuarta arama.";
-        p.Items.InsertWeapon(copy);
-        copy = new AbstractWeapon();
-        copy.ItemName = "Weapon5";
-        copy.Image = aux2.Image;
-        copy.Description = "Esta es la Quinta arama.";
-        p.Items.InsertWeapon(copy);
-        copy = new AbstractWeapon();
-        copy.ItemName = "Weapon6";
-        copy.Image = aux2.Image;
-        copy.Description = "Esta es la Sexta arama.";
-        p.Items.InsertWeapon(copy);
-        copy = new AbstractWeapon();
-        copy.ItemName = "Weapon7";
-        copy.Image = aux2.Image;
-        copy.Description = "Esta es la Septima arama.";
-         p.Items.InsertWeapon(copy);
-        copy = new AbstractWeapon();
-        copy.ItemName = "Weapon8";
-        copy.Image = aux2.Image;
-        copy.Description = "Esta es la Octava arama.";
-        p.Items.InsertWeapon(copy);
-        copy = new AbstractWeapon();
-        copy.ItemName = "Weapon9";
-        copy.Image = aux2.Image;
-        copy.Description = "Esta es la Novena arama.";
-        p.Items.InsertWeapon(copy);
         player = p;
         UsableSelected = new AbstractUsable();
         ItemMenu = new ScrollNavigator<AbstractUsable, AbstractAbility>();
         SelectionMenu = new Navigator();
-        ItemMenu.Init(new Vector3(-4, 25), new Vector3(82, 64),new Vector3(168,21), -30, 0, 5, GameObject.Find("List Panel").transform.FindChild("Arrow2").gameObject, GameObject.Find("List Panel").transform.FindChild("NextArrow").gameObject, GameObject.Find("List Panel").transform.FindChild("PrevArrow").gameObject, GameObject.Find("List Panel"));
+        ItemMenu.Init(new Vector3(-74, -3), new Vector3(-40, 35),new Vector3(92,-11), -24, 0,4, GameObject.Find("List Panel").transform.FindChild("Arrow2").gameObject, GameObject.Find("List Panel").transform.FindChild("NextArrow").gameObject, GameObject.Find("List Panel").transform.FindChild("PrevArrow").gameObject, GameObject.Find("List Panel"));
         GameObject SelectPanel = GameObject.Find("Select Panel");
         GameObject Arrow3 = new GameObject();
         List<GameObject> SelectItem = new List<GameObject>();
