@@ -1,16 +1,18 @@
 ﻿using UnityEngine;
+using System;
 
+[Serializable]
 public class Audio
 {
     public GameObject gameobject;
     public AudioSource Source;
-
+    
     private Constant.AudioType type;
 
     public Audio()
     {
-        gameobject = new GameObject();
-    }
+        gameobject = new GameObject("BackgroundAudio");
+    }    
 
     public void CreateAudioSource(AudioClip clip)
     {
