@@ -4,6 +4,7 @@ using System.Collections;
 using System.IO;
 using UnityEditor;
 
+
 /// <summary>
 /// Clase que se encarga de manejar los proyectos de RPG
 /// </summary>
@@ -61,7 +62,7 @@ public class Project  {
                 //Copia de la carpeta de rpg-animationController a animationController
                 sw.WriteLine("ROBOCOPY " + @"""" + projectAssets + "\\TurnBaseRPG-Creator\\RPG-AnimationController" + @"""" +
                            @" """ + projectAssets + "\\AnimationController" + @"""" + " *.* /E");
-                sw.WriteLine(ProjectSettings.UnityPath.Replace('/','\\')+" -createProject "+projectPath);
+                sw.WriteLine(EditorApplication.applicationPath.Replace('/', '\\') + " -createProject " + projectPath);
             }
         }
         return;

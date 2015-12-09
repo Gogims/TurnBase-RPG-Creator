@@ -181,6 +181,12 @@ public class GameEngine : EditorWindow {
     [MenuItem("RPG-File/Deploy")]
     public static void ShowDeployProject()
     {
+        var window = EditorWindow.GetWindow<DeployUI>();
+        window.titleContent.text = "Deploy";
+
+        window.minSize = new Vector2(450, 200);
+        window.Init();
+        window.Show();
     }
     /// <summary>
     /// Presenta la ventana para ajustar los settings del proyecto

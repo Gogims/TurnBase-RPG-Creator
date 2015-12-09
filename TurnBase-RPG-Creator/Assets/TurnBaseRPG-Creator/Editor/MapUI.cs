@@ -159,6 +159,7 @@ public class MapUI : EditorWindow {
 
                 if (aux.Data.MapPath == EditorApplication.currentScene)
                 {
+                    Constant.RemoveScene(aux.Data.MapPath);
                     DestroyImmediate(temp);
                     var newscene= (Objs[0] as GameObject).GetComponent<Map>();
                     if (aux.Data.MapPath != newscene.Data.MapPath)

@@ -121,7 +121,7 @@ public class BattleMenu : Menus {
         UsableSelected = new AbstractUsable();
         ItemMenu = new ScrollNavigator<AbstractUsable, AbstractAbility>();
         SelectionMenu = new Navigator();
-        ItemMenu.Init(new Vector3(9, 59), new Vector3(105, 68),new Vector3(198,59), -30, 0, 5, GameObject.Find("List Panel").transform.FindChild("Arrow2").gameObject, GameObject.Find("List Panel").transform.FindChild("NextArrow").gameObject, GameObject.Find("List Panel").transform.FindChild("PrevArrow").gameObject, GameObject.Find("List Panel"));
+        ItemMenu.Init(new Vector3(-4, 25), new Vector3(82, 64),new Vector3(168,21), -30, 0, 5, GameObject.Find("List Panel").transform.FindChild("Arrow2").gameObject, GameObject.Find("List Panel").transform.FindChild("NextArrow").gameObject, GameObject.Find("List Panel").transform.FindChild("PrevArrow").gameObject, GameObject.Find("List Panel"));
         GameObject SelectPanel = GameObject.Find("Select Panel");
         GameObject Arrow3 = new GameObject();
         List<GameObject> SelectItem = new List<GameObject>();
