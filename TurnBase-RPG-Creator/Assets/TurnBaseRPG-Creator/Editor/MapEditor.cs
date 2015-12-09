@@ -25,20 +25,16 @@ public class MapEditor {
 	static void OnSceneEvents(SceneView sceneview)
 	{
 		Event e = Event.current;
+
 		//Revisa si el objeto seleccionado es nulo.
 		if (Selection.activeGameObject != null) {
             ChangeSelectedObject (Selection.activeGameObject);
-
-            if (Selection.activeGameObject.GetComponent<Troop>() != null)
-            {
-                selectedObject = Selection.activeGameObject;
-            }
 		}
         
         // si el click izquierdo es precionado y el objeto seleccionado es diferente de nulo inserta un objeto al mapa. 
         if (EventType.MouseUp == e.type && e.button == 0 && selectedObject != null && (selectedObject.tag == "RPG-MAPOBJECT" || selectedObject.tag == "RPG-PLAYER" || selectedObject.tag == "RPG-ENEMY"))
         {
-             DropObject ();
+             DropObject();
 		} 
         
         // Si la tecla del es precionada borra los objetos seleccionados. 
@@ -119,22 +115,25 @@ public class MapEditor {
             {
                 selectedObject = Selected;
                 GameEngine.inspectorRpg.Focus();
-            } 
-        }
+            }
 
-        if (Selected.tag == "RPG-ENEMY" && AreaTroopSelector == null)
-        {
-            Troop enemy = Selected.gameObject.GetComponent<Troop>();
+            if (Selected.tag == "RPG-ENEMY" && Selected.activeInHierarchy)
+            {
+                selectedObject = Selected;
+                var SceneWindow = SceneView.lastActiveSceneView;
+                GameEngine.inspectorRpg.Focus();
+                SceneWindow.Focus();
 
-            AreaTroopSelector = new GameObject("Selector");
-            var sprite = AreaTroopSelector.AddComponent<SpriteRenderer>();
-            sprite.sprite = Resources.Load<Sprite>("Selector");
-            sprite.sortingLayerName = "Selector";
-            AreaTroopSelector.transform.position = enemy.transform.position;
-
-            selectedObject = Selected;
-            GameEngine.inspectorRpg.Focus();
-        }
+                if (RPGInspectorUI.SelectionMode)
+                {
+                    AreaTroopSelector = new GameObject("Selector");
+                    var sprite = AreaTroopSelector.AddComponent<SpriteRenderer>();
+                    sprite.sprite = Resources.Load<Sprite>("Selector");
+                    sprite.sortingLayerName = "Selector";
+                    AreaTroopSelector.transform.position = Selected.gameObject.GetComponent<Troop>().transform.position;
+                }
+            }
+        }        
 
         if (AreaTroopSelector != null && selectedObject.gameObject.GetComponent<Troop>() != null)
         {
@@ -175,17 +174,12 @@ public class MapEditor {
                 MapUI.Instantiate(temp, temp.transform.position, Quaternion.identity);
                 
             }
-            else if (selectSprite.sortingLayerName == Constant.LAYER_ACTOR)
+            else if (temp.tag == "RPG-PLAYER")
             {
                 if (GameObject.Find("PLAYER(Clone)") != null)
-                {
                     continue;
-                }
-                
-                if (temp.tag == "RPG-PLAYER")
-                {
-                    temp.name = "PLAYER";
-                }
+
+                temp.name = "PLAYER";
                 temp.transform.position = i.transform.position;
                 temp.transform.localScale = new Vector3(ProjectSettings.pixelPerUnit / selectSprite.sprite.rect.width, ProjectSettings.pixelPerUnit / selectSprite.sprite.rect.height);
                 MapUI.Instantiate(temp, temp.transform.position, Quaternion.identity);
@@ -193,7 +187,6 @@ public class MapEditor {
             else
             {
                 GameObject aux = null;
-                if (i.tag == "RPG-PLAYER") continue;
                 if (i.transform.parent == null && i.transform.childCount != 0)
                 {
                     if (i.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite.name == selectSprite.sprite.name)

@@ -32,6 +32,8 @@ public class ObjectBrowserUI : EditorWindow
     /// Contiene el nombre de la opcion que se selecciono
     /// </summary>
     string optionSelected = "";
+
+
     /// <summary>
     /// Funcion para inicializar los valores de la ventana.
     /// </summary>
@@ -98,7 +100,7 @@ public class ObjectBrowserUI : EditorWindow
         {
            
             GameObject temp = (GameObject)obj;
-            if (temp.tag == "RPG-CORE") continue;
+            if (temp == null || temp.tag == "RPG-CORE") continue;
             RPGElement ob = temp.GetComponent<RPGElement>();
             Rect position = new Rect(x, y, 44, 44);
             if (ob.Icon != null)
@@ -118,10 +120,11 @@ public class ObjectBrowserUI : EditorWindow
                 if (optionSelected == "Maps")
                 {
                     string OpenScene = temp.GetComponent<Map>().Data.MapPath;
+
                     if (OpenScene != Directory.GetCurrentDirectory() + "\\" + EditorApplication.currentScene.Replace('/', '\\'))
                     {
                         EditorApplication.SaveScene();
-                        EditorApplication.OpenScene(OpenScene);
+                        EditorApplication.OpenScene(OpenScene);                        
                     }
                 }
 
@@ -168,6 +171,13 @@ public class ObjectBrowserUI : EditorWindow
             Objects = Resources.LoadAll("Armor", typeof(GameObject));
         }
         GUILayout.Space(10);
+        if (GUILayout.Button("Troop"))
+        {
+            optionSelected = "Troop";
+            mapObjects = false;
+            Objects = Resources.LoadAll("Troop", typeof(GameObject));
+        }
+        GUILayout.Space(10);
         if ( GUILayout.Button("Weapon")){
             mapObjects = false;
             optionSelected = "Weapon";
@@ -191,6 +201,9 @@ public class ObjectBrowserUI : EditorWindow
             mapObjects = false;
             Objects = Resources.LoadAll("Sprites", typeof(GameObject));
         }
+
+        GUILayout.Space(10);        
+
         GUILayout.EndArea();
     }
 }

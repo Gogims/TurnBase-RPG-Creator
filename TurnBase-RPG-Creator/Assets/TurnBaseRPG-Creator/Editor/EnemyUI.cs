@@ -128,6 +128,7 @@ public class EnemyUI : CRUD<Enemy>
     protected override void Create()
     {
         element.BattleEnemy.Data.Image = element.Icon;
+        element.tag = "RPG-ENEMY";
         base.Create();
     }
 
