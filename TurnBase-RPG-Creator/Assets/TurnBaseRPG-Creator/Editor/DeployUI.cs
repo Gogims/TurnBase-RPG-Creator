@@ -9,7 +9,7 @@ public class DeployUI : EditorWindow {
     private Object NewGame;
     public void Init() {
         Maps = Resources.LoadAll("Maps", typeof(GameObject));
-        NewGame  = Resources.Load("Menus/SelectNewGame", typeof(GameObject));
+        NewGame  = Resources.Load("Menus/FirstScene", typeof(GameObject));
         GameObject aux2 = NewGame as GameObject;
         foreach (Object i in Maps)
         {   
@@ -17,6 +17,7 @@ public class DeployUI : EditorWindow {
             if (aux.GetComponent<Map>().Data.Name == aux2.GetComponent<MenuOptionScen>().SceneName)
             {
                 MapName = aux.GetComponent<Map>().Name;
+                break;
             }
 
         }

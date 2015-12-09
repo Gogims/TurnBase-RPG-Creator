@@ -8,7 +8,7 @@ using System.Collections.Generic;
 /// </summary>
 public class MainMenu : Menus {
     public void Start() { 
-        Object x = Resources.Load("Menus/SelectNewGame", typeof(GameObject));
+        Object x = Resources.Load("Menus/FirstScene", typeof(GameObject));
 
         GameObject.Find("SelectNewGame").GetComponent<MenuOptionScen>().SceneName = (x as GameObject).GetComponent<MenuOptionScen>().SceneName;
     }
@@ -17,8 +17,5 @@ public class MainMenu : Menus {
     }
     public override void Select()
     {
-        Object [] Player = Resources.LoadAll("Player/",typeof(GameObject));
-        GameObject x = GameObject.Instantiate(Player[0] as GameObject);
-
     }
 }

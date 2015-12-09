@@ -36,8 +36,7 @@ public class BattleMenu : Menus {
     /// Codigo de prueba
     /// </summary>
     public void Start() {
-        Constant.LastSceneLoaded = "BattleMenu";
-        Camera Cam = GameObject.Find("BattleMenu").transform.FindChild("Canvas").GetComponent<Canvas>().worldCamera = GameObject.Find("Main Camera").GetComponent<Camera>();;
+        GameObject.Find("BattleMenu").transform.FindChild("Canvas").GetComponent<Canvas>().worldCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
         Init(GameObject.FindWithTag("RPG-PLAYER").GetComponent<Player>());
     }
     /// <summary>
@@ -65,7 +64,6 @@ public class BattleMenu : Menus {
             else
                 Arrow3 = ic;
         }
-        player.Data.Job = new AbstractJob();
         SelectionMenu.Init(Arrow3, SelectItem);
         ItemMenu.HideList();
     }
