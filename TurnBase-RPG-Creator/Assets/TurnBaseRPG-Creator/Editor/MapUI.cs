@@ -107,7 +107,7 @@ public class MapUI : EditorWindow {
         
         if (GUILayout.Button("Select Audio"))
         {
-            EditorGUIUtility.ShowObjectPicker<>(null, false, "Background_", 1);
+            EditorGUIUtility.ShowObjectPicker<AudioClip>(null, false, "Background_", 1);
         }
 
         UpdateValidationVal();
