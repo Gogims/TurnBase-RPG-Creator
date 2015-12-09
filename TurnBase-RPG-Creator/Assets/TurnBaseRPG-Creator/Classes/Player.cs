@@ -90,7 +90,14 @@ public class Player : Actor
     {
         if (coll.gameObject.tag == "RPG-ENEMY")
         {
-            Debug.Log("Change Scene");
+            GameObject p = GameObject.FindWithTag("RPG-PLAYER");
+            Constant.ActiveMap = GameObject.Find("Map");
+            Constant.ActiveMap.SetActive(false);
+            DontDestroyOnLoad(p);
+            p.SetActive(true);
+            Constant.LastSceneLoaded = coll.gameObject.GetComponent<Troop>().Id;
+            Application.LoadLevelAdditive(Constant.LastSceneLoaded);
+            
         }
         if (coll.gameObject.tag == "RPG-MAPOBJECT")
         {

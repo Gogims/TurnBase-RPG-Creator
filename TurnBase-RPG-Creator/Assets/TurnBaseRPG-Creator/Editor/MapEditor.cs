@@ -71,6 +71,7 @@ public class MapEditor {
 	/// </summary>
 	static void DeleteObject()
 	{
+        GameObject MapObj = GameObject.Find("Map");
 		foreach (GameObject i in Selection.gameObjects) {
             if (i == null) continue;
             if (i.name.Contains("Main Camera") )
@@ -92,7 +93,8 @@ public class MapEditor {
                 Sprite aux = temp.GetComponent<SpriteRenderer>().sprite;
                 temp.transform.position = i.transform.position;
                 temp.transform.localScale = new Vector3(ProjectSettings.pixelPerUnit / aux.rect.width, ProjectSettings.pixelPerUnit / aux.rect.height);
-                MapUI.Instantiate(temp, temp.transform.position, Quaternion.identity);
+                var ins = MapUI.Instantiate(temp, temp.transform.position, Quaternion.identity) as GameObject;
+                ins.transform.parent = MapObj.transform;
                 MapUI.DestroyImmediate(GameObject.Find("New Game Object"), true);
             }
 			MapUI.DestroyImmediate (i,true);
@@ -163,21 +165,23 @@ public class MapEditor {
 		foreach (GameObject i in Selection.gameObjects) {
             if (i == null) continue;
             SpriteRenderer iSprite = i.GetComponent<SpriteRenderer>();
-            if (i.name == "Main Camera" || iSprite.sprite.name == selectSprite.sprite.name) continue;
+            if (i.name == "Main Camera" || iSprite.sprite.name == selectSprite.sprite.name || i.name == "Map") continue;
             if (selectSprite.sortingLayerName == Constant.LAYER_TILE)
             {
-                if (i.transform.parent == null && i.tag != "RPG-PLAYER")
+                if (i.transform.parent.name == "Map"  && i.tag != "RPG-PLAYER")
                 {
                     temp.transform.position = i.transform.position;
-                    MapUI.DestroyImmediate(i, true);
+                    
                 }
                 else if (i.tag != "RPG-PLAYER")
                 {
                     temp.transform.position = i.transform.parent.gameObject.transform.position;
-                    MapUI.DestroyImmediate(i.transform.parent.gameObject, true);
+                  
                 }
                 temp.transform.localScale = new Vector3(ProjectSettings.pixelPerUnit / selectSprite.sprite.rect.width, ProjectSettings.pixelPerUnit / selectSprite.sprite.rect.height);
-                MapUI.Instantiate(temp, temp.transform.position, Quaternion.identity);
+                GameObject son = MapUI.Instantiate(temp, temp.transform.position, Quaternion.identity) as GameObject;
+                son.transform.parent = i.transform.parent;
+                MapUI.DestroyImmediate(i, true);
                 
             }
             else if (temp.tag == "RPG-PLAYER")
@@ -188,24 +192,24 @@ public class MapEditor {
                 temp.name = "PLAYER";
                 temp.transform.position = i.transform.position;
                 temp.transform.localScale = new Vector3(ProjectSettings.pixelPerUnit / selectSprite.sprite.rect.width, ProjectSettings.pixelPerUnit / selectSprite.sprite.rect.height);
-                MapUI.Instantiate(temp, temp.transform.position, Quaternion.identity);
+                var son = MapUI.Instantiate(temp, temp.transform.position, Quaternion.identity) as GameObject;
             }
             else
             {
                 GameObject aux = null;
-                if (i.transform.parent == null && i.transform.childCount != 0)
+                if (i.transform.parent.gameObject.transform.parent != null && i.transform.parent.childCount != 0)
                 {
-                    if (i.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite.name == selectSprite.sprite.name)
+                    if (i.transform.parent.gameObject.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite.name == selectSprite.sprite.name)
                     {
                         continue;
                     }
 
-                    aux = i;
-                    MapUI.DestroyImmediate(i.transform.GetChild(0).gameObject);
+                    aux = i.transform.parent.gameObject ;
+                    MapUI.DestroyImmediate(i.transform.parent.gameObject.transform.GetChild(0).gameObject);
                 }
-                else if (i.transform.parent != null)
+                else if (i.transform.parent.gameObject.transform.parent != null)
                 {
-                    aux = i.transform.parent.gameObject;
+                    aux = i.transform.parent.gameObject.transform.parent.gameObject;
                     MapUI.DestroyImmediate(i);
                 }
                 else

@@ -4,8 +4,6 @@ using UnityEditor;
 /// <summary>
 /// Constantes de TurnBase-RPG-Creator.
 /// </summary>
-
-
 public class Constant{
     /// <summary>
     /// Layers que utiliza RPG-Creator para ordenar los objetos en la scene.
@@ -196,4 +194,5 @@ public class Constant{
     /// </summary>
     public static bool start;
     public static string LastSceneLoaded;
+    public static GameObject ActiveMap;
 }

@@ -31,6 +31,8 @@ public class BattleManager : RPGElement
 
     void Start()
     {
+        Constant.LastSceneLoaded = "BattleMenu";
+        Application.LoadLevelAdditive("BattleMenu");
         //ActorsOrdered = OrderActors(Player, Enemies);
         ResizeSpriteToScreen(GameObject.Find("Top"));
         ResizeSpriteToScreen(GameObject.Find("Bottom"));
