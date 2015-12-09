@@ -51,6 +51,7 @@ public class Map : RPGElement{
         PrefabUtility.CreatePrefab("Assets/Resources/Maps/" + x.Id + ".prefab", x.gameObject);
         DestroyImmediate(settings);
         EditorApplication.SaveScene(returnPath);// Guarda la scene.
+        Constant.AddSceneToBuild(returnPath);
 	}
     /// <summary>
     /// Actualiza un mapa dado su path

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEditor;
 /// <summary>
 /// Constantes de TurnBase-RPG-Creator.
 /// </summary>
@@ -63,6 +64,19 @@ public class Constant{
                         Image.textureRect.y / Image.texture.height,
                         Image.textureRect.width / Image.texture.width,
                         Image.textureRect.height / Image.texture.height);
+    }
+    /// <summary>
+    /// Agrega un scene a la configuracion de construccion ( Build Settings).
+    /// </summary>
+    /// <param name="path">Ruta del scene</param>
+    public static void AddSceneToBuild(string path)
+    {
+        EditorBuildSettingsScene[] original = EditorBuildSettings.scenes;
+        EditorBuildSettingsScene[] newSettings = new EditorBuildSettingsScene[original.Length + 1];
+        System.Array.Copy(original, newSettings, original.Length);
+        EditorBuildSettingsScene sceneToAdd = new EditorBuildSettingsScene(path, true);
+        newSettings[newSettings.Length - 1] = sceneToAdd;
+        EditorBuildSettings.scenes = newSettings;
     }
     /// <summary>
     /// Tipos de items.
@@ -150,4 +164,21 @@ public class Constant{
         Random,
         Stationary
     };
+    /// <summary>
+    /// remueve un scene de la configuracion de construccion ( Build Settings). 
+    /// </summary>
+    /// <param name="p">ruta de la scene</param>
+    public static void RemoveScene(string path)
+    {
+        EditorBuildSettingsScene[] original = EditorBuildSettings.scenes;
+        EditorBuildSettingsScene[] newSettings = new EditorBuildSettingsScene[original.Length -1];
+
+        for (int i = 0, j = 0 ; i < original.Length; i++)
+        {
+            if (original[i].path == path) continue;
+            newSettings[j] = original[i];
+            j++;
+        }
+        EditorBuildSettings.scenes = newSettings;
+    }
 }

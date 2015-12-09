@@ -3,7 +3,6 @@ using System.IO;
 using UnityEngine;
 using System.Diagnostics;
 using System;
-using UnityEditor;
 
 /// <summary>
 /// Clase que se encarga de las configuraciones del proyecto.
@@ -18,10 +17,6 @@ public class ProjectSettings:MonoBehaviour  {
     /// </summary>
     public static string ProjectName = "Second Game";
     /// <summary>
-    /// Path de unity.exe
-    /// </summary>
-    public static string UnityPath = EditorApplication.applicationPath;
-    /// <summary>
     /// Scala con la que se va trabajar el proyecto.
     /// </summary>
     static public int pixelPerUnit = 1;
@@ -29,6 +24,7 @@ public class ProjectSettings:MonoBehaviour  {
     /// Archivo de configuracion
     /// </summary>
     const string path = "Assets/settings.txt";
+    public static string MainMap = string.Empty;
     /// <summary>
     /// Constructor Estatico
     /// </summary>
