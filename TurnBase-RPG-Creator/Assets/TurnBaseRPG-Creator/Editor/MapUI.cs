@@ -107,6 +107,10 @@ public class MapUI : EditorWindow {
         GUILayout.Label("Starting position (Player)", EditorStyles.boldLabel);
         map.Data.startX = EditorGUILayout.IntField("X", map.Data.startX);
         map.Data.startY = EditorGUILayout.IntField("Y", map.Data.startY);
+        if (GUILayout.Button("Select Audio"))
+        {
+            EditorGUIUtility.ShowObjectPicker<AudioClip>(null, false, "Background_", 1);
+        }
         UpdateValidationVal();
         GUILayout.EndArea();
         if (GUI.Button(new Rect(0, this.position.height - 20, 100, 20), "Create"))

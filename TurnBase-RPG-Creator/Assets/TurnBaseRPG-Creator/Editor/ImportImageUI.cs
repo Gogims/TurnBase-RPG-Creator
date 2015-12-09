@@ -44,7 +44,7 @@ public class ImportImageUI : EditorWindow
         GUI.enabled = true;
         upload = GUI.Button (new Rect(300, 0, 100, 20), "Upload Photo");
         Texture= new Texture2D(width, height);
-       Texture.LoadImage(image.GetImage);
+       Texture.LoadImage(image.File);
 		EditorGUI.LabelField(new Rect(0,30,100,20),new GUIContent("Name:"));
 		Name = EditorGUI.TextField(new Rect(90,30,200,20),Name);
 		EditorGUI.LabelField(new Rect(0,70,100,20),new GUIContent("Sprite Type:"));

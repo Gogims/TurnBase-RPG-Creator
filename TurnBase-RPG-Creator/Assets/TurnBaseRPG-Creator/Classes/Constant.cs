@@ -166,6 +166,14 @@ public class Constant{
         Random,
         Stationary
     };
+
+    public enum AudioType
+    {
+        Background,
+        BackgroundEffect,
+        Sound
+    };
+
     /// <summary>
     /// remueve un scene de la configuracion de construccion ( Build Settings). 
     /// </summary>
