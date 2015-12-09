@@ -150,4 +150,11 @@ public class Constant{
         Random,
         Stationary
     };
+
+    public enum AudioType
+    {
+        Background,
+        BackgroundEffect,
+        Sound
+    };
 }

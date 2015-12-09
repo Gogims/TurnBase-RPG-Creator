@@ -13,17 +13,17 @@ public class FileBrowser
 			_path = value;			
 
 			if (value != null && value != "") {
-				image = File.ReadAllBytes(value);
+				file = System.IO.File.ReadAllBytes(value);
 			}
 		}
 	}
 
-	private byte[] image;
-	private string _path;
+	private byte[] file;
+	private string _path = string.Empty;
 
-	public byte[] GetImage{
+	public byte[] File{
 		get{
-			return image;
+			return file;
 		}
 	}
 

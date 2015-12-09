@@ -209,6 +209,10 @@ public class GameEngine : EditorWindow {
     [MenuItem("RPG-Tools/Import Sound")]
     public static void ShowImportSound()
     {
+        var window = EditorWindow.GetWindow<ImportAudioUI>();
+        window.minSize = new Vector2(500, 300);
+        window.Init();
+        window.Show();
     }
     /// <summary>
     /// Presenta La ventana de importar imagenes

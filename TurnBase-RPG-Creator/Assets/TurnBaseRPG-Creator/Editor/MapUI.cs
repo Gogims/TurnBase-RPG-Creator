@@ -104,6 +104,12 @@ public class MapUI : EditorWindow {
         map.Data.Name = EditorGUILayout.TextField("Map Name", map.Data.Name);
         map.Data.Width = EditorGUILayout.IntField("Width", map.Data.Width);
         map.Data.Heigth = EditorGUILayout.IntField("Heigth", map.Data.Heigth);
+        
+        if (GUILayout.Button("Select Audio"))
+        {
+            EditorGUIUtility.ShowObjectPicker<>(null, false, "Background_", 1);
+        }
+
         UpdateValidationVal();
         GUILayout.EndArea();
         if (GUI.Button(new Rect(0, this.position.height - 20, 100, 20), "Create"))
