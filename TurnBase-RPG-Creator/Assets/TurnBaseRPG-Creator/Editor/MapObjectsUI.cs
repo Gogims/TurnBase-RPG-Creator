@@ -192,31 +192,6 @@ public class MapObjectsUI : EditorWindow {
             door.Name = name;
             door.Icon = texture;
             MapObjectType = Constant.MapObjectType.Door;
-            GUILayout.Space(15);
-            GUILayout.BeginHorizontal();
-
-            if (GUILayout.Button("Select Inside Map", GUILayout.Width(labelWidth)))
-            {
-                var window = EditorWindow.GetWindow<MapUI>();
-                window.Initialize(ref door.InMap);
-                window.Show();
-            }
-            GUI.enabled = false;
-            GUILayout.TextField(door.InMap.Name);
-            GUI.enabled = true;
-            GUILayout.EndHorizontal();
-            GUILayout.Space(15);
-            GUILayout.BeginHorizontal();
-            if (GUILayout.Button("Select Outside Map", GUILayout.Width(labelWidth)))
-            {
-                var window = EditorWindow.GetWindow<MapUI>();
-                window.Initialize(ref door.OutMap);
-                window.Show();
-            }
-            GUI.enabled = false;
-            GUILayout.TextField(door.OutMap.Name);
-            GUI.enabled = true;
-            GUILayout.EndHorizontal();
         }
         else if (tab == 5) {
             GUILayout.BeginHorizontal();
@@ -320,7 +295,6 @@ public class MapObjectsUI : EditorWindow {
                 image4.sortingLayerName = Constant.LAYER_ITEM;
                 image4.sprite = door.Icon;
                 temp.InMap = door.InMap;
-                temp.OutMap = door.OutMap;
                 temp.Name = door.Name;
                 temp.Icon = door.Icon;
                 temp.Image = door.Icon;
@@ -377,7 +351,7 @@ public class MapObjectsUI : EditorWindow {
         switch (tab)
         {
             case 1: 
-                var temp = obj as Wall;
+
                 break;
             case 2:
                 var temp6 = obj as Pickup;
@@ -392,11 +366,10 @@ public class MapObjectsUI : EditorWindow {
             case 4:
                 Door aux = GameObject.Find("New Game Object").GetComponent<Door>();
                 var temp2 = obj as Door;
-                temp2.OutMap = door.OutMap;
                 temp2.InMap = door.InMap;
-                 DestroyImmediate(aux.gameObject);
-                 CreateObj = new GameObject();
-                 door = CreateObj.AddComponent<Door>();
+                DestroyImmediate(aux.gameObject);
+                CreateObj = new GameObject();
+                door = CreateObj.AddComponent<Door>();
 
                 break;
             case 5:
@@ -405,7 +378,7 @@ public class MapObjectsUI : EditorWindow {
                 temp3.Heigth = house.Heigth;
                 break;
             default:
-                var temp4 = obj as Tile;
+
                 break;
         }
         ClearFields();
@@ -521,7 +494,6 @@ public class MapObjectsUI : EditorWindow {
         if (tab == 4)
         {
             door.InMap = new AbstractMap() ;
-            door.OutMap = new AbstractMap() ;
         }
         if (tab == 5)
         {
@@ -609,7 +581,6 @@ public class MapObjectsUI : EditorWindow {
                 break;
             case 4:
                 var temp2 = obj as Door;
-                door.OutMap = temp2.OutMap;
                 door.InMap = temp2.InMap;
                 door.Image = temp2.Image;
                 break;

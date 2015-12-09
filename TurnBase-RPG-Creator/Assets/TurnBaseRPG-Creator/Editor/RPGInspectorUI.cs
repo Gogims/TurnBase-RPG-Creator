@@ -80,6 +80,20 @@ public class RPGInspectorUI : EditorWindow {
                     Selection.activeGameObject = obj;
                 }
             }
+            var door = MapEditor.selectedObject.GetComponent<Door>();
+            if (door != null)
+            {
+                GUILayout.Label("Map:", EditorStyles.boldLabel);
+                GUI.enabled = false;
+                GUILayout.TextField(door.InMap.Name);
+                GUI.enabled = true;
+                if (GUILayout.Button("Select Inside Map"))
+                {
+                    var window = EditorWindow.GetWindow<MapUI>();
+                    window.Initialize(ref door.InMap);
+                    window.Show();
+                }
+            }
         }        
 
         GUILayout.EndArea();

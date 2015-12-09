@@ -4,6 +4,8 @@ using UnityEditor;
 /// <summary>
 /// Constantes de TurnBase-RPG-Creator.
 /// </summary>
+
+
 public class Constant{
     /// <summary>
     /// Layers que utiliza RPG-Creator para ordenar los objetos en la scene.
@@ -181,4 +183,9 @@ public class Constant{
         }
         EditorBuildSettings.scenes = newSettings;
     }
+    /// <summary>
+    /// Permite saber al jugador si el juego esta en pausa o no
+    /// </summary>
+    public static bool start;
+    public static string LastSceneLoaded;
 }

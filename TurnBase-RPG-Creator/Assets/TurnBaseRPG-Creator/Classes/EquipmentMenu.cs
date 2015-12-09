@@ -146,76 +146,76 @@ public class EquipmentMenu : Menus {
     public void Start() {
         ClearDiffText();
         Player p = GameObject.FindWithTag("RPG-PLAYER").GetComponent<Player>();
-        p.Items = new Inventory();
-        AbstractArmor aux = (Resources.Load("Armor/2fde446b-dd6e-459f-8ff8-47082c952525") as GameObject).GetComponent<Armor>().Data;
-        AbstractWeapon aux2 = (Resources.Load("Weapon/dfaa859c-5ae4-44b4-9882-6ced915fd665") as GameObject).GetComponent<Weapon>().Data;
-        AbstractUsable aux3 = (Resources.Load("Item/52a2fc86-91e8-44e8-98c7-203be647b54b") as GameObject).GetComponent<Usable>().Data;
-        p.Items.InsertArmor(aux);
-        p.Items.InsertArmor(aux);
-        p.Items.InsertArmor(aux);
-        p.Items.InsertArmor(aux);
-        p.Items.InsertArmor(aux);
-        p.Items.InsertArmor(aux);
-        p.Items.InsertArmor(aux);
-        p.Items.InsertArmor(aux);
-        p.Items.InsertArmor(aux);
-        p.Items.InsertArmor(aux);
-        p.Items.InsertUsable(aux3);
-        p.Items.InsertUsable(aux3);
-        p.Items.InsertUsable(aux3);
-        p.Items.InsertUsable(aux3);
-        p.Items.InsertUsable(aux3);
-        p.Items.InsertUsable(aux3);
-        p.Items.InsertUsable(aux3);
-        p.Items.InsertUsable(aux3);
-        p.Items.InsertUsable(aux3);
-        p.Items.InsertUsable(aux3);
-        p.Items.InsertUsable(aux3);
-        AbstractWeapon copy = new AbstractWeapon();
-        copy.ItemName = "Weapon1";
-        copy.Image = aux2.Image;
-        copy.Description = "Esta es la Primera arama.";
-        p.Items.InsertWeapon(copy);
-        copy = new AbstractWeapon();
-        copy.ItemName = "Weapon2";
-        copy.Image = aux2.Image;
-        copy.Description = "Esta es la Segunda arama.";
-        p.Items.InsertWeapon(copy);
-        copy = new AbstractWeapon();
-        copy.ItemName = "Weapon3";
-        copy.Image = aux2.Image;
-        copy.Description = "Esta es la Tercera arama.";
-        p.Items.InsertWeapon(copy);
-        copy = new AbstractWeapon();
-        copy.ItemName = "Weapon4";
-        copy.Image = aux2.Image;
-        copy.Description = "Esta es la Cuarta arama.";
-        p.Items.InsertWeapon(copy);
-        copy = new AbstractWeapon();
-        copy.ItemName = "Weapon5";
-        copy.Image = aux2.Image;
-        copy.Description = "Esta es la Quinta arama.";
-        p.Items.InsertWeapon(copy);
-        copy = new AbstractWeapon();
-        copy.ItemName = "Weapon6";
-        copy.Image = aux2.Image;
-        copy.Description = "Esta es la Sexta arama.";
-        p.Items.InsertWeapon(copy);
-        copy = new AbstractWeapon();
-        copy.ItemName = "Weapon7";
-        copy.Image = aux2.Image;
-        copy.Description = "Esta es la Septima arama.";
-        p.Items.InsertWeapon(copy);
-        copy = new AbstractWeapon();
-        copy.ItemName = "Weapon8";
-        copy.Image = aux2.Image;
-        copy.Description = "Esta es la Octava arama.";
-        p.Items.InsertWeapon(copy);
-        copy = new AbstractWeapon();
-        copy.ItemName = "Weapon9";
-        copy.Image = aux2.Image;
-        copy.Description = "Esta es la Novena arama.";
-        p.Items.InsertWeapon(copy);
+        //p.Items = new Inventory();
+        //AbstractArmor aux = (Resources.Load("Armor/2fde446b-dd6e-459f-8ff8-47082c952525") as GameObject).GetComponent<Armor>().Data;
+        //AbstractWeapon aux2 = (Resources.Load("Weapon/dfaa859c-5ae4-44b4-9882-6ced915fd665") as GameObject).GetComponent<Weapon>().Data;
+        //AbstractUsable aux3 = (Resources.Load("Item/52a2fc86-91e8-44e8-98c7-203be647b54b") as GameObject).GetComponent<Usable>().Data;
+        //p.Items.InsertArmor(aux);
+        //p.Items.InsertArmor(aux);
+        //p.Items.InsertArmor(aux);
+        //p.Items.InsertArmor(aux);
+        //p.Items.InsertArmor(aux);
+        //p.Items.InsertArmor(aux);
+        //p.Items.InsertArmor(aux);
+        //p.Items.InsertArmor(aux);
+        //p.Items.InsertArmor(aux);
+        //p.Items.InsertArmor(aux);
+        //p.Items.InsertUsable(aux3);
+        //p.Items.InsertUsable(aux3);
+        //p.Items.InsertUsable(aux3);
+        //p.Items.InsertUsable(aux3);
+        //p.Items.InsertUsable(aux3);
+        //p.Items.InsertUsable(aux3);
+        //p.Items.InsertUsable(aux3);
+        //p.Items.InsertUsable(aux3);
+        //p.Items.InsertUsable(aux3);
+        //p.Items.InsertUsable(aux3);
+        //p.Items.InsertUsable(aux3);
+        //AbstractWeapon copy = new AbstractWeapon();
+        //copy.ItemName = "Weapon1";
+        //copy.Image = aux2.Image;
+        //copy.Description = "Esta es la Primera arama.";
+        //p.Items.InsertWeapon(copy);
+        //copy = new AbstractWeapon();
+        //copy.ItemName = "Weapon2";
+        //copy.Image = aux2.Image;
+        //copy.Description = "Esta es la Segunda arama.";
+        //p.Items.InsertWeapon(copy);
+        //copy = new AbstractWeapon();
+        //copy.ItemName = "Weapon3";
+        //copy.Image = aux2.Image;
+        //copy.Description = "Esta es la Tercera arama.";
+        //p.Items.InsertWeapon(copy);
+        //copy = new AbstractWeapon();
+        //copy.ItemName = "Weapon4";
+        //copy.Image = aux2.Image;
+        //copy.Description = "Esta es la Cuarta arama.";
+        //p.Items.InsertWeapon(copy);
+        //copy = new AbstractWeapon();
+        //copy.ItemName = "Weapon5";
+        //copy.Image = aux2.Image;
+        //copy.Description = "Esta es la Quinta arama.";
+        //p.Items.InsertWeapon(copy);
+        //copy = new AbstractWeapon();
+        //copy.ItemName = "Weapon6";
+        //copy.Image = aux2.Image;
+        //copy.Description = "Esta es la Sexta arama.";
+        //p.Items.InsertWeapon(copy);
+        //copy = new AbstractWeapon();
+        //copy.ItemName = "Weapon7";
+        //copy.Image = aux2.Image;
+        //copy.Description = "Esta es la Septima arama.";
+        //p.Items.InsertWeapon(copy);
+        //copy = new AbstractWeapon();
+        //copy.ItemName = "Weapon8";
+        //copy.Image = aux2.Image;
+        //copy.Description = "Esta es la Octava arama.";
+        //p.Items.InsertWeapon(copy);
+        //copy = new AbstractWeapon();
+        //copy.ItemName = "Weapon9";
+        //copy.Image = aux2.Image;
+        //copy.Description = "Esta es la Novena arama.";
+        //p.Items.InsertWeapon(copy);
         player = p;
         SetPlayerLabels();
         ListBody = new List<Tuple<AbstractArmor, int>>();
@@ -237,7 +237,7 @@ public class EquipmentMenu : Menus {
         MenuScroll.Init(new Vector3(-42, lastY), new Vector3(25, 97),new Vector3(111,lastY), diffy, 0, 6, Arrow2, NextArrow, PrevArrow, ItemPanel);
         fillWeapon();
         Menu2 = new Navigator();
-        GameObject menusObj = GameObject.Find("Canvas").transform.FindChild("Select Panel").gameObject;
+        GameObject menusObj = GameObject.Find("EquipmentMenu").transform.FindChild("Canvas").transform.FindChild("Select Panel").gameObject;
         List<GameObject> Options = new List<GameObject>();
         for (int i = 0; i < menusObj.transform.childCount; i++)
         {
@@ -338,8 +338,9 @@ public class EquipmentMenu : Menus {
         switch (MenuSelected)
         {
             case 0 :
-                ///TODO
-                MenuSelected--;
+                GameObject.Find("StartMenu").transform.FindChild("Canvas").gameObject.GetComponent<Menus>().disable = false;
+                Destroy(GameObject.Find("EquipmentMenu"));
+                Constant.LastSceneLoaded = "StartMenu";
                 break;
             case 1:
                 ClearDiffText();
@@ -440,7 +441,6 @@ public class EquipmentMenu : Menus {
         switch (MenuSelected)
         {
             case 0:
-                ///TODO
                 Menu.update();
                 break;
             case 1:
@@ -462,7 +462,9 @@ public class EquipmentMenu : Menus {
             foreach (Tuple<AbstractWeapon,int> i in ListWeapon)
             {
                 Tuple<Item, int> ins = new Tuple<Item, int>(i.First as Item, i.Second);
-                    ActiveItems.Add(ins);
+                ActiveItems.Add(ins);
+                Destroy(GameObject.Find("New Game Object"));
+                Destroy(GameObject.Find("New Game Object"));
             }
             MenuScroll.ChangeList(ActiveItems);
         

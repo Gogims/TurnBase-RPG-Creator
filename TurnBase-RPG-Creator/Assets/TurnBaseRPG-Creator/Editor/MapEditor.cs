@@ -111,13 +111,19 @@ public class MapEditor {
                 Object.DestroyImmediate(AreaTroopSelector);
             }
 
-            if (Selected.tag == "RPG-MAPOBJECT" && !Selected.activeInHierarchy)
+            if (Selected.GetComponent<Door>() != null)
             {
                 selectedObject = Selected;
                 GameEngine.inspectorRpg.Focus();
             }
+            else if (Selected.tag == "RPG-MAPOBJECT" && !Selected.activeInHierarchy )
+            {
+                selectedObject = Selected;
+                GameEngine.inspectorRpg.Focus();                
 
-            if (Selected.tag == "RPG-ENEMY" && Selected.activeInHierarchy)
+            }
+ 
+            else if (Selected.tag == "RPG-ENEMY" && Selected.activeInHierarchy)
             {
                 selectedObject = Selected;
                 var SceneWindow = SceneView.lastActiveSceneView;

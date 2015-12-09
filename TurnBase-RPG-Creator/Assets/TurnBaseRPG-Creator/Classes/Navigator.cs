@@ -33,7 +33,9 @@ public class Navigator : AbstractNavigator{
         }
         if (ProxyInput.GetInstance().B())
         {
+            delay = 0;
             Options[selected].GetComponent<MenuOption>().UnSelect();
+           
             return;
         }
         if (ProxyInput.GetInstance().Down())

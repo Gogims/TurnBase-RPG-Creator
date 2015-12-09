@@ -35,4 +35,45 @@ public class PcInput {
 	public static bool Select(){
 		return Input.GetKey ("space");
 	}
+
+    //Retorna true si el boton A es soltado.
+    public static bool AUp()
+    {
+        return Input.GetKeyUp("z");
+    }
+    //Retorna true si el boton B es soltado.
+    public static bool BUp()
+    {
+        return Input.GetKeyUp("x");
+    }
+    //Retorna true si el boton de moverse hacia arriba es soltado.
+    public static bool UpUp()
+    {
+        return Input.GetKeyUp("up");
+    }
+    //Retorna true si el boton de moverse hacia abajo es soltado.
+    public static bool DownUp()
+    {
+        return Input.GetKeyUp("down");
+    }
+    //Retorna true si el boton de moverse hacia la derecha es soltado.
+    public static bool RightUp()
+    {
+        return Input.GetKeyUp("right");
+    }
+    //Retorna true si el boton de moverse hacia la izquierda es soltado.
+    public static bool LeftUp()
+    {
+        return Input.GetKeyUp("left");
+    }
+    //Retorna true si el boton de pausa es soltado.
+    public static bool PauseUp()
+    {
+        return Input.GetKeyUp(KeyCode.Return);
+    }
+    //Retorna true si el boton de select es soltado.
+    public static bool SelectUp()
+    {
+        return Input.GetKeyUp("space");
+    }
 }

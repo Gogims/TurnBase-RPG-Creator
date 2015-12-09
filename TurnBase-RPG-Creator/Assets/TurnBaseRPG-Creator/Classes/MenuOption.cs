@@ -8,8 +8,8 @@ public abstract class MenuOption: MonoBehaviour{
     {
     }
     public virtual void UnSelect() 
-    { 
-
+    {
+        GameObject.Find(Constant.LastSceneLoaded).transform.FindChild("Canvas").GetComponent<Menus>().unSelect();
     }
     public virtual void On(Equippable selected) 
     { 

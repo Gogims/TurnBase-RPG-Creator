@@ -73,12 +73,12 @@ public class MapUI : EditorWindow {
     private void InitErr(){
         err.InsertPropertyError("Heigth", map.Data.Heigth, "The Heigth has to be greater than 13 and less than 100");
         err.InsertPropertyError("Width", map.Data.Width, "The Width has to be greater than 17 and less than 100");
-            err.InsertPropertyError("Name", map.Data.Name.Length, "The length of the name has to be grater than 1");
-            err.InsertCondition("Heigth", Constant.MIN_MAP_HEIGTH, ErrorCondition.GreaterOrEqual, LogicalOperators.AND);
-            err.InsertCondition("Heigth", Constant.MAX_MAP_HEIGTH, ErrorCondition.LessOrEqual, LogicalOperators.None);
-            err.InsertCondition("Width", Constant.MIN_MAP_WIDTH, ErrorCondition.GreaterOrEqual, LogicalOperators.AND);
-            err.InsertCondition("Width", Constant.MAX_MAP_WIDTH, ErrorCondition.LessOrEqual, LogicalOperators.None);
-            err.InsertCondition("Name", 1, ErrorCondition.GreaterOrEqual, LogicalOperators.None);
+        err.InsertPropertyError("Name", map.Data.Name.Length, "The length of the name has to be grater than 1");
+        err.InsertCondition("Heigth", Constant.MIN_MAP_HEIGTH, ErrorCondition.GreaterOrEqual, LogicalOperators.AND);
+        err.InsertCondition("Heigth", Constant.MAX_MAP_HEIGTH, ErrorCondition.LessOrEqual, LogicalOperators.None);
+        err.InsertCondition("Width", Constant.MIN_MAP_WIDTH, ErrorCondition.GreaterOrEqual, LogicalOperators.AND);
+        err.InsertCondition("Width", Constant.MAX_MAP_WIDTH, ErrorCondition.LessOrEqual, LogicalOperators.None);
+        err.InsertCondition("Name", 1, ErrorCondition.GreaterOrEqual, LogicalOperators.None);
     }
 
     /// <summary>
@@ -104,6 +104,9 @@ public class MapUI : EditorWindow {
         map.Data.Name = EditorGUILayout.TextField("Map Name", map.Data.Name);
         map.Data.Width = EditorGUILayout.IntField("Width", map.Data.Width);
         map.Data.Heigth = EditorGUILayout.IntField("Heigth", map.Data.Heigth);
+        GUILayout.Label("Starting position (Player)", EditorStyles.boldLabel);
+        map.Data.startX = EditorGUILayout.IntField("X", map.Data.startX);
+        map.Data.startY = EditorGUILayout.IntField("Y", map.Data.startY);
         UpdateValidationVal();
         GUILayout.EndArea();
         if (GUI.Button(new Rect(0, this.position.height - 20, 100, 20), "Create"))
@@ -192,6 +195,8 @@ public class MapUI : EditorWindow {
              SelectMap1.MapPath= selectData.MapPath;
              SelectMap1.Width = selectData.Width;
              SelectMap1.Name = selectData.Name;
+             SelectMap1.startX = selectData.startX;
+             SelectMap1.startY = selectData.startY;
              this.Close();
         }
     }
@@ -204,7 +209,9 @@ public class MapUI : EditorWindow {
         var aux = Selected.GetComponent<Map>();
         map.updateMap(aux);
         aux.Data.Heigth = map.Data.Heigth;
-        aux.Data.Width= map.Data.Width;
+        aux.Data.Width = map.Data.Width;
+        aux.Data.startX = map.Data.startX;
+        aux.Data.startY = map.Data.startY;
         aux.Name = aux.Data.Name = map.Data.Name;
         
     }
@@ -216,6 +223,8 @@ public class MapUI : EditorWindow {
         map.Data.Name = "";
         map.Data.Width = 0;
         map.Data.Heigth = 0;
+        map.Data.startX = 0;
+        map.Data.startY = 0;
         Selected = null;
         err.CheckErrors();
         UpdateValidationVal();

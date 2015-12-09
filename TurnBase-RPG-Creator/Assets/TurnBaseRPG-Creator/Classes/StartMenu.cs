@@ -25,6 +25,17 @@ public class StartMenu : Menus {
        PlayerJob.GetComponent<Text>().text = GameObject.FindWithTag("RPG-PLAYER").GetComponent<Player>().Data.Job.JobName;
     }
     public void Update() {
-        Menu.update();
+        if (!disable )
+            Menu.update();
+    }
+    public override void unSelect()
+    {
+        Destroy(GameObject.Find("StartMenu"));
+        Constant.LastSceneLoaded = null;
+        Constant.start = false;
+    }
+    public override void Select()
+    {
+        disable = true;
     }
 }

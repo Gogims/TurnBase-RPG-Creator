@@ -22,13 +22,20 @@ public abstract class  Menus : MonoBehaviour {
     /// <summary>
     /// Menu principal.
     /// </summary>
-    protected Navigator Menu; 
+    protected Navigator Menu;
+    public bool disable; 
     /// <summary>
     /// Funcion que se llama cuando se inicia la scene.
     /// </summary>
     public void Awake() {
-        Menu = new Navigator();
-        GameObject menusObj = GameObject.Find("Canvas").transform.FindChild("Menu Panel").gameObject;
+        GameObject menuC = new GameObject();
+        Menu = menuC.AddComponent<Navigator>();
+        Destroy(menuC);
+        GameObject menusObj =null;
+        if (Constant.LastSceneLoaded == null)
+             menusObj = GameObject.Find("Canvas").transform.FindChild("Menu Panel").gameObject;
+        else 
+             menusObj = GameObject.Find(Constant.LastSceneLoaded).transform.FindChild("Canvas").transform.FindChild("Menu Panel").gameObject;
         List<GameObject> Options = new List<GameObject>();
         for (int i = 0; i < menusObj.transform.childCount; i++)
         {

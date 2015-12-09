@@ -135,7 +135,6 @@ public class ScrollNavigator<T,U> : AbstractNavigator
         Arrow.SetActive(false);
         Item = Resources.Load("Menus/MenuItems") as GameObject;
         ItemImage = Resources.Load("Menus/MenuImage") as GameObject;
-        ItemImage.AddComponent<Image>();
         PosX = (int)position.x;
         PosY = (int)position.y;
         ImagePosX = (int)positionImage.x;
@@ -370,18 +369,14 @@ public class ScrollNavigator<T,U> : AbstractNavigator
             Text.GetComponent<Text>().text = Ability[i].Ability;
             ItemImage.GetComponent<Image>().sprite = Ability[i].Image;        
         }
-        GameObject ax = Instantiate(Text);
         GameObject ay = Instantiate(ItemImage);
-        GameObject az = Instantiate(Cant);
-        ax.transform.SetParent(Panel.transform);
+        Text.transform.SetParent(Panel.transform);
         ay.transform.SetParent(Panel.transform);
-        az.transform.SetParent(Panel.transform);
-        ax.transform.localPosition = Position;
+        Cant.transform.SetParent(Panel.transform);
+        Text.transform.localPosition = Position;
         ay.transform.localPosition = ImagePosition;
-        az.transform.localPosition = PositionCant;
-        Destroy(GameObject.Find("New Game Object"));
-        Destroy(GameObject.Find("New Game Object"));
-        KeyValuePair<GameObject, Tuple<GameObject, GameObject>> aux = new KeyValuePair<GameObject, Tuple<GameObject, GameObject>>(ax, new Tuple<GameObject, GameObject>(ay, az));
+        Cant.transform.localPosition = PositionCant;
+        KeyValuePair<GameObject, Tuple<GameObject, GameObject>> aux = new KeyValuePair<GameObject, Tuple<GameObject, GameObject>>(Text, new Tuple<GameObject, GameObject>(ay, Cant));
         return aux;
     }
     /// <summary>

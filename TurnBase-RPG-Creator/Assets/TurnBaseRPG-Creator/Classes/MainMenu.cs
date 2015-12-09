@@ -15,4 +15,10 @@ public class MainMenu : Menus {
     public void Update() {
         Menu.update();
     }
+    public override void Select()
+    {
+        Object [] Player = Resources.LoadAll("Player/",typeof(GameObject));
+        GameObject x = GameObject.Instantiate(Player[0] as GameObject);
+
+    }
 }

@@ -5,7 +5,7 @@ using System.Linq;
 
 public class Actor : RPGElement
 {
-    private const float speed = 0.5f;
+    private const float speed =1f;
 
     protected virtual void Start()
     {

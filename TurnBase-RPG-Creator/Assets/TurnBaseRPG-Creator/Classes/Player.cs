@@ -5,6 +5,11 @@ using UnityEngine;
 
 public class Player : Actor
 {
+    void OnLevelWasLoaded(int level)
+    {
+        Destroy(GameObject.Find("PLAYER(Clone)"));
+
+    }
     public Inventory Items = new Inventory();
     /// <summary>
     /// Listado de las animaciones para caminar hacia abajo
@@ -28,6 +33,7 @@ public class Player : Actor
     /// </summary>
     public AbstractPlayer Data;
 
+
     public Player()
     {
         Data = new AbstractPlayer();
@@ -40,19 +46,65 @@ public class Player : Actor
 
     void Update()
     {
-        MoveDirection(ProxyInput.GetInstance().Down(), "down", 0);
-        MoveDirection(ProxyInput.GetInstance().Left(), "left", 0.34f);
-        MoveDirection(ProxyInput.GetInstance().Up(), "up", 0.67f);
-        MoveDirection(ProxyInput.GetInstance().Right(), "right", 1);
-
-        PlayerMove();
+        if (!Constant.start)
+        {
+            MoveDirection(ProxyInput.GetInstance().Down(), "down", 0);
+            MoveDirection(ProxyInput.GetInstance().Left(), "left", 0.34f);
+            MoveDirection(ProxyInput.GetInstance().Up(), "up", 0.67f);
+            MoveDirection(ProxyInput.GetInstance().Right(), "right", 1);
+            PlayerMove();
+        }
+        if (ProxyInput.GetInstance().Select() && !Constant.start)
+        {
+            Constant.LastSceneLoaded = "StartMenu";
+            Application.LoadLevelAdditive("StartMenu");
+            Constant.start = true;
+        }
+       
     }
-
+    void OnCollisionStay2D(Collision2D coll) {
+        Pickup pickup = coll.gameObject.GetComponent<Pickup>();
+        if (pickup != null)
+        {
+            if (ProxyInput.GetInstance().A())
+            {
+                if (pickup.ItemArmor.ItemName != "")
+                {
+                    AbstractArmor armor = new AbstractArmor();
+                    armor = pickup.ItemArmor;
+                    this.Items.InsertArmor(armor);
+                }
+                if (pickup.ItemWeapon.ItemName != "")
+                {
+                    this.Items.InsertWeapon(pickup.ItemWeapon);
+                }
+                if (pickup.ItemUsable.ItemName != "")
+                {
+                    this.Items.InsertUsable(pickup.ItemUsable);
+                }
+                Destroy(coll.gameObject);
+            }
+        }
+    }
     void OnCollisionEnter2D(Collision2D coll)
     {
         if (coll.gameObject.tag == "RPG-ENEMY")
         {
             Debug.Log("Change Scene");
+        }
+        if (coll.gameObject.tag == "RPG-MAPOBJECT")
+        {
+            Door door = coll.gameObject.GetComponent<Door>();
+            if (door != null)
+            {
+                string path = door.InMap.MapPath;
+                GameObject p = GameObject.FindWithTag("RPG-PLAYER");
+                p.name = "PLAYER";
+                DontDestroyOnLoad(p);
+                Application.LoadLevel(path.Substring(path.LastIndexOf("/")+1).Replace(".unity", ""));
+                GameObject.FindWithTag("RPG-PLAYER").transform.position = new Vector3(door.InMap.startX, door.InMap.startY);
+            }
+
         }
             
     }

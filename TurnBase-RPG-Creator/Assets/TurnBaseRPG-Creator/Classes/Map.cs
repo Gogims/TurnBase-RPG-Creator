@@ -165,4 +165,9 @@ public class AbstractMap
     /// Nombre del mapa.
     /// </summary>
     public string Name = string.Empty;
+    /// <summary>
+    /// Posicion donde va iniciar el jugador en el mapa
+    /// </summary>
+    public int startX;
+    public int startY;
 }
