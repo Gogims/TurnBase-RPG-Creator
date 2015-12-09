@@ -136,7 +136,7 @@ public class BattleMenu : Menus {
         }
         else if (SelectionName == "Run")
         {
-            //GameObject.FindWithTag("RPG-BM").GetComponent<BattleManager>().Run();
+            GameObject.Find("BattleManager").GetComponent<BattleManager>().Run();
             MenuSelection = 0;
         }
     }

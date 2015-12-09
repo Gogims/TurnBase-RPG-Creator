@@ -278,9 +278,11 @@ public class BattleManager : RPGElement
         throw new NotImplementedException();
     }
 
-    internal void Run()
+    public void Run()
     {
-        throw new NotImplementedException();
+        Destroy(GameObject.Find("BattleMap"));
+        Destroy(GameObject.Find("BattleMenu"));
+        Constant.ActiveMap.SetActive(true);
     }
 
     internal void UseAbility(AbstractAbility AbilitySelected)

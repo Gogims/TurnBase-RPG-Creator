@@ -90,6 +90,7 @@ public class Player : Actor
     {
         if (coll.gameObject.tag == "RPG-ENEMY")
         {
+            Destroy(coll.gameObject);
             GameObject p = GameObject.FindWithTag("RPG-PLAYER");
             Constant.ActiveMap = GameObject.Find("Map");
             Constant.ActiveMap.SetActive(false);
