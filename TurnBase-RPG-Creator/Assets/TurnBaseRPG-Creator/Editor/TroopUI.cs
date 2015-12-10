@@ -9,6 +9,7 @@ public class TroopUI : CRUD<Troop>
     Animator animations;
     const int previewX = Constant.BackgroundWidth/2;
     const int previewY = Constant.BackgroundHeight/2 + 20;
+    AudioClip clip;
 
     TroopUI():base("Troop", new Rect(0, 0, 300, 940)) { }
 
@@ -26,6 +27,7 @@ public class TroopUI : CRUD<Troop>
         GUILayout.EndHorizontal();
 
         GUILayout.Label("Background: ", EditorStyles.boldLabel);
+        GUILayout.BeginHorizontal();
         if (GUILayout.Button("Top Background"))
         {
             EditorGUIUtility.ShowObjectPicker<Sprite>(null, false, "Background", 1);
@@ -34,6 +36,18 @@ public class TroopUI : CRUD<Troop>
         {
             EditorGUIUtility.ShowObjectPicker<Sprite>(null, false, "Background", 2);
         }
+        GUILayout.EndHorizontal();
+
+        GUILayout.BeginHorizontal();
+        string audioname = element.Background != null ? element.Background.name : string.Empty;
+        GUI.enabled = false;
+        EditorGUILayout.TextField(audioname);
+        GUI.enabled = true;
+        if (GUILayout.Button("Select Audio"))
+        {
+            EditorGUIUtility.ShowObjectPicker<AudioClip>(null, false, "Background_", 3);
+        }
+        GUILayout.EndHorizontal();
 
         GUILayout.Label("Animation", EditorStyles.boldLabel);
         GUILayout.BeginHorizontal();
@@ -58,7 +72,7 @@ public class TroopUI : CRUD<Troop>
         // Preview
         GUILayout.BeginArea(new Rect(300, 300, Constant.BackgroundWidth, Constant.BackgroundHeight + 40), "Preview", EditorStyles.helpBox);
         GUILayout.Space(15);
-        AddBackground();
+        AddFiles();
 
         if (element.BackgroundBottom != null)
         {
@@ -238,7 +252,7 @@ public class TroopUI : CRUD<Troop>
         return current;
     }
 
-    private void AddBackground()
+    private void AddFiles()
     {
         if (Event.current.commandName == "ObjectSelectorUpdated")
         {
@@ -250,7 +264,12 @@ public class TroopUI : CRUD<Troop>
             if (EditorGUIUtility.GetObjectPickerControlID() == 2)
             {
                 element.BackgroundBottom = (Sprite)EditorGUIUtility.GetObjectPickerObject();
-            } 
+            }
+
+            if (EditorGUIUtility.GetObjectPickerControlID() == 3)
+            {
+                element.Background = (AudioClip)EditorGUIUtility.GetObjectPickerObject();                
+            }
         }
 
         Repaint();

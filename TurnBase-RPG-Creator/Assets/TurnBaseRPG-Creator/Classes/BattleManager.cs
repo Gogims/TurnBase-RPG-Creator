@@ -51,17 +51,20 @@ public class BattleManager : RPGElement
     public static void CreateTroopScene(Troop troop)
     {
         EditorApplication.NewScene(); // Crea una scene nueva.
+        var battlemap = new GameObject("BattleMap");
+        Camera.main.transform.parent = battlemap.transform;
         Camera.main.orthographic = true;
         Camera.main.backgroundColor = Color.black;
         Camera.main.gameObject.AddComponent<MainCamera>();
         Camera.main.orthographicSize = 6.95f; // Ajusta el tamaño de la camara ( la cantidad de espacio que va enfocar)        
         Camera.main.rect = new Rect(0, 0, 1, 1.4f);
-        Camera.main.orthographicSize = 222.12f;
+        Camera.main.orthographicSize = 222.12f;        
 
-        new GameObject("BattleManager").AddComponent<BattleManager>();
+        var bm = new GameObject("BattleManager").AddComponent<BattleManager>();
+        bm.transform.parent = battlemap.transform;
 
-        Vector2 backgroundSize = CreateBackground("Bottom", troop.BackgroundBottom, 0);
-        CreateBackground("Top", troop.BackgroundTop, 1);
+        Vector2 backgroundSize = CreateBackground("Bottom", troop.BackgroundBottom, 0, battlemap);
+        CreateBackground("Top", troop.BackgroundTop, 1, battlemap);
         foreach (var enemy in troop.Enemies)
         {
             GameObject gobj = new GameObject(enemy.Data.ActorName);
@@ -72,8 +75,13 @@ public class BattleManager : RPGElement
             var sprite = gobj.AddComponent<SpriteRenderer>();
             sprite.sprite = enemy.Data.Image;
             sprite.sortingLayerName = "Actors";
+            gobj.transform.parent = battlemap.transform;
+
         }
 
+        Audio audio = new Audio();
+        audio.CreateAudioSource(troop.Background);
+        audio.gameobject.transform.parent = battlemap.transform;
         EditorApplication.SaveScene("Assets/Resources/BattleMap/" + troop.Id + ".unity", true);// Guarda la scene.
     }
 
@@ -256,7 +264,7 @@ public class BattleManager : RPGElement
         }
     }
 
-    private static Vector2 CreateBackground(string name, Sprite background, int OrderLayer)
+    private static Vector2 CreateBackground(string name, Sprite background, int OrderLayer, GameObject father)
     {
         GameObject gobj = new GameObject(name);
         SpriteRenderer renderer = gobj.AddComponent<SpriteRenderer>();
@@ -264,6 +272,7 @@ public class BattleManager : RPGElement
         renderer.sortingLayerName = "Background";
         renderer.sortingOrder = OrderLayer;
         gobj.transform.localScale = new Vector2(1.5455f, 1);
+        gobj.transform.parent = father.transform;
 
         return new Vector2(gobj.transform.localScale.x* renderer.sprite.textureRect.width, gobj.transform.localScale.y * renderer.sprite.textureRect.height);
     }

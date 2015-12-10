@@ -15,8 +15,8 @@ public class Map : RPGElement{
 	/// <summary>
 	/// Crea un mapa dado su ancho, alto y nombre.
 	/// </summary>
-	public void CreateMap(){
-		EditorApplication.NewScene(); // Crea una scene nueva.
+	public void CreateMap(){        
+		EditorApplication.NewScene(); // Crea una scene nueva.        
         GameObject MapObj = new GameObject("Map");
         Camera.main.transform.parent = MapObj.transform;
 		Camera.main.orthographicSize = 5; // Ajusta el tamaño de la camara ( la cantidad de espacio que va enfocar)
@@ -43,6 +43,11 @@ public class Map : RPGElement{
 		}
         GameObject settings = new GameObject("Settings");
         settings.AddComponent<Map>();
+
+        Audio audio = new Audio();
+        audio.CreateAudioSource(this.Data.Background);
+        audio.gameobject.transform.parent = MapObj.transform;
+
         Map x = settings.GetComponent<Map>();
         x.Name = x.Data.Name = this.Data.Name;
         x.Data.Width = this.Data.Width;
@@ -146,10 +151,19 @@ public class Map : RPGElement{
         EditorWindow.DestroyImmediate(GameObject.Find("New Game Object"));
         Camera.main.orthographicSize = 5; // Ajusta el tamaño de la camara ( la cantidad de espacio que va enfocar)
         Camera.main.transform.localPosition = new Vector3((float)(this.Data.Width - 1) / 2, (float)(this.Data.Heigth - 1) / 2, -10); // Posiciona la camara en el centro del mapa
+        
+        DestroyImmediate(GameObject.Find("BackgroundAudio"));
+
+        Audio audio = new Audio();
+        audio.CreateAudioSource(this.Data.Background);
+        audio.gameobject.transform.parent = MapObj.transform;
 
         EditorApplication.SaveScene();
+    }
 
-
+    private void CreateAudioBackground(Audio audio)
+    {
+              
     }
 }
 [Serializable]
@@ -176,4 +190,5 @@ public class AbstractMap
     /// </summary>
     public int startX;
     public int startY;
+    public AudioClip Background;
 }

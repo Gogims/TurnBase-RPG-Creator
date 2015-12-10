@@ -41,6 +41,11 @@ public class Troop : Actor
     /// Listado de las animaciones para caminar hacia la derecha
     /// </summary>
     public List<Sprite> rightSprites;
+
+    /// <summary>
+    /// Sonido de fondo en el modo de combate
+    /// </summary>
+    public AudioClip Background;
     
     /// <summary>
     /// Ancho que ocupará el área que podrá moverse

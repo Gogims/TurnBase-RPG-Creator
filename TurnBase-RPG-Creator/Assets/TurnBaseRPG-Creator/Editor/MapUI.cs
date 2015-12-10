@@ -54,12 +54,13 @@ public class MapUI : EditorWindow {
     /// <summary>
     /// Objeto que se selecciono en el modo de seleccion (mapout).
     /// </summary>
-    public static string SelectMap2 =string.Empty;
+    public static string SelectMap2 = string.Empty;
     /// <summary>
     /// Nombre de la scene que esta abierta cuando se abre la ventana.
     /// </summary>
     private string scene;
-    bool SelectButton;
+    bool SelectButton;    
+
 	public void Init () {
             Selected = null; 
             //LoadList();
@@ -107,10 +108,18 @@ public class MapUI : EditorWindow {
         GUILayout.Label("Starting position (Player)", EditorStyles.boldLabel);
         map.Data.startX = EditorGUILayout.IntField("X", map.Data.startX);
         map.Data.startY = EditorGUILayout.IntField("Y", map.Data.startY);
+
+        GUILayout.BeginHorizontal();
+        string audioname = map.Data.Background != null ? map.Data.Background.name : string.Empty;
+        GUI.enabled = false;
+        EditorGUILayout.TextField(audioname);
+        GUI.enabled = true;
         if (GUILayout.Button("Select Audio"))
         {
             EditorGUIUtility.ShowObjectPicker<AudioClip>(null, false, "Background_", 1);
         }
+        GUILayout.EndHorizontal();
+
         UpdateValidationVal();
         GUILayout.EndArea();
         if (GUI.Button(new Rect(0, this.position.height - 20, 100, 20), "Create"))
@@ -145,7 +154,9 @@ public class MapUI : EditorWindow {
             GUI.enabled = true;
             SelectButton = GUI.Button(new Rect((float)(this.position.width * 0.3), this.position.height - 20, 100, 20), "Select");
         }
-	}
+
+        AddObject();
+    }
     /// <summary>
     /// Elimina el mapa seleccionado en la ventana
     /// </summary>
@@ -217,7 +228,7 @@ public class MapUI : EditorWindow {
         aux.Data.startX = map.Data.startX;
         aux.Data.startY = map.Data.startY;
         aux.Name = aux.Data.Name = map.Data.Name;
-        
+        aux.Data.Background = map.Data.Background;
     }
     /// <summary>
     /// Limpia todos los campos de la ventana
@@ -277,6 +288,7 @@ public class MapUI : EditorWindow {
                 map.Data.Width = imap.Data.Width;
                 map.Data.Heigth = imap.Data.Heigth;
                 map.Data.MapPath = imap.Data.MapPath;
+                map.Data.Background = imap.Data.Background;
                 Selected = imap.gameObject;
             }
         }
@@ -325,5 +337,14 @@ public class MapUI : EditorWindow {
         err.UpdateValue("Heigth", map.Data.Heigth);
         err.UpdateValue("Width", map.Data.Width);
         err.UpdateValue("Name", map.Data.Name.Length);
+    }
+
+    protected void AddObject()
+    {
+        if (Event.current.commandName == "ObjectSelectorUpdated")
+        {
+            map.Data.Background = (AudioClip)EditorGUIUtility.GetObjectPickerObject();
+            Repaint();
+        }
     }
 }
