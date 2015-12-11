@@ -19,7 +19,7 @@ public class Audio
         Source = gameobject.AddComponent<AudioSource>();
         Source.clip = clip;
         GetAudioType(clip.name);
-
+                
         switch (type)
         {
             case Constant.AudioType.Background:

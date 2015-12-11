@@ -6,7 +6,8 @@ using System.Collections.Generic;
 /// </summary>
 public class Pickup : MapObject
 {
-    
+    public AudioClip Sound;
+
     public Pickup() {
         ItemUsable = new AbstractUsable();
         ItemArmor = new AbstractArmor();

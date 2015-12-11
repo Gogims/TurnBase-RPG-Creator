@@ -12,6 +12,8 @@ public class Obstacle: MapObject
     /// </summary>
     public int hp;
 
+    public AudioClip Sound;
+
     //DamageWall is called when the player attacks a wall.
     public void DamageWall(int loss)
     {
@@ -22,6 +24,6 @@ public class Obstacle: MapObject
         if (hp <= 0)
             //Disable the gameObject.
             gameObject.SetActive(false);
-    }
+    }    
 }
 

@@ -136,6 +136,18 @@ public class MapObjectsUI : EditorWindow {
             pickup.Name = name;
             pickup.Icon = texture;
             MapObjectType = Constant.MapObjectType.Pickup;
+
+            GUILayout.BeginHorizontal();
+            if (GUILayout.Button("Select Sound", GUILayout.Width(labelWidth)))
+            {
+                EditorGUIUtility.ShowObjectPicker<AudioClip>(null, false, "Sound_", 2);
+            }
+            string soundName = pickup.Sound == null ? string.Empty : pickup.Sound.name;
+            GUI.enabled = false;
+            EditorGUILayout.TextField(soundName);
+            GUI.enabled = true;
+            GUILayout.EndHorizontal();
+
             GUILayout.BeginHorizontal();
             itemType = (Constant.ItemType)EditorGUILayout.EnumPopup("Select Item Type", itemType);
             GUILayout.EndHorizontal();
@@ -180,6 +192,17 @@ public class MapObjectsUI : EditorWindow {
 
         }
         else if (tab == 3){
+            GUILayout.BeginHorizontal();
+            if (GUILayout.Button("Select Sound", GUILayout.Width(labelWidth)))
+            {
+                EditorGUIUtility.ShowObjectPicker<AudioClip>(null, false, "Sound_", 3);
+            }
+            string soundName = obstacle.Sound == null ? string.Empty : obstacle.Sound.name;
+            GUI.enabled = false;
+            EditorGUILayout.TextField(soundName);
+            GUI.enabled = true;
+            GUILayout.EndHorizontal();
+
             GUILayout.BeginHorizontal();
             GUILayout.Label("Obstacle HP:",GUILayout.Width(labelWidth));
             obstacle.hp = EditorGUILayout.IntField(obstacle.hp);
@@ -358,10 +381,12 @@ public class MapObjectsUI : EditorWindow {
                 temp6.ItemArmor =  pickup.ItemArmor ;
                 temp6.ItemUsable =  pickup.ItemUsable;
                 temp6.ItemWeapon = pickup.ItemWeapon;
+                temp6.Sound = pickup.Sound;
                 break;
             case 3:
                 var temp1 = obj as Obstacle;
                 temp1.hp = obstacle.hp ;
+                temp1.Sound = obstacle.Sound;
                 break;
             case 4:
                 Door aux = GameObject.Find("New Game Object").GetComponent<Door>();
@@ -387,12 +412,23 @@ public class MapObjectsUI : EditorWindow {
     {
         if (Event.current.commandName == "ObjectSelectorUpdated") 
         {
-            texture = (Sprite)EditorGUIUtility.GetObjectPickerObject();
-            if (texture != null)
+            if (EditorGUIUtility.GetObjectPickerControlID() == 1)
             {
-                textureName = texture.name;
+                texture = (Sprite)EditorGUIUtility.GetObjectPickerObject();
+                if (texture != null)
+                {
+                    textureName = texture.name;
+                }
+                Repaint(); 
             }
-            Repaint();
+            else if (EditorGUIUtility.GetObjectPickerControlID() == 2)
+            {
+                pickup.Sound = (AudioClip)EditorGUIUtility.GetObjectPickerObject();
+            }
+            else if (EditorGUIUtility.GetObjectPickerControlID() == 3)
+            {
+                obstacle.Sound = (AudioClip)EditorGUIUtility.GetObjectPickerObject();
+            }
         }
     }
     /// <summary>
@@ -573,11 +609,13 @@ public class MapObjectsUI : EditorWindow {
                pickup.ItemArmor = temp.ItemArmor;
                pickup.ItemUsable = temp.ItemUsable;
                pickup.ItemWeapon = temp.ItemWeapon;
+               pickup.Sound = temp.Sound;
                 break;
             case 3:
                 var temp1 = obj as Obstacle;
                 obstacle.hp = temp1.hp;
                 obstacle.Image = temp1.Image;
+                obstacle.Sound = temp1.Sound;
                 break;
             case 4:
                 var temp2 = obj as Door;

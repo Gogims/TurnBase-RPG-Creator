@@ -68,6 +68,14 @@ public class Player : Actor
         {
             if (ProxyInput.GetInstance().A())
             {
+                if (pickup.Sound != null)
+                {
+                    Audio audio = new Audio();
+                    audio.CreateAudioSource(pickup.Sound);
+                    audio.Source.Play();
+                    Destroy(audio.gameobject, pickup.Sound.length + 0.5f);
+                }
+
                 if (pickup.ItemArmor.ItemName != "")
                 {
                     AbstractArmor armor = new AbstractArmor();
