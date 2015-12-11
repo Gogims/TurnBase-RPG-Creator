@@ -44,9 +44,12 @@ public class Map : RPGElement{
         GameObject settings = new GameObject("Settings");
         settings.AddComponent<Map>();
 
-        Audio audio = new Audio();
-        audio.CreateAudioSource(this.Data.Background);
-        audio.gameobject.transform.parent = MapObj.transform;
+        if (this.Data.Background != null)
+        {
+            Audio audio = new Audio();
+            audio.CreateAudioSource(this.Data.Background);
+            audio.gameobject.transform.parent = MapObj.transform; 
+        }
 
         Map x = settings.GetComponent<Map>();
         x.Name = x.Data.Name = this.Data.Name;
@@ -154,9 +157,12 @@ public class Map : RPGElement{
         
         DestroyImmediate(GameObject.Find("BackgroundAudio"));
 
-        Audio audio = new Audio();
-        audio.CreateAudioSource(this.Data.Background);
-        audio.gameobject.transform.parent = MapObj.transform;
+        if (this.Data.Background != null)
+        {
+            Audio audio = new Audio();
+            audio.CreateAudioSource(this.Data.Background);
+            audio.gameobject.transform.parent = MapObj.transform; 
+        }
 
         EditorApplication.SaveScene();
     }
