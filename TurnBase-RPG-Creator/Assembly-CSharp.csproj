@@ -58,7 +58,6 @@
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\BattleMenu.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Condition.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Constant.cs" />
-     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\DemoBehaviour.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Door.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Enemy.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\EquipmentMenu.cs" />
@@ -69,7 +68,6 @@
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Inventory.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Item.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\Job.cs" />
-     <Compile Include="Assets\TurnBaseRPG-Creator\Classes\ListBox.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\LoigcalCondition.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\MainCamera.cs" />
      <Compile Include="Assets\TurnBaseRPG-Creator\Classes\MainMenu.cs" />

@@ -81,8 +81,11 @@ public abstract class CRUD<T> : EditorWindow
     /// <summary>
     /// Variable para el scroll del listado
     /// </summary>
-    private Vector2 ScrollPosition;    
-
+    private Vector2 ScrollPosition;
+    /// <summary>
+    /// Logo de las ventanas
+    /// </summary>
+    public Texture Logo = Resources.Load<Texture>("LogoPUCMM");
     /// <summary>
     /// Unico constructor de la clase CRUD
     /// </summary>
@@ -185,8 +188,8 @@ public abstract class CRUD<T> : EditorWindow
             CreateButton = GUI.Button(new Rect(LeftSide.x, LeftSide.height - 20, 100, 20), "Create");
         }
 
-        GUI.DrawTexture(new Rect(LeftSide.width - element.Logo.width, LeftSide.height - element.Logo.height, element.Logo.width, element.Logo.height), 
-                        element.Logo);
+        GUI.DrawTexture(new Rect(LeftSide.width - Logo.width, LeftSide.height -Logo.height, Logo.width,Logo.height), 
+                        Logo);
     }
 
     /// <summary>

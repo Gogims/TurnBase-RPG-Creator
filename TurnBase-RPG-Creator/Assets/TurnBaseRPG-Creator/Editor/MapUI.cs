@@ -59,7 +59,11 @@ public class MapUI : EditorWindow {
     /// Nombre de la scene que esta abierta cuando se abre la ventana.
     /// </summary>
     private string scene;
-    bool SelectButton;    
+    bool SelectButton;
+    /// <summary>
+    /// Logo de las ventanas
+    /// </summary>
+    public Texture Logo = Resources.Load<Texture>("LogoPUCMM");
 
 	public void Init () {
             Selected = null; 
@@ -257,8 +261,8 @@ public class MapUI : EditorWindow {
         {
             ClearFields();
         }
-        GUI.DrawTexture(new Rect(LeftSide.width - map.Logo.width, LeftSide.height, map.Logo.width, map.Logo.height),
-                        map.Logo);
+        GUI.DrawTexture(new Rect(LeftSide.width - Logo.width, LeftSide.height, Logo.width, Logo.height),
+                        Logo);
     }
     /// <summary>
     /// Compara la ruta absoluta con una ruta relativa

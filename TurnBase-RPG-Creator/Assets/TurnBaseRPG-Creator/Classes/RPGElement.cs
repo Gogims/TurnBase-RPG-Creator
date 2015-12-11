@@ -16,7 +16,4 @@ public abstract class RPGElement : MonoBehaviour
     /// Icono del elemento
     /// </summary>
     public Sprite Icon;
-
-    [NonSerialized]
-    public Texture Logo = Resources.Load<Texture>("LogoPUCMM");
 }
