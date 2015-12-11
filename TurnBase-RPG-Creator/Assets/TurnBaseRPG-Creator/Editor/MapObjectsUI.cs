@@ -232,10 +232,7 @@ public class MapObjectsUI : EditorWindow {
         }
 
         GUILayout.EndArea();
-        if (GUI.Button(new Rect(0, this.position.height-20, 100, 20), "Create"))
-        {
-            ClearFields();    
-        }
+        
         if (GUI.Button(new Rect((float)(this.position.width * 0.5), this.position.height - 20, 100, 20), "Save"))
         {
             if (Selected != null)
@@ -436,7 +433,8 @@ public class MapObjectsUI : EditorWindow {
     /// </summary>
     void RenderLeftSide()
     {
-        GUILayout.BeginArea(new Rect(0, 0, (float)(this.position.width * 0.5), this.position.height-20), string.Empty, EditorStyles.helpBox);
+        Rect LeftSide = new Rect(0, 0, (this.position.width * 0.5f), this.position.height - 20);
+        GUILayout.BeginArea(LeftSide, string.Empty, EditorStyles.helpBox);
         tab = GUILayout.Toolbar(tab, new string[] { "Tiles", "Walls", "PickUps", "Obstacles", "Doors", "Houses" });
         GUILayout.BeginVertical();
         scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition);
@@ -516,6 +514,16 @@ public class MapObjectsUI : EditorWindow {
         GUILayout.EndVertical();
         GUILayout.EndScrollView();
         GUILayout.EndArea();
+
+        if (GUI.Button(new Rect(0, this.position.height - 20, 100, 20), "Create"))
+        {
+            ClearFields();
+        }
+
+        Texture Logo = Resources.Load<Texture>("LogoPUCMM");
+
+        GUI.DrawTexture(new Rect(LeftSide.width - Logo.width, LeftSide.height, Logo.width, Logo.height),
+                        Logo);
     }
 
      void ClearFields()

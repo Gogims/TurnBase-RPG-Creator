@@ -33,7 +33,8 @@ public class ImportAudioUI : EditorWindow
     /// </summary>
 	void OnGUI() 
 	{
-        GUILayout.BeginArea(new Rect(0, 0, 500, 300), "Settings", EditorStyles.helpBox);
+        Rect LeftSide = new Rect(0, 0, 500, 300);
+        GUILayout.BeginArea(LeftSide, "Settings", EditorStyles.helpBox);
         GUILayout.Space(15);
 
         //err.ShowErrorsLayout();
@@ -56,7 +57,12 @@ public class ImportAudioUI : EditorWindow
         GUILayout.Space(15);
         import = GUILayout.Button("Import Audio");
         GUILayout.EndArea();
-        
+
+        Texture Logo = Resources.Load<Texture>("LogoPUCMM");
+
+        GUI.DrawTexture(new Rect(LeftSide.width - Logo.width, LeftSide.height, Logo.width, Logo.height),
+                        Logo);
+
         if (!import && err.CheckErrors())
         {
             import = false;

@@ -37,6 +37,9 @@ public class ImportImageUI : EditorWindow
 	{
         if ( err == null || obtype == null )
             Init();
+
+        Rect LeftSide = new Rect(0, 0, 600, 300);
+        GUILayout.BeginArea(LeftSide, "Settings", EditorStyles.helpBox);
         GUI.enabled = false;
         path = GUI.TextField(new Rect(0,0, 300, 20),path);
         if (path.Length != 0)
@@ -61,8 +64,12 @@ public class ImportImageUI : EditorWindow
         {
             import = false;
         }
-        
-	}
+        GUILayout.EndArea();
+
+        Texture Logo = Resources.Load<Texture>("LogoPUCMM");
+        GUI.DrawTexture(new Rect(LeftSide.width - Logo.width, LeftSide.height, Logo.width, Logo.height),
+                        Logo);
+    }
     /// <summary>
     /// Actualiza los valores del manejador de errores
     /// </summary>

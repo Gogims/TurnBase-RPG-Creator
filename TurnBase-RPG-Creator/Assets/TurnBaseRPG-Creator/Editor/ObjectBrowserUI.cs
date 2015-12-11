@@ -150,7 +150,9 @@ public class ObjectBrowserUI : EditorWindow
     /// Renderisa la parte izquierda de la ventana.
     /// </summary>
     void RenderLeftSide() {
-        GUILayout.BeginArea(new Rect(0, 0, 300,this.position.height),string.Empty,EditorStyles.helpBox);
+        Rect LeftSide = new Rect(0, 0, 300, this.position.height);
+
+        GUILayout.BeginArea(LeftSide, string.Empty,EditorStyles.helpBox);
         GUILayout.Label("Objects", fontStyle);
         GUILayout.Space(10);
         if (GUILayout.Button("Map Objects"))
@@ -202,8 +204,11 @@ public class ObjectBrowserUI : EditorWindow
             Objects = Resources.LoadAll("Sprites", typeof(GameObject));
         }
 
-        GUILayout.Space(10);        
-
+        GUILayout.Space(10);
         GUILayout.EndArea();
+
+        Texture Logo = Resources.Load<Texture>("LogoPUCMM");
+        GUI.DrawTexture(new Rect(LeftSide.width - Logo.width, LeftSide.height- Logo.height, Logo.width, Logo.height),
+                        Logo);
     }
 }

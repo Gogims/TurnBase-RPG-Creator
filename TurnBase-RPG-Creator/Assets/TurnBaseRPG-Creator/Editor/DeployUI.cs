@@ -26,7 +26,9 @@ public class DeployUI : EditorWindow {
     void OnGUI()
     {
         RenderLeft();
-        GUILayout.BeginArea(new Rect((float)(this.position.width * 0.5), 0, (float)(this.position.width * 0.5), this.position.height - 20), string.Empty, EditorStyles.helpBox);
+
+        Rect LeftSide = new Rect(this.position.width * 0.5f, 0, this.position.width * 0.5f, this.position.height - 20);
+        GUILayout.BeginArea(LeftSide, string.Empty, EditorStyles.helpBox);
         GUILayout.BeginHorizontal();
         GUILayout.Label("Mapa:",GUILayout.Width(50));
         GUI.enabled = false;
@@ -35,6 +37,9 @@ public class DeployUI : EditorWindow {
         GUILayout.EndHorizontal();
         GUILayout.EndArea();
 
+        Texture Logo = Resources.Load<Texture>("LogoPUCMM");
+        GUI.DrawTexture(new Rect(LeftSide.width - Logo.width, LeftSide.height, Logo.width, Logo.height),
+                        Logo);
     }
 
     private void RenderLeft()

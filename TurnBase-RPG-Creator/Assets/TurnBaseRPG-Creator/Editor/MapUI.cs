@@ -122,10 +122,7 @@ public class MapUI : EditorWindow {
 
         UpdateValidationVal();
         GUILayout.EndArea();
-        if (GUI.Button(new Rect(0, this.position.height - 20, 100, 20), "Create"))
-        {
-            ClearFields();
-        }
+        
         errores = err.CheckErrors();
         if (!selectMode)
         {
@@ -248,12 +245,20 @@ public class MapUI : EditorWindow {
     /// Renderiza la parte izquierda de la ventana
     /// </summary>
     void RenderLeftSide() {
-        GUILayout.BeginArea(new Rect(0,0,(float)(this.position.width*0.3),this.position.height-20),EditorStyles.helpBox);
+        Rect LeftSide = new Rect(0, 0, (this.position.width * 0.3f), this.position.height - 20);
+        GUILayout.BeginArea(LeftSide, EditorStyles.helpBox);
         GUILayout.Label("Maps", fontStyle);
         scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition);
         DrawObjectList();
         GUILayout.EndScrollView();
         GUILayout.EndArea();
+
+        if (GUI.Button(new Rect(0, this.position.height - 20, 100, 20), "Create"))
+        {
+            ClearFields();
+        }
+        GUI.DrawTexture(new Rect(LeftSide.width - map.Logo.width, LeftSide.height, map.Logo.width, map.Logo.height),
+                        map.Logo);
     }
     /// <summary>
     /// Compara la ruta absoluta con una ruta relativa

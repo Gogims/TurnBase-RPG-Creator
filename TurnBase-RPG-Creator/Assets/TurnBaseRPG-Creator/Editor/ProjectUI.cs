@@ -47,9 +47,13 @@ public class ProjectUI : EditorWindow {
             {
                 newProject.CreateProject();
                 this.Close();
-            }
-            
+            }            
         }
+
+        Texture Logo = Resources.Load<Texture>("LogoPUCMM");
+
+        GUI.DrawTexture(new Rect(350, 200, Logo.width, Logo.height),
+                        Logo);
     }
     void UpdateValidationVal() {
         err.UpdateValue("name", newProject.Name.Length);

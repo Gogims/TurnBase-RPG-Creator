@@ -183,7 +183,10 @@ public abstract class CRUD<T> : EditorWindow
         if (!Selected)
         {
             CreateButton = GUI.Button(new Rect(LeftSide.x, LeftSide.height - 20, 100, 20), "Create");
-        }        
+        }
+
+        GUI.DrawTexture(new Rect(LeftSide.width - element.Logo.width, LeftSide.height - element.Logo.height, element.Logo.width, element.Logo.height), 
+                        element.Logo);
     }
 
     /// <summary>
