@@ -9,9 +9,10 @@ public class Audio
     
     private Constant.AudioType type;
 
-    public Audio()
+    public Audio(string name)
     {
-        gameobject = new GameObject("BackgroundAudio");
+        gameobject = new GameObject(name);
+        gameobject.tag = "RPG-AUDIO";
     }    
 
     public void CreateAudioSource(AudioClip clip)

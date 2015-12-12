@@ -46,7 +46,7 @@ public class Map : RPGElement{
 
         if (this.Data.Background != null)
         {
-            Audio audio = new Audio();
+            Audio audio = new Audio("BackgroundAudio");
             audio.CreateAudioSource(this.Data.Background);
             audio.gameobject.transform.parent = MapObj.transform; 
         }
@@ -159,7 +159,7 @@ public class Map : RPGElement{
 
         if (this.Data.Background != null)
         {
-            Audio audio = new Audio();
+            Audio audio = new Audio("BackgroundAudio");
             audio.CreateAudioSource(this.Data.Background);
             audio.gameobject.transform.parent = MapObj.transform; 
         }
@@ -167,9 +167,13 @@ public class Map : RPGElement{
         EditorApplication.SaveScene();
     }
 
-    private void CreateAudioBackground(Audio audio)
+    public static void ResetDoors()
     {
-              
+        foreach (var door in GameObject.FindGameObjectsWithTag("RPG-SELECTED"))
+        {
+            door.tag = "RPG-MAPOBJECT";
+            EditorApplication.SaveScene();
+        }
     }
 }
 [Serializable]
@@ -194,7 +198,5 @@ public class AbstractMap
     /// <summary>
     /// Posicion donde va iniciar el jugador en el mapa
     /// </summary>
-    public int startX;
-    public int startY;
     public AudioClip Background;
 }

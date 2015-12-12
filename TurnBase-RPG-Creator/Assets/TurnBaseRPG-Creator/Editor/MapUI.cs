@@ -52,10 +52,6 @@ public class MapUI : EditorWindow {
     /// </summary>
     private AbstractMap SelectMap1;
     /// <summary>
-    /// Objeto que se selecciono en el modo de seleccion (mapout).
-    /// </summary>
-    public static string SelectMap2 = string.Empty;
-    /// <summary>
     /// Nombre de la scene que esta abierta cuando se abre la ventana.
     /// </summary>
     private string scene;
@@ -110,8 +106,6 @@ public class MapUI : EditorWindow {
         map.Data.Width = EditorGUILayout.IntField("Width", map.Data.Width);
         map.Data.Heigth = EditorGUILayout.IntField("Heigth", map.Data.Heigth);
         GUILayout.Label("Starting position (Player)", EditorStyles.boldLabel);
-        map.Data.startX = EditorGUILayout.IntField("X", map.Data.startX);
-        map.Data.startY = EditorGUILayout.IntField("Y", map.Data.startY);
 
         GUILayout.BeginHorizontal();
         string audioname = map.Data.Background != null ? map.Data.Background.name : string.Empty;
@@ -211,8 +205,6 @@ public class MapUI : EditorWindow {
              SelectMap1.MapPath= selectData.MapPath;
              SelectMap1.Width = selectData.Width;
              SelectMap1.Name = selectData.Name;
-             SelectMap1.startX = selectData.startX;
-             SelectMap1.startY = selectData.startY;
              this.Close();
         }
     }
@@ -226,8 +218,6 @@ public class MapUI : EditorWindow {
         map.updateMap(aux);
         aux.Data.Heigth = map.Data.Heigth;
         aux.Data.Width = map.Data.Width;
-        aux.Data.startX = map.Data.startX;
-        aux.Data.startY = map.Data.startY;
         aux.Name = aux.Data.Name = map.Data.Name;
         aux.Data.Background = map.Data.Background;
     }
@@ -239,8 +229,6 @@ public class MapUI : EditorWindow {
         map.Data.Name = "";
         map.Data.Width = 0;
         map.Data.Heigth = 0;
-        map.Data.startX = 0;
-        map.Data.startY = 0;
         Selected = null;
         err.CheckErrors();
         UpdateValidationVal();

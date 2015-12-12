@@ -124,7 +124,7 @@ public class BattleManager : RPGElement
 
         }
 
-        Audio audio = new Audio();
+        Audio audio = new Audio("BackgroundAudio");
         audio.CreateAudioSource(troop.Background);
         audio.gameobject.transform.parent = battlemap.transform;
         EditorApplication.SaveScene("Assets/Resources/BattleMap/" + troop.Id + ".unity", true);// Guarda la scene.
