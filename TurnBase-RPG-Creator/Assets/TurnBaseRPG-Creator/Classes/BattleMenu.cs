@@ -32,17 +32,27 @@ public class BattleMenu : Menus {
     /// Item seleccionado
     /// </summary>
     private AbstractUsable UsableSelected;
+
     /// <summary>
     /// Codigo de prueba
     /// </summary>
     public void Start() {
+        GameObject battle = GameObject.Find("BattleMenu");
+        battle.transform.parent = GameObject.Find("BattleMap").transform;
+        battle.transform.localPosition = new Vector3(0, 0, 90);
+        battle.transform.localScale = new Vector3(1, 1);
         GameObject.Find("BattleMenu").transform.FindChild("Canvas").GetComponent<Canvas>().worldCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
+        RectTransform canvas = GameObject.Find(Constant.LastSceneLoaded).transform.FindChild("Canvas").gameObject.GetComponent<RectTransform>();
+        Vector2 worldScreen = new Vector2(Camera.main.orthographicSize * 2 / Screen.height * Screen.width, Camera.main.orthographicSize * 2);
+        canvas.sizeDelta = new Vector2(worldScreen.x, worldScreen.y);
         Init(GameObject.FindWithTag("RPG-PLAYER").GetComponent<Player>());
+        GameObject.Find("BattleMap").transform.FindChild("BattleManager").gameObject.GetComponent<BattleManager>().BattleMenu = battle;
     }
     /// <summary>
     /// player que va usar el menu.
     /// </summary>
     Player player;
+    private GameObject Message;
     /// <summary>
     /// 
     /// </summary>
@@ -51,20 +61,21 @@ public class BattleMenu : Menus {
         player = p;
         UsableSelected = new AbstractUsable();
         ItemMenu = new ScrollNavigator<AbstractUsable, AbstractAbility>();
+        SelectionName = "Attack";
         SelectionMenu = new Navigator();
-        ItemMenu.Init(new Vector3(-74, -3), new Vector3(-40, 35),new Vector3(92,-11), -24, 0,4, GameObject.Find("List Panel").transform.FindChild("Arrow2").gameObject, GameObject.Find("List Panel").transform.FindChild("NextArrow").gameObject, GameObject.Find("List Panel").transform.FindChild("PrevArrow").gameObject, GameObject.Find("List Panel"));
+        ItemMenu.Init(new Vector3(-76, 40), new Vector3(-33, 40),new Vector3(92,-11), -24, 0,4, GameObject.Find("List Panel").transform.FindChild("Arrow2").gameObject, GameObject.Find("List Panel").transform.FindChild("NextArrow").gameObject, GameObject.Find("List Panel").transform.FindChild("PrevArrow").gameObject, GameObject.Find("List Panel"));
         GameObject SelectPanel = GameObject.Find("Select Panel");
-        GameObject Arrow3 = new GameObject();
+        Message = GameObject.Find("Message");
         List<GameObject> SelectItem = new List<GameObject>();
+        GameObject.Find("List Panel").transform.FindChild("Quantity").gameObject.SetActive(false);
         for(int i =0;  i < SelectPanel.transform.childCount; i++)
         {
             GameObject ic = SelectPanel.transform.GetChild(i).gameObject;
             if (!ic.name.Contains("Arrow"))
                 SelectItem.Add(ic);
-            else
-                Arrow3 = ic;
+               
         }
-        SelectionMenu.Init(Arrow3, SelectItem);
+        SelectionMenu.Init(GameObject.Find("Arrow3"), SelectItem);
         ItemMenu.HideList();
     }
     /// <summary>
@@ -110,20 +121,33 @@ public class BattleMenu : Menus {
     /// </summary>
     public override void Select()
     {
+        Message.GetComponent<Text>().text = "";
         MenuSelection++;
         if (MenuSelection > 2)
             MenuSelection = 2;
-        if (SelectionName == "Use" && MainSelection == "Items")
+        if (SelectionName == "Ability" || SelectionName == "Items")
         {
-            //GameObject.FindWithTag("RPG-BM").GetComponent<BattleManager>().UseItem(UsableSelected);
+            ItemMenu.OnFirst();
+        }
+        else if (SelectionName == "Use" && MainSelection == "Items")
+        {
+            
+            GameObject.Find("BattleManager").GetComponent<BattleManager>().UseItem(UsableSelected);
             MenuSelection = 0;
             ItemMenu.HideList();
         }
-        if (SelectionName == "Use" && MainSelection == "Ability")
+        else if (SelectionName == "Use" && MainSelection == "Ability")
         {
-           // GameObject.FindWithTag("RPG-BM").GetComponent<BattleManager>().UseAbility(AbilitySelected);
-            MenuSelection = 0;
-            ItemMenu.HideList();
+            if (player.GetComponent<Player>().Data.MP < AbilitySelected.MPCost)
+            {
+                Message.GetComponent<Text>().text = "NO MANA!!!!";
+            }
+            else
+            {
+                GameObject.Find("BattleManager").GetComponent<BattleManager>().UseAbility(AbilitySelected);
+                MenuSelection = 0;
+                ItemMenu.HideList();
+            }
         }
         else if (SelectionName == "Cancel")
         {
@@ -131,7 +155,7 @@ public class BattleMenu : Menus {
         }
         else if (SelectionName == "Attack") 
         {
-           // GameObject.FindWithTag("RPG-BM").GetComponent<BattleManager>().Attack();
+            GameObject.Find("BattleManager").GetComponent<BattleManager>().Attack();
             MenuSelection = 0;
         }
         else if (SelectionName == "Run")
@@ -139,6 +163,8 @@ public class BattleMenu : Menus {
             GameObject.Find("BattleManager").GetComponent<BattleManager>().Run();
             MenuSelection = 0;
         }
+        if (MenuSelection == 2)
+            SelectionName = "Use";
     }
     /// <summary>
     /// 
@@ -153,6 +179,7 @@ public class BattleMenu : Menus {
                 MainSelection = name;
                 if (name == "Items")
                 {
+                    GameObject.Find("List Panel").transform.FindChild("Quantity").gameObject.SetActive(true);
                     ItemMenu.HideList();
                     ItemMenu.setList(player.Items.GetUsables());
                     ItemMenu.DisplayList();
@@ -163,6 +190,7 @@ public class BattleMenu : Menus {
                 }
                 else if (name == "Ability")
                 {
+                    GameObject.Find("List Panel").transform.FindChild("Quantity").gameObject.SetActive(false);
                     ItemMenu.HideList();
                     ItemMenu.setList(player.Data.Job.Abilities);
                     ItemMenu.DisplayList();

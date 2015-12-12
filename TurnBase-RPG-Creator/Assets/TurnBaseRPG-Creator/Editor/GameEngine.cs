@@ -10,7 +10,11 @@ public class GameEngine : EditorWindow {
 	public static RPGInspectorUI inspectorRpg = EditorWindow.GetWindow<RPGInspectorUI> ();
     static GameEngine() {
     }
-
+    [MenuItem("RPG-Creator/Anchor Around Object")]
+    static void uGUIAnchorAroundObject()
+    {
+        Constant.SetAnchorPoint(Selection.activeGameObject);
+    }
     /// <summary>
     /// Presenta la ventana de crear un nuevo mapa
     /// </summary>

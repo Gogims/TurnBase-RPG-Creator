@@ -34,22 +34,12 @@ public class AbstractJob
     public Formula Luck;
 
     public Formula XP;
-
+    
     public List<AbstractAbility> Abilities;
 
     public AbstractJob()
     {
         Abilities = new List<AbstractAbility>();
         AbstractAbility aux = new AbstractAbility();
-        aux.ApplyStatePorcentage = 2;
-        aux.Ability = "Fire";
-        Abilities.Add(aux);
-        Abilities.Add(aux);
-        Abilities.Add(aux);
-        Abilities.Add(aux);
-        Abilities.Add(aux);
-        Abilities.Add(aux);
-        Abilities.Add(aux);
-        Abilities.Add(aux);
     }
 }

@@ -3,16 +3,39 @@ using UnityEditor;
 using System.Collections.Generic;
 using System.Linq;
 using System;
+using UnityEngine.UI;
 
 public class BattleManager : RPGElement
 {
-    List<Enemy> Enemies;
-    AbstractPlayer Player;
+    List<GameObject> Enemies;
+    Player Player;
+    public GameObject BattleMenu;
+    /// <summary>
+    /// Selector para seleccionar el enemigo
+    /// </summary>
+    GameObject selector;
+    /// <summary>
+    /// habilidad seleccionada en el battleMenu
+    /// </summary>
+    AbstractAbility AbilityToUse;
+    /// <summary>
+    /// Item seleccionado en el battleMenu
+    /// </summary>
+    AbstractUsable UsableToUse;
     /// <summary>
     /// Actor, True = player
     /// </summary>
     List<Tuple<AbstractActor, bool>> ActorsOrdered;
-
+    Slider Hp;
+    Slider Mp;
+    Text CantHp;
+    Text CantMp;
+    enum Actions { 
+        Attack,
+        Ability,
+        Usable
+    }
+    Actions ActionSelected;
     enum BattleStateMachine
     {
         PLAYERTURN,
@@ -20,15 +43,15 @@ public class BattleManager : RPGElement
         WIN,
         LOSE
     };
-
     BattleStateMachine BattleState;
+    private bool SELECTIONMODE;
+    private int enemySelect;
 
-    public BattleManager(List<Enemy> enemies, AbstractPlayer player)
+    public BattleManager(List<GameObject> enemies, Player player)
     {
         Enemies = enemies;
         Player = player;
     }
-
     void Start()
     {
         Constant.LastSceneLoaded = "BattleMenu";
@@ -36,12 +59,34 @@ public class BattleManager : RPGElement
         //ActorsOrdered = OrderActors(Player, Enemies);
         ResizeSpriteToScreen(GameObject.Find("Top"));
         ResizeSpriteToScreen(GameObject.Find("Bottom"));
-
+        selector = GameObject.Find("BattleMap").transform.FindChild("Selector").gameObject;
+        Vector2 worldScreen = new Vector2(Camera.main.orthographicSize * 2 / Screen.height * Screen.width, Camera.main.orthographicSize * 2);
+       
+        selector.SetActive(false);
+        Enemies = new List<GameObject>();
+        Player = GameObject.FindWithTag("RPG-PLAYER").gameObject.GetComponent<Player>();
         foreach (var enemy in GameObject.FindGameObjectsWithTag("RPG-ENEMY"))
-        {            
-
+        {
+            Enemies.Add(enemy);
         }
+        
+         GameObject canvasBar = GameObject.Find("BattleMap").transform.FindChild("CanvasBars").gameObject;
+         setCanvasBar(canvasBar);
+         
 
+    }
+
+    private void setCanvasBar(GameObject canvasBar)
+    {
+        Vector2 worldScreen = new Vector2(Camera.main.orthographicSize * 2 / Screen.height * Screen.width, Camera.main.orthographicSize * 2);
+        canvasBar.transform.position = new Vector3(-worldScreen.x / 2 + canvasBar.GetComponent<RectTransform>().rect.width / 2, worldScreen.y / 2 - canvasBar.GetComponent<RectTransform>().rect.height / 2);
+        Hp = canvasBar.transform.FindChild("Panel").gameObject.transform.FindChild("HPSlider").gameObject.GetComponent<Slider>();
+        Mp = canvasBar.transform.FindChild("Panel").gameObject.transform.FindChild("MPSlider").gameObject.GetComponent<Slider>();
+        CantHp = canvasBar.transform.FindChild("Panel").gameObject.transform.FindChild("HPCant").gameObject.GetComponent<Text>();
+        CantMp = canvasBar.transform.FindChild("Panel").gameObject.transform.FindChild("MPCant").gameObject.GetComponent<Text>();
+        canvasBar.transform.FindChild("Panel").gameObject.transform.FindChild("LevelVal").gameObject.GetComponent<Text>().text = Player.Data.Level.ToString();
+        canvasBar.transform.FindChild("Panel").gameObject.transform.FindChild("PlayerName").gameObject.GetComponent<Text>().text = Player.Data.ActorName;
+        UpdateBars();
     }
 
     /// <summary>
@@ -87,20 +132,169 @@ public class BattleManager : RPGElement
 
     void Update()
     {
-        //switch (BattleState)
-        //{
-        //    case BattleStateMachine.PLAYERTURN:
-        //        Player.RemoveOnTurnState();
-        //        break;
-        //    case BattleStateMachine.ENEMYTURN:
-        //        break;
-        //    case BattleStateMachine.WIN:
-        //        break;
-        //    case BattleStateMachine.LOSE:
-        //        break;
-        //}
+        if (Enemies.Count <= 0)
+            BattleState = BattleStateMachine.WIN;
+        if (Player.Data.HP <= 0)
+            BattleState = BattleStateMachine.LOSE;
+        switch (BattleState)
+        {
+            case BattleStateMachine.PLAYERTURN:
+                if (SELECTIONMODE)
+                {
+                    
+                    if (ProxyInput.GetInstance().Up()){
+                        if (enemySelect + 1 >= Enemies.Count) break;
+                        enemySelect++;
+                        PositionSelector(enemySelect);
+                    }
+                    else if (ProxyInput.GetInstance().Down()) {
+                        if (enemySelect -1 < 0 ) break;
+                        enemySelect--;
+                        PositionSelector(enemySelect);
+                    }
+                    else if (ProxyInput.GetInstance().A() || (UsableToUse != null && UsableToUse.AreaOfEffect == Constant.AOE.Self)){
+
+                    switch (ActionSelected)
+                        {
+                            case Actions.Attack:
+                                 AbstractActor attacker = Player.Data;
+                                 AbstractActor defender = Enemies[enemySelect].GetComponent<Enemy>().BattleEnemy.Data;
+                                 int damage = NormalFight(ref attacker, ref defender, 0);
+                                 ShowDamage(damage);
+                                 BattleState = BattleStateMachine.ENEMYTURN;
+                                 break;
+                            case Actions.Ability:
+                                 AbstractActor attacker2 = Player.Data;
+                                 AbstractActor defender2 = Enemies[enemySelect].GetComponent<Enemy>().BattleEnemy.Data;
+                                 int damage2 = AbilityFight(ref attacker2, ref defender2,  AbilityToUse);
+                                 ShowDamage(damage2);
+                                 BattleState = BattleStateMachine.ENEMYTURN;
+                                break;
+                            case Actions.Usable:
+                                AbstractActor actor =null;
+                                int val=0;
+                                if (UsableToUse.AreaOfEffect == Constant.AOE.OneEnemy)
+                                {
+                                    actor = Enemies[enemySelect].GetComponent<Enemy>().BattleEnemy.Data;
+
+                                }
+                                else {
+                                    actor = Player.Data;
+                                }
+                                val = ItemFigth(ref actor);
+                                if (UsableToUse.Attribute == Constant.Attribute.HP && UsableToUse.AreaOfEffect == Constant.AOE.OneEnemy)
+                                    ShowDamage(val);
+                                else if (UsableToUse.Attribute == Constant.Attribute.HP && UsableToUse.AreaOfEffect == Constant.AOE.Self)
+                                {
+                                    ShowHeal(val);
+                                }
+                                BattleState = BattleStateMachine.ENEMYTURN;
+                                SELECTIONMODE = false;
+                                UpdateBars();
+                                
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    else if (ProxyInput.GetInstance().B())
+                    {
+                        deactivateSelector();
+                        BattleMenu.SetActive(true);
+                        SELECTIONMODE = false;
+                    }
+                }
+                //Player.RemoveOnTurnState();
+                break;
+            case BattleStateMachine.ENEMYTURN:
+                BattleMenu.SetActive(true);
+                BattleState = BattleStateMachine.PLAYERTURN;
+                SELECTIONMODE = false;
+                UpdateBars();
+                break;
+            case BattleStateMachine.WIN:
+                Destroy(GameObject.Find("BattleMap"));
+                Destroy(GameObject.Find("BattleMenu"));
+                Constant.ActiveMap.SetActive(true);
+                break;
+            case BattleStateMachine.LOSE:
+                Destroy(GameObject.Find("BattleMap"));
+                Destroy(GameObject.Find("BattleMenu"));
+                Constant.ActiveMap.SetActive(true);
+                break;
+        }
+    }
+    void UpdateBars() {
+        Hp.value = (float)((float)Player.Data.HP / (float)Player.Data.Stats.MaxHP);
+        Mp.value = (float)((float)Player.Data.MP / (float)Player.Data.Stats.MaxMP);
+        CantHp.text = Player.Data.HP.ToString() + "/" + Player.Data.Stats.MaxHP.ToString();
+        CantMp.text = Player.Data.MP.ToString() + "/" + Player.Data.Stats.MaxMP.ToString();
+    }
+    private void ShowHeal(int val)
+    {
+        Debug.Log(val);
+    }
+    /// <summary>
+    /// Usa el item seleccionado en el battleMenu
+    /// </summary>
+    /// <param name="actor">Actor que se le va aplicar el item</param>
+    /// <returns>retorna la cantida de vida disminuida o aumentada por el item </returns>
+    private int ItemFigth(ref AbstractActor actor)
+    {
+        Player.Items.DeleteItem(UsableToUse.ItemName);
+        switch (UsableToUse.Attribute)
+        {
+            case Constant.Attribute.None:
+                return 0;
+            case Constant.Attribute.HP:
+                actor.HP += UsableToUse.Power;
+                if (actor.HP > actor.Stats.MaxHP)
+                    actor.HP = actor.Stats.MaxHP;
+                if (actor.HP < actor.Stats.MaxHP)
+                    actor.HP = 0;
+                return UsableToUse.Power;
+            case Constant.Attribute.MP:
+                actor.MP += UsableToUse.Power;
+                if (actor.MP > actor.Stats.MaxHP)
+                    actor.MP = actor.Stats.MaxMP;
+                if (actor.MP < actor.Stats.MaxHP)
+                    actor.MP = 0;
+                break;
+            case Constant.Attribute.Attack:
+                actor.Stats.Attack += UsableToUse.Power;
+                break;
+            case Constant.Attribute.Defense:
+                actor.Stats.Defense += UsableToUse.Power;
+                break;
+            case Constant.Attribute.Magic:
+                actor.Stats.Magic += UsableToUse.Power;
+                break;
+            case Constant.Attribute.MagicDefense:
+                actor.Stats.MagicDefense += UsableToUse.Power;
+                break;
+            case Constant.Attribute.Agility:
+                actor.Stats.Agility += UsableToUse.Power;
+                break;
+            case Constant.Attribute.Luck:
+                actor.Stats.Luck += UsableToUse.Power;
+                break;
+            case Constant.Attribute.MaxHP:
+                actor.Stats.MaxHP += UsableToUse.Power;
+                break;
+            case Constant.Attribute.MaxMP:
+                actor.Stats.MaxMP += UsableToUse.Power;
+                break;
+            default:
+                break;
+        }
+
+        return 0;
     }
 
+    private void ShowDamage(int damage)
+    {
+        Debug.Log(damage);
+    }
     private void ResizeSpriteToScreen(GameObject background)
     {
         var sr = background.GetComponent<SpriteRenderer>();
@@ -114,6 +308,7 @@ public class BattleManager : RPGElement
         Vector2 worldScreen = new Vector2(Camera.main.orthographicSize * 2 / Screen.height * Screen.width, Camera.main.orthographicSize * 2);
 
         background.transform.localScale = new Vector3(worldScreen.x / width, worldScreen.y / height, 1);
+
     }
 
     private List<Tuple<AbstractActor, bool>> OrderActors(AbstractPlayer p, List<BattleEnemy> enemies)
@@ -135,8 +330,9 @@ public class BattleManager : RPGElement
     }
 
 
-    private void AbilityFight(ref AbstractActor Attacker, ref AbstractActor Defender, AbstractAbility ability)
+    private int AbilityFight(ref AbstractActor Attacker, ref AbstractActor Defender, AbstractAbility ability)
     {
+        Attacker.MP -= ability.MPCost;
         if (ability.State.State != string.Empty)
         {
             if (ability.Type == Constant.OffenseDefense.Offensive)
@@ -151,35 +347,42 @@ public class BattleManager : RPGElement
 
         if (ability.AttackType == Constant.AttackType.MagicAttack)
         {
-            MagicFight(ref Attacker, ref Defender, ability.AttackPower);
+           return  MagicFight(ref Attacker, ref Defender, ability.AttackPower);
         }
         else
         {
-            NormalFight(ref Attacker, ref Defender, ability.AttackPower);
+            return NormalFight(ref Attacker, ref Defender, ability.AttackPower);
         }        
     }
 
-    private void MagicFight(ref AbstractActor Attacker, ref AbstractActor Defender, int boost)
+    private int MagicFight(ref AbstractActor Attacker, ref AbstractActor Defender, int boost)
     {
+        
         // Calculando el Ataque
         int MagicDamage = Attacker.TotalMagicDamage() + boost;
-
+        
         // Calculando la defensa
         int MagicDefense = Defender.TotalMagicDefense();
 
         int damage = MagicDamage - MagicDefense;
-
-        Defender.RemoveOnDamageState();
+        
+        //Defender.RemoveOnDamageState();
+        
 
         if (damage > 0)
         {
             Defender.HP -= damage;
-
+            if (Defender.HP <= 0 )
+            {
+                Destroy(Enemies[enemySelect]);
+                Enemies.RemoveAt(enemySelect);
+            }
             //Check if dead (todo)
         }
+        return damage;
     }
 
-    private void NormalFight(ref AbstractActor Attacker, ref AbstractActor Defender, int boost)
+    private int NormalFight(ref AbstractActor Attacker, ref AbstractActor Defender, int boost)
     {
         int damageMultiplier = 1;
 
@@ -208,7 +411,7 @@ public class BattleManager : RPGElement
         ApplyState(Defender.Ring.State, Defender.Ring.PercentageState, ref Attacker);
         ApplyState(Defender.Necklace.State, Defender.Necklace.PercentageState, ref Attacker);
 
-        Defender.RemoveOnDamageState();
+        //Defender.RemoveOnDamageState();
 
         // Calculando el daño total
         int damage = AttackDamage - defense;
@@ -216,9 +419,14 @@ public class BattleManager : RPGElement
         if (damage > 0)
         {
             Defender.HP -= damage;
-
+            if (Defender.HP < 0)
+            {
+                Destroy(Enemies[enemySelect]);
+                Enemies.RemoveAt(enemySelect);
+            }
             //Check if dead (todo)
         }
+        return damage;
     }     
 
     /// <summary>
@@ -276,15 +484,42 @@ public class BattleManager : RPGElement
 
         return new Vector2(gobj.transform.localScale.x* renderer.sprite.textureRect.width, gobj.transform.localScale.y * renderer.sprite.textureRect.height);
     }
-
-    internal void UseItem(AbstractUsable UsableSelected)
+    private void PositionSelector(int index){
+        selector.transform.position = new Vector3(Enemies[index].transform.position.x, Enemies[index].transform.position.y + Enemies[index].GetComponent<SpriteRenderer>().sprite.rect.height);
+    }
+    private void ActiveSelector() {
+        BattleMenu.SetActive(false);
+        selector.SetActive(true);
+        PositionSelector(0);
+        enemySelect = 0;
+    }
+    private void deactivateSelector() {
+        selector.SetActive(false);
+        PositionSelector(0);
+        enemySelect = 0;
+    }
+    public void UseItem(AbstractUsable UsableSelected)
     {
-        throw new NotImplementedException();
+        ActionSelected = Actions.Usable;
+        SELECTIONMODE = true;
+        UsableToUse = UsableSelected;
+        if (UsableToUse.AreaOfEffect == Constant.AOE.OneEnemy)
+            ActiveSelector();
+       
     }
 
-    internal void Attack()
+    public void Attack()
     {
-        throw new NotImplementedException();
+        ActionSelected = Actions.Attack;
+        ActiveSelector();
+        SELECTIONMODE = true;
+    }
+    public void UseAbility(AbstractAbility AbilitySelected)
+    {
+        ActionSelected = Actions.Ability;
+        SELECTIONMODE = true;
+        ActiveSelector();
+        AbilityToUse = AbilitySelected;
     }
 
     public void Run()
@@ -294,8 +529,4 @@ public class BattleManager : RPGElement
         Constant.ActiveMap.SetActive(true);
     }
 
-    internal void UseAbility(AbstractAbility AbilitySelected)
-    {
-        throw new NotImplementedException();
-    }
 }

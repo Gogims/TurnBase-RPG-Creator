@@ -73,6 +73,27 @@ public class Inventory {
         }
         return returnList;
     }
+    public void DeleteItem(string name)
+    {
+        if (Armors.ContainsKey(name))
+        {
+            Armors[name].Second--;
+            if (Armors[name].Second <= 0)
+                Armors.Remove(name);
+        }
+        else if (Weapons.ContainsKey(name))
+        {
+            Weapons[name].Second--;
+            if (Weapons[name].Second <= 0)
+                Weapons.Remove(name);
+        }
+        if (Usables.ContainsKey(name))
+        {
+            Usables[name].Second--;
+            if (Usables[name].Second <= 0)
+                Usables.Remove(name);
+        }
+    }
     /// <summary>
     /// Inserta un usable en el inventorio
     /// </summary>

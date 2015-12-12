@@ -6,7 +6,7 @@ using System.Linq;
 public class Actor : RPGElement
 {
     private const float speed =1f;
-
+    
     protected virtual void Start()
     {
 
@@ -52,6 +52,7 @@ public class Actor : RPGElement
 [Serializable]
 public class AbstractActor
 {
+
     /// <summary>
     /// Atributos actuales del actor
     /// </summary>
@@ -125,6 +126,7 @@ public class AbstractActor
 
     public AbstractActor()
     {
+        RemoveStates = new Dictionary<string, Dictionary<string, AbstractState>>();
         Stats = new Attribute();
         MainHand = new AbstractWeapon();
         Helmet = new AbstractArmor();

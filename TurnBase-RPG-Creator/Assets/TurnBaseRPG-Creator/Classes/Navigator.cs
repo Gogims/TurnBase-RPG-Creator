@@ -19,25 +19,30 @@ public class Navigator : AbstractNavigator{
         Options = new List<GameObject>();
         Arrow = arrow;
         Options = options;
+        selected = 0;
     }
     /// <summary>
     /// Funcion para actualizar el estado del selector
     /// </summary>
     public override void update()
     {
-
-        if (delay < 15)
+        if (ProxyInput.GetInstance().A())
         {
-            delay++;
-            return;
+            Options[selected].GetComponent<MenuOption>().OnSelect();
         }
         if (ProxyInput.GetInstance().B())
         {
             delay = 0;
             Options[selected].GetComponent<MenuOption>().UnSelect();
-           
+
             return;
         }
+        //if (delay < 15)
+        //{
+        //    delay++;
+        //    return;
+        //}
+
         if (ProxyInput.GetInstance().Down())
         {
             if (selected == Options.Count - 1)
@@ -69,10 +74,6 @@ public class Navigator : AbstractNavigator{
                 Options[selected].GetComponent<MenuOption>().On(Options[selected].GetComponent<Text>().text);
             }
             Arrow.transform.position = new Vector3(Arrow.transform.position.x, Options[selected].gameObject.transform.position.y);
-        }
-        else if (ProxyInput.GetInstance().A())
-        {
-            Options[selected].GetComponent<MenuOption>().OnSelect();
         }
 
         delay = 0;

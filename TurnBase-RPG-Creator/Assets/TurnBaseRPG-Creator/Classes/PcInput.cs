@@ -5,19 +5,19 @@ public class PcInput {
 
 	//Retorna true si el boton A es presionado de lo contrario retorna false.
 	public  static bool A(){
-		return Input.GetKey ("z");
+		return Input.GetKeyUp ("z");
 	}	
 	//Retorna true si el boton B es presionado de lo contrario retorna false.
 	public static bool B(){
-		return Input.GetKey ("x");
+        return Input.GetKeyUp("x");
 	}
 	//Retorna true si el boton de moverse hacia arriba es presionado de lo contrario retorna false.
 	public static bool Up(){
-		return Input.GetKey ("up");
+		return Input.GetKeyUp ("up");
 	}
 	//Retorna true si el boton de moverse hacia abajo es presionado de lo contrario retorna false.
 	public static bool Down () {
-		return Input.GetKey ("down");
+		return Input.GetKeyUp ("down");
 	}
 	//Retorna true si el boton de moverse hacia la derecha es presionado de lo contrario retorna false.
 	public static bool Right (){
@@ -29,11 +29,11 @@ public class PcInput {
 	}
 	//Retorna true si el boton de pausa es presionado de lo contrario retorna false.
 	public static bool Pause(){
-		return Input.GetKey ("enter");
+		return Input.GetKeyUp ("enter");
 	}
 	//Retorna true si el boton de select es presionado de lo contrario retorna false.
 	public static bool Select(){
-		return Input.GetKey ("space");
+		return Input.GetKeyUp ("space");
 	}
 
     //Retorna true si el boton A es soltado.

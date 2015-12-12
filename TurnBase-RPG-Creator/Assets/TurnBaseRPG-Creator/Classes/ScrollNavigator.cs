@@ -106,6 +106,10 @@ public class ScrollNavigator<T,U> : AbstractNavigator
     /// </summary>
     private int ElementCant = 0;
     /// <summary>
+    /// Font de la letra
+    /// </summary>
+    private Font font;
+    /// <summary>
     /// Incializa los valores de la clase
     /// </summary>
     /// <param name="position">posicion donde va iniciar el texto</param>
@@ -120,6 +124,8 @@ public class ScrollNavigator<T,U> : AbstractNavigator
     /// <param name="panel">Panel padre de la lista</param>
     public override void Init(Vector3 position, Vector3 positionImage,Vector3 positionCant, int difY, int difX, int maxItem, GameObject arrow, GameObject nextArrow, GameObject prevArrow,GameObject panel)
     {
+        
+        font = (Font)Resources.Load("fonts/Vecna");
         Options = new List<KeyValuePair<GameObject,Tuple<GameObject,GameObject>>>();
         PositionImage = positionImage;
         Position = position;
@@ -152,12 +158,16 @@ public class ScrollNavigator<T,U> : AbstractNavigator
     {
         GameObject Obj = new GameObject();
         Text x = Obj.AddComponent<Text>();
-        x.font = Item.GetComponent<Text>().font;
+        x.font = font;
         x.fontSize = 20;
         x.supportRichText = true;
         x.horizontalOverflow = HorizontalWrapMode.Overflow;
         x.verticalOverflow = VerticalWrapMode.Overflow;
         Obj.AddComponent<MenuOptionAction>();
+        ContentSizeFitter csf = Obj.AddComponent<ContentSizeFitter>();
+        csf.horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
+        csf.verticalFit = ContentSizeFitter.FitMode.PreferredSize; 
+
         return Obj;
     }
     /// <summary>
@@ -276,17 +286,22 @@ public class ScrollNavigator<T,U> : AbstractNavigator
     /// </summary>
     public override void update()
     {
-        if (delay < 15)
-        {
-            delay++;
-            return;
-        }
-        if (!Arrow.activeSelf) return;
         if (ProxyInput.GetInstance().B())
         {
             Options[selected].Key.GetComponent<MenuOption>().UnSelect();
             return;
         }
+        else if (ProxyInput.GetInstance().A())
+        {
+            Options[selected].Key.GetComponent<MenuOption>().OnSelect();
+        }
+        //if (delay < 15)
+        //{
+        //    delay++;
+        //    return;
+        //}
+        if (!Arrow.activeSelf) return;
+       
         if (ProxyInput.GetInstance().Down())
         {
             if (selected + ScrollCant < ElementCant - 1)
@@ -342,10 +357,7 @@ public class ScrollNavigator<T,U> : AbstractNavigator
             }
             Arrow.transform.position = new Vector3(Arrow.transform.position.x, Options[selected].Value.First.gameObject.transform.position.y);
         }
-        else if (ProxyInput.GetInstance().A())
-        {
-            Options[selected].Key.GetComponent<MenuOption>().OnSelect();
-        }
+        
         delay = 0;
 
     }
@@ -370,12 +382,21 @@ public class ScrollNavigator<T,U> : AbstractNavigator
             ItemImage.GetComponent<Image>().sprite = Ability[i].Image;        
         }
         GameObject ay = Instantiate(ItemImage);
-        Text.transform.SetParent(Panel.transform);
+        Text.transform.parent = Panel.transform;
+        Text.transform.localPosition = Position;
+        Text.transform.localScale = new Vector3(1, 1);
+        Constant.SetAnchorPoint(Text);
         ay.transform.SetParent(Panel.transform);
         Cant.transform.SetParent(Panel.transform);
-        Text.transform.localPosition = Position;
-        ay.transform.localPosition = ImagePosition;
         Cant.transform.localPosition = PositionCant;
+        Cant.transform.localScale = new Vector3(1, 1);
+        Constant.SetAnchorPoint(Cant);
+        ay.transform.parent = Panel.transform;
+        ay.transform.localPosition = ImagePosition;
+        ay.transform.localScale = new Vector3(1, 1);
+        //Constant.SetAnchorPoint(ay);
+        
+        
         KeyValuePair<GameObject, Tuple<GameObject, GameObject>> aux = new KeyValuePair<GameObject, Tuple<GameObject, GameObject>>(Text, new Tuple<GameObject, GameObject>(ay, Cant));
         return aux;
     }

@@ -184,7 +184,19 @@ public class MapObjectsUI : EditorWindow {
                         break;
                 }
             }
-            pickupName = pickup.ItemArmor.ItemName;
+            switch (itemType)
+            {
+                case Constant.ItemType.Armor:
+                    pickupName = pickup.ItemArmor.ItemName;
+                    break;
+                case Constant.ItemType.Usable:
+                    pickupName = pickup.ItemUsable.ItemName;
+                    break;
+                case Constant.ItemType.Weapon:
+                    pickupName = pickup.ItemWeapon.ItemName;
+                    break;
+            }
+           
             GUI.enabled = false;
             GUILayout.TextField(pickupName);
             GUI.enabled = true;

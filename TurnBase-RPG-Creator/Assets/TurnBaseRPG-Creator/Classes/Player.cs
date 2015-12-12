@@ -4,13 +4,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : Actor
-{
+{    /// <summary>
+    /// Inventorio del actor 
+    /// </summary>
+    public Inventory Items = new Inventory();
     void OnLevelWasLoaded(int level)
     {
         Destroy(GameObject.Find("PLAYER(Clone)"));
 
     }
-    public Inventory Items = new Inventory();
+    
     /// <summary>
     /// Listado de las animaciones para caminar hacia abajo
     /// </summary>
@@ -56,6 +59,8 @@ public class Player : Actor
         }
         if (ProxyInput.GetInstance().Select() && !Constant.start)
         {
+            Constant.ActiveMap = GameObject.Find("Map");
+            Constant.ActiveMap.SetActive(false);
             Constant.LastSceneLoaded = "StartMenu";
             Application.LoadLevelAdditive("StartMenu");
             Constant.start = true;

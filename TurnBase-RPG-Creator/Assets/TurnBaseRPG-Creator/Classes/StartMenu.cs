@@ -33,6 +33,7 @@ public class StartMenu : Menus {
         Destroy(GameObject.Find("StartMenu"));
         Constant.LastSceneLoaded = null;
         Constant.start = false;
+        Constant.ActiveMap.SetActive(true);
     }
     public override void Select()
     {
