@@ -111,12 +111,12 @@ public class Player : Actor
             p.SetActive(true);
             Constant.LastSceneLoaded = coll.gameObject.GetComponent<Troop>().Id;
             Application.LoadLevelAdditive(Constant.LastSceneLoaded);
-            
         }
         if (coll.gameObject.tag == "RPG-MAPOBJECT")
-        {
+        {   
             Door door = coll.gameObject.GetComponent<Door>();
-            if (door != null && door.InMap != null)
+
+            if (door != null && Constant.checkDoor(door.InMap))
             {
                 string path = door.InMap.MapPath;
                 GameObject p = GameObject.FindWithTag("RPG-PLAYER");

@@ -227,4 +227,17 @@ public class Constant{
     public static bool start;
     public static string LastSceneLoaded;
     public static GameObject ActiveMap;
+
+    public static bool checkDoor(AbstractMap door)
+    {
+        string name = door.MapPath.Substring(door.MapPath.LastIndexOf("/")+1).Replace(".unity", "");
+        Object[] obj = Resources.LoadAll("Maps", typeof(GameObject));
+        foreach (var i in obj )
+        {
+             Map iobj = (i as GameObject).GetComponent<Map>();
+             if (iobj.Id == name)
+                 return true;
+        }
+        return false;
+    }
 }
