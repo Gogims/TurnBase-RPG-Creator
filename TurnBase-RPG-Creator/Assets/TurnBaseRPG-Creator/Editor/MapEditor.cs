@@ -12,12 +12,15 @@ public class MapEditor {
 	static Object DarkFloor;
 	static Object LightFloor;
     static bool deleting = false;
-	static MapEditor () {
-	
+    public static bool selection;
+
+	static MapEditor ()
+    {	
 		SceneView.onSceneGUIDelegate += OnSceneEvents;
 		DarkFloor =  AssetDatabase.LoadAssetAtPath(@"Assets/Resources/Tile/DefaultTile1.prefab", typeof(GameObject));
         LightFloor = AssetDatabase.LoadAssetAtPath(@"Assets/Resources/Tile/DefaultTile2.prefab", typeof(GameObject));
 	}
+
 	/// <summary>
 	/// Funcion que se llama cada vez que ocurre algun evento en la escena actual.
 	/// </summary>
@@ -27,14 +30,37 @@ public class MapEditor {
 		Event e = Event.current;
 
 		//Revisa si el objeto seleccionado es nulo.
-		if (Selection.activeGameObject != null) {
+		if (Selection.activeGameObject != null && !selection)
+        {
             ChangeSelectedObject (Selection.activeGameObject);
 		}
         
         // si el click izquierdo es precionado y el objeto seleccionado es diferente de nulo inserta un objeto al mapa. 
-        if (EventType.MouseUp == e.type && e.button == 0 && selectedObject != null && (selectedObject.tag == "RPG-MAPOBJECT" || selectedObject.tag == "RPG-PLAYER" || selectedObject.tag == "RPG-ENEMY"))
+        if (EventType.MouseUp == e.type && e.button == 0)
         {
-             DropObject();
+            if (!selection && selectedObject != null && (selectedObject.tag == "RPG-MAPOBJECT" || selectedObject.tag == "RPG-PLAYER" || selectedObject.tag == "RPG-ENEMY"))
+            {
+                DropObject();
+            }
+            else if(selection && Selection.activeGameObject.activeInHierarchy)
+            {
+                GameObject gobj = Selection.activeGameObject;
+
+                if (gobj.transform.parent != null && gobj.transform.parent.gameObject.name != "Map")
+                {
+                    gobj = gobj.transform.parent.gameObject;
+                }
+
+                var doorPosition = gobj.transform.position;
+                EditorApplication.OpenScene(RPGInspectorUI.scenePath);
+                RPGInspectorUI.scenePath = string.Empty;
+                gobj = GameObject.FindGameObjectWithTag("RPG-SELECTED");
+                gobj.tag = "RPG-MAPOBJECT";
+                var door = gobj.GetComponent<Door>();
+                door.X = doorPosition.x;
+                door.Y = doorPosition.y;
+                selection = false;
+            }
 		} 
         
         // Si la tecla del es precionada borra los objetos seleccionados. 
@@ -113,12 +139,7 @@ public class MapEditor {
                 Object.DestroyImmediate(AreaTroopSelector);
             }
 
-            if (Selected.GetComponent<Door>() != null)
-            {
-                selectedObject = Selected;
-                GameEngine.inspectorRpg.Focus();
-            }
-            else if (Selected.tag == "RPG-MAPOBJECT" && !Selected.activeInHierarchy )
+            if ((Selected.tag == "RPG-MAPOBJECT" && !Selected.activeInHierarchy) || Selected.GetComponent<Door>() != null)
             {
                 selectedObject = Selected;
                 GameEngine.inspectorRpg.Focus();                

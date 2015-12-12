@@ -9,6 +9,7 @@ public class RPGInspectorUI : EditorWindow {
     private Sprite defaultText;
 	const int width = Constant.INSPECTOR_IMAGE_WIDTH;
 	const int height = Constant.INSPECTOR_IMAGE_HEIGTH;
+    public static string scenePath = string.Empty;    
 
     /// <summary>
     /// Si al elegir un enemigo se debe seleccionar el área donde se moverá
@@ -23,7 +24,7 @@ public class RPGInspectorUI : EditorWindow {
 
 	void OnGUI() 
 	{
-        GUILayout.BeginArea(new Rect(0, 0, Constant.INSPECTOR_IMAGE_WIDTH + 50, Constant.INSPECTOR_IMAGE_HEIGTH + 75));
+        GUILayout.BeginArea(new Rect(20, 20, Constant.INSPECTOR_IMAGE_WIDTH + 50, Constant.INSPECTOR_IMAGE_HEIGTH + 75));
 
         string tag = "";
         string name = "";
@@ -33,20 +34,20 @@ public class RPGInspectorUI : EditorWindow {
 		
 		if (MapEditor.selectedObject != null && MapEditor.selectedObject.tag != "RPG-CREATOR") {
             texture = MapEditor.selectedObject.GetComponent<RPGElement>().Icon;
-			tag = MapEditor.selectedObject.tag;
+			tag = " (" + MapEditor.selectedObject.tag + ")";
             name = MapEditor.selectedObject.GetComponent<RPGElement>().Name;
 		}
         else {
             texture = defaultText;
-		}        
+		}
 
-		EditorGUILayout.PrefixLabel(tag);
-		EditorGUI.PrefixLabel(new Rect(50,45, 500,137),0, new GUIContent(name));
-        GUI.DrawTextureWithTexCoords(new Rect(50, 55, width, height), texture.texture, Constant.GetTextureCoordinate(texture));
+        EditorGUILayout.LabelField(name);
+        EditorGUILayout.LabelField(tag);
+        GUI.DrawTextureWithTexCoords(new Rect(0, 55, width, height), texture.texture, Constant.GetTextureCoordinate(texture));
 
         GUILayout.EndArea();
 
-        GUILayout.BeginArea(new Rect(0, Constant.INSPECTOR_IMAGE_WIDTH + 75, Constant.INSPECTOR_IMAGE_WIDTH + 50, 100));
+        GUILayout.BeginArea(new Rect(20, Constant.INSPECTOR_IMAGE_HEIGTH + 95, Constant.INSPECTOR_IMAGE_WIDTH + 50, 140));
 
         // Area para dibujar si el gameobject no vino vacío
         if (MapEditor.selectedObject != null)
@@ -93,6 +94,22 @@ public class RPGInspectorUI : EditorWindow {
                     window.Initialize(ref door.InMap);
                     window.Show();
                 }
+
+                GUI.enabled = door.InMap.Name != string.Empty;
+                if (GUILayout.Button("Select Position"))
+                {
+                    MapEditor.selectedObject.tag = "RPG-SELECTED";                    
+                    scenePath = EditorApplication.currentScene;
+                    EditorApplication.SaveScene();
+                    EditorApplication.OpenScene(door.InMap.MapPath);
+                    MapEditor.selection = true;
+                    Map.ResetDoors();
+                }
+
+                GUI.enabled = false;
+                EditorGUILayout.FloatField("X:", door.X);
+                EditorGUILayout.FloatField("Y:", door.Y);
+                GUI.enabled = true;
             }
         }        
 

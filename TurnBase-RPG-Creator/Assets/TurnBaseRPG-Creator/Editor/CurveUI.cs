@@ -48,15 +48,15 @@ public class CurveUI : EditorWindow
 
         for (i = 1; i <= Formula.MaxLevel; i = i+4)
         {
-            EditorGUI.LabelField(new Rect(0, graphHeight + i * 5, 200, 20), "Lv. " + i.ToString() + ": " + curve.GetValue(i) + " xp");
-            EditorGUI.LabelField(new Rect(200, graphHeight + i * 5, 200, 20), "Lv. " + (i + 1).ToString() + ": " + curve.GetValue(i + 1) + " xp");
-            EditorGUI.LabelField(new Rect(400, graphHeight + i * 5, 200, 20), "Lv. " + (i + 2).ToString() + ": " + curve.GetValue(i + 2) + " xp");
+            EditorGUI.LabelField(new Rect(0, graphHeight + i * 5, 200, 20), "Lv. " + i.ToString() + ": " + curve.GetValue(i) + " " + curve.GetFormulaType().ToString());
+            EditorGUI.LabelField(new Rect(200, graphHeight + i * 5, 200, 20), "Lv. " + (i + 1).ToString() + ": " + curve.GetValue(i + 1) + " " + curve.GetFormulaType().ToString());
+            EditorGUI.LabelField(new Rect(400, graphHeight + i * 5, 200, 20), "Lv. " + (i + 2).ToString() + ": " + curve.GetValue(i + 2) + " " + curve.GetFormulaType().ToString());
 
             if (i + 3 > 99)
                 break;
 
-            EditorGUI.LabelField(new Rect(600, graphHeight + i * 5, 200, 20), "Lv. " + (i + 3).ToString() + ": " + curve.GetValue(i + 3) + " xp");
-            EditorGUI.LabelField(new Rect(800, graphHeight + i * 5, 200, 20), "Lv. " + (i + 4).ToString() + ": " + curve.GetValue(i + 4) + " xp");
+            EditorGUI.LabelField(new Rect(600, graphHeight + i * 5, 200, 20), "Lv. " + (i + 3).ToString() + ": " + curve.GetValue(i + 3) + " " + curve.GetFormulaType().ToString());
+            EditorGUI.LabelField(new Rect(800, graphHeight + i * 5, 200, 20), "Lv. " + (i + 4).ToString() + ": " + curve.GetValue(i + 4) + " " + curve.GetFormulaType().ToString());
         }
 
         if (GUI.Button(new Rect(800, graphHeight + 20 + 20 * (Formula.MaxLevel / 4), 100, 20), "Exit"))

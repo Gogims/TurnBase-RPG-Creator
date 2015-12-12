@@ -70,7 +70,7 @@ public class Player : Actor
             {
                 if (pickup.Sound != null)
                 {
-                    Audio audio = new Audio();
+                    Audio audio = new Audio(pickup.name);
                     audio.CreateAudioSource(pickup.Sound);
                     audio.Source.Play();
                     Destroy(audio.gameobject, pickup.Sound.length + 0.5f);
@@ -111,18 +111,16 @@ public class Player : Actor
         if (coll.gameObject.tag == "RPG-MAPOBJECT")
         {
             Door door = coll.gameObject.GetComponent<Door>();
-            if (door != null)
+            if (door != null && door.InMap != null)
             {
                 string path = door.InMap.MapPath;
                 GameObject p = GameObject.FindWithTag("RPG-PLAYER");
                 p.name = "PLAYER";
                 DontDestroyOnLoad(p);
                 Application.LoadLevel(path.Substring(path.LastIndexOf("/")+1).Replace(".unity", ""));
-                GameObject.FindWithTag("RPG-PLAYER").transform.position = new Vector3(door.InMap.startX, door.InMap.startY);
+                GameObject.FindWithTag("RPG-PLAYER").transform.position = new Vector3(door.X, door.Y);
             }
-
-        }
-            
+        }            
     }
 
     private bool PlayerMove()

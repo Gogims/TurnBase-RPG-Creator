@@ -12,5 +12,6 @@ public class Door: MapObject
     /// Define cual es el mapa que se va mostrar al entrar por la puerta
     /// </summary>
     public AbstractMap InMap;
-
+    public float X;
+    public float Y;
 }

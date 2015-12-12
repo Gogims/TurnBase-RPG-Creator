@@ -124,7 +124,8 @@ public class ObjectBrowserUI : EditorWindow
                     if (OpenScene != Directory.GetCurrentDirectory() + "\\" + EditorApplication.currentScene.Replace('/', '\\'))
                     {
                         EditorApplication.SaveScene();
-                        EditorApplication.OpenScene(OpenScene);                        
+                        EditorApplication.OpenScene(OpenScene);
+                        Map.ResetDoors();
                     }
                 }
 
