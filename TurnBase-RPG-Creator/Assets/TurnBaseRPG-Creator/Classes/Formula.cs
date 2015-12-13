@@ -171,8 +171,6 @@ public class Formula
 
         if (type == Constant.FormulaType.XP)
         {
-            level++;
-
             if (level > 1)
                 previousValue = Growth[level - 2];
 
