@@ -11,6 +11,7 @@ using System.Collections;
 public class BattleManager : RPGElement
 {
     List<GameObject> Enemies;
+    int GainXp = 0;
     Player Player;
     public GameObject BattleMenu;
     /// <summary>
@@ -45,7 +46,9 @@ public class BattleManager : RPGElement
         ENEMYTURN,
         WIN,
         LOSE,
-        RUN
+        RUN,
+        LVLUP,
+        ENDBATTLE
     };
     BattleStateMachine BattleState;
     private bool SELECTIONMODE;
@@ -54,6 +57,7 @@ public class BattleManager : RPGElement
     string Message = string.Empty;
     private bool destroy;
     private bool working = false;
+    private bool lvlup;
 
     public BattleManager(List<GameObject> enemies, Player player)
     {
@@ -98,8 +102,8 @@ public class BattleManager : RPGElement
     {
         Vector2 worldScreen = new Vector2(Camera.main.orthographicSize * 2 / Screen.height * Screen.width, Camera.main.orthographicSize * 2);
         canvasBar.transform.position = new Vector3(-worldScreen.x / 2 + canvasBar.GetComponent<RectTransform>().rect.width / 2, worldScreen.y / 2 - canvasBar.GetComponent<RectTransform>().rect.height / 2);
-        Hp = canvasBar.transform.FindChild("Panel").gameObject.transform.FindChild("HPSlider").gameObject.GetComponent<Slider>();
-        Mp = canvasBar.transform.FindChild("Panel").gameObject.transform.FindChild("MPSlider").gameObject.GetComponent<Slider>();
+        Hp = canvasBar.transform.FindChild("Panel").gameObject.transform.FindChild("HP Slider").gameObject.GetComponent<Slider>();
+        Mp = canvasBar.transform.FindChild("Panel").gameObject.transform.FindChild("MP Slider").gameObject.GetComponent<Slider>();
         CantHp = canvasBar.transform.FindChild("Panel").gameObject.transform.FindChild("HPCant").gameObject.GetComponent<Text>();
         CantMp = canvasBar.transform.FindChild("Panel").gameObject.transform.FindChild("MPCant").gameObject.GetComponent<Text>();
         canvasBar.transform.FindChild("Panel").gameObject.transform.FindChild("LevelVal").gameObject.GetComponent<Text>().text = Player.Data.Level.ToString();
@@ -125,7 +129,13 @@ public class BattleManager : RPGElement
 
         var bm = new GameObject("BattleManager").AddComponent<BattleManager>();
         bm.transform.parent = battlemap.transform;
-
+        UnityEngine.Object [] BattlePrefabs = Resources.LoadAll("BattleMap",typeof(GameObject));
+        foreach (var i in BattlePrefabs)
+        {
+            GameObject x = Instantiate(i as GameObject);
+            x.name = i.name;
+            x.transform.SetParent(battlemap.transform);
+        }
         Vector2 backgroundSize = CreateBackground("Bottom", troop.BackgroundBottom, 0, battlemap);
         CreateBackground("Top", troop.BackgroundTop, 1, battlemap);
         foreach (var enemy in troop.Enemies)
@@ -146,6 +156,8 @@ public class BattleManager : RPGElement
         audio.CreateAudioSource(troop.Background);
         audio.gameobject.transform.parent = battlemap.transform;
         EditorApplication.SaveScene("Assets/Resources/BattleMap/" + troop.Id + ".unity", true);// Guarda la scene.
+        Constant.AddSceneToBuild("Assets/Resources/BattleMap/" + troop.Id + ".unity");
+
     }  
     IEnumerator ShowMessage() {
         BattleMenu.SetActive(false);
@@ -159,6 +171,7 @@ public class BattleManager : RPGElement
             case BattleStateMachine.PLAYERTURN:
                 if (destroy)
                 {
+                    GainXp += Enemies[enemySelect].GetComponent<Enemy>().BattleEnemy.Data.RewardExperience;
                     Destroy(Enemies[enemySelect]);
                     Enemies.RemoveAt(enemySelect);
                     destroy = false;
@@ -182,17 +195,19 @@ public class BattleManager : RPGElement
                 UpdateBars();
                 break;
             case BattleStateMachine.WIN:
-                Destroy(GameObject.Find("BattleMap"));
-                Destroy(GameObject.Find("BattleMenu"));
-                Constant.ActiveMap.SetActive(true);
+                if (lvlup)
+                    BattleState = BattleStateMachine.LVLUP;
+                else
+                    BattleState = BattleStateMachine.ENDBATTLE;
                 break;
             case BattleStateMachine.LOSE:
-                ///TODO WHEN PLAYER DIES
+                BattleState = BattleStateMachine.ENDBATTLE;
                 break;
             case BattleStateMachine.RUN:
-                Destroy(GameObject.Find("BattleMap"));
-                Destroy(GameObject.Find("BattleMenu"));
-                Constant.ActiveMap.SetActive(true);
+                BattleState = BattleStateMachine.ENDBATTLE;
+                break;
+            case BattleStateMachine.LVLUP:
+                BattleState = BattleStateMachine.ENDBATTLE;
                 break;
             default:
                 break;
@@ -296,13 +311,13 @@ public class BattleManager : RPGElement
                     break;
                 case BattleStateMachine.WIN:
                     ////TODO!!!!
-                    List<AbstractUsable> items = GetRewards();
+                    List<AbstractUsable> items = GetRewards();//TODO
                     string sitems = "";
                     foreach (var i in items){
-                        sitems += i.ItemName + ", ";
+                        sitems += ", "+i.ItemName ;
                     }
-                    int xp = getXP();
-                    //sitems.Remove(sitems.LastIndexOf(','));
+                    int xp = getXP();//TTODOOOO
+                    lvlup = applyXP();//TODO
                     Message = "You have earn "+getXP()+" XP, "+sitems;
                     StartCoroutine(ShowMessage());
                     break;
@@ -310,8 +325,32 @@ public class BattleManager : RPGElement
                     Message = "You have lost the battle!";
                     StartCoroutine(ShowMessage());
                     break;
+                case BattleStateMachine.LVLUP:
+                    Message = "You have Reach Level " + Player.Data.Level;
+                    showStats();//TODO
+                    StartCoroutine(ShowMessage());
+                    break;
+                case BattleStateMachine.ENDBATTLE:
+                    Destroy(GameObject.Find("BattleMap"));
+                    Destroy(GameObject.Find("BattleMenu"));
+                    Constant.ActiveMap.SetActive(true);
+                    break;
             }
         }
+    }
+
+    private void showStats()
+    {
+        throw new NotImplementedException();
+    }
+
+    private bool applyXP()
+    {
+        foreach (var enemy in Enemies)
+        {
+            ;
+        }
+        return true;
     }
 
     private List<AbstractUsable> GetRewards()
@@ -328,10 +367,6 @@ public class BattleManager : RPGElement
         Mp.value = (float)((float)Player.Data.MP / (float)Player.Data.Stats.MaxMP);
         CantHp.text = Player.Data.HP.ToString() + "/" + Player.Data.Stats.MaxHP.ToString();
         CantMp.text = Player.Data.MP.ToString() + "/" + Player.Data.Stats.MaxMP.ToString();
-    }
-    private void ShowHeal(int val)
-    {
-        Debug.Log(val);
     }
     /// <summary>
     /// Usa el item seleccionado en el battleMenu
