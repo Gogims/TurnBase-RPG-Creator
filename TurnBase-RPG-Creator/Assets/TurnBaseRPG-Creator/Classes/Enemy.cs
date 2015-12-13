@@ -27,6 +27,26 @@ public class Enemy : RPGElement
 
         transform.position = Position;
     }
+
+    public AbstractAbility AttackSelected()
+    {
+        AbstractAbility selected = null;
+        foreach (AbstractAbility i in BattleEnemy.Data.Job.Abilities){
+            if (BattleEnemy.Data.MP < i.MPCost)
+            {
+                continue;
+            }
+            else if (selected != null && selected.AttackPower < i.AttackPower)
+            {
+                selected = i;
+            }
+            else
+            {
+                selected = i;
+            }
+        }
+        return selected;
+    }
 }
 
 [Serializable]

@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 using UnityEngine.UI;
+using System.Collections;
+
+
 
 public class BattleManager : RPGElement
 {
@@ -41,11 +44,16 @@ public class BattleManager : RPGElement
         PLAYERTURN,
         ENEMYTURN,
         WIN,
-        LOSE
+        LOSE,
+        RUN
     };
     BattleStateMachine BattleState;
     private bool SELECTIONMODE;
     private int enemySelect;
+    private GameObject CanvasMessage;
+    string Message = string.Empty;
+    private bool destroy;
+    private bool working = false;
 
     public BattleManager(List<GameObject> enemies, Player player)
     {
@@ -54,6 +62,7 @@ public class BattleManager : RPGElement
     }
     void Start()
     {
+        working = false;
         Constant.LastSceneLoaded = "BattleMenu";
         Application.LoadLevelAdditive("BattleMenu");
         //ActorsOrdered = OrderActors(Player, Enemies);
@@ -72,8 +81,17 @@ public class BattleManager : RPGElement
         
          GameObject canvasBar = GameObject.Find("BattleMap").transform.FindChild("CanvasBars").gameObject;
          setCanvasBar(canvasBar);
+         setCanvasMessage(GameObject.Find("BattleMap").transform.FindChild("CanvasMessage").gameObject);
          
 
+    }
+
+    private void setCanvasMessage(GameObject canvasMessage)
+    {
+        Vector2 worldScreen = new Vector2(Camera.main.orthographicSize * 2 / Screen.height * Screen.width, Camera.main.orthographicSize * 2);
+        canvasMessage.transform.position = new Vector3(-worldScreen.x / 2 + canvasMessage.GetComponent<RectTransform>().rect.width / 2, -worldScreen.y / 2 + canvasMessage.GetComponent<RectTransform>().rect.height / 2);
+        CanvasMessage = canvasMessage;
+        CanvasMessage.SetActive(false);
     }
 
     private void setCanvasBar(GameObject canvasBar)
@@ -128,87 +146,38 @@ public class BattleManager : RPGElement
         audio.CreateAudioSource(troop.Background);
         audio.gameobject.transform.parent = battlemap.transform;
         EditorApplication.SaveScene("Assets/Resources/BattleMap/" + troop.Id + ".unity", true);// Guarda la scene.
-    }
-
-    void Update()
-    {
-        if (Enemies.Count <= 0)
-            BattleState = BattleStateMachine.WIN;
-        if (Player.Data.HP <= 0)
-            BattleState = BattleStateMachine.LOSE;
+    }  
+    IEnumerator ShowMessage() {
+        BattleMenu.SetActive(false);
+        CanvasMessage.SetActive(true);
+        CanvasMessage.transform.FindChild("Panel").gameObject.transform.FindChild("MessageText").gameObject.GetComponent<Text>().text = Message;
+        selector.SetActive(false);
+        working = true;
+        yield return new WaitForSeconds(2);
         switch (BattleState)
         {
             case BattleStateMachine.PLAYERTURN:
-                if (SELECTIONMODE)
+                if (destroy)
                 {
-                    
-                    if (ProxyInput.GetInstance().Up()){
-                        if (enemySelect + 1 >= Enemies.Count) break;
-                        enemySelect++;
-                        PositionSelector(enemySelect);
-                    }
-                    else if (ProxyInput.GetInstance().Down()) {
-                        if (enemySelect -1 < 0 ) break;
-                        enemySelect--;
-                        PositionSelector(enemySelect);
-                    }
-                    else if (ProxyInput.GetInstance().A() || (UsableToUse != null && UsableToUse.AreaOfEffect == Constant.AOE.Self)){
-
-                    switch (ActionSelected)
-                        {
-                            case Actions.Attack:
-                                 AbstractActor attacker = Player.Data;
-                                 AbstractActor defender = Enemies[enemySelect].GetComponent<Enemy>().BattleEnemy.Data;
-                                 int damage = NormalFight(ref attacker, ref defender, 0);
-                                 ShowDamage(damage);
-                                 BattleState = BattleStateMachine.ENEMYTURN;
-                                 break;
-                            case Actions.Ability:
-                                 AbstractActor attacker2 = Player.Data;
-                                 AbstractActor defender2 = Enemies[enemySelect].GetComponent<Enemy>().BattleEnemy.Data;
-                                 int damage2 = AbilityFight(ref attacker2, ref defender2,  AbilityToUse);
-                                 ShowDamage(damage2);
-                                 BattleState = BattleStateMachine.ENEMYTURN;
-                                break;
-                            case Actions.Usable:
-                                AbstractActor actor =null;
-                                int val=0;
-                                if (UsableToUse.AreaOfEffect == Constant.AOE.OneEnemy)
-                                {
-                                    actor = Enemies[enemySelect].GetComponent<Enemy>().BattleEnemy.Data;
-
-                                }
-                                else {
-                                    actor = Player.Data;
-                                }
-                                val = ItemFigth(ref actor);
-                                if (UsableToUse.Attribute == Constant.Attribute.HP && UsableToUse.AreaOfEffect == Constant.AOE.OneEnemy)
-                                    ShowDamage(val);
-                                else if (UsableToUse.Attribute == Constant.Attribute.HP && UsableToUse.AreaOfEffect == Constant.AOE.Self)
-                                {
-                                    ShowHeal(val);
-                                }
-                                BattleState = BattleStateMachine.ENEMYTURN;
-                                SELECTIONMODE = false;
-                                UpdateBars();
-                                
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                    else if (ProxyInput.GetInstance().B())
-                    {
-                        deactivateSelector();
-                        BattleMenu.SetActive(true);
-                        SELECTIONMODE = false;
-                    }
+                    Destroy(Enemies[enemySelect]);
+                    Enemies.RemoveAt(enemySelect);
+                    destroy = false;
                 }
-                //Player.RemoveOnTurnState();
+                
+                BattleState = BattleStateMachine.ENEMYTURN;
+                SELECTIONMODE = false;
+                UpdateBars();
                 break;
             case BattleStateMachine.ENEMYTURN:
-                BattleMenu.SetActive(true);
-                BattleState = BattleStateMachine.PLAYERTURN;
+
+                if (enemySelect+1 == Enemies.Count)
+                {
+                    BattleState = BattleStateMachine.PLAYERTURN;
+                    BattleMenu.SetActive(true);
+                    enemySelect = 0;
+                }
+                else
+                    enemySelect++;
                 SELECTIONMODE = false;
                 UpdateBars();
                 break;
@@ -218,11 +187,136 @@ public class BattleManager : RPGElement
                 Constant.ActiveMap.SetActive(true);
                 break;
             case BattleStateMachine.LOSE:
-                Destroy(GameObject.Find("BattleMap"));
-                Destroy(GameObject.Find("BattleMenu"));
-                Constant.ActiveMap.SetActive(true);
+                ///TODO WHEN PLAYER DIES
+                break;
+            default:
                 break;
         }
+        Message = "";
+        CanvasMessage.SetActive(false);
+        working = false;
+    
+    }
+
+    void Update()
+    {
+        if (!working)
+        {
+            int damage = 0;
+            if (Enemies.Count <= 0)
+                BattleState = BattleStateMachine.WIN;
+            if (Player.Data.HP <= 0)
+                BattleState = BattleStateMachine.LOSE;
+            switch (BattleState)
+            {
+                case BattleStateMachine.PLAYERTURN:
+                    if (SELECTIONMODE)
+                    {
+                        if (ProxyInput.GetInstance().Up())
+                        {
+                            if (enemySelect + 1 >= Enemies.Count) break;
+                            enemySelect++;
+                            PositionSelector(enemySelect);
+                        }
+                        else if (ProxyInput.GetInstance().Down())
+                        {
+                            if (enemySelect - 1 < 0) break;
+                            enemySelect--;
+                            PositionSelector(enemySelect);
+                        }
+                        else if (ProxyInput.GetInstance().A() || (UsableToUse != null && UsableToUse.AreaOfEffect == Constant.AOE.Self))
+                        {
+
+                            switch (ActionSelected)
+                            {
+                                case Actions.Attack:
+                                    AbstractActor attacker = Player.Data;
+                                    AbstractActor defender = Enemies[enemySelect].GetComponent<Enemy>().BattleEnemy.Data;
+                                    damage = NormalFight(ref attacker, ref defender, 0);
+                                    Message += "You have Attack! "+ defender.ActorName + " has recive " + damage + " damage.";
+                                    break;
+                                case Actions.Ability:
+                                    AbstractActor attacker2 = Player.Data;
+                                    AbstractActor defender2 = Enemies[enemySelect].GetComponent<Enemy>().BattleEnemy.Data;
+                                    damage = AbilityFight(ref attacker2, ref defender2, AbilityToUse);
+                                    Message += "You have use " + AbilityToUse.Ability + "! " + defender2.ActorName + " has recive " + damage + " damage.";
+                                    break;
+                                case Actions.Usable:
+                                    AbstractActor actor = null;
+                                    if (UsableToUse.AreaOfEffect == Constant.AOE.OneEnemy)
+                                    {
+                                        actor = Enemies[enemySelect].GetComponent<Enemy>().BattleEnemy.Data;
+
+                                    }
+                                    else
+                                    {
+                                        actor = Player.Data;
+                                    }
+                                    Message = UsableToUse.ItemName + " has been use on " + actor.ActorName + "! ";
+                                    damage = ItemFigth(ref actor);
+                                    break;
+                                default:
+                                    break;
+                            }
+                            
+                            StartCoroutine(ShowMessage());
+
+                        }
+                        else if (ProxyInput.GetInstance().B())
+                        {
+                            deactivateSelector();
+                            BattleMenu.SetActive(true);
+                            SELECTIONMODE = false;
+                        }
+                    }
+                    //Player.RemoveOnTurnState();
+                    break;
+                case BattleStateMachine.ENEMYTURN:
+                    
+                    AbstractAbility ability = Enemies[enemySelect].GetComponent<Enemy>().AttackSelected();
+                    if (ability == null)
+                    {
+                        AbstractActor defender = Player.Data;
+                        AbstractActor attacker = Enemies[enemySelect].GetComponent<Enemy>().BattleEnemy.Data;
+                        damage = NormalFight(ref attacker, ref defender, 0);
+                        Message += attacker.ActorName+" "+enemySelect+1+" has attack! " + damage.ToString() + " Damage dealt ";
+                    }
+                    else {
+                        AbstractActor defender = Player.Data;
+                        AbstractActor attacker = Enemies[enemySelect].GetComponent<Enemy>().BattleEnemy.Data;
+                        damage = AbilityFight(ref attacker, ref defender, ability);
+                        Message += attacker.ActorName +" "+enemySelect+1+ " has use " + ability.Ability + "! " + damage.ToString() + " Damage dealt ";
+                    }
+                    StartCoroutine(ShowMessage());
+                    break;
+                case BattleStateMachine.WIN:
+                    ////TODO!!!!
+                    List<AbstractUsable> items = GetRewards();
+                    string sitems = "";
+                    foreach (var i in items){
+                        sitems += i.ItemName + ", ";
+                    }
+                    int xp = getXP();
+                    //sitems.Remove(sitems.LastIndexOf(','));
+                    Message = "You have earn "+getXP()+" XP, "+sitems;
+                    StartCoroutine(ShowMessage());
+                    break;
+                case BattleStateMachine.LOSE:
+                    Message = "You have lost the battle!";
+                    StartCoroutine(ShowMessage());
+                    break;
+            }
+        }
+    }
+
+    private List<AbstractUsable> GetRewards()
+    {
+        return new List<AbstractUsable>();
+    }
+
+    private int getXP()
+    {
+        return 0;
     }
     void UpdateBars() {
         Hp.value = (float)((float)Player.Data.HP / (float)Player.Data.Stats.MaxHP);
@@ -252,6 +346,10 @@ public class BattleManager : RPGElement
                     actor.HP = actor.Stats.MaxHP;
                 if (actor.HP < actor.Stats.MaxHP)
                     actor.HP = 0;
+                if (UsableToUse.Power < 0)
+                    Message += "Damage Dealt " + -1 * UsableToUse.Power;
+                else
+                    Message += "HP Restored " +UsableToUse.Power;
                 return UsableToUse.Power;
             case Constant.Attribute.MP:
                 actor.MP += UsableToUse.Power;
@@ -259,41 +357,72 @@ public class BattleManager : RPGElement
                     actor.MP = actor.Stats.MaxMP;
                 if (actor.MP < actor.Stats.MaxHP)
                     actor.MP = 0;
+                if (UsableToUse.Power < 0)
+                    Message += "MP Dealt " + -1 * UsableToUse.Power;
+                else
+                    Message += "MP Restored " + UsableToUse.Power;
                 break;
             case Constant.Attribute.Attack:
                 actor.Stats.Attack += UsableToUse.Power;
+                if (UsableToUse.Power < 0)
+                    Message += "Attack decrease " + -1 * UsableToUse.Power;
+                else
+                    Message += "Attack raise " + UsableToUse.Power;
                 break;
             case Constant.Attribute.Defense:
                 actor.Stats.Defense += UsableToUse.Power;
+                if (UsableToUse.Power < 0)
+                    Message += "Defense decrease " + -1 * UsableToUse.Power;
+                else
+                    Message += "Defense raise " + UsableToUse.Power;
                 break;
             case Constant.Attribute.Magic:
                 actor.Stats.Magic += UsableToUse.Power;
+                if (UsableToUse.Power < 0)
+                    Message += "Magic decrease " + -1 * UsableToUse.Power;
+                else
+                    Message += "Magic raise " + UsableToUse.Power;
                 break;
             case Constant.Attribute.MagicDefense:
                 actor.Stats.MagicDefense += UsableToUse.Power;
+                if (UsableToUse.Power < 0)
+                    Message += "Magic Defense decrease " + -1 * UsableToUse.Power;
+                else
+                    Message += "Magic Defense raise" + UsableToUse.Power;
                 break;
             case Constant.Attribute.Agility:
                 actor.Stats.Agility += UsableToUse.Power;
+                if (UsableToUse.Power < 0)
+                    Message += "Agility decrease " + -1 * UsableToUse.Power;
+                else
+                    Message += "Agility raise " + UsableToUse.Power;
                 break;
             case Constant.Attribute.Luck:
                 actor.Stats.Luck += UsableToUse.Power;
+                if (UsableToUse.Power < 0)
+                    Message += "Luck decrease " + -1 * UsableToUse.Power;
+                else
+                    Message += "Luck raise " + UsableToUse.Power;
                 break;
             case Constant.Attribute.MaxHP:
                 actor.Stats.MaxHP += UsableToUse.Power;
+                if (UsableToUse.Power < 0)
+                    Message += "MaxHP decrease " + -1 * UsableToUse.Power;
+                else
+                    Message += "MaxHP raise " + UsableToUse.Power;
                 break;
             case Constant.Attribute.MaxMP:
                 actor.Stats.MaxMP += UsableToUse.Power;
+                if (UsableToUse.Power < 0)
+                    Message += "MaxMP decrease " + -1 * UsableToUse.Power;
+                else
+                    Message += "MaxMP raise " + UsableToUse.Power;
                 break;
             default:
                 break;
         }
 
         return 0;
-    }
-
-    private void ShowDamage(int damage)
-    {
-        Debug.Log(damage);
     }
     private void ResizeSpriteToScreen(GameObject background)
     {
@@ -374,10 +503,8 @@ public class BattleManager : RPGElement
             Defender.HP -= damage;
             if (Defender.HP <= 0 )
             {
-                Destroy(Enemies[enemySelect]);
-                Enemies.RemoveAt(enemySelect);
+                destroy = true;
             }
-            //Check if dead (todo)
         }
         return damage;
     }
@@ -390,6 +517,7 @@ public class BattleManager : RPGElement
         if ((Attacker.Stats.Luck / Attacker.Level) >= UnityEngine.Random.Range(1, 100))
         {
             damageMultiplier = 2;
+            Message += "Is a Critical Attack!";
         }
 
         // Calculando el ataque
@@ -421,10 +549,8 @@ public class BattleManager : RPGElement
             Defender.HP -= damage;
             if (Defender.HP < 0)
             {
-                Destroy(Enemies[enemySelect]);
-                Enemies.RemoveAt(enemySelect);
+                destroy = true;
             }
-            //Check if dead (todo)
         }
         return damage;
     }     
@@ -524,9 +650,9 @@ public class BattleManager : RPGElement
 
     public void Run()
     {
-        Destroy(GameObject.Find("BattleMap"));
-        Destroy(GameObject.Find("BattleMenu"));
-        Constant.ActiveMap.SetActive(true);
+        Message = "You have run from the  battle!";
+        BattleState = BattleStateMachine.RUN;
+        StartCoroutine(ShowMessage());
     }
 
 }
