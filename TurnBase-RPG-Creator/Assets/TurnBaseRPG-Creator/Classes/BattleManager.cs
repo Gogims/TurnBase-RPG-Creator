@@ -189,6 +189,11 @@ public class BattleManager : RPGElement
             case BattleStateMachine.LOSE:
                 ///TODO WHEN PLAYER DIES
                 break;
+            case BattleStateMachine.RUN:
+                Destroy(GameObject.Find("BattleMap"));
+                Destroy(GameObject.Find("BattleMenu"));
+                Constant.ActiveMap.SetActive(true);
+                break;
             default:
                 break;
         }
