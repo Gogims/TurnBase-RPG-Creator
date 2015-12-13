@@ -16,6 +16,10 @@ public class Obstacle: MapObject
 
     public Constant.ObstacleType Type;
 
+    public GameObject Removable;
+
+    public bool Switched=true;
+
     //DamageWall is called when the player attacks a wall.
     public void DamageWall(int loss)
     {
@@ -27,5 +31,13 @@ public class Obstacle: MapObject
             //Disable the gameObject.
             gameObject.SetActive(false);
     }    
+
+    void Update()
+    {
+        if (Removable != null)
+        {
+            Removable.SetActive(Switched);
+        }
+    }
 }
 

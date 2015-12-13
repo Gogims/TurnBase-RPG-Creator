@@ -5,18 +5,7 @@ using UnityEngine;
 [Serializable]
 public class Formula
 {
-    public enum FormulaType
-    {
-        XP,
-        MaxHP,
-        MaxMP,
-        Attack,
-        Defense,
-        MagicAttack,
-        MagicDefense,
-        Agility,
-        Luck
-    };    
+    
     
     /// <summary>
     /// Valor inicial con el que la formula empezará
@@ -30,6 +19,39 @@ public class Formula
     /// Valor para hacer crecer los últimos niveles
     /// </summary>
     public int Acceleration = 30;
+    /// <summary>
+    /// Convierte la aceleración en decimal
+    /// </summary>
+    private double acc
+    {
+        get { return (double)Acceleration / 100; }
+    }
+    [SerializeField]
+    private Constant.FormulaType type;
+
+    public int GetValue(int Level)
+    {
+        int value = 0;
+        int previousValue = 0;
+
+        switch (type)
+        {
+            case Constant.FormulaType.XP:
+                if (Level > 1)
+                    previousValue = BaseValue + ((Level - 1) * ExtraValue) + (int)(acc * (Level - 1) * ExtraValue);
+
+                value = previousValue + BaseValue + (Level * ExtraValue) + (int)(acc * Level * ExtraValue);
+                break;
+            default:
+                value = BaseValue + (Level * ExtraValue);
+                break;
+        }
+
+        return value;
+    }
+
+#if UNITY_EDITOR
+
     /// <summary>
     /// Valor mínimo de los sliders de la curva de experiencia
     /// </summary>
@@ -46,62 +68,37 @@ public class Formula
     /// Estructura que contiene el (nivel, cantidad de xp para subir al próximo nivel)
     /// </summary>
     public List<int> Growth;
-
     /// <summary>
     /// Nombre de la curva (XP, HP, MP...)
     /// </summary>
-    private string CurveName;
-
-    /// <summary>
-    /// Convierte la aceleración en decimal
-    /// </summary>
-    private double acc
-    {
-        get { return (double)Acceleration / 100; }
-    }
-
-    [SerializeField]
-    private FormulaType type;
-
-    /// <summary>
-    /// Constructor que agrega el nivel máximo de items en el diccionario y le asigna un valor por defecto
-    /// </summary>
-    public Formula()
-    {
-        Growth = new List<int>(MaxLevel);
-        CurveName = "Experience";
-        type = FormulaType.XP;
-
-        for (int i = 0; i < MaxLevel; i++)
-        {
-            Growth.Add(GetLevelValue(i));
-        }
-    }
+    private string CurveName;    
 
     /// <summary>
     /// Constructor que agrega el valor por defecto de los atributos
     /// </summary>
     /// <param name="type">1=Max HP</param>
-    public Formula(FormulaType _type)
+    public Formula(Constant.FormulaType _type)
     {
         Growth = new List<int>(MaxLevel);
         type = _type;
 
-        if (type == FormulaType.MaxHP)
+        if(type == Constant.FormulaType.XP)
+            CurveName = "Experience";
+        else if (type == Constant.FormulaType.MaxHP)
             CurveName = "Max HP";
-        else if (type == FormulaType.MaxMP)
+        else if (type == Constant.FormulaType.MaxMP)
             CurveName = "Max MP";
-        else if (type == FormulaType.Attack)
+        else if (type == Constant.FormulaType.Attack)
             CurveName = "Attack";
-        else if (type == FormulaType.Defense)
+        else if (type == Constant.FormulaType.Defense)
             CurveName = "Defense";
-        else if (type == FormulaType.MagicAttack)
+        else if (type == Constant.FormulaType.MagicAttack)
             CurveName = "Magic Attack";
-        else if (type == FormulaType.MagicDefense)
+        else if (type == Constant.FormulaType.MagicDefense)
             CurveName = "Magic Defense";
-        else if (type == FormulaType.Agility)
+        else if (type == Constant.FormulaType.Agility)
             CurveName = "Agility";
-        else if (type == FormulaType.Luck)
+        else if (type == Constant.FormulaType.Luck)
             CurveName = "Luck";
 
         for (int i = 1; i <= MaxLevel; i++)
@@ -115,7 +112,7 @@ public class Formula
     /// </summary>
     /// <param name="Level">Nivel que se desea acceder</param>
     /// <returns>Cantidad de nivel necesitado para el próximo nivel</returns>
-    public int GetValue(int Level)
+    public int GetListValue(int Level)
     {
         Level--;
         return Growth[Level];
@@ -138,19 +135,9 @@ public class Formula
     /// </summary>
     public void Update()
     {
-        if (type != FormulaType.XP)
+        for (int i = 0; i < Growth.Count; i++)
         {
-            for (int i = 0; i < Growth.Count; i++)
-            {
-                Growth[i] = GetStatValue(i);
-            }
-        }
-        else
-        {
-            for (int i = 0; i < Growth.Count; i++)
-            {
-                Growth[i] = GetLevelValue(i);
-            }
+            Growth[i] = GetStatValue(i);
         }
     }
 
@@ -167,26 +154,10 @@ public class Formula
     /// Devuelve el tipo de curva que es
     /// </summary>
     /// <returns>Tipo de curva</returns>
-    public FormulaType GetFormulaType()
+    public Constant.FormulaType GetFormulaType()
     {
         return type;
-    }
-
-    /// <summary>
-    /// Fórmula para calcular la cantidad de experiencia necesitada para pasar al próximo nivel, dado un nivel
-    /// </summary>
-    /// <param name="Level">Nivel del personaje</param>
-    /// <returns>Cantidad de experiencia necesitada para pasar al próximo nivel</returns>
-    private int GetLevelValue(int Level)
-    {
-        int previouslevel = 0;
-        Level++;
-
-        if (Level > 1)
-            previouslevel = Growth[Level - 2];
-
-        return previouslevel + BaseValue + (Level * ExtraValue) + (int)(acc * Level * ExtraValue);
-    }
+    }    
 
     /// <summary>
     /// Fórmula para calcular la cantidad de experiencia necesitada para pasar al próximo nivel, dado un nivel
@@ -196,14 +167,21 @@ public class Formula
     private int GetStatValue(int level)
     {
         int value = 0;
+        int previousValue = 0;
 
-        if (type == FormulaType.MaxHP)
+        if (type == Constant.FormulaType.XP)
         {
-            
-        }
+            if (level > 1)
+                previousValue = Growth[level - 2];
 
-        value = BaseValue + (level * ExtraValue);
+            value = previousValue + BaseValue + (level * ExtraValue) + (int)(acc * level * ExtraValue);
+        }
+        else
+        {
+            value = BaseValue + (level * ExtraValue);
+        }       
 
         return value;  
     }
+#endif  
 }

@@ -214,10 +214,14 @@ public class MapObjectsUI : EditorWindow {
             GUI.enabled = false;
             EditorGUILayout.TextField(soundName);
             GUI.enabled = true;
-            GUILayout.EndHorizontal();
-
-            obstacle.hp = EditorGUILayout.IntField("Obstacle HP:", obstacle.hp);
+            GUILayout.EndHorizontal();                        
             obstacle.Type = (Constant.ObstacleType)EditorGUILayout.EnumPopup("Type:", obstacle.Type);
+
+            if (obstacle.Type == Constant.ObstacleType.Destroyable)
+            {
+                obstacle.hp = EditorGUILayout.IntField("Obstacle HP:", obstacle.hp);
+            }
+
             obstacle.Name = name;
             obstacle.Icon = texture;
             MapObjectType = Constant.MapObjectType.Obstacle;

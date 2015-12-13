@@ -195,10 +195,23 @@ public class Constant{
 
     public enum ObstacleType
     {
-        Normal,
+        Destroyable,
         Movable,
-        Destroyable
-    }
+        Switchable        
+    };
+
+    public enum FormulaType
+    {
+        XP,
+        MaxHP,
+        MaxMP,
+        Attack,
+        Defense,
+        MagicAttack,
+        MagicDefense,
+        Agility,
+        Luck
+    };
 
     /// <summary>
     /// Crea el marco de la imagen del equipamiento

@@ -100,6 +100,35 @@ public class Player : Actor
                 Destroy(coll.gameObject);
             }
         }
+
+        var obstacle = coll.gameObject.GetComponent<Obstacle>();
+        if (obstacle != null)
+        {
+            if (ProxyInput.GetInstance().A())
+            {
+                if (obstacle.Sound != null)
+                {
+                    Audio audio = new Audio(name);
+                    audio.CreateAudioSource(obstacle.Sound);
+                    audio.Source.Play();
+                    Destroy(audio.gameobject, obstacle.Sound.length + 0.5f);
+                }
+
+                if (obstacle.Type == Constant.ObstacleType.Switchable)
+                {
+                    obstacle.Switched = !obstacle.Switched;
+                }
+                else if (obstacle.Type == Constant.ObstacleType.Destroyable)
+                {
+                    obstacle.hp -= Data.TotalDamage();
+
+                    if (obstacle.hp <= 0)
+                    {
+                        Destroy(obstacle);
+                    }
+                }
+            }
+        }
     }
 
     void OnCollisionEnter2D(Collision2D coll)

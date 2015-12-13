@@ -107,7 +107,7 @@ public class JobUI : CRUD<Job>
         GUI.enabled = false;
         string description;
 
-        if (curve.GetFormulaType() == Formula.FormulaType.XP)
+        if (curve.GetFormulaType() == Constant.FormulaType.XP)
             description = curve.BaseValue.ToString() + ", " + curve.Acceleration.ToString() + ", " + curve.ExtraValue.ToString();
         else
             description = curve.BaseValue.ToString() + ", " + curve.ExtraValue.ToString();
@@ -142,15 +142,15 @@ public class JobUI : CRUD<Job>
     {
         elementObject = base.NewGameObject();
 
-        element.Data.XP = new Formula();
-        element.Data.MaxHP = new Formula(Formula.FormulaType.MaxHP);
-        element.Data.MaxMP = new Formula(Formula.FormulaType.MaxMP);
-        element.Data.Attack = new Formula(Formula.FormulaType.Attack);
-        element.Data.Defense = new Formula(Formula.FormulaType.Defense);
-        element.Data.MagicAttack = new Formula(Formula.FormulaType.MagicAttack);
-        element.Data.MagicDefense = new Formula(Formula.FormulaType.MagicDefense);
-        element.Data.Agility = new Formula(Formula.FormulaType.Agility);
-        element.Data.Luck = new Formula(Formula.FormulaType.Luck);
+        element.Data.XP = new Formula(Constant.FormulaType.XP);
+        element.Data.MaxHP = new Formula(Constant.FormulaType.MaxHP);
+        element.Data.MaxMP = new Formula(Constant.FormulaType.MaxMP);
+        element.Data.Attack = new Formula(Constant.FormulaType.Attack);
+        element.Data.Defense = new Formula(Constant.FormulaType.Defense);
+        element.Data.MagicAttack = new Formula(Constant.FormulaType.MagicAttack);
+        element.Data.MagicDefense = new Formula(Constant.FormulaType.MagicDefense);
+        element.Data.Agility = new Formula(Constant.FormulaType.Agility);
+        element.Data.Luck = new Formula(Constant.FormulaType.Luck);
 
         return elementObject;
     }
