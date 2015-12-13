@@ -1,21 +1,27 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using UnityEditor;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 /// <summary>
 /// Representa un Mapa en RPG.
 /// </summary>
-public class Map : RPGElement{
-    public Map() {
+public class Map : RPGElement
+{
+    public Map()
+    {
         Data = new AbstractMap();
     }
+
     public AbstractMap Data;
-	/// <summary>
-	/// Crea un mapa dado su ancho, alto y nombre.
-	/// </summary>
-	public void CreateMap(){        
+
+#if UNITY_EDITOR
+    /// <summary>
+    /// Crea un mapa dado su ancho, alto y nombre.
+    /// </summary>
+    public void CreateMap()
+    {        
 		EditorApplication.NewScene(); // Crea una scene nueva.        
         GameObject MapObj = new GameObject("Map");
         Camera.main.transform.parent = MapObj.transform;
@@ -175,8 +181,12 @@ public class Map : RPGElement{
             EditorApplication.SaveScene();
         }
     }
+#endif
 }
+
+#if UNITY_EDITOR
 [Serializable]
+#endif
 public class AbstractMap
 {
     /// <summary>
@@ -195,8 +205,10 @@ public class AbstractMap
     /// Nombre del mapa.
     /// </summary>
     public string Name = string.Empty;
+#if UNITY_EDITOR
     /// <summary>
     /// Posicion donde va iniciar el jugador en el mapa
     /// </summary>
     public AudioClip Background;
+#endif
 }

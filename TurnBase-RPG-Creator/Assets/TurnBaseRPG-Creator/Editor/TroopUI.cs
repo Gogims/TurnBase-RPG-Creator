@@ -112,7 +112,12 @@ public class TroopUI : CRUD<Troop>
 
         return elementObject;
     }
+    protected override void Delete()
+    {
 
+        Constant.RemoveScene("Resources/BattleMap/" + element.Id+".unity");
+        base.Delete();
+    }
     protected override void Create()
     {
         element.tag = "RPG-ENEMY";
@@ -135,10 +140,10 @@ public class TroopUI : CRUD<Troop>
         var collider = elementObject.AddComponent<BoxCollider2D>();
         collider.size = new Vector2(element.downSprites[0].textureRect.width, element.downSprites[0].textureRect.height);
 
+        CreatePrefab(element);
         string scene = EditorApplication.currentScene;
         BattleManager.CreateTroopScene(element);
         EditorApplication.OpenScene(scene);
-        CreatePrefab(element);
     }    
 
     private void CreateAnimation()

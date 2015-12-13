@@ -1,5 +1,6 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿#if UNITY_EDITOR
+
+using UnityEngine;
 using UnityEditor;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,8 @@ using System.Collections.Generic;
 /// <summary>
 /// Clase para el manejo de errores de las ventanas
 /// </summary>
-public class ErrorHandler  {
+public class ErrorHandler
+{
     /// <summary>
     /// Estilo del mensage
     /// </summary>
@@ -202,3 +204,4 @@ public class ErrorHandler  {
 
     }
 }
+#endif

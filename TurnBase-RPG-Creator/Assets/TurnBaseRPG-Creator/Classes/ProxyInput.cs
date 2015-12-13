@@ -52,17 +52,19 @@ public class ProxyInput
 	public static ProxyInput GetInstance(){
 		if (instance == null) {
 			instance = new ProxyInput();
-			if ( !Application.isMobilePlatform){
-				instance.OnA = PcInput.A;
-				instance.OnB = PcInput.B;
-				instance.OnSelect = PcInput.Select;
-				instance.OnPause = PcInput.Pause;
-				instance.OnDown = PcInput.Down;
-				instance.OnLeft = PcInput.Left;
-				instance.OnRight = PcInput.Right;
-				instance.OnUp = PcInput.Up;
-			}
-			else {
+            if (!Application.isMobilePlatform)
+            {
+                instance.OnA = PcInput.A;
+                instance.OnB = PcInput.B;
+                instance.OnSelect = PcInput.Select;
+                instance.OnPause = PcInput.Pause;
+                instance.OnDown = PcInput.Down;
+                instance.OnLeft = PcInput.Left;
+                instance.OnRight = PcInput.Right;
+                instance.OnUp = PcInput.Up;
+            }
+            else
+            {
                 instance.OnA = PhoneInput.A;
                 instance.OnB = PhoneInput.B;
                 instance.OnSelect = PhoneInput.Select;
@@ -72,7 +74,7 @@ public class ProxyInput
                 instance.OnRight = PhoneInput.Right;
                 instance.OnUp = PhoneInput.Up;
             }
-		}
+        }
 		return instance;
 	}
 	//Retorna true si el boton A es presionado de lo contrario retorna false.
