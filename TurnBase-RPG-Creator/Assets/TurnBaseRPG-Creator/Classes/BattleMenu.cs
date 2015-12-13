@@ -90,7 +90,7 @@ public class BattleMenu : Menus {
             case 0:
                 break;
             case 1:
-                GameObject.Find("Description").GetComponent<Text>().text = UsableSelected.Description + "." + UsableSelected.AreaOfEffect.ToString() + "," + UsableSelected.Attribute.ToString();
+                GameObject.Find("Description").GetComponent<Text>().text = "Attribute affected " + UsableSelected.Attribute.ToString() + " " + UsableSelected.Power.ToString()+", "+UsableSelected.AreaOfEffect.ToString()+"."+UsableSelected.Description;
                 break;
                 
             default:
@@ -109,7 +109,7 @@ public class BattleMenu : Menus {
             case 0:
                 break;
             case 1:
-                GameObject.Find("Description").GetComponent<Text>().text = AbilitySelected.Description + "." + AbilitySelected.AreaOfEffect.ToString();
+                GameObject.Find("Description").GetComponent<Text>().text = "MP Cost " + AbilitySelected.MPCost+", Power "+AbilitySelected.AttackPower+" "+AbilitySelected.Type.ToString() + "." + AbilitySelected.Description;
                 break;
 
             default:
@@ -209,7 +209,8 @@ public class BattleMenu : Menus {
     /// </summary>
     public override void unSelect()
     {
-
+        if (SelectionName != "Use")
+            GameObject.Find("Description").GetComponent<Text>().text = "";
         MenuSelection--;
         if (MenuSelection < 0)
             MenuSelection = 0;
