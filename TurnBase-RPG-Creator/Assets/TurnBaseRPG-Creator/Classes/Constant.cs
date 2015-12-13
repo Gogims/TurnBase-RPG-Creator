@@ -195,9 +195,9 @@ public class Constant{
 
     public enum ObstacleType
     {
-        Normal,
+        Destroyable,
         Movable,
-        Destroyable
+        Switchable        
     }
 
     /// <summary>

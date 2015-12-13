@@ -108,7 +108,8 @@ public class ImportAudioUI : EditorWindow
         string extension = sound.path.Substring(index);
         string tempFile = Application.dataPath + "/Resources/Audio/Files/" + AudioName + extension;
         System.IO.File.WriteAllBytes(tempFile, sound.File);
-	}
+        AssetDatabase.Refresh();
+    }
 
     private string GetDescription()
     {
