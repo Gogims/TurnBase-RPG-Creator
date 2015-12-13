@@ -16,7 +16,7 @@ public class CurveUI : EditorWindow
         currentStyle.normal.background = MakeTex(2, 2, curveColor);
         ratio = 10;
 
-        if (curve.GetFormulaType() == Formula.FormulaType.XP)
+        if (curve.GetFormulaType() == Constant.FormulaType.XP)
             ratio = 1500;
     }
 
@@ -37,7 +37,7 @@ public class CurveUI : EditorWindow
         EditorGUI.LabelField(new Rect(0, graphHeight + 80, 100, 20), "Extra Value");
         curve.ExtraValue = EditorGUI.IntSlider(new Rect(100, graphHeight + 80, 300, 20), curve.ExtraValue, 1, 50);
 
-        if (curve.GetFormulaType() == Formula.FormulaType.XP)
+        if (curve.GetFormulaType() == Constant.FormulaType.XP)
         {
             EditorGUI.LabelField(new Rect(0, graphHeight + 100, 100, 20), "Acceleration");
             curve.Acceleration = EditorGUI.IntSlider(new Rect(100, graphHeight + 100, 300, 20), curve.Acceleration, Formula.MinValue, Formula.MaxValue);

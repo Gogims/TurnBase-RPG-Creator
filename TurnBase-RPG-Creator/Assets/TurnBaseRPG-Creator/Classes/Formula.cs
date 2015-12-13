@@ -5,18 +5,7 @@ using UnityEngine;
 [Serializable]
 public class Formula
 {
-    public enum FormulaType
-    {
-        XP,
-        MaxHP,
-        MaxMP,
-        Attack,
-        Defense,
-        MagicAttack,
-        MagicDefense,
-        Agility,
-        Luck
-    };    
+    
     
     /// <summary>
     /// Valor inicial con el que la formula empezará
@@ -38,7 +27,7 @@ public class Formula
         get { return (double)Acceleration / 100; }
     }
     [SerializeField]
-    private FormulaType type;
+    private Constant.FormulaType type;
 
     public int GetValue(int Level)
     {
@@ -47,7 +36,7 @@ public class Formula
 
         switch (type)
         {
-            case FormulaType.XP:
+            case Constant.FormulaType.XP:
                 if (Level > 1)
                     previousValue = BaseValue + ((Level - 1) * ExtraValue) + (int)(acc * (Level - 1) * ExtraValue);
 
@@ -88,28 +77,28 @@ public class Formula
     /// Constructor que agrega el valor por defecto de los atributos
     /// </summary>
     /// <param name="type">1=Max HP</param>
-    public Formula(FormulaType _type)
+    public Formula(Constant.FormulaType _type)
     {
         Growth = new List<int>(MaxLevel);
         type = _type;
 
-        if(type == FormulaType.XP)
+        if(type == Constant.FormulaType.XP)
             CurveName = "Experience";
-        else if (type == FormulaType.MaxHP)
+        else if (type == Constant.FormulaType.MaxHP)
             CurveName = "Max HP";
-        else if (type == FormulaType.MaxMP)
+        else if (type == Constant.FormulaType.MaxMP)
             CurveName = "Max MP";
-        else if (type == FormulaType.Attack)
+        else if (type == Constant.FormulaType.Attack)
             CurveName = "Attack";
-        else if (type == FormulaType.Defense)
+        else if (type == Constant.FormulaType.Defense)
             CurveName = "Defense";
-        else if (type == FormulaType.MagicAttack)
+        else if (type == Constant.FormulaType.MagicAttack)
             CurveName = "Magic Attack";
-        else if (type == FormulaType.MagicDefense)
+        else if (type == Constant.FormulaType.MagicDefense)
             CurveName = "Magic Defense";
-        else if (type == FormulaType.Agility)
+        else if (type == Constant.FormulaType.Agility)
             CurveName = "Agility";
-        else if (type == FormulaType.Luck)
+        else if (type == Constant.FormulaType.Luck)
             CurveName = "Luck";
 
         for (int i = 1; i <= MaxLevel; i++)
@@ -165,7 +154,7 @@ public class Formula
     /// Devuelve el tipo de curva que es
     /// </summary>
     /// <returns>Tipo de curva</returns>
-    public FormulaType GetFormulaType()
+    public Constant.FormulaType GetFormulaType()
     {
         return type;
     }    
@@ -180,7 +169,7 @@ public class Formula
         int value = 0;
         int previousValue = 0;
 
-        if (type == FormulaType.XP)
+        if (type == Constant.FormulaType.XP)
         {
             level++;
 

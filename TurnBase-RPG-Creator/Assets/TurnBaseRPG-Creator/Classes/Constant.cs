@@ -198,7 +198,20 @@ public class Constant{
         Destroyable,
         Movable,
         Switchable        
-    }
+    };
+
+    public enum FormulaType
+    {
+        XP,
+        MaxHP,
+        MaxMP,
+        Attack,
+        Defense,
+        MagicAttack,
+        MagicDefense,
+        Agility,
+        Luck
+    };
 
     /// <summary>
     /// Crea el marco de la imagen del equipamiento
