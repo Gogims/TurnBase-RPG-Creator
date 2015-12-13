@@ -43,8 +43,7 @@ public class RPGInspectorUI : EditorWindow
     {
         Error = string.Empty;
         style = new GUIStyle();
-        style.normal.textColor = Color.red;
-        Logo = Resources.Load<Texture>("LogoPUCMM");
+        style.normal.textColor = Color.red;        
     }
 
 	void OnGUI() 
@@ -185,6 +184,11 @@ public class RPGInspectorUI : EditorWindow
         //GUILayout.Label(Error, style);
         GUILayout.EndArea();
 
+        if (Logo == null)
+        {
+            Logo = Resources.Load<Texture>("LogoPUCMM");
+        }
+
         GUI.DrawTexture(new Rect(0, position.height-20, Logo.width, Logo.height),
                         Logo);
     }    
@@ -241,6 +245,8 @@ public class RPGInspectorUI : EditorWindow
         if (gobj == null) return;
 
         RPGElement element = gobj.GetComponent<RPGElement>();
+
+        if (element == null) return;
 
         EditorGUILayout.LabelField(element.Name);
         EditorGUILayout.LabelField(" (" + gobj.tag + ")");
