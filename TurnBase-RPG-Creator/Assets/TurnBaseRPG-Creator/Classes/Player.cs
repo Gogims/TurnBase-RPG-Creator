@@ -67,7 +67,9 @@ public class Player : Actor
         }
        
     }
-    void OnCollisionStay2D(Collision2D coll) {
+
+    void OnCollisionStay2D(Collision2D coll)
+    {
         Pickup pickup = coll.gameObject.GetComponent<Pickup>();
         if (pickup != null)
         {
@@ -99,6 +101,7 @@ public class Player : Actor
             }
         }
     }
+
     void OnCollisionEnter2D(Collision2D coll)
     {
         if (coll.gameObject.tag == "RPG-ENEMY")

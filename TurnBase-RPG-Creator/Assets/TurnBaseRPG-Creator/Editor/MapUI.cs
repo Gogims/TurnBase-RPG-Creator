@@ -61,7 +61,8 @@ public class MapUI : EditorWindow {
     /// </summary>
     public Texture Logo = Resources.Load<Texture>("LogoPUCMM");
 
-	public void Init () {
+	public void Init ()
+    {
             Selected = null; 
             //LoadList();
             Objs = Resources.LoadAll("Maps", typeof(GameObject));
@@ -71,7 +72,9 @@ public class MapUI : EditorWindow {
             fontStyle.fontStyle = FontStyle.BoldAndItalic;
             scene = EditorApplication.currentScene;
 	}
-    private void InitErr(){
+
+    private void InitErr()
+    {
         err.InsertPropertyError("Heigth", map.Data.Heigth, "The Heigth has to be greater than 13 and less than 100");
         err.InsertPropertyError("Width", map.Data.Width, "The Width has to be greater than 17 and less than 100");
         err.InsertPropertyError("Name", map.Data.Name.Length, "The length of the name has to be grater than 1");
@@ -88,10 +91,10 @@ public class MapUI : EditorWindow {
     public void Initialize(ref AbstractMap val)
     {
         SelectMap1 = val;
-        //SelectMap1 = "Prueba";
         selectMode = true;
         Init();
     }
+
     /// <summary>
     /// Funcion que se llama cuando la ventana esta abierta. dibuja los objetos de la ventana.
     /// </summary>
@@ -99,6 +102,7 @@ public class MapUI : EditorWindow {
         RenderLeftSide();
         if (selectMode )
             GUI.enabled = false;
+
         GUILayout.BeginArea(new Rect((float)(this.position.width * 0.3), 0, (float)(this.position.width * 0.7), this.position.height-20),EditorStyles.helpBox);
         err.ShowErrorsLayout();
         GUILayout.Label("Settings", EditorStyles.boldLabel);
@@ -152,6 +156,7 @@ public class MapUI : EditorWindow {
 
         AddObject();
     }
+
     /// <summary>
     /// Elimina el mapa seleccionado en la ventana
     /// </summary>

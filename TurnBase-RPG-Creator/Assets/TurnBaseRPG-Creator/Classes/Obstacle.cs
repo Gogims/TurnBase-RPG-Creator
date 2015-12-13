@@ -14,6 +14,8 @@ public class Obstacle: MapObject
 
     public AudioClip Sound;
 
+    public Constant.ObstacleType Type;
+
     //DamageWall is called when the player attacks a wall.
     public void DamageWall(int loss)
     {

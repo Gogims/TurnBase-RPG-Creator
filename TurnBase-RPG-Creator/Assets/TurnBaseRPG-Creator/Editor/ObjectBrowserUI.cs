@@ -55,7 +55,7 @@ public class ObjectBrowserUI : EditorWindow
         {
             diff = 25;
             GUILayout.BeginArea(new Rect(300, 0, this.position.width - 300, 25), string.Empty, EditorStyles.helpBox);
-            tab = GUILayout.Toolbar(tab, new string[] { "Tiles", "Walls", "PickUps", "Obstacles", "Doors", "Houses" });
+            tab = GUILayout.Toolbar(tab, new string[] { "Tiles", "Walls", "PickUps", "Obstacles", "Doors" });
             switch (tab)
             {
                 case 1:
@@ -114,7 +114,7 @@ public class ObjectBrowserUI : EditorWindow
             if (GUI.Button(position, "", new GUIStyle()))
             {
                 Selection.activeGameObject = temp;
-                MapEditor.selectedObject = temp;
+                RPGInspectorUI.ObjectBrowser = temp;
                 Selection.activeObject = temp;
                 GameEngine.inspectorRpg.Focus();
                 if (optionSelected == "Maps")

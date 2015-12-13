@@ -128,7 +128,7 @@ public class GameEngine : EditorWindow {
     {
         if (inspectorRpg == null)
             inspectorRpg = EditorWindow.GetWindow<RPGInspectorUI>();
-        inspectorRpg.Init();
+                
         inspectorRpg.Show();
     }
 

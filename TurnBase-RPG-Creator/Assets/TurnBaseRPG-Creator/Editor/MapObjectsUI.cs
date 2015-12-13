@@ -125,6 +125,7 @@ public class MapObjectsUI : EditorWindow {
         if ( tab == 0 ){
             tile.Name = name;
             tile.Icon = texture;
+            tile.Type = (Constant.TileType) EditorGUILayout.EnumPopup("Type:", tile.Type);
             MapObjectType = Constant.MapObjectType.Tile;
         }
         else if (tab == 1) { 
@@ -215,10 +216,8 @@ public class MapObjectsUI : EditorWindow {
             GUI.enabled = true;
             GUILayout.EndHorizontal();
 
-            GUILayout.BeginHorizontal();
-            GUILayout.Label("Obstacle HP:",GUILayout.Width(labelWidth));
-            obstacle.hp = EditorGUILayout.IntField(obstacle.hp);
-            GUILayout.EndHorizontal();
+            obstacle.hp = EditorGUILayout.IntField("Obstacle HP:", obstacle.hp);
+            obstacle.Type = (Constant.ObstacleType)EditorGUILayout.EnumPopup("Type:", obstacle.Type);
             obstacle.Name = name;
             obstacle.Icon = texture;
             MapObjectType = Constant.MapObjectType.Obstacle;
@@ -275,7 +274,6 @@ public class MapObjectsUI : EditorWindow {
 
      void CreateNew()
     {
-
         switch (tab)
         {
             case 1:
@@ -314,8 +312,17 @@ public class MapObjectsUI : EditorWindow {
                 BoxCollider2D collider3 = obstacle.gameObject.AddComponent<BoxCollider2D>();
                 collider3.size = new Vector2(image3.sprite.rect.width, image3.sprite.rect.height);
                 obstacle.Image = obstacle.Icon;
-                obstacle.gameObject.tag = tag;
+                obstacle.gameObject.tag = tag;                
                 obstacle.Id = Guid.NewGuid().ToString();
+
+                if (obstacle.Type == Constant.ObstacleType.Movable)
+                {
+                    var rb2D = obstacle.gameObject.AddComponent<Rigidbody2D>();
+                    rb2D.gravityScale = 0;
+                    rb2D.angularDrag = 0;
+                    rb2D.freezeRotation = true;
+                }
+
                 PrefabUtility.CreatePrefab("Assets/Resources/" + type + "/" + obstacle.Id + ".prefab", obstacle.gameObject);
                 DestroyImmediate(obstacle.gameObject);
                 CreateObj = new GameObject();
@@ -360,6 +367,13 @@ public class MapObjectsUI : EditorWindow {
                 tile.Image = tile.Icon;
                 tile.gameObject.tag = tag;
                 tile.Id = Guid.NewGuid().ToString();
+
+                if (tile.Type == Constant.TileType.Pressable)
+                {
+                    var coll = tile.gameObject.AddComponent<BoxCollider2D>();
+                    coll.isTrigger = true;
+                }
+
                 PrefabUtility.CreatePrefab("Assets/Resources/" + type + "/" + tile.Id + ".prefab", tile.gameObject);
                 DestroyImmediate(tile.gameObject);
                 CreateObj = new GameObject();
@@ -383,7 +397,6 @@ public class MapObjectsUI : EditorWindow {
         switch (tab)
         {
             case 1: 
-
                 break;
             case 2:
                 var temp6 = obj as Pickup;
@@ -394,8 +407,22 @@ public class MapObjectsUI : EditorWindow {
                 break;
             case 3:
                 var temp1 = obj as Obstacle;
-                temp1.hp = obstacle.hp ;
+                temp1.hp = obstacle.hp;
                 temp1.Sound = obstacle.Sound;
+                temp1.Type = obstacle.Type;
+                var physic = temp1.gameObject.GetComponent<Rigidbody2D>();
+
+                if (temp1.Type == Constant.ObstacleType.Movable && physic == null)
+                {
+                    var rb2D = temp1.gameObject.AddComponent<Rigidbody2D>();
+                    rb2D.gravityScale = 0;
+                    rb2D.angularDrag = 0;
+                    rb2D.freezeRotation = true;
+                }
+                else if (physic != null)
+                {
+                    DestroyImmediate(physic, true);
+                }                
                 break;
             case 4:
                 Door aux = GameObject.Find("New Game Object").GetComponent<Door>();
@@ -404,7 +431,6 @@ public class MapObjectsUI : EditorWindow {
                 DestroyImmediate(aux.gameObject);
                 CreateObj = new GameObject();
                 door = CreateObj.AddComponent<Door>();
-
                 break;
             case 5:
                 var temp3 = obj as House;
@@ -412,12 +438,24 @@ public class MapObjectsUI : EditorWindow {
                 temp3.Heigth = house.Heigth;
                 break;
             default:
-
+                var temp4 = obj as Tile;
+                temp4.Type = tile.Type;
+                var coll = temp4.gameObject.GetComponent<BoxCollider2D>();
+                if (temp4.Type == Constant.TileType.Pressable && coll == null)
+                {
+                    coll = temp4.gameObject.AddComponent<BoxCollider2D>();
+                    coll.isTrigger = true;
+                }
+                else if (coll != null)
+                {
+                    DestroyImmediate(coll, true);
+                }
                 break;
         }
         ClearFields();
     }
-     void AddObject()
+
+    void AddObject()
     {
         if (Event.current.commandName == "ObjectSelectorUpdated") 
         {
@@ -447,7 +485,7 @@ public class MapObjectsUI : EditorWindow {
     {
         Rect LeftSide = new Rect(0, 0, (this.position.width * 0.5f), this.position.height - 20);
         GUILayout.BeginArea(LeftSide, string.Empty, EditorStyles.helpBox);
-        tab = GUILayout.Toolbar(tab, new string[] { "Tiles", "Walls", "PickUps", "Obstacles", "Doors", "Houses" });
+        tab = GUILayout.Toolbar(tab, new string[] { "Tiles", "Walls", "PickUps", "Obstacles", "Doors" });
         GUILayout.BeginVertical();
         scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition);
 
@@ -538,7 +576,7 @@ public class MapObjectsUI : EditorWindow {
                         Logo);
     }
 
-     void ClearFields()
+    void ClearFields()
     {
         textureName = string.Empty;
         texture = new Sprite();
@@ -558,10 +596,12 @@ public class MapObjectsUI : EditorWindow {
         }
         Selected = null;
     }
-     void OnDestroy()
-     {
+
+    void OnDestroy()
+    {
         DestroyImmediate(CreateObj);
     }
+
     /// <summary>
     /// Dibuja los objetos que estan en el arreglo
     /// </summary>
@@ -597,7 +637,9 @@ public class MapObjectsUI : EditorWindow {
             }
         }
     }
-     void updateFields(){
+
+    void updateFields()
+    {
         var obj = Selected.GetComponent<RPGElement>();
         name = obj.Name;
         texture = obj.Icon;
@@ -636,6 +678,7 @@ public class MapObjectsUI : EditorWindow {
                 obstacle.hp = temp1.hp;
                 obstacle.Image = temp1.Image;
                 obstacle.Sound = temp1.Sound;
+                obstacle.Type = temp1.Type;
                 break;
             case 4:
                 var temp2 = obj as Door;
@@ -643,7 +686,6 @@ public class MapObjectsUI : EditorWindow {
                 door.Image = temp2.Image;
                 break;
             case 5:
-
                 var temp3 = obj as House;
                 house.Width = temp3.Width;
                 house.Heigth = temp3.Heigth;
@@ -652,6 +694,7 @@ public class MapObjectsUI : EditorWindow {
             default:
                 var temp5 = obj as Tile;
                 tile.Image = temp5.Image;
+                tile.Type = temp5.Type;
                 break;
         }
     }

@@ -53,31 +53,13 @@ public class Constant{
     /// Alto del fondo de pantalla del combate
     /// </summary>
     public const int BackgroundHeight= 580;
-
     /// <summary>
-    /// Crea el marco de la imagen del equipamiento
+    /// Permite saber al jugador si el juego esta en pausa o no
     /// </summary>
-    /// <returns>Rectángulo con sus coordenadas definidas</returns>
-    public static Rect GetTextureCoordinate(Sprite Image)
-    {
-        return new Rect(Image.textureRect.x / Image.texture.width,
-                        Image.textureRect.y / Image.texture.height,
-                        Image.textureRect.width / Image.texture.width,
-                        Image.textureRect.height / Image.texture.height);
-    }
-    /// <summary>
-    /// Agrega un scene a la configuracion de construccion ( Build Settings).
-    /// </summary>
-    /// <param name="path">Ruta del scene</param>
-    public static void AddSceneToBuild(string path)
-    {
-        EditorBuildSettingsScene[] original = EditorBuildSettings.scenes;
-        EditorBuildSettingsScene[] newSettings = new EditorBuildSettingsScene[original.Length + 1];
-        System.Array.Copy(original, newSettings, original.Length);
-        EditorBuildSettingsScene sceneToAdd = new EditorBuildSettingsScene(path, true);
-        newSettings[newSettings.Length - 1] = sceneToAdd;
-        EditorBuildSettings.scenes = newSettings;
-    }
+    public static bool start;
+    public static string LastSceneLoaded;
+    public static GameObject ActiveMap;
+    
     /// <summary>
     /// Se encarga de colocar los anchor point en el borde del objeto
     /// </summary>
@@ -204,6 +186,46 @@ public class Constant{
         Sound
     };
 
+    public enum TileType
+    {
+        Normal,
+        Pressable,
+        EnemySpawn
+    };
+
+    public enum ObstacleType
+    {
+        Normal,
+        Movable,
+        Destroyable
+    }
+
+    /// <summary>
+    /// Crea el marco de la imagen del equipamiento
+    /// </summary>
+    /// <returns>Rectángulo con sus coordenadas definidas</returns>
+    public static Rect GetTextureCoordinate(Sprite Image)
+    {
+        return new Rect(Image.textureRect.x / Image.texture.width,
+                        Image.textureRect.y / Image.texture.height,
+                        Image.textureRect.width / Image.texture.width,
+                        Image.textureRect.height / Image.texture.height);
+    }
+
+    /// <summary>
+    /// Agrega un scene a la configuracion de construccion ( Build Settings).
+    /// </summary>
+    /// <param name="path">Ruta del scene</param>
+    public static void AddSceneToBuild(string path)
+    {
+        EditorBuildSettingsScene[] original = EditorBuildSettings.scenes;
+        EditorBuildSettingsScene[] newSettings = new EditorBuildSettingsScene[original.Length + 1];
+        System.Array.Copy(original, newSettings, original.Length);
+        EditorBuildSettingsScene sceneToAdd = new EditorBuildSettingsScene(path, true);
+        newSettings[newSettings.Length - 1] = sceneToAdd;
+        EditorBuildSettings.scenes = newSettings;
+    }
+
     /// <summary>
     /// remueve un scene de la configuracion de construccion ( Build Settings). 
     /// </summary>
@@ -221,12 +243,7 @@ public class Constant{
         }
         EditorBuildSettings.scenes = newSettings;
     }
-    /// <summary>
-    /// Permite saber al jugador si el juego esta en pausa o no
-    /// </summary>
-    public static bool start;
-    public static string LastSceneLoaded;
-    public static GameObject ActiveMap;
+    
 
     public static bool checkDoor(AbstractMap door)
     {

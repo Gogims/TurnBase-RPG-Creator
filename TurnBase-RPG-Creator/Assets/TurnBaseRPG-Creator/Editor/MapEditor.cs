@@ -2,12 +2,8 @@
 using UnityEditor;
 
 [InitializeOnLoad]
-public class MapEditor {
-
-	/// <summary>
-	/// Objeto seleccionado.
-	/// </summary>
-	public static GameObject selectedObject;
+public class MapEditor
+{    
     private static GameObject AreaTroopSelector;
 	static Object DarkFloor;
 	static Object LightFloor;
@@ -29,19 +25,27 @@ public class MapEditor {
 	{
 		Event e = Event.current;
 
-		//Revisa si el objeto seleccionado es nulo.
-		if (Selection.activeGameObject != null && !selection)
+        //Revisa si el objeto seleccionado es del Object Browser
+        if (Selection.activeGameObject != null)
         {
-            ChangeSelectedObject (Selection.activeGameObject);
-		}
+            if (Selection.activeGameObject.activeInHierarchy)
+            {
+                ChangeSelectedObjectInMap(Selection.activeGameObject);
+            }
+            else
+            {
+                ChangeSelectedObject(Selection.activeGameObject);
+            }            
+        }
         
         // si el click izquierdo es precionado y el objeto seleccionado es diferente de nulo inserta un objeto al mapa. 
         if (EventType.MouseUp == e.type && e.button == 0)
         {
-            if (!selection && selectedObject != null && (selectedObject.tag == "RPG-MAPOBJECT" || selectedObject.tag == "RPG-PLAYER" || selectedObject.tag == "RPG-ENEMY"))
+            if (RPGInspectorUI.ObjectBrowser != null && (RPGInspectorUI.ObjectBrowser.tag == "RPG-MAPOBJECT" || RPGInspectorUI.ObjectBrowser.tag == "RPG-PLAYER" || RPGInspectorUI.ObjectBrowser.tag == "RPG-ENEMY"))
             {
                 DropObject();
             }
+            // Modo selección y se eligió la puerta
             else if(selection && Selection.activeGameObject.activeInHierarchy)
             {
                 GameObject gobj = Selection.activeGameObject;
@@ -78,7 +82,7 @@ public class MapEditor {
         if (EventType.MouseDown == e.type && e.button == 1 )
         {
             Selection.activeGameObject = null;
-            selectedObject = null;
+            RPGInspectorUI.ObjectBrowser = null;
             GameEngine.inspectorRpg.Focus();
         }
 	}
@@ -132,28 +136,36 @@ public class MapEditor {
 	/// </summary>
 	/// <param name="Selected">objeto seleccionado</param>
 	static void ChangeSelectedObject(GameObject Selected){
-        if (Selected != selectedObject)
+        if (Selected != RPGInspectorUI.ObjectBrowser)
         {
+            if ((Selected.tag == "RPG-MAPOBJECT" && !Selected.activeInHierarchy) || Selected.GetComponent<Door>() != null)
+            {
+                RPGInspectorUI.ObjectBrowser = Selected;
+                GameEngine.inspectorRpg.Focus();
+            }
+        }
+    }
+    
+    static void ChangeSelectedObjectInMap(GameObject Selected)
+    {
+        if (Selected != RPGInspectorUI.ObjectBrowser)
+        {
+            if (EditorWindow.focusedWindow.titleContent.text == "Scene")
+            {
+                RPGInspectorUI.ObjectMap = Selected;
+                GameEngine.inspectorRpg.Focus();
+                SceneView.currentDrawingSceneView.Focus();                 
+            }
+
+            // Crear el area de selección del enemigo elegido
             if (AreaTroopSelector != null)
             {
                 Object.DestroyImmediate(AreaTroopSelector);
             }
 
-            if ((Selected.tag == "RPG-MAPOBJECT" && !Selected.activeInHierarchy) || Selected.GetComponent<Door>() != null)
+            if (Selected.tag == "RPG-ENEMY" && Selected.activeInHierarchy)
             {
-                selectedObject = Selected;
-                GameEngine.inspectorRpg.Focus();                
-
-            }
- 
-            else if (Selected.tag == "RPG-ENEMY" && Selected.activeInHierarchy)
-            {
-                selectedObject = Selected;
-                var SceneWindow = SceneView.lastActiveSceneView;
-                GameEngine.inspectorRpg.Focus();
-                SceneWindow.Focus();
-
-                if (RPGInspectorUI.SelectionMode)
+                if (RPGInspectorUI.EnemySelection)
                 {
                     AreaTroopSelector = new GameObject("Selector");
                     var sprite = AreaTroopSelector.AddComponent<SpriteRenderer>();
@@ -162,26 +174,25 @@ public class MapEditor {
                     AreaTroopSelector.transform.position = Selected.gameObject.GetComponent<Troop>().transform.position;
                 }
             }
-        }        
+        }
 
-        if (AreaTroopSelector != null && selectedObject.gameObject.GetComponent<Troop>() != null)
+        if (AreaTroopSelector != null && Selected.gameObject.GetComponent<Troop>() != null)
         {
-            Troop troop = selectedObject.GetComponent<Troop>();
+            Troop troop = Selected.GetComponent<Troop>();
             var selector = AreaTroopSelector.GetComponent<SpriteRenderer>();
             float EnemyAreaWidth = troop.AreaWidth < 0 ? 0 : 3.125f * troop.AreaWidth * 2;
             float EnemyAreaHeight = troop.AreaHeight < 0 ? 0 : 3.125f * troop.AreaHeight * 2;
 
-            selector.transform.localScale = new Vector3(EnemyAreaWidth+3.125f, EnemyAreaHeight + 3.125f, 1);
-
+            selector.transform.localScale = new Vector3(EnemyAreaWidth + 3.125f, EnemyAreaHeight + 3.125f, 1);
         }
-
     }
+
 	/// <summary>
 	/// Pinta el objeto seleccionado en la scene.
 	/// </summary>
 	static void DropObject()
 	{
-        GameObject temp = selectedObject;
+        GameObject temp = RPGInspectorUI.ObjectBrowser;
         SpriteRenderer selectSprite = temp.GetComponent<SpriteRenderer>();
 		foreach (GameObject i in Selection.gameObjects) {
             if (i == null) continue;
