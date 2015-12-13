@@ -142,7 +142,7 @@ public class JobUI : CRUD<Job>
     {
         elementObject = base.NewGameObject();
 
-        element.Data.XP = new Formula();
+        element.Data.XP = new Formula(Formula.FormulaType.XP);
         element.Data.MaxHP = new Formula(Formula.FormulaType.MaxHP);
         element.Data.MaxMP = new Formula(Formula.FormulaType.MaxMP);
         element.Data.Attack = new Formula(Formula.FormulaType.Attack);

@@ -37,33 +37,20 @@ public class RPGInspectorUI : EditorWindow
     /// </summary>
     private static GameObject temp;
     private GUIStyle style;
+    private Texture Logo;
 
     public RPGInspectorUI()
     {
         Error = string.Empty;
         style = new GUIStyle();
         style.normal.textColor = Color.red;
+        Logo = Resources.Load<Texture>("LogoPUCMM");
     }
 
 	void OnGUI() 
 	{
-        // Seleccionado en Object Browser
-        GUILayout.BeginArea(new Rect(20, 20, Constant.INSPECTOR_IMAGE_WIDTH + 80, Constant.INSPECTOR_IMAGE_HEIGTH + 140), "Object In Browser", EditorStyles.boldLabel);
-        GUILayout.Space(15);
-
-        DrawObject(ObjectBrowser);
-        GUILayout.Space(Constant.INSPECTOR_IMAGE_HEIGTH + 20);
-
-        GUI.enabled = ObjectBrowser != null;
-        if (GUILayout.Button("Clear Selection"))
-        {
-            ObjectBrowser = null;
-        }
-        GUI.enabled = true;
-        GUILayout.EndArea();
-
         // Seleccionado en la escena del mapa 
-        GUILayout.BeginArea(new Rect(20, Constant.INSPECTOR_IMAGE_HEIGTH + 150, Constant.INSPECTOR_IMAGE_WIDTH + 50, position.height - Constant.INSPECTOR_IMAGE_HEIGTH + 120), "Object In Map", EditorStyles.boldLabel);
+        GUILayout.BeginArea(new Rect(20, 20, Constant.INSPECTOR_IMAGE_WIDTH + 80, position.height - (Constant.INSPECTOR_IMAGE_HEIGTH + 120)), "Object In Map", EditorStyles.boldLabel);
         GUILayout.Space(15);
 
         DrawObject(ObjectMap);
@@ -179,8 +166,27 @@ public class RPGInspectorUI : EditorWindow
             }
         }
 
-        GUILayout.Label(Error, style);
         GUILayout.EndArea();
+
+        // Seleccionado en Object Browser
+        GUILayout.BeginArea(new Rect(20, position.height - (Constant.INSPECTOR_IMAGE_HEIGTH + 120), Constant.INSPECTOR_IMAGE_WIDTH + 80, Constant.INSPECTOR_IMAGE_HEIGTH + 140), "Object In Browser", EditorStyles.boldLabel);
+        GUILayout.Space(15);
+
+        DrawObject(ObjectBrowser);
+        GUILayout.Space(Constant.INSPECTOR_IMAGE_HEIGTH + 20);
+
+        GUI.enabled = ObjectBrowser != null;
+        if (GUILayout.Button("Clear Selection"))
+        {
+            ObjectBrowser = null;
+        }
+        GUI.enabled = true;
+
+        //GUILayout.Label(Error, style);
+        GUILayout.EndArea();
+
+        GUI.DrawTexture(new Rect(0, position.height-20, Logo.width, Logo.height),
+                        Logo);
     }    
 
     void Update()

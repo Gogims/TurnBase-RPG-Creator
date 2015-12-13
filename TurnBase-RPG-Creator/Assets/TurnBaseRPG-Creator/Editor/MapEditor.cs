@@ -150,7 +150,7 @@ public class MapEditor
     {
         if (Selected != RPGInspectorUI.ObjectBrowser)
         {
-            if (EditorWindow.focusedWindow.titleContent.text == "Scene")
+            if (Selected != RPGInspectorUI.ObjectMap)
             {
                 RPGInspectorUI.ObjectMap = Selected;
                 GameEngine.inspectorRpg.Focus();
