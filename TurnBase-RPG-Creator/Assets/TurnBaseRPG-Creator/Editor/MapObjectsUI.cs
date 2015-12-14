@@ -564,7 +564,7 @@ public class MapObjectsUI : EditorWindow {
             oldtab = tab;
             ClearFields();
         }
-        DrawObjectList();
+        DrawObjectList(LeftSide);
         GUILayout.EndVertical();
         GUILayout.EndScrollView();
         GUILayout.EndArea();
@@ -609,7 +609,7 @@ public class MapObjectsUI : EditorWindow {
     /// <summary>
     /// Dibuja los objetos que estan en el arreglo
     /// </summary>
-    void DrawObjectList() 
+    void DrawObjectList(Rect area) 
     {
         int x = 10;
         int y = 26;
@@ -631,12 +631,12 @@ public class MapObjectsUI : EditorWindow {
                 Selected = temp;
                 updateFields();
             }
-            if (x + 84 +112 < this.position.width)
+            if (x + 84 +112 < area.width)
                 x += 84;
             else
             {
                 GUILayout.Label("", GUILayout.Height(64 + 25), GUILayout.Width(x+60));
-                y += 84;
+                y += 94;
                 x = 10;
             }
         }

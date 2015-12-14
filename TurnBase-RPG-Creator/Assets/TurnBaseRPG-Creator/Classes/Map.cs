@@ -67,6 +67,10 @@ public class Map : RPGElement
         x.Data.MapPath = returnPath;
         PrefabUtility.CreatePrefab("Assets/Resources/Maps/" + x.Id + ".prefab", x.gameObject);
         DestroyImmediate(settings);
+        var mobilecontrol = Instantiate(Resources.Load<GameObject>("MobileSingleStickControl"));
+        var eventsystem = Instantiate(Resources.Load<GameObject>("EventSystem"));
+        eventsystem.transform.parent = MapObj.transform;
+        mobilecontrol.transform.parent = MapObj.transform;
         EditorApplication.SaveScene(returnPath);// Guarda la scene.
         Constant.AddSceneToBuild(returnPath);
 	}
@@ -168,6 +172,18 @@ public class Map : RPGElement
             Audio audio = new Audio("BackgroundAudio");
             audio.CreateAudioSource(this.Data.Background);
             audio.gameobject.transform.parent = MapObj.transform; 
+        }
+
+        if (GameObject.Find("MobileSingleStickControl(Clone)") == null)
+        {
+            var MobileSingleStickControl = Instantiate(Resources.Load<GameObject>("MobileSingleStickControl"));
+            MobileSingleStickControl.transform.parent = MapObj.transform;
+        }
+
+        if (GameObject.Find("EventSystem(Clone)") == null)
+        {
+            var EventSystem = Instantiate(Resources.Load<GameObject>("EventSystem"));
+            EventSystem.transform.parent = MapObj.transform;
         }
 
         EditorApplication.SaveScene();

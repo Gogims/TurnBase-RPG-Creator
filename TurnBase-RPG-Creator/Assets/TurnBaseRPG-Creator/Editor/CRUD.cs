@@ -229,11 +229,6 @@ public abstract class CRUD<T> : EditorWindow
                     elementObject = Instantiate(temp);
                     element = elementObject.GetComponent<T>();
                     Creating = false;
-
-                    //if (element.Icon != null)
-                    //{
-                    //    SpriteName = element.Icon.name;
-                    //}
                 }
 
                 if (x + 84 + 64 < LeftSide.width)
