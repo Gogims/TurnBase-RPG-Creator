@@ -59,7 +59,10 @@ public class Constant{
     public static bool start;
     public static string LastSceneLoaded;
     public static GameObject ActiveMap;
-    
+    public static void SetCanvasScale(GameObject obj, Vector2 screenSize){
+    RectTransform size = obj.GetComponent<RectTransform>();
+    obj.transform.localScale = new Vector3(size.rect.width/screenSize.x, size.rect.height/screenSize.y);
+    }
     /// <summary>
     /// Se encarga de colocar los anchor point en el borde del objeto
     /// </summary>

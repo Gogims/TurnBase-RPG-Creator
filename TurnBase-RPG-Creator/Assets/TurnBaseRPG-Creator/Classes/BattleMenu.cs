@@ -37,16 +37,7 @@ public class BattleMenu : Menus {
     /// Codigo de prueba
     /// </summary>
     public void Start() {
-        GameObject battle = GameObject.Find("BattleMenu");
-        battle.transform.parent = GameObject.Find("BattleMap").transform;
-        battle.transform.localPosition = new Vector3(0, 0, 90);
-        battle.transform.localScale = new Vector3(1, 1);
-        GameObject.Find("BattleMenu").transform.FindChild("Canvas").GetComponent<Canvas>().worldCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
-        RectTransform canvas = GameObject.Find(Constant.LastSceneLoaded).transform.FindChild("Canvas").gameObject.GetComponent<RectTransform>();
-        Vector2 worldScreen = new Vector2(Camera.main.orthographicSize * 2 / Screen.height * Screen.width, Camera.main.orthographicSize * 2);
-        canvas.sizeDelta = new Vector2(worldScreen.x, worldScreen.y);
         Init(GameObject.FindWithTag("RPG-PLAYER").GetComponent<Player>());
-        GameObject.Find("BattleMap").transform.FindChild("BattleManager").gameObject.GetComponent<BattleManager>().BattleMenu = battle;
     }
     /// <summary>
     /// player que va usar el menu.
