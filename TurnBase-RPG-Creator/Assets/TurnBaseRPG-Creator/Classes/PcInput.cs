@@ -29,8 +29,8 @@ public class PcInput
 	}
 	//Retorna true si el boton de pausa es presionado de lo contrario retorna false.
 	public static bool Pause(){
-		return Input.GetKeyUp ("enter");
-	}
+        return Input.GetKey(KeyCode.KeypadEnter) || Input.GetKey("enter");
+    }
 	//Retorna true si el boton de select es presionado de lo contrario retorna false.
 	public static bool Select(){
 		return Input.GetKeyUp ("space");

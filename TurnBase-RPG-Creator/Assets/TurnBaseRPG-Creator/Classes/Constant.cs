@@ -110,6 +110,7 @@ public class Constant
     public static bool start;
     public static string LastSceneLoaded;
     public static GameObject ActiveMap;
+    public static GameObject Control;
 
     public static bool checkDoor(AbstractMap door)
     {

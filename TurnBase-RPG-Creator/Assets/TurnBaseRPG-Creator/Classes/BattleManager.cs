@@ -139,7 +139,7 @@ public class BattleManager : RPGElement
             GameObject x = Instantiate(i as GameObject);
             x.name = i.name;
 
-            if (i.name == "Selector" || i.name == "MobileSingleStickControl" || i.name == "EventSystem" )
+            if (i.name == "Selector" || i.name == "Battle" )
             {
                 x.transform.SetParent(battlemap.transform);
                 continue;
@@ -369,6 +369,7 @@ public class BattleManager : RPGElement
                     Destroy(GameObject.Find("BattleMap"));
                     Destroy(GameObject.Find("BattleMenu"));
                     Constant.ActiveMap.SetActive(true);
+                    Constant.Control.SetActive(true);
                     break;
             }
         }

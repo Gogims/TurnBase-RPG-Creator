@@ -20,6 +20,7 @@ public class MainMenu : Menus {
             break;
         }
         DontDestroyOnLoad(GameObject.Find("MobileSingleStickControl"));
+        DontDestroyOnLoad(GameObject.Find("EventSystem"));
         Constant.LastSceneLoaded = "MainMenu";
         GameObject.Find("SelectNewGame").GetComponent<MenuOptionScen>().SceneName = (x as GameObject).GetComponent<MenuOptionScen>().SceneName;
     }
