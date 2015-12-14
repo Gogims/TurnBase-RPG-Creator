@@ -365,6 +365,7 @@ public class BattleManager : RPGElement
                     Destroy(GameObject.Find("BattleMenu"));
                     Constant.ActiveMap.SetActive(true);
                     Constant.Control.SetActive(true);
+                    Player.transform.position = Constant.playerPos;
                     break;
             }
         }

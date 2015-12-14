@@ -36,12 +36,12 @@ public class PhoneInput
     //Retorna true si el boton de pausa es presionado de lo contrario retorna false.
     public static bool Pause()
     {
-        return Input.GetKeyUp("enter");
+        return CrossPlatformInputManager.GetButton("Start");
     }
     //Retorna true si el boton de select es presionado de lo contrario retorna false.
     public static bool Select()
     {
-        return Input.GetKeyUp("space");
+        return CrossPlatformInputManager.GetButton("Select");
     }
 
     //Retorna true si el boton A es soltado.

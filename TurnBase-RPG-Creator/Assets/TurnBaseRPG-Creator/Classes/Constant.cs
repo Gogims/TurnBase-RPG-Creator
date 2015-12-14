@@ -113,6 +113,7 @@ public class Constant
     public static string LastSceneLoaded;
     public static GameObject ActiveMap;
     public static GameObject Control;
+    public static Vector3 playerPos;
 
     public static bool checkDoor(AbstractMap door)
     {

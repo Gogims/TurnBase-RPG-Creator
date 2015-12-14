@@ -205,7 +205,6 @@ public class ProxyInput
                 instance.OnRightUp = PhoneInput.RightUp;
                 instance.OnUpUp = PhoneInput.UpUp;
             }
-
             instance.OnA = PhoneInput.A;
             instance.OnB = PhoneInput.B;
             instance.OnSelect = PhoneInput.Select;
@@ -222,6 +221,8 @@ public class ProxyInput
             instance.OnLeftUp = PhoneInput.LeftUp;
             instance.OnRightUp = PhoneInput.RightUp;
             instance.OnUpUp = PhoneInput.UpUp;
+
+            
 
 
         }

@@ -45,69 +45,6 @@ public class Player : Actor
 
     protected override void Start()
     {
-        AbstractAbility aux = new AbstractAbility();
-        AbstractUsable aux2 = new AbstractUsable();
-        AbstractArmor aux3 = new AbstractArmor();
-        AbstractArmor aux4 = new AbstractArmor();
-        AbstractArmor aux5 = new AbstractArmor();
-        AbstractArmor aux6 = new AbstractArmor();
-        AbstractArmor aux7 = new AbstractArmor();
-        AbstractArmor aux8 = new AbstractArmor();
-        AbstractArmor aux9 = new AbstractArmor();
-        AbstractArmor aux0 = new AbstractArmor();
-        AbstractArmor aux11 = new AbstractArmor();
-        AbstractArmor aux12 = new AbstractArmor();
-        AbstractArmor aux13 = new AbstractArmor();
-        aux2.ItemName = "Potion";
-        aux.Ability = "Ice";
-        aux.AttackPower = 10;
-        aux3.ItemName = "Armor";
-        aux3.Type = AbstractArmor.ArmorType.Body;
-        Items.InsertArmor(aux3);
-        Items.InsertArmor(aux3);
-        Items.InsertArmor(aux3);
-        Items.InsertArmor(aux3);
-        aux4.Type = AbstractArmor.ArmorType.Feet;
-        aux4.ItemName = "Armor2";
-        Items.InsertArmor(aux4);
-        Items.InsertArmor(aux4);
-        aux5.Type = AbstractArmor.ArmorType.Helmet;
-        aux5.ItemName = "Armor3";
-        Items.InsertArmor(aux5);
-        aux6.Type = AbstractArmor.ArmorType.Helmet;
-        aux6.ItemName = "Armor6";
-        Items.InsertArmor(aux6);
-        aux7.Type = AbstractArmor.ArmorType.Helmet;
-        aux7.ItemName = "Armor67";
-        Items.InsertArmor(aux7);
-        aux8.Type = AbstractArmor.ArmorType.Necklace;
-        aux8.ItemName = "Armor4";
-        Items.InsertArmor(aux8);
-        aux9.Type = AbstractArmor.ArmorType.Ring;
-        aux9.ItemName = "Armor5";
-        Items.InsertArmor(aux9);
-        Items.InsertUsable(aux2);
-        Items.InsertUsable(aux2);
-        Items.InsertUsable(aux2);
-        Items.InsertUsable(aux2);
-        Items.InsertUsable(aux2);
-        Items.InsertUsable(aux2);
-        Items.InsertUsable(aux2);
-        Items.InsertUsable(aux2);
-        Items.InsertUsable(aux2);
-        Items.InsertUsable(aux2);
-        Items.InsertUsable(aux2);
-        Items.InsertUsable(aux2);
-        Data.Job.Abilities.Add(aux);
-        Data.Job.Abilities.Add(aux);
-        Data.Job.Abilities.Add(aux);
-        Data.Job.Abilities.Add(aux);
-        Data.Job.Abilities.Add(aux);
-        Data.Job.Abilities.Add(aux); 
-        Data.Job.Abilities.Add(aux);
-        Data.Job.Abilities.Add(aux);
-        Data.Job.Abilities.Add(aux);
-        Data.Job.Abilities.Add(aux);
         Data.InstanceStates();
     }
     /// <summary>
@@ -160,7 +97,7 @@ public class Player : Actor
             MoveDirection(ProxyInput.GetInstance().Right(), "right", 1);
             PlayerMove();
         }
-        if (ProxyInput.GetInstance().Select() && !Constant.start)
+        if (ProxyInput.GetInstance().Pause() && !Constant.start)
         {
             Constant.ActiveMap = GameObject.Find("Map");
             Constant.ActiveMap.SetActive(false);
@@ -240,6 +177,7 @@ public class Player : Actor
         {
             Destroy(coll.gameObject);
             GameObject p = GameObject.FindWithTag("RPG-PLAYER");
+            Constant.playerPos = p.transform.position;
             Constant.ActiveMap = GameObject.Find("Map");
             Constant.ActiveMap.SetActive(false);
             Constant.Control = GameObject.Find("MobileSingleStickControl");
