@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
+using UnityEngine.UI;
+using System;
 #endif
 
 /// <summary>
@@ -114,7 +116,7 @@ public class Constant
     public static bool checkDoor(AbstractMap door)
     {
         string name = door.MapPath.Substring(door.MapPath.LastIndexOf("/") + 1).Replace(".unity", "");
-        Object[] obj = Resources.LoadAll("Maps", typeof(GameObject));
+        UnityEngine.Object[] obj = Resources.LoadAll("Maps", typeof(GameObject));
         foreach (var i in obj)
         {
             Map iobj = (i as GameObject).GetComponent<Map>();
@@ -276,5 +278,20 @@ public class Constant
         MagicDefense,
         Agility,
         Luck
-    };    
+    };
+
+    public static void AdjustTextFont(string mode)
+    {
+        Vector2 worldScreen = new Vector2(Camera.main.orthographicSize * 2 / Screen.height * Screen.width, Camera.main.orthographicSize * 2);
+        Text[] Texts = GameObject.FindObjectsOfType<Text>();
+        foreach (var txt in Texts)
+        {
+            if (mode == "Start")
+                txt.fontSize = (int)(Math.Min(worldScreen.x, worldScreen.y) / 30);
+            else if (mode == "Battle")
+                txt.fontSize = (int)(Math.Min(worldScreen.x, worldScreen.y) / 20);
+            else if (mode == "Equipment")
+                txt.fontSize = (int)(Math.Min(worldScreen.x, worldScreen.y) / 15);
+        }
+    }
 }

@@ -178,6 +178,7 @@ public class EquipmentMenu : Menus {
             }
         }
         Menu2.Init(Arrow3, Options);
+        Constant.AdjustTextFont("Equipment");
         
     }
     /// <summary>
@@ -345,42 +346,60 @@ public class EquipmentMenu : Menus {
         }
     }
     private void SetDiffText(Attribute stats, Attribute stats2) {
-        SetDiffVal("AgilityDiff", stats.Agility, stats2.Agility);
-        SetDiffVal("DefenseDiff", stats.Defense, stats2.Defense);
-        SetDiffVal("AttackDiff", stats.Attack, stats2.Attack);
-        SetDiffVal("LuckDiff", stats.Luck, stats2.Luck);
-        SetDiffVal("MagicDiff", stats.Magic, stats2.Magic);
-        SetDiffVal("MagicDefenseDiff", stats.MagicDefense, stats2.MagicDefense);
-        SetDiffVal("MaxHPDiff", stats.MaxHP, stats2.MaxHP);
-        SetDiffVal("MaxMPDiff", stats.MaxMP, stats2.MaxMP);
+        if (Constant.LastSceneLoaded != "StatsMenu")
+        {
+            SetDiffVal("AgilityDiff", stats.Agility, stats2.Agility);
+            SetDiffVal("DefenseDiff", stats.Defense, stats2.Defense);
+            SetDiffVal("AttackDiff", stats.Attack, stats2.Attack);
+            SetDiffVal("LuckDiff", stats.Luck, stats2.Luck);
+            SetDiffVal("MagicDiff", stats.Magic, stats2.Magic);
+            SetDiffVal("MagicDefenseDiff", stats.MagicDefense, stats2.MagicDefense);
+            SetDiffVal("MaxHPDiff", stats.MaxHP, stats2.MaxHP);
+            SetDiffVal("MaxMPDiff", stats.MaxMP, stats2.MaxMP);
+        }
     }
     /// <summary>
     /// Pone inactivo todos los text que muestran la diferencia de los stats.
     /// </summary>
     private void ClearDiffText(){
-        GameObject.Find("MaxHPDiff").GetComponent<Text>().text = "";
-        GameObject.Find("MaxMPDiff").GetComponent<Text>().text = "";
-        GameObject.Find("AttackDiff").GetComponent<Text>().text = "";
-        GameObject.Find("MagicDiff").GetComponent<Text>().text = "";
-        GameObject.Find("DefenseDiff").GetComponent<Text>().text = "";
-        GameObject.Find("MagicDefenseDiff").GetComponent<Text>().text = "";
-        GameObject.Find("AgilityDiff").GetComponent<Text>().text = "";
-        GameObject.Find("LuckDiff").GetComponent<Text>().text = "";
+        if (Constant.LastSceneLoaded != "StatsMenu")
+        {
+            GameObject.Find("MaxHPDiff").GetComponent<Text>().text = "";
+            GameObject.Find("MaxMPDiff").GetComponent<Text>().text = "";
+            GameObject.Find("AttackDiff").GetComponent<Text>().text = "";
+            GameObject.Find("MagicDiff").GetComponent<Text>().text = "";
+            GameObject.Find("DefenseDiff").GetComponent<Text>().text = "";
+            GameObject.Find("MagicDefenseDiff").GetComponent<Text>().text = "";
+            GameObject.Find("AgilityDiff").GetComponent<Text>().text = "";
+            GameObject.Find("LuckDiff").GetComponent<Text>().text = "";
+        }
     }
     public void Update() {
-        switch (MenuSelected)
+
+        if (Constant.LastSceneLoaded != "StatsMenu")
         {
-            case 0:
-                Menu.update();
-                break;
-            case 1:
-                MenuScroll.update();
-                break;
-            case 2:
-                Menu2.update();
-                break;
-            default:
-                break;
+            switch (MenuSelected)
+            {
+                case 0:
+                    Menu.update();
+                    break;
+                case 1:
+                    MenuScroll.update();
+                    break;
+                case 2:
+                    Menu2.update();
+                    break;
+                default:
+                    break;
+            }
+        }
+        else {
+            if (ProxyInput.GetInstance().BUp())
+            {
+                GameObject.Find("StartMenu").transform.FindChild("Canvas").gameObject.GetComponent<Menus>().disable = false;
+                Destroy(GameObject.Find("EquipmentMenu"));
+                Constant.LastSceneLoaded = "StartMenu";
+            }
         }
         
     }
@@ -396,7 +415,9 @@ public class EquipmentMenu : Menus {
                 Destroy(GameObject.Find("New Game Object"));
                 Destroy(GameObject.Find("New Game Object"));
             }
-            MenuScroll.ChangeList(ActiveItems);
+            MenuScroll.setList(ActiveItems);
+            MenuScroll.DisplayList();
+
         
     }
     private void fillArmor(AbstractArmor.ArmorType type){
@@ -427,7 +448,9 @@ public class EquipmentMenu : Menus {
             Tuple<Item, int> ins = new Tuple<Item, int>(i.First as Item, i.Second);
             ActiveItems.Add(ins);
         }
-            MenuScroll.ChangeList(ActiveItems);
+        MenuScroll.setList(ActiveItems);
+        MenuScroll.DisplayList();
+
     }
     public override void On(string name)
     {

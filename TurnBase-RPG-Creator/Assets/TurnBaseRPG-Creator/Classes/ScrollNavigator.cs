@@ -422,7 +422,7 @@ public class ScrollNavigator<T,U> : AbstractNavigator
     /// </summary>
     public void OnFirst()
     {
-        if (Options.Count > 0)
+        if (Options.Count > 0 && ((Items != null && Items.Count > 0) || (Ability != null && Ability.Count > 0)))
         {
             if (Items != null)
                 Options[0].Key.GetComponent<MenuOption>().On(Items[0].First);

@@ -78,12 +78,7 @@ public class BattleManager : RPGElement
         StatsCanvas = GameObject.Find("BattleMap").transform.FindChild("CanvasStats").gameObject;
         GameObject panel = StatsCanvas.transform.FindChild("Stats Panel").gameObject;
         Vector2 worldScreen = new Vector2(Camera.main.orthographicSize * 2 / Screen.height * Screen.width, Camera.main.orthographicSize * 2);
-        Text[] Texts = GameObject.FindObjectsOfType<Text>();
-        foreach (var txt in Texts)
-        {
-
-            txt.fontSize = (int)(Math.Min(worldScreen.x, worldScreen.y) / 20);
-        }
+        Constant.AdjustTextFont("Battle");
         Constant.LastSceneLoaded = "BattleMenu";
         //ActorsOrdered = OrderActors(Player, Enemies);
         ResizeSpriteToScreen(GameObject.Find("Top"));

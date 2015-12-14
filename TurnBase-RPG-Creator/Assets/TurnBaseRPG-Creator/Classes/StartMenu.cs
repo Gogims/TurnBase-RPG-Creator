@@ -23,6 +23,7 @@ public class StartMenu : Menus {
        HPSlider.GetComponent<Slider>().value = (float)GameObject.FindWithTag("RPG-PLAYER").GetComponent<Player>().Data.HP / (float)GameObject.FindWithTag("RPG-PLAYER").GetComponent<Player>().Data.Stats.MaxHP;
        MPSlider.GetComponent<Slider>().value = (float)GameObject.FindWithTag("RPG-PLAYER").GetComponent<Player>().Data.MP / (float)GameObject.FindWithTag("RPG-PLAYER").GetComponent<Player>().Data.Stats.MaxMP;
        PlayerJob.GetComponent<Text>().text = GameObject.FindWithTag("RPG-PLAYER").GetComponent<Player>().Data.Job.JobName;
+       Constant.AdjustTextFont("Start");
     }
     public void Update() {
         if (!disable )
