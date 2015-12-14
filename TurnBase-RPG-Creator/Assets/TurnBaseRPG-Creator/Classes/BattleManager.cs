@@ -10,6 +10,7 @@ using UnityEditor;
 
 public class BattleManager : RPGElement
 {
+    List<AbstractUsable> ItemsDrop;
     List<GameObject> Enemies;
     int GainXp = 0;
     Player Player;
@@ -58,7 +59,8 @@ public class BattleManager : RPGElement
     string Message = string.Empty;
     private bool destroy;
     private bool working = false;
-    private bool lvlup;
+    private Attribute lvlup;
+    private GameObject StatsCanvas;
 
     public BattleManager(List<GameObject> enemies, Player player)
     {
@@ -68,15 +70,23 @@ public class BattleManager : RPGElement
 
     void Start()
     {
+        ItemsDrop = new List<AbstractUsable>();
+        lvlup = null;
         working = false;
+        BattleMenu = GameObject.Find("BattleMenu");
+        StatsCanvas = GameObject.Find("BattleMap").transform.FindChild("CanvasStats").gameObject;
+        GameObject panel = StatsCanvas.transform.FindChild("Stats Panel").gameObject;
+        Vector2 worldScreen = new Vector2(Camera.main.orthographicSize * 2 / Screen.height * Screen.width, Camera.main.orthographicSize * 2);
+        Text[] Texts = GameObject.FindObjectsOfType<Text>();
+        foreach (var txt in Texts)
+        {
+            txt.fontSize = (int)(Math.Min(worldScreen.x, worldScreen.y) / 22);
+        }
         Constant.LastSceneLoaded = "BattleMenu";
-        Application.LoadLevelAdditive("BattleMenu");
         //ActorsOrdered = OrderActors(Player, Enemies);
         ResizeSpriteToScreen(GameObject.Find("Top"));
         ResizeSpriteToScreen(GameObject.Find("Bottom"));
         selector = GameObject.Find("BattleMap").transform.FindChild("Selector").gameObject;
-        Vector2 worldScreen = new Vector2(Camera.main.orthographicSize * 2 / Screen.height * Screen.width, Camera.main.orthographicSize * 2);
-       
         selector.SetActive(false);
         Enemies = new List<GameObject>();
         Player = GameObject.FindWithTag("RPG-PLAYER").gameObject.GetComponent<Player>();
@@ -84,24 +94,15 @@ public class BattleManager : RPGElement
         {
             Enemies.Add(enemy);
         }
-        
-         GameObject canvasBar = GameObject.Find("BattleMap").transform.FindChild("CanvasBars").gameObject;
-         setCanvasBar(canvasBar);
-         setCanvasMessage(GameObject.Find("BattleMap").transform.FindChild("CanvasMessage").gameObject);   
-    }
-
-    private void setCanvasMessage(GameObject canvasMessage)
-    {
-        Vector2 worldScreen = new Vector2(Camera.main.orthographicSize * 2 / Screen.height * Screen.width, Camera.main.orthographicSize * 2);
-        canvasMessage.transform.position = new Vector3(-worldScreen.x / 2 + canvasMessage.GetComponent<RectTransform>().rect.width / 2, -worldScreen.y / 2 + canvasMessage.GetComponent<RectTransform>().rect.height / 2);
-        CanvasMessage = canvasMessage;
+        GameObject canvasBar = GameObject.Find("BattleMap").transform.FindChild("CanvasBars").gameObject;
+        StatsCanvas = GameObject.Find("BattleMap").transform.FindChild("CanvasStats").gameObject;
+        setCanvasBar(canvasBar);
+        CanvasMessage = GameObject.Find("BattleMap").transform.FindChild("CanvasMessage").gameObject;
         CanvasMessage.SetActive(false);
+        StatsCanvas.SetActive(false);
     }
-
     private void setCanvasBar(GameObject canvasBar)
     {
-        Vector2 worldScreen = new Vector2(Camera.main.orthographicSize * 2 / Screen.height * Screen.width, Camera.main.orthographicSize * 2);
-        canvasBar.transform.position = new Vector3(-worldScreen.x / 2 + canvasBar.GetComponent<RectTransform>().rect.width / 2, worldScreen.y / 2 - canvasBar.GetComponent<RectTransform>().rect.height / 2);
         Hp = canvasBar.transform.FindChild("Panel").gameObject.transform.FindChild("HP Slider").gameObject.GetComponent<Slider>();
         Mp = canvasBar.transform.FindChild("Panel").gameObject.transform.FindChild("MP Slider").gameObject.GetComponent<Slider>();
         CantHp = canvasBar.transform.FindChild("Panel").gameObject.transform.FindChild("HPCant").gameObject.GetComponent<Text>();
@@ -135,7 +136,24 @@ public class BattleManager : RPGElement
         {
             GameObject x = Instantiate(i as GameObject);
             x.name = i.name;
-            x.transform.SetParent(battlemap.transform);
+
+            if (i.name == "Selector" || i.name == "MobileSingleStickControl" || i.name == "EventSystem" )
+            {
+                x.transform.SetParent(battlemap.transform);
+                continue;
+            }
+            if (i.name != "BattleMenu")
+            {
+                x.transform.SetParent(battlemap.transform);
+                x.GetComponent<Canvas>().worldCamera = Camera.main;
+                x.GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceCamera;
+            }
+            else {
+                x.transform.SetParent(battlemap.transform);
+                x.transform.FindChild("Canvas").gameObject.GetComponent<Canvas>().worldCamera = Camera.main;
+                x.transform.FindChild("Canvas").gameObject.GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceCamera;
+            }
+
         }
         Vector2 backgroundSize = CreateBackground("Bottom", troop.BackgroundBottom, 0, battlemap);
         CreateBackground("Top", troop.BackgroundTop, 1, battlemap);
@@ -168,13 +186,24 @@ public class BattleManager : RPGElement
         CanvasMessage.transform.FindChild("Panel").gameObject.transform.FindChild("MessageText").gameObject.GetComponent<Text>().text = Message;
         selector.SetActive(false);
         working = true;
-        yield return new WaitForSeconds(2);
+        if (BattleState == BattleStateMachine.LVLUP)
+            yield return new WaitForSeconds(4);
+        else
+            yield return new WaitForSeconds(2);
         switch (BattleState)
         {
             case BattleStateMachine.PLAYERTURN:
                 if (destroy)
                 {
-                    GainXp += Enemies[enemySelect].GetComponent<Enemy>().BattleEnemy.Data.RewardExperience;
+                    Enemy e = Enemies[enemySelect].GetComponent<Enemy>();
+                    GainXp += e.BattleEnemy.Data.RewardExperience;
+                    List<AbstractUsable> Item = e.getItem();
+                    if (Item.Count >  0)
+                    {
+                        foreach (var i in Item) { 
+                            ItemsDrop.Add(i);
+                        }
+                    }
                     Destroy(Enemies[enemySelect]);
                     Enemies.RemoveAt(enemySelect);
                     destroy = false;
@@ -198,7 +227,7 @@ public class BattleManager : RPGElement
                 UpdateBars();
                 break;
             case BattleStateMachine.WIN:
-                if (lvlup)
+                if (lvlup != null)
                     BattleState = BattleStateMachine.LVLUP;
                 else
                     BattleState = BattleStateMachine.ENDBATTLE;
@@ -225,9 +254,9 @@ public class BattleManager : RPGElement
         if (!working)
         {
             int damage = 0;
-            if (Enemies.Count <= 0)
+            if (Enemies.Count <= 0 && BattleState != BattleStateMachine.LVLUP && BattleState != BattleStateMachine.ENDBATTLE)
                 BattleState = BattleStateMachine.WIN;
-            if (Player.Data.HP <= 0)
+            if (Player.Data.HP <= 0 && BattleState != BattleStateMachine.ENDBATTLE)
                 BattleState = BattleStateMachine.LOSE;
             switch (BattleState)
             {
@@ -255,7 +284,7 @@ public class BattleManager : RPGElement
                                     AbstractActor attacker = Player.Data;
                                     AbstractActor defender = Enemies[enemySelect].GetComponent<Enemy>().BattleEnemy.Data;
                                     damage = NormalFight(ref attacker, ref defender, 0);
-                                    Message += "You have Attack! "+ defender.ActorName + " has recive " + damage + " damage.";
+                                    Message += "You have Attack! " + defender.ActorName + " has recive " + damage + " damage.";
                                     break;
                                 case Actions.Ability:
                                     AbstractActor attacker2 = Player.Data;
@@ -280,7 +309,7 @@ public class BattleManager : RPGElement
                                 default:
                                     break;
                             }
-                            
+
                             StartCoroutine(ShowMessage());
 
                         }
@@ -294,33 +323,34 @@ public class BattleManager : RPGElement
                     //Player.RemoveOnTurnState();
                     break;
                 case BattleStateMachine.ENEMYTURN:
-                    
+
                     AbstractAbility ability = Enemies[enemySelect].GetComponent<Enemy>().AttackSelected();
                     if (ability == null)
                     {
                         AbstractActor defender = Player.Data;
                         AbstractActor attacker = Enemies[enemySelect].GetComponent<Enemy>().BattleEnemy.Data;
                         damage = NormalFight(ref attacker, ref defender, 0);
-                        Message += attacker.ActorName+" "+enemySelect+1+" has attack! " + damage.ToString() + " Damage dealt ";
+                        Message += attacker.ActorName + " " + enemySelect + 1 + " has attack! " + damage.ToString() + " Damage dealt ";
                     }
-                    else {
+                    else
+                    {
                         AbstractActor defender = Player.Data;
                         AbstractActor attacker = Enemies[enemySelect].GetComponent<Enemy>().BattleEnemy.Data;
                         damage = AbilityFight(ref attacker, ref defender, ability);
-                        Message += attacker.ActorName +" "+enemySelect+1+ " has use " + ability.Ability + "! " + damage.ToString() + " Damage dealt ";
+                        Message += attacker.ActorName + " " + enemySelect + 1 + " has use " + ability.Ability + "! " + damage.ToString() + " Damage dealt ";
                     }
                     StartCoroutine(ShowMessage());
                     break;
                 case BattleStateMachine.WIN:
-                    ////TODO!!!!
-                    List<AbstractUsable> items = GetRewards();//TODO
                     string sitems = "";
-                    foreach (var i in items){
-                        sitems += ", "+i.ItemName ;
+                    foreach (var i in ItemsDrop)
+                    {
+                        sitems += ", " + i.ItemName;
+                        Player.Items.InsertUsable(i);
                     }
-                    int xp = getXP();//TTODOOOO
-                    lvlup = applyXP();//TODO
-                    Message = "You have earn "+getXP()+" XP, "+sitems;
+                    lvlup = Player.ApplyXp(GainXp);
+
+                    Message = "You have earn " + GainXp + " XP, " + sitems;
                     StartCoroutine(ShowMessage());
                     break;
                 case BattleStateMachine.LOSE:
@@ -329,7 +359,7 @@ public class BattleManager : RPGElement
                     break;
                 case BattleStateMachine.LVLUP:
                     Message = "You have Reach Level " + Player.Data.Level;
-                    showStats();//TODO
+                    showStats();
                     StartCoroutine(ShowMessage());
                     break;
                 case BattleStateMachine.ENDBATTLE:
@@ -343,26 +373,31 @@ public class BattleManager : RPGElement
 
     private void showStats()
     {
-        throw new NotImplementedException();
+        StatsCanvas.SetActive(true);
+        GameObject panel = StatsCanvas.transform.FindChild("Stats Panel").gameObject;
+        panel.transform.FindChild("MaMPVal").gameObject.GetComponent<Text>().text = lvlup.MaxHP.ToString();
+        panel.transform.FindChild("MaxHPVal").gameObject.GetComponent<Text>().text = lvlup.MaxHP.ToString();
+        panel.transform.FindChild("LuckVal").gameObject.GetComponent<Text>().text = lvlup.Luck.ToString();
+        panel.transform.FindChild("AgilityVal").gameObject.GetComponent<Text>().text = lvlup.Agility.ToString();
+        panel.transform.FindChild("Magic DefenseVal").gameObject.GetComponent<Text>().text = lvlup.MagicDefense.ToString();
+        panel.transform.FindChild("MagicVal").gameObject.GetComponent<Text>().text = lvlup.Magic.ToString();
+        panel.transform.FindChild("DefenseVal").gameObject.GetComponent<Text>().text = lvlup.Defense.ToString();
+        panel.transform.FindChild("AttackVal").gameObject.GetComponent<Text>().text = lvlup.Attack.ToString();
+
+        panel.transform.FindChild("MaxMPDiff").gameObject.GetComponent<Text>().text = Player.Data.Stats.MaxHP.ToString();
+        panel.transform.FindChild("MaxHPDiff").gameObject.GetComponent<Text>().text = Player.Data.Stats.MaxHP.ToString();
+        panel.transform.FindChild("LuckDiff").gameObject.GetComponent<Text>().text = Player.Data.Stats.Luck.ToString();
+        panel.transform.FindChild("AgilityDiff").gameObject.GetComponent<Text>().text = Player.Data.Stats.Agility.ToString();
+        panel.transform.FindChild("MagicDefenseDiff").gameObject.GetComponent<Text>().text = Player.Data.Stats.MagicDefense.ToString();
+        panel.transform.FindChild("MagicDiff").gameObject.GetComponent<Text>().text = Player.Data.Stats.Magic.ToString();
+        panel.transform.FindChild("DefenseDiff").gameObject.GetComponent<Text>().text = Player.Data.Stats.Defense.ToString();
+        panel.transform.FindChild("AttackDiff").gameObject.GetComponent<Text>().text = Player.Data.Stats.Attack.ToString();
     }
 
-    private bool applyXP()
-    {
-        foreach (var enemy in Enemies)
-        {
-            ;
-        }
-        return true;
-    }
 
     private List<AbstractUsable> GetRewards()
     {
         return new List<AbstractUsable>();
-    }
-
-    private int getXP()
-    {
-        return 0;
     }
     void UpdateBars() {
         Hp.value = (float)((float)Player.Data.HP / (float)Player.Data.Stats.MaxHP);
@@ -548,7 +583,7 @@ public class BattleManager : RPGElement
                 destroy = true;
             }
         }
-        return damage;
+        return damage < 0 ? 0: damage;
     }
 
     private int NormalFight(ref AbstractActor Attacker, ref AbstractActor Defender, int boost)
@@ -594,7 +629,7 @@ public class BattleManager : RPGElement
                 destroy = true;
             }
         }
-        return damage;
+        return damage < 0 ? 0 : damage;
     }     
 
     /// <summary>

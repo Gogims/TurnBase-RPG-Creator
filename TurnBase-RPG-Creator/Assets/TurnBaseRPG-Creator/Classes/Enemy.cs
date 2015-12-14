@@ -47,6 +47,32 @@ public class Enemy : RPGElement
         }
         return selected;
     }
+
+    public List<AbstractUsable> getItem()
+    {
+        List<AbstractUsable> returnVal = new List<AbstractUsable>();
+        foreach (var i in this.BattleEnemy.Data.Items)
+        {
+            if (i.ApplyRate >= UnityEngine.Random.Range(1, 100)) {
+                AbstractUsable newVal = new AbstractUsable();
+                newVal.AreaOfEffect = i.Element.AreaOfEffect;
+                newVal.Attribute = i.Element.Attribute;
+                newVal.Available = i.Element.Available;
+                newVal.Available= i.Element.Available;
+                newVal.Description= i.Element.Description;
+                newVal.HitRate = i.Element.HitRate;
+                newVal.Image= i.Element.Image;
+                newVal.ItemName = i.Element.ItemName;
+                newVal.KeyItem = i.Element.KeyItem;
+                newVal.Power = i.Element.Power;
+                newVal.Price= i.Element.Price;
+                newVal.States= i.Element.States;
+                newVal.StateType= i.Element.StateType;
+                returnVal.Add(newVal);
+            }
+        }
+        return returnVal;
+    }
 }
 
 [Serializable]

@@ -10,7 +10,7 @@ public abstract class  Menus : MonoBehaviour {
     /// <summary>
     /// Nombre del menu
     /// </summary>
-    public GameObject MenuName;
+    public string MenuName;
     /// <summary>
     /// Imagen que se va mostrar en el background del menu
     /// </summary>
@@ -32,7 +32,11 @@ public abstract class  Menus : MonoBehaviour {
         Menu = menuC.AddComponent<Navigator>();
         Destroy(menuC);
         GameObject menusObj =null;
-        if (Constant.LastSceneLoaded == null)
+        if (MenuName == "BattleMenu")
+        {
+            menusObj = GameObject.Find("BattleMenu").transform.FindChild("Canvas").transform.FindChild("Menu Panel").gameObject;
+        }
+        else if (Constant.LastSceneLoaded == null)
              menusObj = GameObject.Find("Canvas").transform.FindChild("Menu Panel").gameObject;
         else 
              menusObj = GameObject.Find(Constant.LastSceneLoaded).transform.FindChild("Canvas").transform.FindChild("Menu Panel").gameObject;

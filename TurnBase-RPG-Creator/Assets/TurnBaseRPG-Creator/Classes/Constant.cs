@@ -123,7 +123,6 @@ public class Constant
         }
         return false;
     }
-
     /// <summary>
     /// Se encarga de colocar los anchor point en el borde del objeto
     /// </summary>

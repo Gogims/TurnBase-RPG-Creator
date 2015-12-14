@@ -45,7 +45,46 @@ public class Player : Actor
     {
         Data.InstanceStates();
     }
-
+    /// <summary>
+    /// Aplica la experiencia al jugador
+    /// </summary>
+    /// <param name="XpCant">Cantidad de experiencia a aplicar</param>
+    /// <returns>Retorna los atributos del nivel anterior si crece de nivel de lo contrario retorna null</returns>
+    public Attribute ApplyXp(int XpCant) {
+        Data.XPToLvlUp += XpCant;
+        int cantToNextLvl = Data.Job.XP.GetValue(Data.Level);
+        bool lvlup = false;
+        while(Data.XPToLvlUp >= cantToNextLvl ){
+            if (!lvlup) lvlup = true;
+            Data.Level++;
+            Data.XPToLvlUp = Data.XPToLvlUp - cantToNextLvl;
+            cantToNextLvl = Data.Job.XP.GetValue(Data.Level);
+        }
+        Attribute Stats= null;
+        if (lvlup)
+        {
+            Stats = new Attribute();
+            Stats.Agility = Data.Stats.Agility;
+            Stats.Attack = Data.Stats.Attack;
+            Stats.Defense = Data.Stats.Defense;
+            Stats.Luck = Data.Stats.Luck;
+            Stats.Magic = Data.Stats.Magic;
+            Stats.MagicDefense = Data.Stats.MagicDefense;
+            Stats.MaxHP = Data.Stats.MaxHP;
+            Stats.MaxMP = Data.Stats.MaxMP;
+            Data.Stats.Agility = Data.Job.Agility.GetValue(Data.Level);
+            Data.Stats.Attack = Data.Job.Attack.GetValue(Data.Level);
+            Data.Stats.Defense = Data.Job.Defense.GetValue(Data.Level);
+            Data.Stats.Luck = Data.Job.Luck.GetValue(Data.Level);
+            Data.Stats.Magic = Data.Job.MagicAttack.GetValue(Data.Level);
+            Data.Stats.MagicDefense = Data.Job.MagicDefense.GetValue(Data.Level);
+            Data.Stats.MaxHP = Data.Job.MaxHP.GetValue(Data.Level);
+            Data.Stats.MaxMP = Data.Job.MaxMP.GetValue(Data.Level);
+            Data.HP = Data.Stats.MaxHP;
+            Data.MP = Data.Stats.MaxMP;
+        }
+        return Stats;
+    }
     void Update()
     {
         if (!Constant.start)
@@ -180,5 +219,5 @@ public class Player : Actor
 [Serializable]
 public class AbstractPlayer : AbstractActor
 {
-    
+    public int XPToLvlUp;
 }
