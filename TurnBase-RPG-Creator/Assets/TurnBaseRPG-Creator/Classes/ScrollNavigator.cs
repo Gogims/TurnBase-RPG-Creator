@@ -286,23 +286,19 @@ public class ScrollNavigator<T,U> : AbstractNavigator
     /// </summary>
     public override void update()
     {
-        if (ProxyInput.GetInstance().B())
+        if (!Arrow.activeSelf) return;
+        if (ProxyInput.GetInstance().BUp())
         {
             Options[selected].Key.GetComponent<MenuOption>().UnSelect();
             return;
         }
-        else if (ProxyInput.GetInstance().A())
+        else if (ProxyInput.GetInstance().AUp())
         {
             Options[selected].Key.GetComponent<MenuOption>().OnSelect();
         }
-        //if (delay < 15)
-        //{
-        //    delay++;
-        //    return;
-        //}
-        if (!Arrow.activeSelf) return;
-       
-        if (ProxyInput.GetInstance().Down())
+        
+
+        else if (ProxyInput.GetInstance().DownUp())
         {
             if (selected + ScrollCant < ElementCant - 1)
             {
@@ -332,7 +328,7 @@ public class ScrollNavigator<T,U> : AbstractNavigator
             }
             Arrow.transform.position = new Vector3(Arrow.transform.position.x, Options[selected].Value.First.gameObject.transform.position.y);
         }
-        else if (ProxyInput.GetInstance().Up())
+        else if (ProxyInput.GetInstance().UpUp())
         {
             if (ScrollCant > 0)
                 PrevArrow.SetActive(true);

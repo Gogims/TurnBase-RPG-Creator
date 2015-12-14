@@ -26,50 +26,40 @@ public class Navigator : AbstractNavigator{
     /// </summary>
     public override void update()
     {
-        if (ProxyInput.GetInstance().A())
+        if (ProxyInput.GetInstance().AUp())
         {
             Options[selected].GetComponent<MenuOption>().OnSelect();
         }
-        if (ProxyInput.GetInstance().B())
+        else if (ProxyInput.GetInstance().BUp())
         {
             delay = 0;
             Options[selected].GetComponent<MenuOption>().UnSelect();
 
             return;
         }
-        //if (delay < 15)
-        //{
-        //    delay++;
-        //    return;
-        //}
-
-        if (ProxyInput.GetInstance().Down())
+        else if (ProxyInput.GetInstance().DownUp())
         {
             if (selected == Options.Count - 1)
             {
-                //Options[selected].GetComponent<MenuOption>().Off(Options[selected].GetComponent<Text>().text);
                 selected = 0;
                 Options[selected].GetComponent<MenuOption>().On(Options[selected].GetComponent<Text>().text);
             }
             else
             {
-                //Options[selected].GetComponent<MenuOption>().Off(Options[selected].GetComponent<Text>().text);
                 selected++;
                 Options[selected].GetComponent<MenuOption>().On(Options[selected].GetComponent<Text>().text);
             }
             Arrow.transform.position = new Vector3(Arrow.transform.position.x, Options[selected].gameObject.transform.position.y);
         }
-        else if (ProxyInput.GetInstance().Up())
+        else if (ProxyInput.GetInstance().UpUp())
         {
             if (selected == 0)
             {
-                //Options[selected].GetComponent<MenuOption>().Off(Options[selected].GetComponent<Text>().text);
                 selected = Options.Count - 1;
                 Options[selected].GetComponent<MenuOption>().On(Options[selected].GetComponent<Text>().text);
             }
             else
             {
-                //Options[selected].GetComponent<MenuOption>().Off(Options[selected].GetComponent<Text>().text);
                 selected--;
                 Options[selected].GetComponent<MenuOption>().On(Options[selected].GetComponent<Text>().text);
             }
