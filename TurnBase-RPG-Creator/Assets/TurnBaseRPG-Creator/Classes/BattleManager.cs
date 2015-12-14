@@ -81,7 +81,8 @@ public class BattleManager : RPGElement
         Text[] Texts = GameObject.FindObjectsOfType<Text>();
         foreach (var txt in Texts)
         {
-            txt.fontSize = (int)(Math.Min(worldScreen.x, worldScreen.y) / 22);
+
+            txt.fontSize = (int)(Math.Min(worldScreen.x, worldScreen.y) / 20);
         }
         Constant.LastSceneLoaded = "BattleMenu";
         //ActorsOrdered = OrderActors(Player, Enemies);

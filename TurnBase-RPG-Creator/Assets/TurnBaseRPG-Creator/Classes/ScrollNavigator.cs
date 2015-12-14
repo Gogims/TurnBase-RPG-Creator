@@ -14,7 +14,7 @@ public class ScrollNavigator<T,U> : AbstractNavigator
     /// <summary>
     /// Opciones que aparecen en el menu Con su imagen.
     /// </summary>
-    private List<KeyValuePair<GameObject,Tuple<GameObject,GameObject>>> Options;
+    private List<KeyValuePair<GameObject,GameObject>> Options;
     /// <summary>
     /// Lista de items que van mostrar
     /// </summary>
@@ -110,6 +110,11 @@ public class ScrollNavigator<T,U> : AbstractNavigator
     /// </summary>
     private Font font;
     /// <summary>
+    /// lista de texto que se muestran 
+    /// </summary>
+    private List<GameObject> listOption;
+    private List<GameObject> listQuantity;
+    /// <summary>
     /// Incializa los valores de la clase
     /// </summary>
     /// <param name="position">posicion donde va iniciar el texto</param>
@@ -124,9 +129,14 @@ public class ScrollNavigator<T,U> : AbstractNavigator
     /// <param name="panel">Panel padre de la lista</param>
     public override void Init(Vector3 position, Vector3 positionImage,Vector3 positionCant, int difY, int difX, int maxItem, GameObject arrow, GameObject nextArrow, GameObject prevArrow,GameObject panel)
     {
-        
+
+        Options = new List<KeyValuePair<GameObject, GameObject>>();
         font = (Font)Resources.Load("fonts/Vecna");
-        Options = new List<KeyValuePair<GameObject,Tuple<GameObject,GameObject>>>();
+        for (int i = 1 ; i <= maxItem; i++) {
+            GameObject child = panel.transform.FindChild("Item"+i).gameObject;
+            GameObject child2 = panel.transform.FindChild("Quantity" + i).gameObject;
+            Options.Add(new KeyValuePair<GameObject, GameObject>(child, child2));
+        }
         PositionImage = positionImage;
         Position = position;
         PositionCant = positionCant;
@@ -201,20 +211,8 @@ public class ScrollNavigator<T,U> : AbstractNavigator
         Ability = newAbility;
         DisplayList();
     }
-    /// <summary>
-    /// Destruye la lista de elementos que se estan mostrando
-    /// </summary>
-    private void DestroyOption()
-    {
-        foreach (KeyValuePair<GameObject,Tuple<GameObject,GameObject>> i in Options) {
-            Destroy(i.Key);
-            Destroy(i.Value.First);
-            Destroy(i.Value.Second);
-        }
-        Options.Clear();
 
-    }
-    /// <summary>
+   /// <summary>
     /// Oculta el menu.
     /// </summary>
     public void HideList() {
@@ -222,6 +220,7 @@ public class ScrollNavigator<T,U> : AbstractNavigator
         PrevArrow.SetActive(false);
         Arrow.SetActive(false);
         DestroyOption();
+
     }
     /// <summary>
     /// Muestra el menu
@@ -248,7 +247,7 @@ public class ScrollNavigator<T,U> : AbstractNavigator
             {
                 if (cant < MaxItem)
                 {
-                    Options.Add(NewItem(cant));
+                    NewItem(cant,cant);
                     cant++;
                 }
                 else
@@ -265,7 +264,7 @@ public class ScrollNavigator<T,U> : AbstractNavigator
             {
                 if (cant < MaxItem)
                 {
-                    Options.Add(NewItem(cant));
+                    NewItem(cant,cant);
                     cant++;
                 }
                 else
@@ -277,9 +276,16 @@ public class ScrollNavigator<T,U> : AbstractNavigator
                 NextArrow.SetActive(true);
             ElementCant = Ability.Count;
         }
+    }
 
+    private void DestroyOption()
+    {
+        foreach (var i in Options)
+        {
+            i.Key.GetComponent<Text>().text = "";
+            i.Value.GetComponent<Text>().text = "";
 
-        Reorder();
+        }
     }
     /// <summary>
     /// Funciona para navegar el menu
@@ -326,7 +332,7 @@ public class ScrollNavigator<T,U> : AbstractNavigator
             else {
                 NextArrow.SetActive(false);
             }
-            Arrow.transform.position = new Vector3(Arrow.transform.position.x, Options[selected].Value.First.gameObject.transform.position.y);
+            Arrow.transform.position = new Vector3(Arrow.transform.position.x, Options[selected].Key.gameObject.transform.position.y);
         }
         else if (ProxyInput.GetInstance().UpUp())
         {
@@ -351,7 +357,7 @@ public class ScrollNavigator<T,U> : AbstractNavigator
                 else
                     Options[selected].Key.GetComponent<MenuOption>().On(Ability[selected + ScrollCant]);
             }
-            Arrow.transform.position = new Vector3(Arrow.transform.position.x, Options[selected].Value.First.gameObject.transform.position.y);
+            Arrow.transform.position = new Vector3(Arrow.transform.position.x, Options[selected].Value.gameObject.transform.position.y);
         }
         
         delay = 0;
@@ -362,39 +368,17 @@ public class ScrollNavigator<T,U> : AbstractNavigator
     /// </summary>
     /// <param name="i">indice del elemento en la lista </param>
     /// <returns> Retorna el elemento que se creo en la scene</returns>
-    private KeyValuePair<GameObject,Tuple<GameObject,GameObject>> NewItem(int i){
-        GameObject Cant = NewText();
-        GameObject Text = NewText();
+    private void NewItem(int i,int position){
         if (Items != null)
         {
-            Cant.GetComponent<Text>().text = Items[i].Second.ToString();
-            Text.GetComponent<Text>().text = Items[i].First.ItemName;
-            ItemImage.GetComponent<Image>().sprite = Items[i].First.Image;
-
+            Options[position].Key.GetComponent<Text>().text = Items[i].First.ItemName;
+            Options[position].Value.GetComponent<Text>().text = Items[i].Second.ToString();
         }
         else {
-            Cant.GetComponent<Text>().text = "";
-            Text.GetComponent<Text>().text = Ability[i].Ability;
-            ItemImage.GetComponent<Image>().sprite = Ability[i].Image;        
+            Options[position].Key.GetComponent<Text>().text = Ability[i].Ability;
+            Options[position].Value.GetComponent<Text>().text = "";
+        
         }
-        GameObject ay = Instantiate(ItemImage);
-        Text.transform.parent = Panel.transform;
-        Text.transform.localPosition = Position;
-        Text.transform.localScale = new Vector3(1, 1);
-        Constant.SetAnchorPoint(Text);
-        ay.transform.SetParent(Panel.transform);
-        Cant.transform.SetParent(Panel.transform);
-        Cant.transform.localPosition = PositionCant;
-        Cant.transform.localScale = new Vector3(1, 1);
-        Constant.SetAnchorPoint(Cant);
-        ay.transform.parent = Panel.transform;
-        ay.transform.localPosition = ImagePosition;
-        ay.transform.localScale = new Vector3(1, 1);
-        //Constant.SetAnchorPoint(ay);
-        
-        
-        KeyValuePair<GameObject, Tuple<GameObject, GameObject>> aux = new KeyValuePair<GameObject, Tuple<GameObject, GameObject>>(Text, new Tuple<GameObject, GameObject>(ay, Cant));
-        return aux;
     }
     /// <summary>
     /// Agrega el elemento siguiente a la lista que se esta mostrando y elimina el primer elemento que se esta mostrando
@@ -403,52 +387,22 @@ public class ScrollNavigator<T,U> : AbstractNavigator
     {
         if (selected + ScrollCant <= ElementCant - 1)
         {
-            Destroy(Options[0].Key);
-            Destroy(Options[0].Value.First);
-            Destroy(Options[0].Value.Second);
-            Options.RemoveAt(0);
-            Options.Add(NewItem((MaxItem-1) + ScrollCant));
+            NewItem((MaxItem-1) + ScrollCant,MaxItem-1);
             PrevArrow.SetActive(true);
         }
         else
         {
             NextArrow.SetActive(false);
         }
-        Reorder();
     }
     /// <summary>
     /// Agrega un elemento en la primera posicion de la lista que se esta mostrando y elimina el ultimo elemento.
     /// </summary>
     private void NewListPrev() {
-        Destroy(Options[Options.Count - 1].Key);
-        Destroy(Options[Options.Count - 1].Value.First);
-        Destroy(Options[Options.Count - 1].Value.Second);
-        Options.RemoveAt(Options.Count - 1);
-        Options.Insert(0,NewItem(ScrollCant));
+        NewItem(ScrollCant,0);
         NextArrow.SetActive(true);
         if (ScrollCant == 0)
             PrevArrow.SetActive(false);
-        Reorder();
-    }
-    /// <summary>
-    /// Reordena la lista que se esta mostrando
-    /// </summary>
-    private void Reorder(){
-        Position = new Vector3(PosX, PosY);
-        ImagePosition = new Vector3(ImagePosX, ImagePosY);
-        PositionCant = new Vector3(CantX, CantY);
-        foreach (KeyValuePair<GameObject,Tuple<GameObject,GameObject>> i in Options) {
-            i.Key.transform.localPosition = Position;
-            i.Value.First.transform.localPosition = ImagePosition;
-            i.Value.Second.transform.localPosition = PositionCant;
-            ImagePosition.x += DifX;
-            ImagePosition.y += DifY;
-            Position.x += DifX;
-            Position.y += DifY;
-            PositionCant.x += DifX;
-            PositionCant.y += DifY;
-        }
-            
     }
     /// <summary>
     /// Restaura los valores de las propiedades a como fueron inicializadas

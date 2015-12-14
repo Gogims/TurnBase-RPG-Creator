@@ -6,15 +6,15 @@ public class DeployUI : EditorWindow {
     Object [] Maps;
     private Vector2 scrollPosition;
     private string MapName = string.Empty;
-    private Object NewGame;
+    private GameObject NewGame;
     public void Init() {
         Maps = Resources.LoadAll("Maps", typeof(GameObject));
-        NewGame  = Resources.Load("Menus/FirstScene", typeof(GameObject));
+        NewGame  =  Resources.Load<GameObject>("Menus/FirstScene");
         GameObject aux2 = NewGame as GameObject;
         foreach (Object i in Maps)
         {   
             GameObject aux = i as GameObject;
-            if (aux.GetComponent<Map>().Data.Name == aux2.GetComponent<MenuOptionScen>().SceneName)
+            if (aux.GetComponent<Map>().Id == aux2.GetComponent<MenuOptionScen>().SceneName)
             {
                 MapName = aux.GetComponent<Map>().Name;
                 break;
@@ -78,8 +78,12 @@ public class DeployUI : EditorWindow {
             {
 
                 MapName = temp.GetComponent<Map>().Name;
-                GameObject i = NewGame as GameObject;
+                GameObject i = Instantiate(NewGame);
                 i.GetComponent<MenuOptionScen>().SceneName = temp.GetComponent<Map>().Id;
+                i.name = "FirstScene";
+                PrefabUtility.CreatePrefab("Assets/Resources/Menus/"+i.name+".prefab", i);
+                NewGame = Resources.Load<GameObject>("Menus/FirstScene");
+                DestroyImmediate(i);
             }
             if (x + 84 + 64 < this.position.width)
                 x += 84;

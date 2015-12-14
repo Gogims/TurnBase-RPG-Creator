@@ -135,6 +135,22 @@ public class AbstractActor
         Ring = new AbstractArmor();
         Necklace = new AbstractArmor();
         Job = new AbstractJob();
+        AbstractAbility aux = new AbstractAbility();
+        aux.Ability = "Ice";
+        aux.AttackPower = 10;
+
+        Job.Abilities.Add(aux);
+        Job.Abilities.Add(aux);
+        Job.Abilities.Add(aux);
+        Job.Abilities.Add(aux);
+        Job.Abilities.Add(aux);
+
+        Job.Abilities.Add(aux);
+        Job.Abilities.Add(aux);
+        Job.Abilities.Add(aux);
+        Job.Abilities.Add(aux);
+        Job.Abilities.Add(aux);
+        Job.Abilities.Add(aux);
     }    
 
     public int TotalDamage()

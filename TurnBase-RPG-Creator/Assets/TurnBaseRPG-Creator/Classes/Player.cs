@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : Actor
 {    /// <summary>
@@ -9,6 +10,7 @@ public class Player : Actor
     public Inventory Items = new Inventory();
     void OnLevelWasLoaded(int level)
     {
+        GameObject.Find("PLAYER").transform.position = GameObject.Find("PLAYER(Clone)").transform.position;
         Destroy(GameObject.Find("PLAYER(Clone)"));
 
     }
@@ -43,6 +45,33 @@ public class Player : Actor
 
     protected override void Start()
     {
+        AbstractAbility aux = new AbstractAbility();
+        AbstractUsable aux2 = new AbstractUsable();
+        aux2.ItemName = "Potion";
+        aux.Ability = "Ice";
+        aux.AttackPower = 10;
+        Items.InsertUsable(aux2);
+        Items.InsertUsable(aux2);
+        Items.InsertUsable(aux2);
+        Items.InsertUsable(aux2);
+        Items.InsertUsable(aux2);
+        Items.InsertUsable(aux2);
+        Items.InsertUsable(aux2);
+        Items.InsertUsable(aux2);
+        Items.InsertUsable(aux2);
+        Items.InsertUsable(aux2);
+        Items.InsertUsable(aux2);
+        Items.InsertUsable(aux2);
+        Data.Job.Abilities.Add(aux);
+        Data.Job.Abilities.Add(aux);
+        Data.Job.Abilities.Add(aux);
+        Data.Job.Abilities.Add(aux);
+        Data.Job.Abilities.Add(aux);
+        Data.Job.Abilities.Add(aux); 
+        Data.Job.Abilities.Add(aux);
+        Data.Job.Abilities.Add(aux);
+        Data.Job.Abilities.Add(aux);
+        Data.Job.Abilities.Add(aux);
         Data.InstanceStates();
     }
     /// <summary>
@@ -162,7 +191,7 @@ public class Player : Actor
 
                     if (obstacle.hp <= 0)
                     {
-                        Destroy(obstacle);
+                        Destroy(obstacle.gameObject);
                     }
                 }
             }
@@ -192,6 +221,7 @@ public class Player : Actor
                 GameObject p = GameObject.FindWithTag("RPG-PLAYER");
                 p.name = "PLAYER";
                 DontDestroyOnLoad(p);
+                DontDestroyOnLoad(GameObject.Find("MobileSingleStickControl"));
                 Application.LoadLevel(path.Substring(path.LastIndexOf("/")+1).Replace(".unity", ""));
                 GameObject.FindWithTag("RPG-PLAYER").transform.position = new Vector3(door.X, door.Y);
             }

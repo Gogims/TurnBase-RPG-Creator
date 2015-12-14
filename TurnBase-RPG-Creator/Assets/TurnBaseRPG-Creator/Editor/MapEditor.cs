@@ -12,7 +12,7 @@ public class MapEditor
 
 	static MapEditor ()
     {	
-		SceneView.onSceneGUIDelegate += OnSceneEvents;
+		//SceneView.onSceneGUIDelegate += OnSceneEvents;
 		DarkFloor =  AssetDatabase.LoadAssetAtPath(@"Assets/Resources/Tile/DefaultTile1.prefab", typeof(GameObject));
         LightFloor = AssetDatabase.LoadAssetAtPath(@"Assets/Resources/Tile/DefaultTile2.prefab", typeof(GameObject));
 	}

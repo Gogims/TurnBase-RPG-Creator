@@ -28,11 +28,6 @@ public class ProjectUI : EditorWindow {
         newProject.Name = GUI.TextField(new Rect(150, 30, 300, 20), newProject.Name);
         GUI.Label(new Rect(0, 60, 150, 20), "Project Description");
         newProject.Description = GUI.TextField(new Rect(150, 60, 300, 20), newProject.Description);
-        GUI.Label(new Rect(0, 90, 150, 20), "Unity Path");
-        GUI.enabled = false;
-        newProject.UnityPath = GUI.TextField(new Rect(150, 90, 300, 20), newProject.UnityPath);
-        GUI.enabled = true;
-        browsePath = GUI.Button(new Rect(150, 110, 150, 20), "Browse");
         GUI.Label(new Rect(0, 140, 150, 20), "Location");
         GUI.enabled = false;
         newProject.Path = GUI.TextField(new Rect(150, 140, 300, 20), newProject.Path);
