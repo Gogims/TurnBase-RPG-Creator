@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
-using UnityEditor;
 using System.Collections.Generic;
 using System.Linq;
 using System;
 using UnityEngine.UI;
 using System.Collections;
-
-
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class BattleManager : RPGElement
 {
@@ -35,7 +35,8 @@ public class BattleManager : RPGElement
     Slider Mp;
     Text CantHp;
     Text CantMp;
-    enum Actions { 
+    enum Actions
+    { 
         Attack,
         Ability,
         Usable
@@ -66,6 +67,7 @@ public class BattleManager : RPGElement
         Enemies = enemies;
         Player = player;
     }
+
     void Start()
     {
         ItemsDrop = new List<AbstractUsable>();
@@ -75,7 +77,7 @@ public class BattleManager : RPGElement
         StatsCanvas = GameObject.Find("BattleMap").transform.FindChild("CanvasStats").gameObject;
         GameObject panel = StatsCanvas.transform.FindChild("Stats Panel").gameObject;
         Vector2 worldScreen = new Vector2(Camera.main.orthographicSize * 2 / Screen.height * Screen.width, Camera.main.orthographicSize * 2);
-        Text []Texts = GameObject.FindObjectsOfType<Text>();
+        Text[] Texts = GameObject.FindObjectsOfType<Text>();
         foreach (var txt in Texts)
         {
             txt.fontSize = (int)(Math.Min(worldScreen.x, worldScreen.y) / 22);
@@ -92,14 +94,13 @@ public class BattleManager : RPGElement
         {
             Enemies.Add(enemy);
         }
-         GameObject canvasBar = GameObject.Find("BattleMap").transform.FindChild("CanvasBars").gameObject;
-         StatsCanvas = GameObject.Find("BattleMap").transform.FindChild("CanvasStats").gameObject;
-         setCanvasBar(canvasBar);
-         CanvasMessage = GameObject.Find("BattleMap").transform.FindChild("CanvasMessage").gameObject;
-         CanvasMessage.SetActive(false);
-         StatsCanvas.SetActive(false);
+        GameObject canvasBar = GameObject.Find("BattleMap").transform.FindChild("CanvasBars").gameObject;
+        StatsCanvas = GameObject.Find("BattleMap").transform.FindChild("CanvasStats").gameObject;
+        setCanvasBar(canvasBar);
+        CanvasMessage = GameObject.Find("BattleMap").transform.FindChild("CanvasMessage").gameObject;
+        CanvasMessage.SetActive(false);
+        StatsCanvas.SetActive(false);
     }
-
     private void setCanvasBar(GameObject canvasBar)
     {
         Hp = canvasBar.transform.FindChild("Panel").gameObject.transform.FindChild("HP Slider").gameObject.GetComponent<Slider>();
@@ -111,6 +112,7 @@ public class BattleManager : RPGElement
         UpdateBars();
     }
 
+#if UNITY_EDITOR
     /// <summary>
     /// Crea la escena del battlemap
     /// </summary>
@@ -174,9 +176,11 @@ public class BattleManager : RPGElement
         audio.gameobject.transform.parent = battlemap.transform;
         EditorApplication.SaveScene("Assets/Resources/BattleMap/" + troop.Id + ".unity", true);// Guarda la scene.
         Constant.AddSceneToBuild("Assets/Resources/BattleMap/" + troop.Id + ".unity");
+    }
+#endif
 
-    }  
-    IEnumerator ShowMessage() {
+    IEnumerator ShowMessage()
+    {
         BattleMenu.SetActive(false);
         CanvasMessage.SetActive(true);
         CanvasMessage.transform.FindChild("Panel").gameObject.transform.FindChild("MessageText").gameObject.GetComponent<Text>().text = Message;
@@ -242,8 +246,7 @@ public class BattleManager : RPGElement
         }
         Message = "";
         CanvasMessage.SetActive(false);
-        working = false;
-    
+        working = false;    
     }
 
     void Update()

@@ -1,22 +1,23 @@
-﻿using UnityEngine;
+﻿#if UNITY_EDITOR
 using System.Diagnostics;
-using System.Collections;
 using System.IO;
 using UnityEditor;
-
 
 /// <summary>
 /// Clase que se encarga de manejar los proyectos de RPG
 /// </summary>
-public class Project  {
+public class Project
+{
     public string Name { get; set; }
     public string UnityPath { get; set; }
     public string Description { get; set; }
     public string Path { get; set; }
+
     /// <summary>
     /// Crea un proyecto nuevo de RPG dado un path.
     /// </summary>
-    public void CreateProject() {
+    public void CreateProject()
+    {
         Process p = new Process();
         ProcessStartInfo info = new ProcessStartInfo();
         info.FileName = "cmd.exe";
@@ -67,6 +68,7 @@ public class Project  {
         }
         return;
     }
+
     /// <summary>
     /// Abre un proyecto
     /// </summary>
@@ -75,6 +77,5 @@ public class Project  {
     {
         EditorApplication.OpenProject(path);
     }
-
-
 }
+#endif

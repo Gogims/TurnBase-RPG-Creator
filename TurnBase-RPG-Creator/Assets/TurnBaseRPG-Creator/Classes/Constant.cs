@@ -1,10 +1,14 @@
 ﻿using UnityEngine;
-using System.Collections;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
+
 /// <summary>
 /// Constantes de TurnBase-RPG-Creator.
 /// </summary>
-public class Constant{
+public class Constant
+{
+#if UNITY_EDITOR
     /// <summary>
     /// Layers que utiliza RPG-Creator para ordenar los objetos en la scene.
     /// </summary>
@@ -45,6 +49,53 @@ public class Constant{
     /// Alto de los sprites de los elementos del juego
     /// </summary>
     public const int SpriteHeight = 64;
+
+
+    /// <summary>
+    /// Crea el marco de la imagen del equipamiento
+    /// </summary>
+    /// <returns>Rectángulo con sus coordenadas definidas</returns>
+    public static Rect GetTextureCoordinate(Sprite Image)
+    {
+        return new Rect(Image.textureRect.x / Image.texture.width,
+                        Image.textureRect.y / Image.texture.height,
+                        Image.textureRect.width / Image.texture.width,
+                        Image.textureRect.height / Image.texture.height);
+    }
+
+    /// <summary>
+    /// Agrega un scene a la configuracion de construccion ( Build Settings).
+    /// </summary>
+    /// <param name="path">Ruta del scene</param>
+    public static void AddSceneToBuild(string path)
+    {
+        EditorBuildSettingsScene[] original = EditorBuildSettings.scenes;
+        EditorBuildSettingsScene[] newSettings = new EditorBuildSettingsScene[original.Length + 1];
+        System.Array.Copy(original, newSettings, original.Length);
+        EditorBuildSettingsScene sceneToAdd = new EditorBuildSettingsScene(path, true);
+        newSettings[newSettings.Length - 1] = sceneToAdd;
+        EditorBuildSettings.scenes = newSettings;
+    }
+
+    /// <summary>
+    /// remueve un scene de la configuracion de construccion ( Build Settings). 
+    /// </summary>
+    /// <param name="p">ruta de la scene</param>
+    public static void RemoveScene(string path)
+    {
+        EditorBuildSettingsScene[] original = EditorBuildSettings.scenes;
+        EditorBuildSettingsScene[] newSettings = new EditorBuildSettingsScene[original.Length - 1];
+
+        for (int i = 0, j = 0; i < original.Length; i++)
+        {
+            if (original[i].path == path) continue;
+            newSettings[j] = original[i];
+            j++;
+        }
+        EditorBuildSettings.scenes = newSettings;
+    }
+#endif
+
     /// <summary>
     /// Ancho del fondo de pantalla del combate
     /// </summary>
@@ -59,15 +110,25 @@ public class Constant{
     public static bool start;
     public static string LastSceneLoaded;
     public static GameObject ActiveMap;
-    public static void SetCanvasScale(GameObject obj, Vector2 screenSize){
-    RectTransform size = obj.GetComponent<RectTransform>();
-    obj.transform.localScale = new Vector3(size.rect.width/screenSize.x, size.rect.height/screenSize.y);
+
+    public static bool checkDoor(AbstractMap door)
+    {
+        string name = door.MapPath.Substring(door.MapPath.LastIndexOf("/") + 1).Replace(".unity", "");
+        Object[] obj = Resources.LoadAll("Maps", typeof(GameObject));
+        foreach (var i in obj)
+        {
+            Map iobj = (i as GameObject).GetComponent<Map>();
+            if (iobj.Id == name)
+                return true;
+        }
+        return false;
     }
     /// <summary>
     /// Se encarga de colocar los anchor point en el borde del objeto
     /// </summary>
     /// <param name="o"></param>
-    public static void SetAnchorPoint(GameObject o) {
+    public static void SetAnchorPoint(GameObject o)
+    {
         if (o != null && o.GetComponent<RectTransform>() != null)
         {
             var r = o.GetComponent<RectTransform>();
@@ -95,6 +156,7 @@ public class Constant{
 
         }
     }
+
     /// <summary>
     /// Tipos de items.
     /// </summary>
@@ -214,63 +276,5 @@ public class Constant{
         MagicDefense,
         Agility,
         Luck
-    };
-
-    /// <summary>
-    /// Crea el marco de la imagen del equipamiento
-    /// </summary>
-    /// <returns>Rectángulo con sus coordenadas definidas</returns>
-    public static Rect GetTextureCoordinate(Sprite Image)
-    {
-        return new Rect(Image.textureRect.x / Image.texture.width,
-                        Image.textureRect.y / Image.texture.height,
-                        Image.textureRect.width / Image.texture.width,
-                        Image.textureRect.height / Image.texture.height);
-    }
-
-    /// <summary>
-    /// Agrega un scene a la configuracion de construccion ( Build Settings).
-    /// </summary>
-    /// <param name="path">Ruta del scene</param>
-    public static void AddSceneToBuild(string path)
-    {
-        EditorBuildSettingsScene[] original = EditorBuildSettings.scenes;
-        EditorBuildSettingsScene[] newSettings = new EditorBuildSettingsScene[original.Length + 1];
-        System.Array.Copy(original, newSettings, original.Length);
-        EditorBuildSettingsScene sceneToAdd = new EditorBuildSettingsScene(path, true);
-        newSettings[newSettings.Length - 1] = sceneToAdd;
-        EditorBuildSettings.scenes = newSettings;
-    }
-
-    /// <summary>
-    /// remueve un scene de la configuracion de construccion ( Build Settings). 
-    /// </summary>
-    /// <param name="p">ruta de la scene</param>
-    public static void RemoveScene(string path)
-    {
-        EditorBuildSettingsScene[] original = EditorBuildSettings.scenes;
-        EditorBuildSettingsScene[] newSettings = new EditorBuildSettingsScene[original.Length -1];
-
-        for (int i = 0, j = 0 ; i < original.Length; i++)
-        {
-            if (original[i].path == path) continue;
-            newSettings[j] = original[i];
-            j++;
-        }
-        EditorBuildSettings.scenes = newSettings;
-    }
-    
-
-    public static bool checkDoor(AbstractMap door)
-    {
-        string name = door.MapPath.Substring(door.MapPath.LastIndexOf("/")+1).Replace(".unity", "");
-        Object[] obj = Resources.LoadAll("Maps", typeof(GameObject));
-        foreach (var i in obj )
-        {
-             Map iobj = (i as GameObject).GetComponent<Map>();
-             if (iobj.Id == name)
-                 return true;
-        }
-        return false;
-    }
+    };    
 }

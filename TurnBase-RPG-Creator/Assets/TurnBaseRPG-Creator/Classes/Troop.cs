@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
-using System.IO;
-using System.Linq;
+
+
 [Serializable]
 public class Troop : Actor
 {
+#if UNITY_EDITOR
     /// <summary>
     /// El fondo de arriba del combate
     /// </summary>
@@ -46,7 +46,17 @@ public class Troop : Actor
     /// Sonido de fondo en el modo de combate
     /// </summary>
     public AudioClip Background;
-    
+
+    public Troop()
+    {
+        Enemies = new List<BattleEnemy>();
+        downSprites = new List<Sprite>();
+        leftSprites = new List<Sprite>();
+        upSprites = new List<Sprite>();
+        rightSprites = new List<Sprite>();
+    }
+#endif
+
     /// <summary>
     /// Ancho que ocupará el área que podrá moverse
     /// </summary>
@@ -66,7 +76,7 @@ public class Troop : Actor
             _width = value;
         }
     }
-    
+
     /// <summary>
     /// Alto que ocupará el área que podrá moverse
     /// </summary>
@@ -105,19 +115,10 @@ public class Troop : Actor
     private float MinX;
     private float MaxX;
     private float MinY;
-    private float MaxY;
+    private float MaxY; 
     private bool axis;
     private int count;
-    private float direction;    
-
-    public Troop()
-    {        
-        Enemies = new List<BattleEnemy>();
-        downSprites = new List<Sprite>();
-        leftSprites = new List<Sprite>();
-        upSprites = new List<Sprite>();
-        rightSprites = new List<Sprite>();
-    }
+    private float direction;
 
     /// <summary>
     /// Al iniciar el juego con tropas en la escena 

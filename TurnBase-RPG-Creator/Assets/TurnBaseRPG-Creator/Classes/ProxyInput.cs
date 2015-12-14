@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
-using System.Collections;
+
 //Clase que se encarga de verificar los inputs del juego. 
-public class ProxyInput{
+public class ProxyInput
+{
 	// Instancia de la clase input.
 	public static ProxyInput instance;
 	//Delegado que se encarga de verificar si el boton B es presionado.
@@ -51,21 +52,29 @@ public class ProxyInput{
 	public static ProxyInput GetInstance(){
 		if (instance == null) {
 			instance = new ProxyInput();
-			if ( !Application.isMobilePlatform){
-				instance.OnA = PcInput.A;
-				instance.OnB = PcInput.B;
-				instance.OnSelect = PcInput.Select;
-				instance.OnPause = PcInput.Pause;
-				instance.OnDown = PcInput.Down;
-				instance.OnLeft = PcInput.Left;
-				instance.OnRight = PcInput.Right;
-				instance.OnUp = PcInput.Up;
-			}
-			else {
-				//Codigo si es mobile 
-				//TODO
-			}
-		}
+            if (!Application.isMobilePlatform)
+            {
+                instance.OnA = PcInput.A;
+                instance.OnB = PcInput.B;
+                instance.OnSelect = PcInput.Select;
+                instance.OnPause = PcInput.Pause;
+                instance.OnDown = PcInput.Down;
+                instance.OnLeft = PcInput.Left;
+                instance.OnRight = PcInput.Right;
+                instance.OnUp = PcInput.Up;
+            }
+            else
+            {
+                instance.OnA = PhoneInput.A;
+                instance.OnB = PhoneInput.B;
+                instance.OnSelect = PhoneInput.Select;
+                instance.OnPause = PhoneInput.Pause;
+                instance.OnDown = PhoneInput.Down;
+                instance.OnLeft = PhoneInput.Left;
+                instance.OnRight = PhoneInput.Right;
+                instance.OnUp = PhoneInput.Up;
+            }
+        }
 		return instance;
 	}
 	//Retorna true si el boton A es presionado de lo contrario retorna false.

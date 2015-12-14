@@ -1,7 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class Player : Actor
 {    /// <summary>
@@ -203,10 +203,18 @@ public class Player : Actor
     {
         float horizontal = 0;
         float vertical = 0;
-        
+
         //Get input from the input manager, round it to an integer and store in horizontal to set x axis move direction
-        horizontal = (Input.GetAxisRaw("Horizontal"));
-        vertical = (Input.GetAxisRaw("Vertical"));
+        if (Application.isMobilePlatform)
+        {
+            horizontal = (CrossPlatformInputManager.GetAxis("Horizontal"));
+            vertical = (CrossPlatformInputManager.GetAxis("Vertical")); 
+        }
+        else
+        {
+            horizontal = (Input.GetAxis("Horizontal"));
+            vertical = (Input.GetAxis("Vertical"));
+        }
 
         if (Move(horizontal, vertical))
         {
