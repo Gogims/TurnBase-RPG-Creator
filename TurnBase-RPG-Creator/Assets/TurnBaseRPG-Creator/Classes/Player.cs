@@ -242,6 +242,8 @@ public class Player : Actor
             GameObject p = GameObject.FindWithTag("RPG-PLAYER");
             Constant.ActiveMap = GameObject.Find("Map");
             Constant.ActiveMap.SetActive(false);
+            Constant.Control = GameObject.Find("MobileSingleStickControl");
+            Constant.Control.SetActive(false);
             DontDestroyOnLoad(p);
             p.SetActive(true);
             Constant.LastSceneLoaded = coll.gameObject.GetComponent<Troop>().Id;
@@ -258,6 +260,7 @@ public class Player : Actor
                 p.name = "PLAYER";
                 DontDestroyOnLoad(p);
                 DontDestroyOnLoad(GameObject.Find("MobileSingleStickControl"));
+                DontDestroyOnLoad(GameObject.Find("EventSystem"));                
                 Application.LoadLevel(path.Substring(path.LastIndexOf("/")+1).Replace(".unity", ""));
                 GameObject.FindWithTag("RPG-PLAYER").transform.position = new Vector3(door.X, door.Y);
             }
@@ -272,6 +275,9 @@ public class Player : Actor
         //Get input from the input manager, round it to an integer and store in horizontal to set x axis move direction
         horizontal = ProxyInput.GetInstance().GetHorizontal();
         vertical = ProxyInput.GetInstance().GetVertical();
+
+        if (horizontal != 0 || vertical != 0)
+            Debug.Log(horizontal.ToString() + "," + vertical.ToString());
 
         if (Move(horizontal, vertical))
         {

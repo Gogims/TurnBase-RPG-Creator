@@ -196,7 +196,34 @@ public class ProxyInput
                 instance.OnLeft = PhoneInput.Left;
                 instance.OnRight = PhoneInput.Right;
                 instance.OnUp = PhoneInput.Up;
-            }            
+                instance.OnAUp = PhoneInput.AUp;
+                instance.OnBUp = PhoneInput.BUp;
+                instance.OnSelectUp = PhoneInput.SelectUp;
+                instance.OnPauseUp = PhoneInput.PauseUp;
+                instance.OnDownUp = PhoneInput.DownUp;
+                instance.OnLeftUp = PhoneInput.LeftUp;
+                instance.OnRightUp = PhoneInput.RightUp;
+                instance.OnUpUp = PhoneInput.UpUp;
+            }
+
+            instance.OnA = PhoneInput.A;
+            instance.OnB = PhoneInput.B;
+            instance.OnSelect = PhoneInput.Select;
+            instance.OnPause = PhoneInput.Pause;
+            instance.OnDown = PhoneInput.Down;
+            instance.OnLeft = PhoneInput.Left;
+            instance.OnRight = PhoneInput.Right;
+            instance.OnUp = PhoneInput.Up;
+            instance.OnAUp = PhoneInput.AUp;
+            instance.OnBUp = PhoneInput.BUp;
+            instance.OnSelectUp = PhoneInput.SelectUp;
+            instance.OnPauseUp = PhoneInput.PauseUp;
+            instance.OnDownUp = PhoneInput.DownUp;
+            instance.OnLeftUp = PhoneInput.LeftUp;
+            instance.OnRightUp = PhoneInput.RightUp;
+            instance.OnUpUp = PhoneInput.UpUp;
+
+
         }
 		return instance;
 	}
@@ -298,6 +325,7 @@ public class ProxyInput
         {
             horizontal = PcInput.GetHorizontal();
         }
+        horizontal = PhoneInput.GetHorizontal();
 
         return horizontal;
     }
@@ -317,6 +345,7 @@ public class ProxyInput
         {
             vertical = PcInput.GetVertical();
         }
+        vertical = PhoneInput.GetVertical();
 
         return vertical;
     }

@@ -6,32 +6,32 @@ public class PhoneInput
     //Retorna true si el boton A es presionado de lo contrario retorna false.
     public static bool A()
     {
-        return CrossPlatformInputManager.GetButtonUp("A");
+        return CrossPlatformInputManager.GetButton("A");
     }
     //Retorna true si el boton B es presionado de lo contrario retorna false.
     public static bool B()
     {
-        return CrossPlatformInputManager.GetButtonUp("B");
+        return CrossPlatformInputManager.GetButton("B");
     }
     //Retorna true si el boton de moverse hacia arriba es presionado de lo contrario retorna false.
     public static bool Up()
     {
-        return CrossPlatformInputManager.GetAxis("Vertical") > 0;
+        return CrossPlatformInputManager.GetButton("Up");
     }
     //Retorna true si el boton de moverse hacia abajo es presionado de lo contrario retorna false.
     public static bool Down()
     {
-        return CrossPlatformInputManager.GetAxis("Vertical") < 0;
+        return CrossPlatformInputManager.GetButton("Down");
     }
     //Retorna true si el boton de moverse hacia la derecha es presionado de lo contrario retorna false.
     public static bool Right()
     {
-        return CrossPlatformInputManager.GetAxis("Horizontal") > 0;
+        return CrossPlatformInputManager.GetButton("Right");
     }
     //Retorna true si el boton de moverse hacia la izquierda es presionado de lo contrario retorna false.
     public static bool Left()
     {
-        return CrossPlatformInputManager.GetAxis("Horizontal") < 0;
+        return CrossPlatformInputManager.GetButton("Left");
     }
     //Retorna true si el boton de pausa es presionado de lo contrario retorna false.
     public static bool Pause()
@@ -47,57 +47,79 @@ public class PhoneInput
     //Retorna true si el boton A es soltado.
     public static bool AUp()
     {
-        return Input.GetKeyUp("z");
+        return CrossPlatformInputManager.GetButtonUp("A");
     }
     //Retorna true si el boton B es soltado.
     public static bool BUp()
     {
-        return Input.GetKeyUp("x");
+        return CrossPlatformInputManager.GetButtonUp("B");
     }
     //Retorna true si el boton de moverse hacia arriba es soltado.
     public static bool UpUp()
     {
-        return Input.GetKeyUp("up");
+        return CrossPlatformInputManager.GetButtonUp("Up");
     }
     //Retorna true si el boton de moverse hacia abajo es soltado.
     public static bool DownUp()
     {
-        return Input.GetKeyUp("down");
+        return CrossPlatformInputManager.GetButtonUp("Down");
     }
     //Retorna true si el boton de moverse hacia la derecha es soltado.
     public static bool RightUp()
     {
-        return Input.GetKeyUp("right");
+        return CrossPlatformInputManager.GetButtonUp("Right");
     }
     //Retorna true si el boton de moverse hacia la izquierda es soltado.
     public static bool LeftUp()
     {
-        return Input.GetKeyUp("left");
+        return CrossPlatformInputManager.GetButtonUp("Left");
     }
     //Retorna true si el boton de pausa es soltado.
     public static bool PauseUp()
     {
-        return Input.GetKeyUp(KeyCode.Return);
+        return CrossPlatformInputManager.GetButtonUp("A");
     }
     //Retorna true si el boton de select es soltado.
     public static bool SelectUp()
     {
-        return Input.GetKeyUp("space");
+        return Input.GetKeyUp("Start");
     }
     /// <summary>
     /// Busca cuanto se movió verticalmente
     /// </summary>
     /// <returns>El movimiento verticalmente</returns>
-    public static float GetVertical()
+    public static float GetHorizontal()
     {
-        return CrossPlatformInputManager.GetAxis("Vertical");
+        float value = 0;
+
+        if (Right())
+        {
+            value = 1;
+        }
+        else if (Left())
+        {
+            value = -1;
+        }
+
+        return value;
     }
     /// <summary>
     /// Busca cuanto se movió horizontalmente
     /// </summary>
     /// <returns>El movimiento horizontalmente</returns>
-    public static float GetHorizontal()
+    public static float GetVertical()
     {
-        return CrossPlatformInputManager.GetAxis("Horizontal");
+        float value = 0;
+
+        if (Up())
+        {
+            value = 1;
+        }
+        else if (Down())
+        {
+            value = -1;
+        }
+
+        return value;
     }
 }
