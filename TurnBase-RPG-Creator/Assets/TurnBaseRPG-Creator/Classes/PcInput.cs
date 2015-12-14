@@ -76,4 +76,20 @@ public class PcInput
     {
         return Input.GetKeyUp("space");
     }
+    /// <summary>
+    /// Busca cuanto se movió verticalmente
+    /// </summary>
+    /// <returns>El movimiento verticalmente</returns>
+    public static float GetVertical()
+    {
+        return Input.GetAxis("Vertical");
+    }
+    /// <summary>
+    /// Busca cuanto se movió horizontalmente
+    /// </summary>
+    /// <returns>El movimiento horizontalmente</returns>
+    public static float GetHorizontal()
+    {
+        return Input.GetAxis("Horizontal");
+    }
 }

@@ -1,57 +1,99 @@
 ﻿using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
 
 //Clase que se encarga de verificar los inputs del juego. 
 public class ProxyInput
 {
-	// Instancia de la clase input.
-	public static ProxyInput instance;
-	//Delegado que se encarga de verificar si el boton B es presionado.
-	public delegate bool ActionB();
-	//Delegado que se encarga de verificar si el boton A es presionado.
-	public delegate bool ActionA();
-	//Delegado que se encarga de verificar si el boton de moverse hacia 
-	// arriba es presionado.
-	public delegate bool ActionUp();
-	//Delegado que se encarga de verificar si el boton de moverse hacia 
-	// abajo es presionado.
-	public delegate bool ActionDown();
-	//Delegado que se encarga de verificar si el boton de moverse hacia 
-	// derecha es presionado.
-	public delegate bool ActionRight();
-	//Delegado que se encarga de verificar si el boton de moverse hacia 
-	// izquierda es presionado.
-	public delegate bool ActionLeft();
-	//Delegado que se encarga de verificar si el boton de pausa es presionado
-	public delegate bool ActionPause ();
-	//Delegado que se encarga de verificar si el boton de select es presionado
-	public delegate bool ActionSelect ();
-	// Variable que se encarga de llamar la de cuando el boton b es presionado
-	public event ActionB OnB;
-	// Variable que se encarga de llamar la de cuando el boton a es presionado
-	public event ActionA OnA;
-	// Variable que se encarga de llamar la de cuando el boton de 
-	// moverse hacia arriba es presionado
-	public event ActionUp OnUp;
-	// Variable que se encarga de llamar la de cuando el boton de 
-	// moverse hacia abajo es presionado
-	public event ActionDown OnDown;
-	// Variable que se encarga de llamar la de cuando el boton de 
-	// moverse hacia la derecha es presionado
-	public event ActionRight OnRight;
-	// Variable que se encarga de llamar la de cuando el boton de 
-	// moverse hacia la izquierda es presionado
-	public event ActionLeft OnLeft;
-	// Variable que se encarga de llamar la de cuando el boton de pausa es presionado
-	public event ActionPause OnPause;
-	// Variable que se encarga de llamar la de cuando el boton de select es presionado
-	public event ActionSelect OnSelect;
-	//Retorna la instancia de la clase.
-	private ProxyInput (){}
-	// Retorna la instancia de la clase ProxyInput. Dependiendo del ambiente de ejecicion
-	// Del juego asigna los eventos.
-	public static ProxyInput GetInstance(){
-		if (instance == null) {
+    /// <summary>
+    /// Instancia de la clase input.
+    /// </summary>
+    public static ProxyInput instance;
+    /// <summary>
+    /// Delegado que se encarga de verificar si el botón B es presionado.
+    /// </summary>
+    /// <returns>True si el boton B es presionado</returns>
+    public delegate bool ActionB();
+    /// <summary>
+    /// Delegado que se encarga de verificar si el botón A es presionado.
+    /// </summary>
+    /// <returns>True si el boton A es presionado</returns>
+    public delegate bool ActionA();
+    /// <summary>
+    /// Delegado que se encarga de verificar si el botón de moverse hacia arriba es presionado.
+    /// </summary>
+    /// <returns>True si el boton hacia arriba es presionado</returns>
+    public delegate bool ActionUp();
+    /// <summary>
+    /// Delegado que se encarga de verificar si el botón de moverse hacia abajo es presionado.
+    /// </summary>
+    /// <returns>True si el boton hacia abajo es presionado</returns>
+    public delegate bool ActionDown();
+    /// <summary>
+    /// Delegado que se encarga de verificar si el botón de moverse hacia derecha es presionado.
+    /// </summary>
+    /// <returns>True si el boton hacia derecha es presionado</returns>
+    public delegate bool ActionRight();
+    /// <summary>
+    /// Delegado que se encarga de verificar si el botón de moverse hacia izquierda es presionado.
+    /// </summary>
+    /// <returns>True si el boton hacia izquierda es presionado</returns>
+    public delegate bool ActionLeft();
+    /// <summary>
+    /// Delegado que se encarga de verificar si el botón de pausa es presionado.
+    /// </summary>
+    /// <returns>True si el boton de pausa es presionado</returns>
+    public delegate bool ActionPause ();
+    /// <summary>
+    /// Delegado que se encarga de verificar si el botón de select es presionado.
+    /// </summary>
+    /// <returns>True si el boton de select es presionado</returns>
+    public delegate bool ActionSelect ();
+    /// <summary>
+    /// Variable que se encarga de llamar la función de cuando el botón B es presionado
+    /// </summary>
+    public event ActionB OnB;
+    /// <summary>
+    /// Variable que se encarga de llamar la función de cuando el botón A es presionado
+    /// </summary>
+    public event ActionA OnA;
+    /// <summary>
+    /// Variable que se encarga de llamar la función de cuando el botón hacia arriba es presionado
+    /// </summary>
+    public event ActionUp OnUp;
+    /// <summary>
+    /// Variable que se encarga de llamar la función de cuando el botón hacia abajo es presionado
+    /// </summary>
+    public event ActionDown OnDown;
+    /// <summary>
+    /// Variable que se encarga de llamar la función de cuando el botón hacia derecha es presionado
+    /// </summary>
+    public event ActionRight OnRight;
+    /// <summary>
+    /// Variable que se encarga de llamar la función de cuando el botón hacia izquierda es presionado
+    /// </summary>
+    public event ActionLeft OnLeft;
+    /// <summary>
+    /// Variable que se encarga de llamar la función de cuando el botón pausa es presionado
+    /// </summary>
+    public event ActionPause OnPause;
+    /// <summary>
+    /// Variable que se encarga de llamar la función de cuando el botón select es presionado
+    /// </summary>
+    public event ActionSelect OnSelect;
+    /// <summary>
+    /// Retorna la instancia de la clase.
+    /// </summary>
+    private ProxyInput (){}    
+    /// <summary>
+    /// Busca la instancia del proxy, en caso de que no exista, la construye (una sola vez)
+    /// </summary>
+    /// <returns>Retorna la instancia de la clase ProxyInput. Dependiendo del ambiente de ejecución</returns>
+    public static ProxyInput GetInstance()
+    {
+		if (instance == null)
+        {
 			instance = new ProxyInput();
+
             if (!Application.isMobilePlatform)
             {
                 instance.OnA = PcInput.A;
@@ -73,43 +115,128 @@ public class ProxyInput
                 instance.OnLeft = PhoneInput.Left;
                 instance.OnRight = PhoneInput.Right;
                 instance.OnUp = PhoneInput.Up;
-            }
+            }            
         }
 		return instance;
 	}
-	//Retorna true si el boton A es presionado de lo contrario retorna false.
-	public  bool A(){
+
+    /// <summary>
+    /// Función para detectar botón A presionado
+    /// </summary>
+    /// <returns>True si el boton A es presionado</returns>
+    public bool A()
+    {
 		return OnA();
-	}	
-	//Retorna true si el boton B es presionado de lo contrario retorna false.
-	public  bool B(){
+	}
+
+    /// <summary>
+    /// Función para detectar botón B presionado
+    /// </summary>
+    /// <returns>True si el boton B es presionado</returns>
+    public bool B()
+    {
 		return OnB();
 	}
-	//Retorna true si el boton de moverse hacia arriba es presionado de lo contrario retorna false.
-	public  bool Up(){
+
+    /// <summary>
+    /// Función para detectar botón hacia arriba presionado
+    /// </summary>
+    /// <returns>True si el boton hacia arriba es presionado</returns>
+    public bool Up()
+    {
 		return OnUp();
 	}
-	//Retorna true si el boton de moverse hacia abajo es presionado de lo contrario retorna false.
-	public bool Down () {
+
+    /// <summary>
+    /// Función para detectar botón hacia abajo presionado
+    /// </summary>
+    /// <returns>True si el boton hacia abajo es presionado</returns>
+    public bool Down()
+    {
 		return OnDown();
 	}
-	//Retorna true si el boton de moverse hacia la derecha es presionado de lo contrario retorna false.
-	public bool Right (){
+
+    /// <summary>
+    /// Función para detectar botón hacia derecha presionado
+    /// </summary>
+    /// <returns>True si el boton hacia derecha es presionado</returns>
+    public bool Right()
+    {
 		return OnRight();
 	}
-	//Retorna true si el boton de moverse hacia la izquierda es presionado de lo contrario retorna false.
-	public bool Left() {
+
+    /// <summary>
+    /// Función para detectar botón hacia izquierda presionado
+    /// </summary>
+    /// <returns>True si el boton hacia izquierda es presionado</returns>
+    public bool Left()
+    {
 		return OnLeft();
 	}
-	//Retorna true si el boton de pausa es presionado de lo contrario retorna false.
-	public bool Pause(){
+
+    /// <summary>
+    /// Función para detectar botón pausa presionado
+    /// </summary>
+    /// <returns>True si el boton pausa es presionado</returns>
+    public bool Pause()
+    {
 		return OnPause();
 	}
-	//Retorna true si el boton de select es presionado de lo contrario retorna false.
-	public bool Select(){
+
+    /// <summary>
+    /// Función para detectar botón select presionado
+    /// </summary>
+    /// <returns>True si el boton select es presionado</returns>
+    public bool Select()
+    {
 		return OnSelect();
 	}
-    public bool Movement(){
+
+    /// <summary>
+    /// Función para detectar si el personaje está en movimiento
+    /// </summary>
+    /// <returns>True si está en movimiento</returns>
+    public bool Movement()
+    {
         return OnDown() || OnRight() || OnLeft() || OnUp();
+    }
+
+    /// <summary>
+    /// Función para detectar cuanto se movió horizontalmente
+    /// </summary>
+    /// <returns>Cuanto se movió horizontalmente</returns>
+    public float GetHorizontal()
+    {
+        float horizontal = 0;
+
+        if (Application.isMobilePlatform)
+        {
+            horizontal = PhoneInput.GetHorizontal();
+        }
+        else
+        {
+            horizontal = PcInput.GetHorizontal();
+        }
+
+        return horizontal;
+    }
+    /// <summary>
+    /// Función para detectar cuanto se movió verticalmente
+    /// </summary>
+    /// <returns>Cuanto se movió verticalmente</returns>
+    public float GetVertical()
+    {
+        float vertical = 0;
+
+        if (Application.isMobilePlatform)
+        {
+            vertical = PhoneInput.GetVertical();
+        }
+        else
+        {
+            vertical = PcInput.GetVertical();
+        }
+
+        return vertical;
     }
 }
