@@ -73,6 +73,7 @@ public class BattleManager : RPGElement
         ItemsDrop = new List<AbstractUsable>();
         lvlup = null;
         working = false;
+        enemySelect = 0;
         BattleMenu = GameObject.Find("BattleMenu");
         StatsCanvas = GameObject.Find("BattleMap").transform.FindChild("CanvasStats").gameObject;
         GameObject panel = StatsCanvas.transform.FindChild("Stats Panel").gameObject;
@@ -195,6 +196,7 @@ public class BattleManager : RPGElement
             case BattleStateMachine.PLAYERTURN:
                 if (destroy)
                 {
+                    enemySelect = 0;
                     Enemy e = Enemies[enemySelect].GetComponent<Enemy>();
                     GainXp += e.BattleEnemy.Data.RewardExperience;
                     List<AbstractUsable> Item = e.getItem();
