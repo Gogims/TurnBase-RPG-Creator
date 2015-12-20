@@ -397,7 +397,7 @@ public class EquipmentMenu : Menus {
             if (ProxyInput.GetInstance().BUp())
             {
                 GameObject.Find("StartMenu").transform.FindChild("Canvas").gameObject.GetComponent<Menus>().disable = false;
-                Destroy(GameObject.Find("EquipmentMenu"));
+                Destroy(GameObject.Find("StatsMenu"));
                 Constant.LastSceneLoaded = "StartMenu";
             }
         }

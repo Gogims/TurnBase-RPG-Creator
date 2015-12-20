@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
-#if UNITY_EDITOR
-using UnityEditor;
 using UnityEngine.UI;
 using System;
+#if UNITY_EDITOR
+using UnityEditor;
+
 #endif
 
 /// <summary>

@@ -16,9 +16,12 @@ public class MainMenu : Menus {
         {
             GameObject p = Instantiate(i as GameObject);
             p.name = "PLAYER";
+            p.GetComponent<Player>().Data.HP = p.GetComponent<Player>().Data.Stats.MaxHP;
+            p.GetComponent<Player>().Data.MP = p.GetComponent<Player>().Data.Stats.MaxMP;
             DontDestroyOnLoad(p);
             break;
         }
+       
         DontDestroyOnLoad(GameObject.Find("MobileSingleStickControl"));
         DontDestroyOnLoad(GameObject.Find("EventSystem"));
         Constant.LastSceneLoaded = "MainMenu";

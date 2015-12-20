@@ -61,7 +61,7 @@ public class BattleManager : RPGElement
     private bool working = false;
     private Attribute lvlup;
     private GameObject StatsCanvas;
-
+   
     public BattleManager(List<GameObject> enemies, Player player)
     {
         Enemies = enemies;
@@ -70,6 +70,8 @@ public class BattleManager : RPGElement
 
     void Start()
     {
+        
+        
         ItemsDrop = new List<AbstractUsable>();
         lvlup = null;
         working = false;
@@ -190,6 +192,7 @@ public class BattleManager : RPGElement
         switch (BattleState)
         {
             case BattleStateMachine.PLAYERTURN:
+                
                 if (destroy)
                 {
                     enemySelect = 0;
@@ -275,20 +278,24 @@ public class BattleManager : RPGElement
                         }
                         else if (ProxyInput.GetInstance().A() || (UsableToUse != null && UsableToUse.AreaOfEffect == Constant.AOE.Self))
                         {
-
+                            
                             switch (ActionSelected)
                             {
                                 case Actions.Attack:
+                                    
                                     AbstractActor attacker = Player.Data;
                                     AbstractActor defender = Enemies[enemySelect].GetComponent<Enemy>().BattleEnemy.Data;
                                     damage = NormalFight(ref attacker, ref defender, 0);
                                     Message += "You have Attack! " + defender.ActorName + " has recive " + damage + " damage.";
+                                    
                                     break;
                                 case Actions.Ability:
+                                   
                                     AbstractActor attacker2 = Player.Data;
                                     AbstractActor defender2 = Enemies[enemySelect].GetComponent<Enemy>().BattleEnemy.Data;
                                     damage = AbilityFight(ref attacker2, ref defender2, AbilityToUse);
                                     Message += "You have use " + AbilityToUse.Ability + "! " + defender2.ActorName + " has recive " + damage + " damage.";
+                                    
                                     break;
                                 case Actions.Usable:
                                     AbstractActor actor = null;
@@ -321,7 +328,7 @@ public class BattleManager : RPGElement
                     //Player.RemoveOnTurnState();
                     break;
                 case BattleStateMachine.ENEMYTURN:
-
+                   
                     AbstractAbility ability = Enemies[enemySelect].GetComponent<Enemy>().AttackSelected();
                     if (ability == null)
                     {
@@ -337,6 +344,7 @@ public class BattleManager : RPGElement
                         damage = AbilityFight(ref attacker, ref defender, ability);
                         Message += attacker.ActorName + " " + enemySelect + 1 + " has use " + ability.Ability + "! " + damage.ToString() + " Damage dealt ";
                     }
+                   
                     StartCoroutine(ShowMessage());
                     break;
                 case BattleStateMachine.WIN:

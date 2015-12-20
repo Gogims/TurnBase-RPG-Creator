@@ -1,0 +1,1298 @@
+fileFormatVersion: 2
+guid: 72d3c92d80c9a454ca82e62b82e7f7ea
+timeCreated: 1450118206
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Tiles_Pokemon_0
+    21300002: Tiles_Pokemon_1
+    21300004: Tiles_Pokemon_2
+    21300006: Tiles_Pokemon_3
+    21300008: Tiles_Pokemon_4
+    21300010: Tiles_Pokemon_5
+    21300012: Tiles_Pokemon_6
+    21300014: Tiles_Pokemon_7
+    21300016: Tiles_Pokemon_8
+    21300018: Tiles_Pokemon_9
+    21300020: Tiles_Pokemon_10
+    21300022: Tiles_Pokemon_11
+    21300024: Tiles_Pokemon_12
+    21300026: Tiles_Pokemon_13
+    21300028: Tiles_Pokemon_14
+    21300030: Tiles_Pokemon_15
+    21300032: Tiles_Pokemon_16
+    21300034: Tiles_Pokemon_17
+    21300036: Tiles_Pokemon_18
+    21300038: Tiles_Pokemon_19
+    21300040: Tiles_Pokemon_20
+    21300042: Tiles_Pokemon_21
+    21300044: Tiles_Pokemon_22
+    21300046: Tiles_Pokemon_23
+    21300048: Tiles_Pokemon_24
+    21300050: Tiles_Pokemon_25
+    21300052: Tiles_Pokemon_26
+    21300054: Tiles_Pokemon_27
+    21300056: Tiles_Pokemon_28
+    21300058: Tiles_Pokemon_29
+    21300060: Tiles_Pokemon_30
+    21300062: Tiles_Pokemon_31
+    21300064: Tiles_Pokemon_32
+    21300066: Tiles_Pokemon_33
+    21300068: Tiles_Pokemon_34
+    21300070: Tiles_Pokemon_35
+    21300072: Tiles_Pokemon_36
+    21300074: Tiles_Pokemon_37
+    21300076: Tiles_Pokemon_38
+    21300078: Tiles_Pokemon_39
+    21300080: Tiles_Pokemon_40
+    21300082: Tiles_Pokemon_41
+    21300084: Tiles_Pokemon_42
+    21300086: Tiles_Pokemon_43
+    21300088: Tiles_Pokemon_44
+    21300090: Tiles_Pokemon_45
+    21300092: Tiles_Pokemon_46
+    21300094: Tiles_Pokemon_47
+    21300096: Tiles_Pokemon_48
+    21300098: Tiles_Pokemon_49
+    21300100: Tiles_Pokemon_50
+    21300102: Tiles_Pokemon_51
+    21300104: Tiles_Pokemon_52
+    21300106: Tiles_Pokemon_53
+    21300108: Tiles_Pokemon_54
+    21300110: Tiles_Pokemon_55
+    21300112: Tiles_Pokemon_56
+    21300114: Tiles_Pokemon_57
+    21300116: Tiles_Pokemon_58
+    21300118: Tiles_Pokemon_59
+    21300120: Tiles_Pokemon_60
+    21300122: Tiles_Pokemon_61
+    21300124: Tiles_Pokemon_62
+    21300126: Tiles_Pokemon_63
+    21300128: Tiles_Pokemon_64
+    21300130: Tiles_Pokemon_65
+    21300132: Tiles_Pokemon_66
+    21300134: Tiles_Pokemon_67
+    21300136: Tiles_Pokemon_68
+    21300138: Tiles_Pokemon_69
+    21300140: Tiles_Pokemon_70
+    21300142: Tiles_Pokemon_71
+    21300144: Tiles_Pokemon_72
+    21300146: Tiles_Pokemon_73
+    21300148: Tiles_Pokemon_74
+    21300150: Tiles_Pokemon_75
+    21300152: Tiles_Pokemon_76
+    21300154: Tiles_Pokemon_77
+    21300156: Tiles_Pokemon_78
+    21300158: Tiles_Pokemon_79
+    21300160: Tiles_Pokemon_80
+    21300162: Tiles_Pokemon_81
+    21300164: Tiles_Pokemon_82
+    21300166: Tiles_Pokemon_83
+    21300168: Tiles_Pokemon_84
+    21300170: Tiles_Pokemon_85
+    21300172: Tiles_Pokemon_86
+    21300174: Tiles_Pokemon_87
+    21300176: Tiles_Pokemon_88
+    21300178: Tiles_Pokemon_89
+    21300180: Tiles_Pokemon_90
+    21300182: Tiles_Pokemon_91
+    21300184: Tiles_Pokemon_92
+    21300186: Tiles_Pokemon_93
+    21300188: Tiles_Pokemon_94
+    21300190: Tiles_Pokemon_95
+    21300192: Tiles_Pokemon_96
+    21300194: Tiles_Pokemon_97
+    21300196: Tiles_Pokemon_98
+    21300198: Tiles_Pokemon_99
+    21300200: Tiles_Pokemon_100
+    21300202: Tiles_Pokemon_101
+    21300204: Tiles_Pokemon_102
+    21300206: Tiles_Pokemon_103
+    21300208: Tiles_Pokemon_104
+    21300210: Tiles_Pokemon_105
+    21300212: Tiles_Pokemon_106
+    21300214: Tiles_Pokemon_107
+    21300216: Tiles_Pokemon_108
+    21300218: Tiles_Pokemon_109
+    21300220: Tiles_Pokemon_110
+    21300222: Tiles_Pokemon_111
+    21300224: Tiles_Pokemon_112
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 1
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 8
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: 5
+  maxTextureSize: 1024
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 1
+  alphaIsTransparency: 1
+  textureType: 5
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: Tiles_Pokemon_0
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 144
+        width: 16
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_1
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 144
+        width: 16
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_2
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 145
+        width: 16
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_3
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 145
+        width: 16
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_4
+      rect:
+        serializedVersion: 2
+        x: 73
+        y: 144
+        width: 16
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_5
+      rect:
+        serializedVersion: 2
+        x: 95
+        y: 148
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_6
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 148
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_7
+      rect:
+        serializedVersion: 2
+        x: 113
+        y: 148
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_8
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 148
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_9
+      rect:
+        serializedVersion: 2
+        x: 131
+        y: 148
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_10
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 125
+        width: 15
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_11
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 125
+        width: 16
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_12
+      rect:
+        serializedVersion: 2
+        x: 95
+        y: 139
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_13
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 139
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_14
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 139
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_15
+      rect:
+        serializedVersion: 2
+        x: 131
+        y: 139
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_16
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 125
+        width: 15
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_17
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 125
+        width: 15
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_18
+      rect:
+        serializedVersion: 2
+        x: 71
+        y: 125
+        width: 16
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_19
+      rect:
+        serializedVersion: 2
+        x: 95
+        y: 130
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_20
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 130
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_21
+      rect:
+        serializedVersion: 2
+        x: 113
+        y: 130
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_22
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 130
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_23
+      rect:
+        serializedVersion: 2
+        x: 131
+        y: 130
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_24
+      rect:
+        serializedVersion: 2
+        x: 95
+        y: 121
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_25
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 121
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_26
+      rect:
+        serializedVersion: 2
+        x: 113
+        y: 121
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_27
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 121
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_28
+      rect:
+        serializedVersion: 2
+        x: 131
+        y: 121
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_29
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 104
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_30
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 104
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_31
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 104
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_32
+      rect:
+        serializedVersion: 2
+        x: 55
+        y: 104
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_33
+      rect:
+        serializedVersion: 2
+        x: 95
+        y: 112
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_34
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 112
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_35
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 112
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_36
+      rect:
+        serializedVersion: 2
+        x: 131
+        y: 112
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_37
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 113
+        width: 16
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_38
+      rect:
+        serializedVersion: 2
+        x: 167
+        y: 113
+        width: 16
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_39
+      rect:
+        serializedVersion: 2
+        x: 184
+        y: 113
+        width: 16
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_40
+      rect:
+        serializedVersion: 2
+        x: 95
+        y: 103
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_41
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 103
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_42
+      rect:
+        serializedVersion: 2
+        x: 113
+        y: 103
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_43
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 103
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_44
+      rect:
+        serializedVersion: 2
+        x: 131
+        y: 103
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_45
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 104
+        width: 16
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_46
+      rect:
+        serializedVersion: 2
+        x: 167
+        y: 104
+        width: 16
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_47
+      rect:
+        serializedVersion: 2
+        x: 184
+        y: 104
+        width: 16
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_48
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 83
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_49
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 83
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_50
+      rect:
+        serializedVersion: 2
+        x: 41
+        y: 83
+        width: 16
+        height: 14
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_51
+      rect:
+        serializedVersion: 2
+        x: 95
+        y: 94
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_52
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 94
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_53
+      rect:
+        serializedVersion: 2
+        x: 113
+        y: 94
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_54
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 94
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_55
+      rect:
+        serializedVersion: 2
+        x: 131
+        y: 94
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_56
+      rect:
+        serializedVersion: 2
+        x: 149
+        y: 87
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_57
+      rect:
+        serializedVersion: 2
+        x: 184
+        y: 87
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_58
+      rect:
+        serializedVersion: 2
+        x: 95
+        y: 85
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_59
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 85
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_60
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 85
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_61
+      rect:
+        serializedVersion: 2
+        x: 131
+        y: 85
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_62
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 70
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_63
+      rect:
+        serializedVersion: 2
+        x: 167
+        y: 70
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_64
+      rect:
+        serializedVersion: 2
+        x: 184
+        y: 70
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_65
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 67
+        width: 16
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_66
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 67
+        width: 16
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_67
+      rect:
+        serializedVersion: 2
+        x: 95
+        y: 76
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_68
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 76
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_69
+      rect:
+        serializedVersion: 2
+        x: 113
+        y: 76
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_70
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 76
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_71
+      rect:
+        serializedVersion: 2
+        x: 131
+        y: 76
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_72
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 67
+        width: 16
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_73
+      rect:
+        serializedVersion: 2
+        x: 95
+        y: 67
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_74
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 67
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_75
+      rect:
+        serializedVersion: 2
+        x: 113
+        y: 67
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_76
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 67
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_77
+      rect:
+        serializedVersion: 2
+        x: 131
+        y: 67
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_78
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 53
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_79
+      rect:
+        serializedVersion: 2
+        x: 167
+        y: 53
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_80
+      rect:
+        serializedVersion: 2
+        x: 184
+        y: 53
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_81
+      rect:
+        serializedVersion: 2
+        x: 26
+        y: 56
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_82
+      rect:
+        serializedVersion: 2
+        x: 95
+        y: 54
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_83
+      rect:
+        serializedVersion: 2
+        x: 109
+        y: 50
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_84
+      rect:
+        serializedVersion: 2
+        x: 131
+        y: 54
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_85
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 34
+        width: 15
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_86
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 35
+        width: 16
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_87
+      rect:
+        serializedVersion: 2
+        x: 42
+        y: 35
+        width: 14
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_88
+      rect:
+        serializedVersion: 2
+        x: 95
+        y: 41
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_89
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 41
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_90
+      rect:
+        serializedVersion: 2
+        x: 113
+        y: 41
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_91
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 41
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_92
+      rect:
+        serializedVersion: 2
+        x: 131
+        y: 41
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_93
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 25
+        width: 15
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_94
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 26
+        width: 16
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_95
+      rect:
+        serializedVersion: 2
+        x: 42
+        y: 26
+        width: 14
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_96
+      rect:
+        serializedVersion: 2
+        x: 95
+        y: 28
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_97
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 28
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_98
+      rect:
+        serializedVersion: 2
+        x: 113
+        y: 28
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_99
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 28
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_100
+      rect:
+        serializedVersion: 2
+        x: 131
+        y: 28
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_101
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 12
+        width: 15
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_102
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 12
+        width: 16
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_103
+      rect:
+        serializedVersion: 2
+        x: 42
+        y: 14
+        width: 14
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_104
+      rect:
+        serializedVersion: 2
+        x: 95
+        y: 19
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_105
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 19
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_106
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 19
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_107
+      rect:
+        serializedVersion: 2
+        x: 131
+        y: 19
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_108
+      rect:
+        serializedVersion: 2
+        x: 95
+        y: 10
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_109
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 10
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_110
+      rect:
+        serializedVersion: 2
+        x: 113
+        y: 10
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_111
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 10
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Tiles_Pokemon_112
+      rect:
+        serializedVersion: 2
+        x: 131
+        y: 10
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
